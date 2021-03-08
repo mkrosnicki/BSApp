@@ -27,7 +27,8 @@ class DealsScreen extends StatelessWidget {
                 onRefresh: () => _refreshDeals(context),
                 child: Consumer<Deals>(
                   builder: (context, dealsData, child) => ListView.builder(
-                    itemBuilder: (context, index) => DealItem(dealsData.deals[index]),
+                    itemBuilder: (context, index) =>
+                        DealItem(dealsData.deals[index]),
                     itemCount: dealsData.deals.length,
                   ),
                 ),
@@ -35,6 +36,32 @@ class DealsScreen extends StatelessWidget {
             }
           }
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(99, 137, 217, 1),
+
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Home1',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Home2',
+            icon: Icon(Icons.ac_unit),
+          ),
+          BottomNavigationBarItem(
+            label: 'Home3',
+            icon: Icon(Icons.access_alarm),
+          ),
+          // BottomNavigationBarItem(
+          //   label: 'Home4',
+          //   icon: Icon(Icons.accessibility),
+          // ),
+          // BottomNavigationBarItem(
+          //   label: 'Home',
+          //   icon: Icon(Icons.access_alarm),
+          // ),
+        ],
       ),
     );
   }
