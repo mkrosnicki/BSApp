@@ -46,9 +46,12 @@ class DealItem extends StatelessWidget {
                     children: [
                       Text(deal.dealType.toString()),
                       Text(deal.category),
-                      Text(deal.currentPrice.toString()),
                       Text(deal.regularPrice.toString()),
-                      Text(deal.discountString),
+                      Row(children: [
+                        Text('${deal.currentPrice.toString()} zł'),
+                        Padding(padding: EdgeInsets.all(4.0), child: Text('•')),
+                        Text(deal.discountString),
+                      ],),
                       Text(deal.description),
                     ],
                   ),
@@ -59,13 +62,22 @@ class DealItem extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                color: Color.fromRGBO(249, 250, 251, 1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-                  child: Text('ACTIONS AREA'),
+            child: Container(
+              color: Color.fromRGBO(249, 250, 251, 1),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+                      child: Icon(Icons.favorite_border, size: 16,),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
+                      child: Icon(Icons.mark_chat_unread_outlined, size: 16,),
+                    ),
+                  ],
                 ),
               ),
             ),
