@@ -19,7 +19,7 @@ class Deals with ChangeNotifier {
 
   Future<void> fetchDeals() async {
     print('fetching deals!');
-    final url = 'http://192.168.162.241:8080/deals';
+    final url = 'http://192.168.1.139:8080/deals';
     final response = await http.get(url);
     print(response);
     final List<DealModel> loadedDeals = [];

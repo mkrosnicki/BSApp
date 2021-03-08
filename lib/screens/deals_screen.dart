@@ -1,5 +1,6 @@
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/deal_item.dart';
+import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,32 +38,7 @@ class DealsScreen extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(99, 137, 217, 1),
-
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Home1',
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            label: 'Home2',
-            icon: Icon(Icons.ac_unit),
-          ),
-          BottomNavigationBarItem(
-            label: 'Home3',
-            icon: Icon(Icons.access_alarm),
-          ),
-          // BottomNavigationBarItem(
-          //   label: 'Home4',
-          //   icon: Icon(Icons.accessibility),
-          // ),
-          // BottomNavigationBarItem(
-          //   label: 'Home',
-          //   icon: Icon(Icons.access_alarm),
-          // ),
-        ],
-      ),
+      bottomNavigationBar: MyNavigationBar(),
     );
   }
 
