@@ -9,20 +9,21 @@ class DealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: BorderDirectional(
-          top: BorderSide(
-            color: Colors.black,
-          ),
-        ),
-      ),
+      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(deal.title),
+            child: Text(
+              deal.title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -43,12 +44,12 @@ class DealItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(deal.description),
                       Text(deal.dealType.toString()),
                       Text(deal.category),
                       Text(deal.currentPrice.toString()),
                       Text(deal.regularPrice.toString()),
                       Text(deal.discountString),
+                      Text(deal.description),
                     ],
                   ),
                 ),
@@ -57,11 +58,15 @@ class DealItem extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('ACTIONS AREA'),
+              child: Container(
+                color: Color.fromRGBO(249, 250, 251, 1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+                  child: Text('ACTIONS AREA'),
+                ),
               ),
             ),
           ),
