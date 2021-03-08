@@ -27,10 +27,7 @@ class DealsScreen extends StatelessWidget {
                 onRefresh: () => _refreshDeals(context),
                 child: Consumer<Deals>(
                   builder: (context, dealsData, child) => ListView.builder(
-                    itemBuilder: (context, index) => DealItem(
-                      id: dealsData.deals[index].id,
-                      title: dealsData.deals[index].title,
-                    ),
+                    itemBuilder: (context, index) => DealItem(dealsData.deals[index]),
                     itemCount: dealsData.deals.length,
                   ),
                 ),

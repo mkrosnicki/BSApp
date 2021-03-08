@@ -1,18 +1,13 @@
 import 'dart:convert';
 
+import 'package:BSApp/mappers/deal_mapper.dart';
+import 'package:BSApp/models/deal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class DealModel {
-  String id;
-  String title;
-
-  DealModel({@required this.id, @required this.title});
-
-  @override
-  String toString() {
-    return 'DealModel{id: $id, title: $title}';
-  }
+enum DealType {
+  COUPON,
+  OCCASION,
 }
 
 class Deals with ChangeNotifier {
@@ -32,15 +27,10 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       print('No Deals Found!');
     }
+    print(responseBody);
     responseBody.forEach((element) {
-      loadedDeals.add(DealModel(
-        id: element['id'],
-        title: element['title'],
-      ));
-      print(DealModel(
-        id: element['id'],
-        title: element['title'],
-      ));
+      loadedDeals.add(DealMapper.of(element));
+      print(DealMapper.of(element));
     });
     _deals = loadedDeals;
     notifyListeners();
