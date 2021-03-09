@@ -19,58 +19,7 @@ class DealDetailsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                deal.title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 40,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                            DealDetailsScreen.routeName, arguments: deal.id);
-                      },
-                      child: Image.network(
-                          'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 60,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 0.0, horizontal: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(deal.dealType.toString()),
-                        Text(deal.category),
-                        Text(deal.regularPrice.toString()),
-                        Row(children: [
-                          Text('${deal.currentPrice.toString()} zł'),
-                          Padding(padding: EdgeInsets.all(4.0),
-                              child: Text('•')),
-                          Text(deal.discountString),
-                        ],),
-                        Text(deal.description),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            Image.network('https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(
@@ -96,6 +45,35 @@ class DealDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                deal.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 0.0, horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(deal.dealType.toString()),
+                  Text(deal.category),
+                  Text(deal.regularPrice.toString()),
+                  Row(children: [
+                    Text('${deal.currentPrice.toString()} zł'),
+                    Padding(padding: EdgeInsets.all(4.0),
+                        child: Text('•')),
+                    Text(deal.discountString),
+                  ],),
+                  Text(deal.description),
+                ],
               ),
             ),
           ],
