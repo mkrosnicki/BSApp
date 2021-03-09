@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/auth_screen.dart';
 import 'package:BSApp/screens/deal_details_screen.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
         ChangeNotifierProvider(
           create: (_) => Deals(),
         ),

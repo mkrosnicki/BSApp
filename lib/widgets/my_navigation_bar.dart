@@ -2,11 +2,9 @@ import 'package:BSApp/screens/auth_screen.dart';
 import 'package:BSApp/screens/deals_screen.dart';
 import 'package:BSApp/screens/favourites_screen.dart';
 import 'package:BSApp/screens/forum_screen.dart';
-import 'package:BSApp/screens/profile_options_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigationBar extends StatelessWidget {
-
   final int _selectedIndex;
 
   MyNavigationBar(this._selectedIndex);
@@ -62,7 +60,7 @@ class MyNavigationBar extends StatelessWidget {
         Navigator.of(context).pushReplacementNamed(FavouritesScreen.routeName);
         break;
       case 3:
-        Navigator.of(context).pushReplacementNamed(ProfileOptionsScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
         break;
     }
   }
