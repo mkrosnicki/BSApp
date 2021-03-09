@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/screens/deal_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class DealItem extends StatelessWidget {
@@ -33,8 +34,13 @@ class DealItem extends StatelessWidget {
                 flex: 40,
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Image.network(
-                      'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id);
+                    },
+                    child: Image.network(
+                        'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
+                  ),
                 ),
               ),
               Flexible(
