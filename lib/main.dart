@@ -6,6 +6,7 @@ import 'package:BSApp/screens/deals_screen.dart';
 import 'package:BSApp/screens/favourites_screen.dart';
 import 'package:BSApp/screens/forum_screen.dart';
 import 'package:BSApp/screens/profile_options_screen.dart';
+import 'package:BSApp/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,16 @@ class MyApp extends StatelessWidget {
             // closer together (more dense) than on mobile platforms.
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: auth.isAuthenticated ? DealsScreen() : AuthScreen(),
+          home: auth.isAuthenticated
+              ? DealsScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (context, snapshot) {
+                    return snapshot.connectionState == ConnectionState.waiting
+                        ? SplashScreen()
+                        : AuthScreen();
+                  },
+                ),
           routes: {
             AuthScreen.routeName: (ctx) => AuthScreen(),
             ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
