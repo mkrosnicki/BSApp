@@ -50,15 +50,10 @@ class Auth with ChangeNotifier {
         print(responseData['error']);
         throw HttpException(responseData['error']);
       }
-      _token = responseData['idToken'];
-      _userId = responseData['localId'];
-      _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(
-            responseData['expiresIn'],
-          ),
-        ),
-      );
+      _token = responseData['token'];
+      var decoded = _decodeToken(_token);
+      _userId = _extractUserId(decoded);
+      _expiryDate = _extractExpiryDate(decoded);
       _autoLogout();
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
@@ -73,6 +68,36 @@ class Auth with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  Map<String, dynamic> _decodeToken(String token) {
+    final parts = token.split('.');
+    final payload = parts[1];
+    final String normalized = base64Url.normalize(payload);
+    final String decodedStr = utf8.decode(base64Url.decode(normalized));
+    return json.decode(decodedStr);
+  }
+
+  String _extractUserId(Map<String, dynamic> decoded) {
+    return decoded['sub'];
+  }
+
+  int _extractExpiresInMs(Map<String, dynamic> decoded) {
+    final int expiresIn = decoded['exp'];
+    final int issuedAt = decoded['iat'];
+    print('decoded');
+    print(decoded);
+    print(expiresIn);
+    print(issuedAt);
+    return (expiresIn - issuedAt) * 1000;
+  }
+
+  DateTime _parseToExpiryDate(int expiresInMs) {
+    return DateTime.now().add(Duration(milliseconds: expiresInMs));
+  }
+
+  DateTime _extractExpiryDate(Map<String, dynamic> decoded) {
+    return _parseToExpiryDate(_extractExpiresInMs(decoded));
   }
 
   Future<void> signup(String email, String password) async {

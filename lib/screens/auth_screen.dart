@@ -149,7 +149,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 obscureText: true,
                 decoration: formFieldDecoration,
                 validator: (value) {
-                  if (value.length < 5) {
+                  if (value.length < 3) {
                     return 'Za krótkie hasło!';
                   } else {
                     return null;
