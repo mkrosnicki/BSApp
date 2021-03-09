@@ -36,4 +36,8 @@ class Deals with ChangeNotifier {
     _deals = loadedDeals;
     notifyListeners();
   }
+
+  findById(String dealId) {
+    return _deals.firstWhere((deal) => deal.id == dealId);
+  }
 }
