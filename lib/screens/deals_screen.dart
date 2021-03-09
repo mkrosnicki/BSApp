@@ -38,7 +38,7 @@ class DealsScreen extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: MyNavigationBar(),
+      bottomNavigationBar: MyNavigationBar(0),
     );
   }
 

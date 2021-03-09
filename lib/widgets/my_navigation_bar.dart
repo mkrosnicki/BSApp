@@ -1,8 +1,14 @@
 import 'package:BSApp/screens/auth_screen.dart';
 import 'package:BSApp/screens/deals_screen.dart';
+import 'package:BSApp/screens/profile_options_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigationBar extends StatelessWidget {
+
+  final int _selectedIndex;
+
+  MyNavigationBar(this._selectedIndex);
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -10,7 +16,7 @@ class MyNavigationBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.white,
       unselectedItemColor: Color.fromRGBO(249, 250, 251, 1),
-      currentIndex: 0,
+      currentIndex: _selectedIndex,
       selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       onTap: (index) => navigate(context, index),
       items: const <BottomNavigationBarItem>[
@@ -49,8 +55,10 @@ class MyNavigationBar extends StatelessWidget {
         break;
       case 1:
       case 2:
-      case 3:
         Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+        break;
+      case 3:
+        Navigator.of(context).pushReplacementNamed(ProfileOptionsScreen.routeName);
         break;
     }
   }
