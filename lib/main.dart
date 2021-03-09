@@ -2,6 +2,8 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/auth_screen.dart';
 import 'package:BSApp/screens/deal_details_screen.dart';
 import 'package:BSApp/screens/deals_screen.dart';
+import 'package:BSApp/screens/favourites_screen.dart';
+import 'package:BSApp/screens/forum_screen.dart';
 import 'package:BSApp/screens/profile_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
           ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
+          FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
+          ForumScreen.routeName: (ctx) => ForumScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
           DealDetailsScreen.routeName: (ctx) => DealDetailsScreen(),
         },
