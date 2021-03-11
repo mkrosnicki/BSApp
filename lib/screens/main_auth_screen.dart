@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
 class MainAuthScreen extends StatelessWidget {
+
   _showLoginScreen(BuildContext context) {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
