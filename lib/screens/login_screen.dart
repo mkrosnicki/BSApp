@@ -5,14 +5,14 @@ import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AuthScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   static const routeName = '/auth';
 
   @override
-  _AuthScreenState createState() => _AuthScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   var _isLoading = false;
@@ -88,6 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _isLoading = false;
     });
+    Navigator.of(context).pop();
   }
 
   void _showErrorDialog(String message) {

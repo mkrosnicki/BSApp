@@ -1,4 +1,4 @@
-import 'package:BSApp/screens/auth_screen.dart';
+import 'package:BSApp/screens/login_screen.dart';
 import 'package:BSApp/screens/deals_screen.dart';
 import 'package:BSApp/screens/favourites_screen.dart';
 import 'package:BSApp/screens/forum_screen.dart';
