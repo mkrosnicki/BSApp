@@ -1,9 +1,10 @@
 import 'package:BSApp/models/http_exception.dart';
 import 'package:BSApp/providers/auth.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/util/util_functions.dart';
 import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///D:/Projects/Flutter/BSApp/lib/util/util_functions.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/auth';
