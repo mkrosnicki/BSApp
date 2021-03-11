@@ -8,8 +8,22 @@ class ProfileOptionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(title),
+    return Column(
+      children: [
+        FlatButton(
+          child: ListTile(
+            title: Text(title),
+            subtitle: Text('jakis tam podpis'),
+            trailing: Icon(Icons.chevron_right),
+            focusColor: Colors.grey,
+          ),
+          onPressed: () => _navigateTo(context),
+        ),
+      ],
     );
+  }
+
+  _navigateTo(BuildContext context) {
+    Navigator.of(context).pushNamed(route);
   }
 }

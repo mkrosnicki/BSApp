@@ -3,7 +3,7 @@ import 'package:BSApp/widgets/profile_option_item.dart';
 import 'package:flutter/material.dart';
 
 class FavouritesScreen extends StatelessWidget {
-  static const routeName = 'favourites';
+  static const routeName = '/favourites';
 
   @override
   Widget build(BuildContext context) {
