@@ -59,14 +59,20 @@ class DealSearchResultScreen extends StatelessWidget {
             SizedBox(
               height: 100,
               width: double.infinity,
-              child: Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: 15,
                   itemBuilder: (BuildContext context, int index) =>
                       Card(
-                        child: Center(child: Text('Dummy Card Text')),
+                        child: Row(
+                          children: [
+                            Icon(Icons.filter_list),
+                            Text('Dummy Card Text'),
+                          ],
+                        ),
                       ),
                 ),
               ),
