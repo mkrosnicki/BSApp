@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:BSApp/mappers/deal_mapper.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 enum DealType {
   COUPON,
@@ -11,6 +11,7 @@ enum DealType {
 }
 
 class Deals with ChangeNotifier {
+  ApiProvider apiProvider = ApiProvider();
   List<DealModel> _deals = [];
 
   List<DealModel> get deals {
@@ -19,12 +20,9 @@ class Deals with ChangeNotifier {
 
   Future<void> fetchDeals() async {
     print('fetching deals!');
-    // final url = 'http://192.168.1.139:8080/deals';
-    final url = 'http://192.168.162.241:8080/deals';
-    final response = await http.get(url);
-    print(response);
+    apiProvider.get('/deals');
     final List<DealModel> loadedDeals = [];
-    final responseBody = json.decode(response.body) as List;
+    final responseBody = await apiProvider.get('/deals') as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }
