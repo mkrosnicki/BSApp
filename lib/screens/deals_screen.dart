@@ -15,7 +15,7 @@ class DealsScreen extends StatefulWidget {
 class _DealsScreenState extends State<DealsScreen> {
   final _searchTextController = TextEditingController();
 
-  bool _isTyping = false;
+  bool _isSearchPanelVisible = false;
 
   _createSearchBox() {
     return Container(
@@ -29,7 +29,7 @@ class _DealsScreenState extends State<DealsScreen> {
             Expanded(
               child: TextField(
                 onTap: () => _showSearchPanel(true),
-                autofocus: _isTyping,
+                autofocus: false,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Czego szukasz?',
@@ -39,7 +39,7 @@ class _DealsScreenState extends State<DealsScreen> {
                     focusColor: Colors.white),
               ),
             ),
-            GestureDetector(
+            if (_isSearchPanelVisible) GestureDetector(
               onTap: () => _showSearchPanel(false),
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -59,23 +59,22 @@ class _DealsScreenState extends State<DealsScreen> {
   }
 
   _showSearchPanel(bool isShowSearch) {
-    if (_isTyping != isShowSearch) {
+    if (_isSearchPanelVisible != isShowSearch) {
       setState(() {
-        _isTyping = isShowSearch;
+        _isSearchPanelVisible = isShowSearch;
+        if (!_isSearchPanelVisible) {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        }
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('buliding');
-    print(_isTyping);
+    print(_isSearchPanelVisible);
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () => _showSearchPanel(true),
-          child: _createSearchBox(),
-        ),
+        title: _createSearchBox(),
       ),
       // appBar: AppBar(
       //   title: Container(
@@ -89,7 +88,7 @@ class _DealsScreenState extends State<DealsScreen> {
       //     ),
       //   ),
       // ),
-      body: !_isTyping
+      body: !_isSearchPanelVisible
           ? FutureBuilder(
               future: Provider.of<Deals>(context, listen: false).fetchDeals(),
               builder: (context, snapshot) {
@@ -117,7 +116,7 @@ class _DealsScreenState extends State<DealsScreen> {
               },
             )
           : Center(
-              child: Text('jakis text'),
+              child: Text('Brak ostatnich wyszukiwań'),
             ),
       bottomNavigationBar: MyNavigationBar(0),
     );
