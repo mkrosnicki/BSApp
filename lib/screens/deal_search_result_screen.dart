@@ -11,10 +11,8 @@ class DealSearchResultScreen extends StatelessWidget {
   final _searchTextController = TextEditingController();
 
   _createSearchBox(BuildContext context) {
-    _searchTextController.text = ModalRoute
-        .of(context)
-        .settings
-        .arguments as String;
+    _searchTextController.text =
+        ModalRoute.of(context).settings.arguments as String;
     return Container(
       width: double.infinity,
       alignment: Alignment.centerLeft,
@@ -57,7 +55,7 @@ class DealSearchResultScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(
-              height: 100,
+              height: 50,
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -65,15 +63,24 @@ class DealSearchResultScreen extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) =>
-                      Card(
-                        child: Row(
-                          children: [
-                            Icon(Icons.filter_list),
-                            Text('Dummy Card Text'),
-                          ],
-                        ),
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.filter_list, size: 14,),
+                          Container(
+                            margin: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              'Filtry',
+                              style: TextStyle(fontSize: 12, ),
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -96,10 +103,10 @@ class DealSearchResultScreen extends StatelessWidget {
                       child: Consumer<Deals>(
                         builder: (context, dealsData, child) =>
                             ListView.builder(
-                              itemBuilder: (context, index) =>
-                                  DealItem(dealsData.deals[index]),
-                              itemCount: dealsData.deals.length,
-                            ),
+                          itemBuilder: (context, index) =>
+                              DealItem(dealsData.deals[index]),
+                          itemCount: dealsData.deals.length,
+                        ),
                       ),
                     );
                   }
