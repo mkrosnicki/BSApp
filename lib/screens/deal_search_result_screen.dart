@@ -1,6 +1,9 @@
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/app_bar_search_input.dart';
+import 'package:BSApp/widgets/deal_item.dart';
 import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealSearchResultScreen extends StatelessWidget {
   static const routeName = '/deal-search';
@@ -8,7 +11,10 @@ class DealSearchResultScreen extends StatelessWidget {
   final _searchTextController = TextEditingController();
 
   _createSearchBox(BuildContext context) {
-    _searchTextController.text = ModalRoute.of(context).settings.arguments as String;
+    _searchTextController.text = ModalRoute
+        .of(context)
+        .settings
+        .arguments as String;
     return Container(
       width: double.infinity,
       alignment: Alignment.centerLeft,
@@ -47,8 +53,45 @@ class DealSearchResultScreen extends StatelessWidget {
           title: _createSearchBox(context),
           automaticallyImplyLeading: false,
         ),
-        body: Center(
-          child: Text('center'),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Headline',
+              style: TextStyle(fontSize: 18),
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 15,
+                itemBuilder: (BuildContext context, int index) =>
+                    Card(
+                      child: Center(child: Text('Dummy Card Text')),
+                    ),
+              ),
+            ),
+            Text(
+              'Znalezione promocje',
+              style: TextStyle(fontSize: 18),
+            ),
+            Expanded(
+              child: Consumer<Deals>(
+                builder: (context, dealsData, child) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, int) {
+                      return ListView.builder(
+                        itemBuilder: (context, index) =>
+                            DealItem(dealsData.deals[index]),
+                        itemCount: dealsData.deals.length,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
         bottomNavigationBar: MyNavigationBar(0));
   }

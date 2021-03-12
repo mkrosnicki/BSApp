@@ -30,7 +30,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         ),
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
-            prefixIconConstraints: BoxConstraints.loose(
+            prefixIconConstraints: BoxConstraints.tight(
               Size.square(30),
             ),
             border: InputBorder.none,
