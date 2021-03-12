@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:BSApp/models/http_exception.dart';
+import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
 
+  ApiProvider _apiProvider = ApiProvider();
   String _token;
   DateTime _expiryDate;
   String _userId;
@@ -29,45 +30,32 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    // final url = 'http://192.168.1.139:8080/login';
-    final url = 'http://192.168.162.241:8080/auth/login';
-    print(email);
-    print(password);
-    try {
-      final response = await http.post(
-        url,
-        body: json.encode(
-          {
-            'email': email,
-            'password': password,
-          },
-        ),
-        headers: {"Content-Type": "application/json"},
-      );
-      final responseData = json.decode(response.body);
-      if (responseData['error'] != null) {
-        print(responseData);
-        print(responseData['error']);
-        throw HttpException(responseData['error']);
-      }
-      _token = responseData['token'];
-      var decoded = _decodeToken(_token);
-      _userId = _extractUserId(decoded);
-      _expiryDate = _extractExpiryDate(decoded);
-      _autoLogout();
-      notifyListeners();
-      final prefs = await SharedPreferences.getInstance();
-      final userData = json.encode(
-        {
-          'token': _token,
-          'userId': _userId,
-          'expiryDate': _expiryDate.toIso8601String(),
-        },
-      );
-      prefs.setString('authData', userData);
-    } catch (error) {
-      throw error;
+    final url = '/auth/login';
+    var body = {
+          'email': email,
+          'password': password,
+        };
+    final responseData = await _apiProvider.post(url, body);
+    if (responseData['error'] != null) {
+      print(responseData);
+      print(responseData['error']);
+      throw HttpException(responseData['error']);
     }
+    _token = responseData['token'];
+    var decoded = _decodeToken(_token);
+    _userId = _extractUserId(decoded);
+    _expiryDate = _extractExpiryDate(decoded);
+    _autoLogout();
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json.encode(
+      {
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String(),
+      },
+    );
+    prefs.setString('authData', userData);
   }
 
   Future<void> signup(String email, String password) async {

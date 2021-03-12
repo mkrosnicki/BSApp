@@ -11,7 +11,7 @@ enum DealType {
 }
 
 class Deals with ChangeNotifier {
-  ApiProvider apiProvider = ApiProvider();
+  ApiProvider _apiProvider = ApiProvider();
   List<DealModel> _deals = [];
 
   List<DealModel> get deals {
@@ -20,9 +20,9 @@ class Deals with ChangeNotifier {
 
   Future<void> fetchDeals() async {
     print('fetching deals!');
-    apiProvider.get('/deals');
+    _apiProvider.get('/deals');
     final List<DealModel> loadedDeals = [];
-    final responseBody = await apiProvider.get('/deals') as List;
+    final responseBody = await _apiProvider.get('/deals') as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }
