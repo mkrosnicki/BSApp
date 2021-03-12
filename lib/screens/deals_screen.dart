@@ -5,59 +5,76 @@ import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DealsScreen extends StatelessWidget {
+class DealsScreen extends StatefulWidget {
   static const routeName = '/deals';
 
+  @override
+  _DealsScreenState createState() => _DealsScreenState();
+}
+
+class _DealsScreenState extends State<DealsScreen> {
   final _searchTextController = TextEditingController();
+
+  bool _isTyping = false;
+
+  _createSearchBox() {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.centerLeft,
+      // color: Colors.white,
+      child: SizedBox(
+        // height: 30,
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                onTap: () => _showSearchPanel(true),
+                autofocus: _isTyping,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Czego szukasz?',
+                    isDense: true,
+                    filled: true,
+                    fillColor: Colors.white,
+                    focusColor: Colors.white),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => _showSearchPanel(false),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Anuluj',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _showSearchPanel(bool isShowSearch) {
+    if (_isTyping != isShowSearch) {
+      setState(() {
+        _isTyping = isShowSearch;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formFieldDecoration = InputDecoration(
-      enabledBorder: InputBorder.none,
-      focusedErrorBorder: InputBorder.none,
-      filled: true,
-      fillColor: Colors.white,
-      focusColor: Colors.white,
-      enabled: false,
-      isDense: true,
-      contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      border: UnderlineInputBorder(
-        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: const BorderSide(width: 0),
-      ),
-    );
-
+    print('buliding');
+    print(_isTyping);
     return Scaffold(
       appBar: AppBar(
-        title: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _openFiltersScreen(context),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                          'gffdfdsafds',
-                          style: TextStyle(color: Colors.grey, fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+        title: GestureDetector(
+          onTap: () => _showSearchPanel(true),
+          child: _createSearchBox(),
         ),
       ),
       // appBar: AppBar(
@@ -72,31 +89,36 @@ class DealsScreen extends StatelessWidget {
       //     ),
       //   ),
       // ),
-      body: FutureBuilder(
-        future: Provider.of<Deals>(context, listen: false).fetchDeals(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.error != null) {
-              return Center(
-                child: Text('An error occurred!'),
-              );
-            } else {
-              return RefreshIndicator(
-                onRefresh: () => _refreshDeals(context),
-                child: Consumer<Deals>(
-                  builder: (context, dealsData, child) => ListView.builder(
-                    itemBuilder: (context, index) =>
-                        DealItem(dealsData.deals[index]),
-                    itemCount: dealsData.deals.length,
-                  ),
-                ),
-              );
-            }
-          }
-        },
-      ),
+      body: !_isTyping
+          ? FutureBuilder(
+              future: Provider.of<Deals>(context, listen: false).fetchDeals(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.error != null) {
+                    return Center(
+                      child: Text('An error occurred!'),
+                    );
+                  } else {
+                    return RefreshIndicator(
+                      onRefresh: () => _refreshDeals(context),
+                      child: Consumer<Deals>(
+                        builder: (context, dealsData, child) =>
+                            ListView.builder(
+                          itemBuilder: (context, index) =>
+                              DealItem(dealsData.deals[index]),
+                          itemCount: dealsData.deals.length,
+                        ),
+                      ),
+                    );
+                  }
+                }
+              },
+            )
+          : Center(
+              child: Text('jakis text'),
+            ),
       bottomNavigationBar: MyNavigationBar(0),
     );
   }
@@ -114,5 +136,22 @@ class DealsScreen extends StatelessWidget {
             fullscreenDialog: true));
     _searchTextController.text = returnedValue;
     print(returnedValue);
+  }
+}
+
+class TextBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      color: Colors.white,
+      child: PreferredSize(
+        preferredSize: Size.fromHeight(1),
+        child: TextField(
+          decoration:
+              InputDecoration(border: InputBorder.none, hintText: 'Search'),
+        ),
+      ),
+    );
   }
 }
