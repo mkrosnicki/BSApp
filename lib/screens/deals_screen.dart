@@ -22,48 +22,57 @@ class _DealsScreenState extends State<DealsScreen> {
       width: double.infinity,
       alignment: Alignment.centerLeft,
       // color: Colors.white,
-      child: SizedBox(
-        // height: 30,
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                onTap: () => _showSearchPanel(true),
-                controller: _searchTextController,
-                autofocus: false,
-                cursorColor: Colors.grey,
-                style: TextStyle(
-                  color: Colors.black87,
-                ),
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    prefixIconConstraints: BoxConstraints.loose(
-                      Size.square(30),
-                    ),
-                    border: InputBorder.none,
-                    hintText: 'Czego szukasz?',
-                    isDense: true,
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusColor: Colors.white),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              onTap: () => _showSearchPanel(true),
+              controller: _searchTextController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              autofocus: false,
+              style: TextStyle(
+                color: Colors.black87,
               ),
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  prefixIconConstraints: BoxConstraints.loose(
+                    Size.square(30),
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(8),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    gapPadding: 5,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    gapPadding: 5,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                  hintText: 'Czego szukasz?',
+                  isDense: true,
+                  filled: true,
+                  fillColor: Colors.white,
+                  focusColor: Colors.white),
             ),
-            if (_isSearchPanelVisible)
-              GestureDetector(
-                onTap: () => _showSearchPanel(false),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    'Anuluj',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                    ),
+          ),
+          if (_isSearchPanelVisible)
+            GestureDetector(
+              onTap: () => _showSearchPanel(false),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Anuluj',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
@@ -85,6 +94,7 @@ class _DealsScreenState extends State<DealsScreen> {
     print(_isSearchPanelVisible);
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 8,
         title: _createSearchBox(),
       ),
       // appBar: AppBar(
@@ -149,19 +159,19 @@ class _DealsScreenState extends State<DealsScreen> {
   }
 }
 
-class TextBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      color: Colors.white,
-      child: PreferredSize(
-        preferredSize: Size.fromHeight(1),
-        child: TextField(
-          decoration:
-              InputDecoration(border: InputBorder.none, hintText: 'Search'),
-        ),
-      ),
-    );
-  }
-}
+// class TextBox extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       alignment: Alignment.centerLeft,
+//       color: Colors.white,
+//       child: PreferredSize(
+//         preferredSize: Size.fromHeight(1),
+//         child: TextField(
+//           decoration:
+//               InputDecoration(border: InputBorder.none, hintText: 'Search'),
+//         ),
+//       ),
+//     );
+//   }
+// }
