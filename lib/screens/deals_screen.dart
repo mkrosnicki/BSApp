@@ -29,8 +29,17 @@ class _DealsScreenState extends State<DealsScreen> {
             Expanded(
               child: TextField(
                 onTap: () => _showSearchPanel(true),
+                controller: _searchTextController,
                 autofocus: false,
+                cursorColor: Colors.grey,
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
                 decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    prefixIconConstraints: BoxConstraints.loose(
+                      Size.square(30),
+                    ),
                     border: InputBorder.none,
                     hintText: 'Czego szukasz?',
                     isDense: true,
@@ -39,19 +48,20 @@ class _DealsScreenState extends State<DealsScreen> {
                     focusColor: Colors.white),
               ),
             ),
-            if (_isSearchPanelVisible) GestureDetector(
-              onTap: () => _showSearchPanel(false),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Anuluj',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
+            if (_isSearchPanelVisible)
+              GestureDetector(
+                onTap: () => _showSearchPanel(false),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    'Anuluj',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -64,6 +74,7 @@ class _DealsScreenState extends State<DealsScreen> {
         _isSearchPanelVisible = isShowSearch;
         if (!_isSearchPanelVisible) {
           FocusScope.of(context).requestFocus(new FocusNode());
+          _searchTextController.text = "";
         }
       });
     }
