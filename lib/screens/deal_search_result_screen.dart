@@ -56,40 +56,49 @@ class DealSearchResultScreen extends StatelessWidget {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              'Headline',
-              style: TextStyle(fontSize: 18),
-            ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) =>
-                    Card(
-                      child: Center(child: Text('Dummy Card Text')),
-                    ),
+            SizedBox(
+              height: 100,
+              width: double.infinity,
+              child: Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 15,
+                  itemBuilder: (BuildContext context, int index) =>
+                      Card(
+                        child: Center(child: Text('Dummy Card Text')),
+                      ),
+                ),
               ),
             ),
             Text(
               'Znalezione promocje',
               style: TextStyle(fontSize: 18),
             ),
-            Expanded(
-              child: Consumer<Deals>(
-                builder: (context, dealsData, child) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, int) {
-                      return ListView.builder(
-                        itemBuilder: (context, index) =>
-                            DealItem(dealsData.deals[index]),
-                        itemCount: dealsData.deals.length,
-                      );
-                    },
-                  );
-                },
-              ),
+            FutureBuilder(
+              future: Provider.of<Deals>(context, listen: false).fetchDeals(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.error != null) {
+                    return Center(
+                      child: Text('An error occurred!'),
+                    );
+                  } else {
+                    return Flexible(
+                      child: Consumer<Deals>(
+                        builder: (context, dealsData, child) =>
+                            ListView.builder(
+                              itemBuilder: (context, index) =>
+                                  DealItem(dealsData.deals[index]),
+                              itemCount: dealsData.deals.length,
+                            ),
+                      ),
+                    );
+                  }
+                }
+              },
             ),
           ],
         ),
