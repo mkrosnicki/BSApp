@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deal_search_result_screen.dart';
 import 'package:BSApp/screens/filter_selection_screen.dart';
+import 'package:BSApp/widgets/app_bar_search_input.dart';
 import 'package:BSApp/widgets/deal_item.dart';
 import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -25,42 +26,13 @@ class _DealsScreenState extends State<DealsScreen> {
       // color: Colors.white,
       child: Row(
         children: [
-          Expanded(
-            child: TextField(
-              onTap: () => _showSearchPanel(true),
-              onSubmitted: (searchText) {
-                Navigator.of(context).pushNamed(DealSearchResultScreen.routeName);
-              },
-              controller: _searchTextController,
-              keyboardType: TextInputType.text,
-              cursorColor: Colors.grey,
-              autofocus: false,
-              style: TextStyle(
-                color: Colors.black87,
-              ),
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  prefixIconConstraints: BoxConstraints.loose(
-                    Size.square(30),
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(8),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    gapPadding: 5,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    gapPadding: 5,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  ),
-                  hintText: 'Czego szukasz?',
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white,
-                  focusColor: Colors.white),
-            ),
+          AppBarSearchInput(
+            onTapInputFunction: () => _showSearchPanel(true),
+            onSubmitInputFunction: (searchText) {
+              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: searchText);
+              _showSearchPanel(false);
+            },
+            searchInputController: _searchTextController,
           ),
           if (_isSearchPanelVisible)
             GestureDetector(
@@ -95,7 +67,6 @@ class _DealsScreenState extends State<DealsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_isSearchPanelVisible);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 8,
