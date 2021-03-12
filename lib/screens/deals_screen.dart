@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/deal_search_result_screen.dart';
 import 'package:BSApp/screens/filter_selection_screen.dart';
 import 'package:BSApp/widgets/deal_item.dart';
 import 'package:BSApp/widgets/my_navigation_bar.dart';
@@ -27,6 +28,9 @@ class _DealsScreenState extends State<DealsScreen> {
           Expanded(
             child: TextField(
               onTap: () => _showSearchPanel(true),
+              onSubmitted: (searchText) {
+                Navigator.of(context).pushNamed(DealSearchResultScreen.routeName);
+              },
               controller: _searchTextController,
               keyboardType: TextInputType.text,
               cursorColor: Colors.grey,
@@ -97,18 +101,6 @@ class _DealsScreenState extends State<DealsScreen> {
         titleSpacing: 8,
         title: _createSearchBox(),
       ),
-      // appBar: AppBar(
-      //   title: Container(
-      //     width: double.infinity,
-      //     child: GestureDetector(
-      //       child: TextFormField(
-      //         decoration: formFieldDecoration,
-      //         controller: _searchTextController,
-      //       ),
-      //       onTap: () => _openFiltersScreen(context),
-      //     ),
-      //   ),
-      // ),
       body: !_isSearchPanelVisible
           ? FutureBuilder(
               future: Provider.of<Deals>(context, listen: false).fetchDeals(),
@@ -158,20 +150,3 @@ class _DealsScreenState extends State<DealsScreen> {
     print(returnedValue);
   }
 }
-
-// class TextBox extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       alignment: Alignment.centerLeft,
-//       color: Colors.white,
-//       child: PreferredSize(
-//         preferredSize: Size.fromHeight(1),
-//         child: TextField(
-//           decoration:
-//               InputDecoration(border: InputBorder.none, hintText: 'Search'),
-//         ),
-//       ),
-//     );
-//   }
-// }

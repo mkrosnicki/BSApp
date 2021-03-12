@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deal_details_screen.dart';
+import 'package:BSApp/screens/deal_search_result_screen.dart';
 import 'package:BSApp/screens/deals_screen.dart';
 import 'package:BSApp/screens/favourites_screen.dart';
 import 'package:BSApp/screens/forum_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
           ForumScreen.routeName: (ctx) => ForumScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
           DealDetailsScreen.routeName: (ctx) => DealDetailsScreen(),
+          DealSearchResultScreen.routeName: (ctx) => DealSearchResultScreen(),
         },
       ),
     );
