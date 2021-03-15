@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:BSApp/mappers/deal_mapper.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/services/api_provider.dart';
@@ -11,7 +9,7 @@ enum DealType {
 }
 
 class Deals with ChangeNotifier {
-  ApiProvider _apiProvider = ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
   List<DealModel> _deals = [];
 
   List<DealModel> get deals {
@@ -25,7 +23,6 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       print('No Deals Found!');
     }
-    print(responseBody);
     responseBody.forEach((element) {
       loadedDeals.add(DealMapper.of(element));
       print(DealMapper.of(element));

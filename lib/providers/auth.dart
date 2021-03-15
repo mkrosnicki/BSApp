@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
 
-  ApiProvider _apiProvider = ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
   String _token;
   DateTime _expiryDate;
   String _userId;
