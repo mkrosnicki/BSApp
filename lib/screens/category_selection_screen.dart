@@ -13,19 +13,23 @@ class CategorySelectionScreen extends StatefulWidget {
 
 class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   List<CategoryModel> _allCategories;
-  CategoryModel _selectedCategory;
+  List<CategoryModel> _selectedCategories = [];
 
   Future<void> _initCategories() {
-    return Provider.of<Categories>(context, listen: false).fetchCategories().then((_) {
-      _allCategories = Provider.of<Categories>(context, listen: false).categories;
-    });
+    if (_allCategories == null) {
+      return Provider.of<Categories>(context, listen: false).fetchCategories().then((_) {
+        _allCategories = Provider.of<Categories>(context, listen: false).categories;
+      });
+    } else {
+      return Future(() => {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _selectedCategory == null
+      body: _selectedCategories.isEmpty
           ? FutureBuilder(
               future: _initCategories(),
               builder: (context, snapshot) {
@@ -42,7 +46,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 }
               },
             )
-          : _buildCategoriesList(_selectedCategory.subCategories),
+          : _buildCategoriesList(_selectedCategories.elementAt(_selectedCategories.length - 1).subCategories),
     );
   }
 
@@ -51,9 +55,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       title: Text('Wybierz kategorię'),
       automaticallyImplyLeading: false,
       leading: FlatButton(
-        onPressed: () {
-          Navigator.of(context).pop(null);
-        },
+        onPressed: () => _goUp(),
         child: Icon(
           Icons.arrow_back,
           color: Colors.white,
@@ -76,13 +78,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   _buildCategoriesList(List<CategoryModel> categories) {
     return Column(
       children: [
-        FlatButton(
-          child: ListTile(
-            title: Text('back'),
-            subtitle: Text('back'),
-            trailing: Icon(Icons.chevron_right),
-            focusColor: Colors.grey,
-          ),
+        if (_selectedCategories.isNotEmpty) ListTile(
+          title: Text('${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+          focusColor: Colors.grey,
         ),
         Expanded(
           child: ListView.builder(
@@ -120,7 +118,17 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       Navigator.of(context).pop(category);
     } else {
       setState(() {
-        _selectedCategory = category;
+        _selectedCategories.add(category);
+      });
+    }
+  }
+
+  _goUp() {
+    if (_selectedCategories.isEmpty) {
+      Navigator.of(context).pop(null);
+    } else {
+      setState(() {
+        _selectedCategories.removeLast();
       });
     }
   }
