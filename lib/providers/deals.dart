@@ -10,12 +10,18 @@ enum DealType {
 }
 
 class Deals with ChangeNotifier {
-  final ApiProvider _apiProvider = ApiProvider();
-  List<DealModel> _deals = [];
-  List<DealModel> _favouriteDeals = [];
+
+  ApiProvider _apiProvider = new ApiProvider();
+
+  List<DealModel> allDeals = [];
+  List<DealModel> favouriteDeals = [];
+  String token;
+
+  Deals({this.allDeals, this.favouriteDeals, this.token});
+
 
   List<DealModel> get deals {
-    return [..._deals];
+    return [...allDeals];
   }
 
   Future<void> fetchDeals() async {
@@ -28,35 +34,42 @@ class Deals with ChangeNotifier {
       loadedDeals.add(DealMapper.of(element));
       print(DealMapper.of(element));
     });
-    _deals = loadedDeals;
+    allDeals = loadedDeals;
     notifyListeners();
   }
 
   Future<void> fetchFavouriteDeals() async {
-    final List<DealModel> favouriteDeals = [];
+    final List<DealModel> fetchedDeals = [];
     final responseBody =
-        await _apiProvider.get('/users/me/observed') as List;
+        await _apiProvider.get('/users/me/observed', token: token) as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }
+    print(responseBody);
     responseBody.forEach((element) {
-      favouriteDeals.add(DealMapper.of(element));
+      fetchedDeals.add(DealMapper.of(element));
     });
-    _favouriteDeals = favouriteDeals;
+    favouriteDeals = fetchedDeals;
+    print(fetchedDeals);
     notifyListeners();
   }
 
   Future<void> addToFavouriteDeals(String dealId) async {
     final addDealToFavouritesDto = {'dealId': dealId};
-    await _apiProvider.post('/users/me/observed', addDealToFavouritesDto);
+    await _apiProvider.post('/users/me/observed', addDealToFavouritesDto, token: token);
+    return fetchFavouriteDeals();
+  }
+
+  Future<void> deleteFromFavouriteDeals(String dealId) async {
+    await _apiProvider.delete('/users/me/observed/$dealId', token: token);
     return fetchFavouriteDeals();
   }
 
   findById(String dealId) {
-    return _deals.firstWhere((deal) => deal.id == dealId);
+    return allDeals.firstWhere((deal) => deal.id == dealId);
   }
 
   isFavouriteDeal(DealModel deal) {
-    return _favouriteDeals.contains(deal);
+    return favouriteDeals.contains(deal);
   }
 }
