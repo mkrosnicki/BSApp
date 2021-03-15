@@ -48,12 +48,12 @@ class DealDetailsScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 0.0, horizontal: 8.0),
-                child: Icon(Icons.favorite_border, size: 16,),
+                child: Icon(Icons.favorite_border, size: 24,),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 0.0, horizontal: 8.0),
-                child: Icon(Icons.mark_chat_unread_outlined, size: 16,),
+                child: Icon(Icons.mark_chat_unread_outlined, size: 24,),
               ),
             ],
           ),
