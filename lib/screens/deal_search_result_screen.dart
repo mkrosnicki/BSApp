@@ -5,8 +5,15 @@ import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'category_selection_screen.dart';
+
 class DealSearchResultScreen extends StatelessWidget {
   static const routeName = '/deal-search';
+
+  _openCategorySelector(BuildContext context) async {
+    var returnedValue = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    print(returnedValue);
+  }
 
   final _searchTextController = TextEditingController();
 
@@ -63,21 +70,24 @@ class DealSearchResultScreen extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) => Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.filter_list, size: 14,),
-                          Container(
-                            margin: const EdgeInsets.only(left: 4.0),
-                            child: Text(
-                              'Filtry',
-                              style: TextStyle(fontSize: 12, ),
+                  itemBuilder: (BuildContext context, int index) => GestureDetector(
+                    onTap: () => _openCategorySelector(context),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.filter_list, size: 14,),
+                            Container(
+                              margin: const EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                'Filtry',
+                                style: TextStyle(fontSize: 12, ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
