@@ -1,26 +1,18 @@
 import 'package:BSApp/models/http_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/util/util_functions.dart';
-import 'package:BSApp/widgets/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const routeName = '/auth';
-
+class RegistrationForm extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegistrationFormState createState() => _RegistrationFormState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-
+class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  var _isLoading = false;
-
-  Map<String, String> _authData = {
-    'email': '',
-    'password': ''
-  };
+  Map<String, String> _authData = {'email': '', 'password': ''};
+  bool _isLoading = false;
 
   var formFieldDecoration = InputDecoration(
     enabledBorder: InputBorder.none,
@@ -106,73 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: const Text('E-mail'),
-              ),
-              TextFormField(
-                cursorColor: Colors.black,
-                keyboardType: TextInputType.emailAddress,
-                decoration: formFieldDecoration,
-                validator: (value) {
-                  if (value.isEmpty || !value.contains('@')) {
-                    return 'Nieprawidłowy e-mail!';
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (value) {
-                  _authData['email'] = value;
-                },
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: const Text('Hasło'),
-              ),
-              TextFormField(
-                cursorColor: Colors.black,
-                obscureText: true,
-                decoration: formFieldDecoration,
-                validator: (value) {
-                  if (value.length < 3) {
-                    return 'Za krótkie hasło!';
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (value) {
-                  _authData['password'] = value;
-                },),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: const Text('Nie pamiętasz hasła?'),
-              ),
-              Container(
-                width: double.infinity,
-                child: RaisedButton(
-                  child: Text('Zaloguj się'),
-                  onPressed: _submit,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: MyNavigationBar(3),
+    return Center(
+      child: Text('Rejestracja'),
     );
   }
 }

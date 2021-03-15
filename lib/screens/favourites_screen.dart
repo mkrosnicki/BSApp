@@ -39,7 +39,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Ulubione'),
+              title: Text('Obserwowane'),
               pinned: true,
               floating: true,
               forceElevated: innerBoxIsScrolled,

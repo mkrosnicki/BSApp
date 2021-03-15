@@ -17,7 +17,7 @@ class MyNavigationBar extends StatelessWidget {
       fixedColor: Colors.white,
       unselectedItemColor: Color.fromRGBO(249, 250, 251, 1),
       currentIndex: _selectedIndex,
-      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+      // selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       onTap: (index) => navigate(context, index),
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -37,8 +37,8 @@ class MyNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           label: 'Konto',
-          icon: Icon(Icons.account_circle_outlined),
-          activeIcon: Icon(Icons.account_circle),
+          icon: Icon(Icons.person_outline),
+          activeIcon: Icon(Icons.person),
         ),
         // BottomNavigationBarItem(
         //   label: 'Home',
