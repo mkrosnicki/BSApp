@@ -19,7 +19,6 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> fetchDeals() async {
-    print('fetching deals!');
     _apiProvider.get('/deals');
     final List<DealModel> loadedDeals = [];
     final responseBody = await _apiProvider.get('/deals') as List;

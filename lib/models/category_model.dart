@@ -10,7 +10,7 @@ class CategoryModel {
     return CategoryModel(
       id: categorySnapshot['id'],
       name: categorySnapshot['name'],
-      subCategories: (categorySnapshot['subcategories'] as List).map((e) => CategoryModel.of(e)).toList()
+      subCategories: (categorySnapshot['subCategories'] as List).map((e) => CategoryModel.of(e)).toList()
     );
   }
 }

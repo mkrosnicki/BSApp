@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/category_selection_screen.dart';
 import 'package:BSApp/screens/deal_details_screen.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Deals(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Categories(),
         ),
       ],
       child: MaterialApp(
