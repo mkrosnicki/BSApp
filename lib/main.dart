@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/added_deals_screen.dart';
 import 'package:BSApp/screens/category_selection_screen.dart';
 import 'package:BSApp/screens/deal_details_screen.dart';
 import 'package:BSApp/screens/deal_search_result_screen.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
             print(auth.token);
             return Deals(
                 allDeals: previousDeals != null ? previousDeals.deals : [],
-                favouriteDeals: previousDeals != null ? previousDeals.favouriteDeals : [],
+                fetchedObservedDeals: previousDeals != null ? previousDeals.fetchedObservedDeals : [],
                 token: auth.token);
           },
         ),
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         routes: {
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
           ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
+          AddedDealsScreen.routeName: (ctx) => AddedDealsScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),

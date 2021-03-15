@@ -21,6 +21,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
   void initState() {
     _scrollViewController = new ScrollController();
     _tabController = TabController(length: 2, vsync: this);
+    super.initState();
   }
 
 
@@ -61,7 +62,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
           children: [
             FutureBuilder(
               future: Provider.of<Deals>(context, listen: false)
-                  .fetchFavouriteDeals(),
+                  .fetchObservedDeals(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -76,12 +77,12 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
                           ListView.builder(
                             itemBuilder: (context, index) => Column(
                               children: [
-                                DealItem(dealsData.deals[index]),
-                                DealItem(dealsData.deals[index]),
-                                DealItem(dealsData.deals[index]),
+                                DealItem(dealsData.observedDeals[index]),
+                                DealItem(dealsData.observedDeals[index]),
+                                DealItem(dealsData.observedDeals[index]),
                               ],
                             ),
-                            itemCount: dealsData.deals.length,
+                            itemCount: dealsData.observedDeals.length,
                           ),
                     );
                   }

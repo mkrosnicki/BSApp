@@ -14,14 +14,23 @@ class Deals with ChangeNotifier {
   ApiProvider _apiProvider = new ApiProvider();
 
   List<DealModel> allDeals = [];
-  List<DealModel> favouriteDeals = [];
+  List<DealModel> fetchedObservedDeals = [];
+  List<DealModel> fetchedAddedDeals = [];
   String token;
 
-  Deals({this.allDeals, this.favouriteDeals, this.token});
+  Deals({this.allDeals, this.fetchedObservedDeals, this.token});
 
 
   List<DealModel> get deals {
     return [...allDeals];
+  }
+
+  List<DealModel> get observedDeals {
+    return [...fetchedObservedDeals];
+  }
+
+  List<DealModel> get addedDeals {
+    return [...fetchedAddedDeals];
   }
 
   Future<void> fetchDeals() async {
@@ -38,7 +47,7 @@ class Deals with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchFavouriteDeals() async {
+  Future<void> fetchObservedDeals() async {
     final List<DealModel> fetchedDeals = [];
     final responseBody =
         await _apiProvider.get('/users/me/observed', token: token) as List;
@@ -49,27 +58,43 @@ class Deals with ChangeNotifier {
     responseBody.forEach((element) {
       fetchedDeals.add(DealMapper.of(element));
     });
-    favouriteDeals = fetchedDeals;
+    fetchedObservedDeals = fetchedDeals;
     print(fetchedDeals);
     notifyListeners();
   }
 
-  Future<void> addToFavouriteDeals(String dealId) async {
-    final addDealToFavouritesDto = {'dealId': dealId};
-    await _apiProvider.post('/users/me/observed', addDealToFavouritesDto, token: token);
-    return fetchFavouriteDeals();
+  Future<void> fetchAddedDeals() async {
+    final List<DealModel> fetchedDeals = [];
+    final responseBody =
+    await _apiProvider.get('/users/me/deals/added', token: token) as List;
+    if (responseBody == null) {
+      print('No Deals Found!');
+    }
+    print(responseBody);
+    responseBody.forEach((element) {
+      fetchedDeals.add(DealMapper.of(element));
+    });
+    fetchedAddedDeals = fetchedDeals;
+    print(fetchedDeals);
+    notifyListeners();
   }
 
-  Future<void> deleteFromFavouriteDeals(String dealId) async {
+  Future<void> addToObservedDeals(String dealId) async {
+    final addDealToFavouritesDto = {'dealId': dealId};
+    await _apiProvider.post('/users/me/observed', addDealToFavouritesDto, token: token);
+    return fetchObservedDeals();
+  }
+
+  Future<void> deleteFromObservedDeals(String dealId) async {
     await _apiProvider.delete('/users/me/observed/$dealId', token: token);
-    return fetchFavouriteDeals();
+    return fetchObservedDeals();
   }
 
   findById(String dealId) {
     return allDeals.firstWhere((deal) => deal.id == dealId);
   }
 
-  isFavouriteDeal(DealModel deal) {
-    return favouriteDeals.contains(deal);
+  isObservedDeal(DealModel deal) {
+    return fetchedObservedDeals.contains(deal);
   }
 }

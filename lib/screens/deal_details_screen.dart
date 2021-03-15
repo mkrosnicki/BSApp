@@ -41,7 +41,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
 
   _buildDealActionsSection(DealModel deal) {
     final isUserLoggedIn = Provider.of<Auth>(context, listen: false).isAuthenticated;
-    bool isFavourite = Provider.of<Deals>(context).isFavouriteDeal(deal);
+    bool isFavourite = Provider.of<Deals>(context).isObservedDeal(deal);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -126,9 +126,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
 
   _toggleFavourites(DealModel deal, bool isFavourite) {
     if (isFavourite) {
-      Provider.of<Deals>(context, listen: false).deleteFromFavouriteDeals(deal.id);
+      Provider.of<Deals>(context, listen: false).deleteFromObservedDeals(deal.id);
     } else {
-      Provider.of<Deals>(context, listen: false).addToFavouriteDeals(deal.id);
+      Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileOptionsScreen extends StatelessWidget {
-  static const routeName = 'profile-options';
+  static const routeName = '/profile-options';
 
   @override
   Widget build(BuildContext context) {
