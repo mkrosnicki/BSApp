@@ -24,6 +24,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _buildAppBar(),
       body: _selectedCategory == null
           ? FutureBuilder(
               future: _initCategories(),
@@ -45,20 +46,73 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
     );
   }
 
-  _buildCategoriesList(List<CategoryModel> categories) {
-    return ListView.builder(
-      itemBuilder: (context, index) => FlatButton(
-        child: ListTile(
-          title: Text(categories[index].name),
-          subtitle: Text('${categories[index].subCategories.length}'),
-          trailing: Icon(Icons.chevron_right),
-          focusColor: Colors.grey,
+  _buildAppBar() {
+    return AppBar(
+      title: Text('Wybierz kategorię'),
+      automaticallyImplyLeading: false,
+      leading: FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop(null);
+        },
+        child: Icon(
+          Icons.arrow_back,
+          color: Colors.white,
         ),
-        onPressed: () =>
-            _selectCategory(categories[index]),
       ),
-      itemCount: categories.length,
+      actions: [
+        FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop(null);
+          },
+          child: Icon(
+            Icons.clear,
+            color: Colors.white,
+          ),
+        )
+      ],
     );
+  }
+
+  _buildCategoriesList(List<CategoryModel> categories) {
+    return Column(
+      children: [
+        FlatButton(
+          child: ListTile(
+            title: Text('back'),
+            subtitle: Text('back'),
+            trailing: Icon(Icons.chevron_right),
+            focusColor: Colors.grey,
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) => FlatButton(
+              child: ListTile(
+                title: Text(categories[index].name),
+                subtitle: Text('${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
+                trailing: categories[index].subCategories.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                focusColor: Colors.grey,
+              ),
+              onPressed: () => _selectCategory(categories[index]),
+            ),
+            itemCount: categories.length,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _getCategoriesSuffix(int numOfCategories) {
+    int lastDigit = numOfCategories % 10;
+    if (numOfCategories == 1) {
+      return 'kategoria';
+    } else if (numOfCategories >= 11 && numOfCategories <= 14) {
+      return 'kategorii';
+    } else if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {
+      return 'kategorie';
+    } else {
+      return 'kategorii';
+    }
   }
 
   _selectCategory(CategoryModel category) {
