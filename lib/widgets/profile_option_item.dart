@@ -13,7 +13,6 @@ class ProfileOptionItem extends StatelessWidget {
         FlatButton(
           child: ListTile(
             title: Text(title),
-            subtitle: Text('jakis tam podpis'),
             trailing: Icon(Icons.chevron_right),
             focusColor: Colors.grey,
           ),

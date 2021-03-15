@@ -49,6 +49,10 @@ class MyNavigationBar extends StatelessWidget {
   }
 
   navigate(BuildContext context, int index) {
+    final navigator = Navigator.of(context);
+    while (navigator.canPop()) {
+      navigator.pop();
+    }
     switch (index) {
       case 0:
         Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
