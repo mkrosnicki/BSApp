@@ -31,7 +31,7 @@ class MyNavigationBar extends StatelessWidget {
           activeIcon: Icon(Icons.article),
         ),
         BottomNavigationBarItem(
-          label: 'Ulubione',
+          label: 'Obserwowane',
           icon: Icon(Icons.favorite_border),
           activeIcon: Icon(Icons.favorite),
         ),
