@@ -53,8 +53,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   }
 
   _addReplyToComment() async {
-    await Provider.of<Comments>(context, listen: false)
-        .addReplyToComment(widget.dealId, widget.commentToReplyId, _commentText);
+    await Provider.of<Comments>(context, listen: false).addReplyToComment(widget.dealId, widget.commentToReplyId, _commentText);
     setState(() {
       _commentText = '';
       FocusScope.of(context).requestFocus(new FocusNode());
@@ -62,8 +61,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   }
 
   _addCommentToDeal() async {
-    await Provider.of<Comments>(context, listen: false)
-        .addCommentToDeal(widget.dealId, _commentText);
+    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _commentText);
     setState(() {
       _commentText = '';
       FocusScope.of(context).requestFocus(new FocusNode());
