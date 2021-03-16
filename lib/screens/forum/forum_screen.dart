@@ -1,5 +1,5 @@
-import 'package:BSApp/widgets/my_navigation_bar.dart';
-import 'package:BSApp/widgets/profile_option_item.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/profile/profile_option_item.dart';
 import 'package:flutter/material.dart';
 
 class ForumScreen extends StatelessWidget {

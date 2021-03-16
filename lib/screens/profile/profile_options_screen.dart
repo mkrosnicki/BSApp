@@ -1,8 +1,8 @@
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/screens/main_auth_screen.dart';
-import 'package:BSApp/widgets/my_navigation_bar.dart';
-import 'package:BSApp/widgets/profile_options_list.dart';
-import 'package:BSApp/widgets/profile_options_user_info.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/screens/authentication/main_auth_screen.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/profile/profile_options_list.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/profile/profile_options_user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

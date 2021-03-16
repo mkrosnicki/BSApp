@@ -1,6 +1,6 @@
-import 'package:BSApp/widgets/login_form.dart';
-import 'package:BSApp/widgets/my_navigation_bar.dart';
-import 'package:BSApp/widgets/registration_form.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/authentication/login_form.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/authentication/registration_form.dart';
 import 'package:flutter/material.dart';
 
 class LoginRegistrationScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/widgets/deal_item.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

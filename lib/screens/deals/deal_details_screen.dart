@@ -1,15 +1,14 @@
 import 'package:BSApp/models/comment-mode.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/widgets/comment_item.dart';
-import 'package:BSApp/widgets/deal_details_actions.dart';
-import 'package:BSApp/widgets/deal_details_comments.dart';
-import 'package:BSApp/widgets/deal_details_description.dart';
-import 'package:BSApp/widgets/detal_details_new_comment.dart';
+import 'package:BSApp/widgets/deals/deal_details_description.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_details_actions.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_details_comments.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/detal_details_new_comment.dart';
 
 class DealDetailsScreen extends StatefulWidget {
   static const routeName = '/deal-details';
@@ -19,7 +18,6 @@ class DealDetailsScreen extends StatefulWidget {
 }
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> {
-
   CommentMode _commentMode = CommentMode.NONE;
   String _commentToReplyId;
 
@@ -52,7 +50,8 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                 ),
               ),
             ),
-            if (_commentMode != CommentMode.NONE) DealDetailsNewComment(dealId, _commentMode, _commentToReplyId),
+            if (_commentMode != CommentMode.NONE)
+              DealDetailsNewComment(dealId, _commentMode, _commentToReplyId),
           ],
         ),
       ),

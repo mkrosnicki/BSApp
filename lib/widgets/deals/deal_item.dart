@@ -1,5 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/screens/deal_details_screen.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/screens/deals/deal_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class DealItem extends StatelessWidget {

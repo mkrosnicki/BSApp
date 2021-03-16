@@ -1,4 +1,4 @@
-import 'package:BSApp/widgets/my_navigation_bar.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

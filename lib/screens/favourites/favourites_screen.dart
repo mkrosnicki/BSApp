@@ -1,7 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/widgets/deal_item.dart';
-import 'package:BSApp/widgets/my_navigation_bar.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_item.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
