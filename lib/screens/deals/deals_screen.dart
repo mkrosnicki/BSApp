@@ -1,11 +1,12 @@
 import 'package:BSApp/providers/deals.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/deals/deal_search_result_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/deals/filter_selection_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/app_bar_search_input.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_item.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
+import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
+import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
+import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'deal_search_result_screen.dart';
+import 'filter_selection_screen.dart';
 
 class DealsScreen extends StatefulWidget {
   static const routeName = '/deals';

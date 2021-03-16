@@ -102,65 +102,67 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.centerLeft,
-              child: const Text('E-mail'),
-            ),
-            TextFormField(
-              cursorColor: Colors.black,
-              keyboardType: TextInputType.emailAddress,
-              decoration: formFieldDecoration,
-              validator: (value) {
-                if (value.isEmpty || !value.contains('@')) {
-                  return 'Nieprawidłowy e-mail!';
-                } else {
-                  return null;
-                }
-              },
-              onSaved: (value) {
-                _authData['email'] = value;
-              },
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.centerLeft,
-              child: const Text('Hasło'),
-            ),
-            TextFormField(
-              cursorColor: Colors.black,
-              obscureText: true,
-              decoration: formFieldDecoration,
-              validator: (value) {
-                if (value.length < 3) {
-                  return 'Za krótkie hasło!';
-                } else {
-                  return null;
-                }
-              },
-              onSaved: (value) {
-                _authData['password'] = value;
-              },
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.centerLeft,
-              child: const Text('Nie pamiętasz hasła?'),
-            ),
-            Container(
-              width: double.infinity,
-              child: RaisedButton(
-                child: Text('Zaloguj się'),
-                onPressed: _submit,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: const Text('E-mail'),
               ),
-            ),
-          ],
+              TextFormField(
+                cursorColor: Colors.black,
+                keyboardType: TextInputType.emailAddress,
+                decoration: formFieldDecoration,
+                validator: (value) {
+                  if (value.isEmpty || !value.contains('@')) {
+                    return 'Nieprawidłowy e-mail!';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  _authData['email'] = value;
+                },
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: const Text('Hasło'),
+              ),
+              TextFormField(
+                cursorColor: Colors.black,
+                obscureText: true,
+                decoration: formFieldDecoration,
+                validator: (value) {
+                  if (value.length < 3) {
+                    return 'Za krótkie hasło!';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  _authData['password'] = value;
+                },
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: const Text('Nie pamiętasz hasła?'),
+              ),
+              Container(
+                width: double.infinity,
+                child: RaisedButton(
+                  child: Text('Zaloguj się'),
+                  onPressed: _submit,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

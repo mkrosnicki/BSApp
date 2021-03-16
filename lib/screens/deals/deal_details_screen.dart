@@ -2,13 +2,13 @@ import 'package:BSApp/models/comment-mode.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/widgets/deals/deal_details_actions.dart';
+import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
+import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_details_actions.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/deal_details_comments.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/deals/detal_details_new_comment.dart';
 
 class DealDetailsScreen extends StatefulWidget {
   static const routeName = '/deal-details';

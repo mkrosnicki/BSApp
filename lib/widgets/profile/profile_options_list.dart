@@ -1,5 +1,5 @@
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/profile/added_deals_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/profile/profile_option_item.dart';
+import 'package:BSApp/screens/profile/added_deals_screen.dart';
+import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:flutter/material.dart';
 
 class ProfileOptionsList extends StatelessWidget {

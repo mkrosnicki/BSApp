@@ -1,5 +1,4 @@
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/bars/my_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'login_registration_screen.dart';

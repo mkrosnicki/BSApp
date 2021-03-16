@@ -1,7 +1,7 @@
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/deals/deals_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/favourites/favourites_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/forum/forum_screen.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/screens/deals/deals_screen.dart';
+import 'package:BSApp/screens/favourites/favourites_screen.dart';
+import 'package:BSApp/screens/forum/forum_screen.dart';
+import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigationBar extends StatelessWidget {
