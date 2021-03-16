@@ -93,18 +93,18 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                                           itemCount:
                                               dealsData.observedDeals.length,
                                         )
-                                      : _buildNoObservedDeals();
+                                      : _buildNoObservedDealsSplashView();
                                 },
                               );
                             }
                           }
                         },
                       ),
-                      Text('gfdsgfdgfd'),
+                      Text('Wyszukiwania'),
                     ]
                   : [
-                      _buildNoObservedDeals(),
-                      _buildNoObservedSearches(),
+                      _buildNoObservedDealsSplashView(),
+                      _buildNoObservedSearchesSplashView(),
                     ],
             );
           },
@@ -114,13 +114,13 @@ class _FavouritesScreenState extends State<FavouritesScreen>
     );
   }
 
-  _buildNoObservedDeals() {
+  _buildNoObservedDealsSplashView() {
     return const Center(
       child: Text('Nie obserwujesz żadnych okazji!'),
     );
   }
 
-  _buildNoObservedSearches() {
+  _buildNoObservedSearchesSplashView() {
     return const Center(
       child: Text('Nie obserwujesz żadnych wyszukiwań!'),
     );
