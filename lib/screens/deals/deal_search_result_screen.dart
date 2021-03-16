@@ -11,7 +11,8 @@ class DealSearchResultScreen extends StatelessWidget {
   static const routeName = '/deal-search';
 
   _openCategorySelector(BuildContext context) async {
-    var returnedValue = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    var returnedValue = await Navigator.of(context)
+        .pushNamed(CategorySelectionScreen.routeName);
   }
 
   final _searchTextController = TextEditingController();
@@ -69,7 +70,8 @@ class DealSearchResultScreen extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) => GestureDetector(
+                  itemBuilder: (BuildContext context, int index) =>
+                      GestureDetector(
                     onTap: () => _openCategorySelector(context),
                     child: Card(
                       child: Padding(
@@ -77,12 +79,17 @@ class DealSearchResultScreen extends StatelessWidget {
                             vertical: 4.0, horizontal: 8.0),
                         child: Row(
                           children: [
-                            Icon(Icons.filter_list, size: 14,),
+                            Icon(
+                              Icons.filter_list,
+                              size: 14,
+                            ),
                             Container(
                               margin: const EdgeInsets.only(left: 4.0),
                               child: Text(
                                 'Filtry',
-                                style: TextStyle(fontSize: 12, ),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ],
@@ -93,9 +100,30 @@ class DealSearchResultScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              'Znalezione promocje',
-              style: TextStyle(fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Znalezione okazje',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    customBorder: CircleBorder(),
+                    // onPressed: () {},
+                    // padding: EdgeInsets.all(0.0),
+                    // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    // shape: CircleBorder(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Icon(Icons.filter_list),
+                    ),
+                  )
+                ],
+              ),
             ),
             FutureBuilder(
               future: Provider.of<Deals>(context, listen: false).fetchDeals(),
