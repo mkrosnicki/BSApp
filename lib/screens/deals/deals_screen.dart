@@ -110,14 +110,4 @@ class _DealsScreenState extends State<DealsScreen> {
   Future<void> _refreshDeals(BuildContext context) async {
     await Provider.of<Deals>(context, listen: false).fetchDeals();
   }
-
-  Future _openFiltersScreen(BuildContext context) async {
-    var returnedValue =
-        await Navigator.of(context).push(new MaterialPageRoute<String>(
-            builder: (BuildContext context) {
-              return FilterSelectionScreen();
-            },
-            fullscreenDialog: true));
-    _searchTextController.text = returnedValue;
-  }
 }

@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -101,7 +102,8 @@ class DealSearchResultScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: Flex(
                 direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,12 +113,8 @@ class DealSearchResultScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () => _showFilterSelectionDialog(context),
                     customBorder: CircleBorder(),
-                    // onPressed: () {},
-                    // padding: EdgeInsets.all(0.0),
-                    // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    // shape: CircleBorder(),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Icon(Icons.filter_list),
@@ -154,4 +152,14 @@ class DealSearchResultScreen extends StatelessWidget {
         ),
         bottomNavigationBar: MyNavigationBar(0));
   }
+
+  Future _showFilterSelectionDialog(BuildContext context) async {
+    var returnedValue = await Navigator.of(context).push(new MaterialPageRoute<String>(
+        builder: (BuildContext context) {
+          return FilterSelectionScreen();
+        },
+        fullscreenDialog: true));
+    print(returnedValue);
+  }
+
 }

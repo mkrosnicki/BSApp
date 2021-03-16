@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 
 class FilterSelectionScreen extends StatelessWidget {
 
-  _acceptFilters(BuildContext context) {
-    Navigator.pop(context, 'jakas wartosc');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(elevation: 10,),
       body: SafeArea(
         child: SingleChildScrollView(
           child: RaisedButton(
-            child: Text('ZWROC WARTOSC'),
+            child: Text('Akceptuj'),
             onPressed: () => _acceptFilters(context),
           ),
         ),
       ),
     );
+  }
+
+  _acceptFilters(BuildContext context) {
+    Navigator.pop(context, 'jakas wartosc');
   }
 }

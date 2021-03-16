@@ -4,15 +4,6 @@ import 'package:flutter/material.dart';
 import 'login_registration_screen.dart';
 
 class MainAuthScreen extends StatelessWidget {
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,5 +39,13 @@ class MainAuthScreen extends StatelessWidget {
       ),
       bottomNavigationBar: MyNavigationBar(3),
     );
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 }
