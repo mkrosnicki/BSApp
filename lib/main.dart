@@ -1,5 +1,6 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/categories.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/added_deals_screen.dart';
 import 'package:BSApp/screens/category_selection_screen.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
                 fetchedObservedDeals: previousDeals != null ? previousDeals.fetchedObservedDeals : [],
                 token: auth.token);
           },
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Comments(),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
