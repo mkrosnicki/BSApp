@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/deal_item.dart';
 import 'package:BSApp/widgets/my_navigation_bar.dart';
@@ -11,11 +12,10 @@ class FavouritesScreen extends StatefulWidget {
   _FavouritesScreenState createState() => _FavouritesScreenState();
 }
 
-class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerProviderStateMixin {
-
+class _FavouritesScreenState extends State<FavouritesScreen>
+    with SingleTickerProviderStateMixin {
   ScrollController _scrollViewController;
   TabController _tabController;
-
 
   @override
   void initState() {
@@ -23,7 +23,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -57,43 +56,73 @@ class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerPr
             ),
           ];
         },
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            FutureBuilder(
-              future: Provider.of<Deals>(context, listen: false)
-                  .fetchObservedDeals(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  if (snapshot.error != null) {
-                    return Center(
-                      child: Text('An error occurred!'),
-                    );
-                  } else {
-                    return Consumer<Deals>(
-                      builder: (context, dealsData, child) =>
-                          ListView.builder(
-                            itemBuilder: (context, index) => Column(
-                              children: [
-                                DealItem(dealsData.observedDeals[index]),
-                                DealItem(dealsData.observedDeals[index]),
-                                DealItem(dealsData.observedDeals[index]),
-                              ],
-                            ),
-                            itemCount: dealsData.observedDeals.length,
-                          ),
-                    );
-                  }
-                }
-              },
-            ),
-            Text('gfdsgfdgfd'),
-          ],
+        body: Consumer<Auth>(
+          builder: (context, auth, child) {
+            return TabBarView(
+              controller: _tabController,
+              children: auth.isAuthenticated
+                  ? [
+                      FutureBuilder(
+                        future: Provider.of<Deals>(context, listen: false)
+                            .fetchObservedDeals(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else {
+                            if (snapshot.error != null) {
+                              return Center(
+                                child: Text('An error occurred!'),
+                              );
+                            } else {
+                              return Consumer<Deals>(
+                                builder: (context, dealsData, child) {
+                                  return dealsData.observedDeals.isNotEmpty
+                                      ? ListView.builder(
+                                          itemBuilder: (context, index) =>
+                                              Column(
+                                            children: [
+                                              DealItem(dealsData
+                                                  .observedDeals[index]),
+                                              DealItem(dealsData
+                                                  .observedDeals[index]),
+                                              DealItem(dealsData
+                                                  .observedDeals[index]),
+                                            ],
+                                          ),
+                                          itemCount:
+                                              dealsData.observedDeals.length,
+                                        )
+                                      : _buildNoObservedDeals();
+                                },
+                              );
+                            }
+                          }
+                        },
+                      ),
+                      Text('gfdsgfdgfd'),
+                    ]
+                  : [
+                      _buildNoObservedDeals(),
+                      _buildNoObservedSearches(),
+                    ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: MyNavigationBar(2),
+    );
+  }
+
+  _buildNoObservedDeals() {
+    return const Center(
+      child: Text('Nie obserwujesz żadnych okazji!'),
+    );
+  }
+
+  _buildNoObservedSearches() {
+    return const Center(
+      child: Text('Nie obserwujesz żadnych wyszukiwań!'),
     );
   }
 }
