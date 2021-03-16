@@ -1,9 +1,11 @@
+import 'package:BSApp/models/comment-mode.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/comment_item.dart';
-import 'package:BSApp/widgets/new_comment.dart';
+import 'package:BSApp/widgets/deal_details_actions.dart';
+import 'package:BSApp/widgets/detal_details_new_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +17,10 @@ class DealDetailsScreen extends StatefulWidget {
 }
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> {
+
+  CommentMode _commentMode = CommentMode.NONE;
+  String _commentToReplyId;
+
   @override
   Widget build(BuildContext context) {
     final dealId = ModalRoute.of(context).settings.arguments as String;
@@ -37,12 +43,13 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                         'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
                     _buildDealActionsSection(deal),
                     _buildDealDescriptionSection(deal),
+                    DealDetailsActions(_setCommentMode),
                     _buildCommentsSection(deal)
                   ],
                 ),
               ),
             ),
-            NewComment(dealId),
+            if (_commentMode != CommentMode.NONE) DealDetailsNewComment(dealId, _commentMode, _commentToReplyId),
           ],
         ),
       ),
@@ -142,7 +149,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
           child: Column(
             children: [
-              Text('Komentarze', style: TextStyle(fontSize: 16)),
               FutureBuilder(
                 future: Provider.of<Comments>(context, listen: false)
                     .fetchCommentsForDeal(deal.id),
@@ -158,7 +164,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                       return Consumer<Comments>(
                         builder: (context, commentsData, child) => Column(
                           children: commentsData.dealComments
-                              .map((comment) => CommentItem(comment, () {}))
+                              .map((comment) => CommentItem(comment, _setCommentMode))
                               .toList(),
                         ),
                       );
@@ -180,5 +186,14 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
     } else {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }
+  }
+
+  _setCommentMode(CommentMode commentMode, {String commentToReplyId}) {
+    setState(() {
+      _commentMode = commentMode;
+      _commentToReplyId = commentToReplyId;
+      print(_commentToReplyId);
+      print(_commentMode);
+    });
   }
 }

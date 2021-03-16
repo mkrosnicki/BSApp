@@ -33,4 +33,10 @@ class Comments with ChangeNotifier {
     await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: token);
     return fetchCommentsForDeal(dealId);
   }
+
+  Future<void> addReplyToComment(String dealId, String commentId, String replyContent) async {
+    final addCommentToDealDto = {'replyContent': replyContent};
+    await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: token);
+    return fetchCommentsForDeal(dealId);
+  }
 }

@@ -1,11 +1,12 @@
+import 'package:BSApp/models/comment-mode.dart';
 import 'package:BSApp/models/comment-model.dart';
 import 'package:flutter/material.dart';
 
 class CommentItem extends StatelessWidget {
   final CommentModel comment;
-  final Function callbackFunction;
+  final Function setCommentModeFunction;
 
-  CommentItem(this.comment, this.callbackFunction);
+  CommentItem(this.comment, this.setCommentModeFunction);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class CommentItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: callbackFunction,
+                onTap: () => setCommentModeFunction(CommentMode.REPLY_COMMENT, commentToReplyId: comment.id),
                 child: Text(
                   'Odpowiedz',
                   style: TextStyle(
