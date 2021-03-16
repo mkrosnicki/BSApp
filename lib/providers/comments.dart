@@ -6,12 +6,17 @@ class Comments with ChangeNotifier {
   ApiProvider _apiProvider = new ApiProvider();
 
   List<CommentModel> fetchedDealComments = [];
+  List<CommentModel> fetchedAddedComments = [];
   String token;
 
-  Comments({this.fetchedDealComments, this.token});
+  Comments({this.fetchedDealComments, this.fetchedAddedComments, this.token});
 
   List<CommentModel> get dealComments {
     return [...fetchedDealComments];
+  }
+
+  List<CommentModel> get addedComments {
+    return [...fetchedAddedComments];
   }
 
   Future<void> fetchCommentsForDeal(String dealId) async {
@@ -25,6 +30,20 @@ class Comments with ChangeNotifier {
       loadedComments.add(CommentModel.of(element));
     });
     fetchedDealComments = loadedComments;
+    notifyListeners();
+  }
+
+  Future<void> fetchAddedComments() async {
+    final List<CommentModel> loadedComments = [];
+    final responseBody =
+    await _apiProvider.get('/users/me/comments', token: token) as List;
+    if (responseBody == null) {
+      print('No Comments Found!');
+    }
+    responseBody.forEach((element) {
+      loadedComments.add(CommentModel.of(element));
+    });
+    fetchedAddedComments = loadedComments;
     notifyListeners();
   }
 

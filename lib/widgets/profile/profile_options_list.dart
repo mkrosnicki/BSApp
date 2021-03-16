@@ -1,13 +1,15 @@
+import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:flutter/material.dart';
 
 class ProfileOptionsList extends StatelessWidget {
-  List<Widget> menuOptions = [
+
+  final List<Widget> menuOptions = [
     _buildSectionTitle('Twoja aktywność'),
     ProfileOptionItem('Dodane okazje', AddedDealsScreen.routeName),
     ProfileOptionItem('Dodane posty', '/favourites'),
-    ProfileOptionItem('Dodane komentarze', '/favourites'),
+    ProfileOptionItem('Dodane komentarze', AddedCommentsScreen.routeName),
     _buildSectionTitle('Obserwowane'),
     ProfileOptionItem('title1', '/favourites'),
     ProfileOptionItem('title1', '/favourites'),

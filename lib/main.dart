@@ -9,6 +9,7 @@ import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
+import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
           ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
           AddedDealsScreen.routeName: (ctx) => AddedDealsScreen(),
+          AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
