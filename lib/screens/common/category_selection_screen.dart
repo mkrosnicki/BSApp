@@ -115,7 +115,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
 
   _selectCategory(CategoryModel category) {
     if (category.subCategories.isEmpty) {
-      Navigator.of(context).pop(category);
+      _selectedCategories.add(category);
+      Navigator.of(context).pop([..._selectedCategories]);
     } else {
       setState(() {
         _selectedCategories.add(category);

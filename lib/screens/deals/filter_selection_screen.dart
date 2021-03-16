@@ -33,7 +33,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   Text('Kategoria'),
                   ListTile(
                     title: Text('Kategoria'),
-                    subtitle: filtersSettings.category != null ? Text(filtersSettings.category.name, style: TextStyle(color: Colors.blue),) : null,
+                    subtitle: filtersSettings.categories != null ? Text(filtersSettings.categoriesString, style: TextStyle(color: Colors.blue),) : null,
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => _openCategorySelector(context) ,
                   ),
@@ -93,10 +93,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openCategorySelector(BuildContext context) async {
-    var selectedCategory = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    var selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
     // print(selectedCategory);
     setState(() {
-      filtersSettings.category = selectedCategory;
+      filtersSettings.categories = selectedCategories;
     });
   }
 
