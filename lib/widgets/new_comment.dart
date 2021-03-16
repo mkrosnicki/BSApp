@@ -14,18 +14,11 @@ class NewComment extends StatefulWidget {
 
 class _NewCommentState extends State<NewComment> {
 
-  TextEditingController _commentController = new TextEditingController(text: '');
-
-  @override
-  void dispose() {
-    _commentController.dispose();
-    super.dispose();
-  }
+  var _commentText = '';
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8.0),
       child: Material(
         color: Colors.grey,
         child: Padding(
@@ -34,17 +27,16 @@ class _NewCommentState extends State<NewComment> {
             children: <Widget>[
               Expanded(
                 child: TextField(
-                  controller: _commentController,
                   decoration: InputDecoration(labelText: 'Co myślisz o tej ofercie?', fillColor: Colors.white, filled: true,),
                   onChanged: (value) {
                     setState(() {
-                      _commentController.text = value;
+                      _commentText = value;
                     });
                   },
                 ),
               ),
               FlatButton(
-                onPressed: _commentController.text.trim().isEmpty ? null : () {
+                onPressed: _commentText.trim().isEmpty ? null : () {
                   _addCommentToDeal();
                 },
                 child: Text('Wyślij'),
@@ -57,9 +49,9 @@ class _NewCommentState extends State<NewComment> {
   }
 
   _addCommentToDeal() async {
-    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _commentController.text);
+    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _commentText);
     setState(() {
-      _commentController.text = '';
+      _commentText = '';
       FocusScope.of(context).requestFocus(new FocusNode());
     });
   }

@@ -2,12 +2,13 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/widgets/comment_item.dart';
 import 'package:BSApp/widgets/new_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DealDetailsScreen extends StatefulWidget {
-  static const routeName = 'deal-details';
+  static const routeName = '/deal-details';
 
   @override
   _DealDetailsScreenState createState() => _DealDetailsScreenState();
@@ -157,7 +158,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                       return Consumer<Comments>(
                         builder: (context, commentsData, child) => Column(
                           children: commentsData.dealComments
-                              .map((e) => Text(e.content))
+                              .map((comment) => CommentItem(comment, () {}))
                               .toList(),
                         ),
                       );
