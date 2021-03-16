@@ -1,4 +1,4 @@
-import 'package:BSApp/models/comment-mode.dart';
+import 'package:BSApp/models/comment_mode.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';

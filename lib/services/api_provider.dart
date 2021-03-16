@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:BSApp/models/custom-exception.dart';
+import 'package:BSApp/models/custom_exception.dart';
 import 'package:http/http.dart' as http;
 
 class ApiProvider {

@@ -1,4 +1,4 @@
-import 'package:BSApp/models/comment-mode.dart';
+import 'package:BSApp/models/comment_mode.dart';
 import 'package:flutter/material.dart';
 
 class DealDetailsActions extends StatelessWidget {

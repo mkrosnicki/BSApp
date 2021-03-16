@@ -1,4 +1,4 @@
-import 'package:BSApp/models/comment-mode.dart';
+import 'package:BSApp/models/comment_mode.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

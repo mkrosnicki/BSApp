@@ -9,13 +9,15 @@ class FilterSelectionScreen extends StatefulWidget {
 }
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
-
   Map<String, dynamic> filtersMap = {
     'category': null,
     'phrase': '',
   };
   final FilterSettings filtersSettings = FilterSettings();
 
+  FocusNode _optionAFocusNode = FocusNode();
+
+  var isSelected = [true, false];
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +35,76 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   Text('Kategoria'),
                   ListTile(
                     title: Text('Kategoria'),
-                    subtitle: filtersSettings.categories != null ? Text(filtersSettings.categoriesString, style: TextStyle(color: Colors.blue),) : null,
+                    subtitle: filtersSettings.categories != null
+                        ? Text(
+                            filtersSettings.categoriesString,
+                            style: TextStyle(color: Colors.blue),
+                          )
+                        : null,
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () => _openCategorySelector(context) ,
+                    onTap: () => _openCategorySelector(context),
                   ),
-                  ListTile(
-                    title: Text('title1'),
+                  SwitchListTile(
+                    title: Text('Pokaż tylko aktywne'),
+                    value: filtersSettings.showActiveOnly,
+                    onChanged: (value) {
+                      setState(() {
+                        filtersSettings.showActiveOnly = value;
+                      });
+                    },
                   ),
-                  ListTile(
-                    title: Text('title1'),
+                  SwitchListTile(
+                    title: Text('Tylko internetowe okazje'),
+                    value: filtersSettings.showActiveOnly,
+                    onChanged: (value) {
+                      setState(() {
+                        filtersSettings.showActiveOnly = value;
+                      });
+                    },
                   ),
-                  ListTile(
-                    title: Text('title1'),
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: ListTile(
+                            title: Text('title1'),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: ListTile(
+                            title: Text('title1'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: ToggleButtons(
+                      onPressed: (int index) {
+                        setState(() {
+                          for (int buttonIndex = 0;
+                              buttonIndex < isSelected.length;
+                              buttonIndex++) {
+                            if (buttonIndex == index) {
+                              isSelected[buttonIndex] = true;
+                            } else {
+                              isSelected[buttonIndex] = false;
+                            }
+                          }
+                        });
+                      },
+                      isSelected: isSelected,
+                      children: [
+                        Text('Opcja A'),
+                        Text('Opcja B'),
+                      ],
+                    ),
                   ),
                   ListTile(
                     title: Text('title1'),
@@ -93,7 +153,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openCategorySelector(BuildContext context) async {
-    var selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    var selectedCategories = await Navigator.of(context)
+        .pushNamed(CategorySelectionScreen.routeName);
     // print(selectedCategory);
     setState(() {
       filtersSettings.categories = selectedCategories;

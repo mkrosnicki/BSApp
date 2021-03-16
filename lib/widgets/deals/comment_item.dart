@@ -1,5 +1,5 @@
-import 'package:BSApp/models/comment-mode.dart';
-import 'package:BSApp/models/comment-model.dart';
+import 'package:BSApp/models/comment_mode.dart';
+import 'package:BSApp/models/comment_model.dart';
 import 'package:flutter/material.dart';
 
 class CommentItem extends StatelessWidget {
