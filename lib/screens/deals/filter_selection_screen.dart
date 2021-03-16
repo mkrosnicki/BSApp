@@ -1,6 +1,22 @@
+import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FilterSelectionScreen extends StatelessWidget {
+class FilterSelectionScreen extends StatefulWidget {
+  @override
+  _FilterSelectionScreenState createState() => _FilterSelectionScreenState();
+}
+
+class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
+
+  Map<String, dynamic> filtersMap = {
+    'category': null,
+    'phrase': '',
+  };
+  final FilterSettings filtersSettings = FilterSettings();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,9 +27,50 @@ class FilterSelectionScreen extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: RaisedButton(
-                child: Text('Akceptuj'),
-                onPressed: () => _acceptFilters(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Kategoria'),
+                  ListTile(
+                    title: Text('Kategoria'),
+                    subtitle: filtersSettings.category != null ? Text(filtersSettings.category.name, style: TextStyle(color: Colors.blue),) : null,
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () => _openCategorySelector(context) ,
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                  ListTile(
+                    title: Text('title1'),
+                  ),
+                ],
               ),
             ),
           ),
@@ -22,7 +79,8 @@ class FilterSelectionScreen extends StatelessWidget {
             margin: EdgeInsets.zero,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
               child: RaisedButton(
                 child: Text('Filtruj'),
                 onPressed: () => _acceptFilters(context),
@@ -32,6 +90,14 @@ class FilterSelectionScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _openCategorySelector(BuildContext context) async {
+    var selectedCategory = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    // print(selectedCategory);
+    setState(() {
+      filtersSettings.category = selectedCategory;
+    });
   }
 
   _acceptFilters(BuildContext context) {
