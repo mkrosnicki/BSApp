@@ -37,8 +37,10 @@ class MyApp extends StatelessWidget {
                 token: auth.token);
           },
         ),
-        ChangeNotifierProvider(
-          create: (_) => Comments(),
+        ChangeNotifierProxyProvider<Auth, Comments>(
+          update: (context, auth, previousComments) {
+            return Comments(token: auth.token);
+          },
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),

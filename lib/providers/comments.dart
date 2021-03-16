@@ -19,12 +19,18 @@ class Comments with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/deals/$dealId/comments') as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      print('No Comments Found!');
     }
     responseBody.forEach((element) {
       loadedComments.add(CommentModel.of(element));
     });
     fetchedDealComments = loadedComments;
     notifyListeners();
+  }
+
+  Future<void> addCommentToDeal(String dealId, String content) async {
+    final addCommentToDealDto = {'content': content};
+    await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: token);
+    return fetchCommentsForDeal(dealId);
   }
 }

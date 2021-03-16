@@ -41,7 +41,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                 ),
               ),
             ),
-            NewComment(),
+            NewComment(dealId),
           ],
         ),
       ),
