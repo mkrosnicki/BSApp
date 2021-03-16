@@ -23,7 +23,6 @@ class ProfileOptionItem extends StatelessWidget {
   }
 
   _navigateTo(BuildContext context) {
-    print(route);
     Navigator.of(context).pushNamed(route);
   }
 }

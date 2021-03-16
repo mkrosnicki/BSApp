@@ -12,7 +12,6 @@ class DealSearchResultScreen extends StatelessWidget {
 
   _openCategorySelector(BuildContext context) async {
     var returnedValue = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
-    print(returnedValue);
   }
 
   final _searchTextController = TextEditingController();

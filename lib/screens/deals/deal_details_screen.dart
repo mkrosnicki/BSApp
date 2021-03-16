@@ -110,8 +110,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
     setState(() {
       _commentMode = commentMode;
       _commentToReplyId = commentToReplyId;
-      print(_commentToReplyId);
-      print(_commentMode);
     });
   }
 }

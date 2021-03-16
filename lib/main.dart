@@ -30,8 +30,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Deals>(
           update: (context, auth, previousDeals) {
-            print(auth);
-            print(auth.token);
             return Deals(
                 allDeals: previousDeals != null ? previousDeals.deals : [],
                 fetchedObservedDeals: previousDeals != null ? previousDeals.fetchedObservedDeals : [],

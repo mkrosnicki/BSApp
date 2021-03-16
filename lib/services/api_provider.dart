@@ -43,7 +43,6 @@ class ApiProvider {
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    print('responseJson');
     return responseJson;
   }
 

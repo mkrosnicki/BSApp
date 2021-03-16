@@ -119,6 +119,5 @@ class _DealsScreenState extends State<DealsScreen> {
             },
             fullscreenDialog: true));
     _searchTextController.text = returnedValue;
-    print(returnedValue);
   }
 }

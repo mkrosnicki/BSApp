@@ -41,7 +41,6 @@ class Deals with ChangeNotifier {
     }
     responseBody.forEach((element) {
       loadedDeals.add(DealMapper.of(element));
-      print(DealMapper.of(element));
     });
     allDeals = loadedDeals;
     notifyListeners();
@@ -54,12 +53,10 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       print('No Deals Found!');
     }
-    print(responseBody);
     responseBody.forEach((element) {
       fetchedDeals.add(DealMapper.of(element));
     });
     fetchedObservedDeals = fetchedDeals;
-    print(fetchedDeals);
     notifyListeners();
   }
 
@@ -70,12 +67,10 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       print('No Deals Found!');
     }
-    print(responseBody);
     responseBody.forEach((element) {
       fetchedDeals.add(DealMapper.of(element));
     });
     fetchedAddedDeals = fetchedDeals;
-    print(fetchedDeals);
     notifyListeners();
   }
 

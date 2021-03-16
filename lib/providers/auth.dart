@@ -37,8 +37,6 @@ class Auth with ChangeNotifier {
         };
     final responseData = await _apiProvider.post(url, body);
     if (responseData['error'] != null) {
-      print(responseData);
-      print(responseData['error']);
       throw HttpException(responseData['error']);
     }
     _token = responseData['token'];
@@ -118,10 +116,6 @@ class Auth with ChangeNotifier {
   int _extractExpiresInMs(Map<String, dynamic> decoded) {
     final int expiresIn = decoded['exp'];
     final int issuedAt = decoded['iat'];
-    print('decoded');
-    print(decoded);
-    print(expiresIn);
-    print(issuedAt);
     return (expiresIn - issuedAt) * 1000;
   }
 
