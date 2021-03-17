@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +62,17 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         filtersSettings.showActiveOnly = value;
                       });
                     },
+                  ),
+                  ListTile(
+                    title: Text('Lokalizacja'),
+                    subtitle: filtersSettings.categories != null
+                        ? Text(
+                      filtersSettings.categoriesString,
+                      style: TextStyle(color: Colors.blue),
+                    )
+                        : null,
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () => _openLocationSelector(context),
                   ),
                   Container(
                     width: double.infinity,
@@ -155,9 +167,16 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   _openCategorySelector(BuildContext context) async {
     var selectedCategories = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
-    // print(selectedCategory);
     setState(() {
       filtersSettings.categories = selectedCategories;
+    });
+  }
+
+  _openLocationSelector(BuildContext context) async {
+    var selectedCategories = await Navigator.of(context)
+        .pushNamed(LocationSelectionScreen.routeName);
+    setState(() {
+      // filtersSettings.categories = selectedCategories;
     });
   }
 

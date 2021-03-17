@@ -1,13 +1,11 @@
-import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
-import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LocationSelectionScreen extends StatefulWidget {
-  static const routeName = '/category-selection';
+  static const routeName = '/location-selection';
 
   @override
   _LocationSelectionScreenState createState() =>
