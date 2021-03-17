@@ -2,6 +2,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Locations(),
         ),
       ],
       child: MaterialApp(
