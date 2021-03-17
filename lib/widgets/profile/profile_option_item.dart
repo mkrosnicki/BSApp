@@ -18,14 +18,21 @@ class ProfileOptionItem extends StatelessWidget {
             focusColor: Colors.grey,
           ),
           onPressed: () {
-            if (function != null) {
-              function();
-            }
-            _navigateTo(context);
+            _preformAction(context);
           },
         ),
       ],
     );
+  }
+
+  void _preformAction(BuildContext context) async{
+    var shouldNavigate = true;
+    if (function != null) {
+      shouldNavigate = await function();
+    }
+    if (shouldNavigate) {
+      _navigateTo(context);
+    }
   }
 
   _navigateTo(BuildContext context) {
