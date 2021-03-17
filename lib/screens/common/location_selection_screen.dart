@@ -2,6 +2,7 @@ import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/categories.dart';
+import 'package:BSApp/providers/locations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +15,14 @@ class LocationSelectionScreen extends StatefulWidget {
 }
 
 class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
-  List<CategoryModel> _allCategories;
+  List<Voivodeship> _allVoivodeships;
   Voivodeship _selectedVoivodeship;
   List<City> _selectedCities = [];
 
   Future<void> _initCategories() {
-    if (_allCategories == null) {
-      return Provider.of<Categories>(context, listen: false).fetchCategories().then((_) {
-        _allCategories = Provider.of<Categories>(context, listen: false).categories;
+    if (_allVoivodeships == null) {
+      return Provider.of<Locations>(context, listen: false).fetchVoivodeships().then((_) {
+        _allVoivodeships = Provider.of<Locations>(context, listen: false).voivodeships;
       });
     } else {
       return Future(() => {});
@@ -32,7 +33,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: _selectedCities.isEmpty
+      body: _selectedVoivodeship == null
           ? FutureBuilder(
               future: _initCategories(),
               builder: (context, snapshot) {
@@ -44,12 +45,12 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                       child: Text('An error occurred!'),
                     );
                   } else {
-                    return _buildCategoriesList(_allCategories);
+                    return _buildVoivodeshipsList(_allVoivodeships);
                   }
                 }
               },
             )
-          : _buildCategoriesList(_selectedCities.elementAt(_selectedCities.length - 1).subCategories),
+          : _buildCitiesList(_selectedVoivodeship.cities),
     );
   }
 
@@ -78,7 +79,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     );
   }
 
-  _buildCategoriesList(List<CategoryModel> categories) {
+  _buildCitiesList(List<City> cities) {
     return Column(
       children: [
         if (_selectedCities.isNotEmpty) ListTile(
@@ -89,14 +90,39 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
-                title: Text(categories[index].name),
-                subtitle: Text('${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                trailing: categories[index].subCategories.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                title: Text(cities[index].name),
+                // trailing: cities[index].cities.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
                 focusColor: Colors.grey,
               ),
-              onPressed: () => _selectCategory(categories[index]),
+              onPressed: () => _selectCity(cities[index]),
             ),
-            itemCount: categories.length,
+            itemCount: cities.length,
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  _buildVoivodeshipsList(List<Voivodeship> voivodeships) {
+    return Column(
+      children: [
+        if (_selectedCities.isNotEmpty) ListTile(
+          title: Text('${_selectedCities.elementAt(_selectedCities.length - 1).name}'),
+          focusColor: Colors.grey,
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) => FlatButton(
+              child: ListTile(
+                title: Text(voivodeships[index].name),
+                subtitle: Text('${voivodeships[index].cities.length}'),
+                trailing: voivodeships[index].cities.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                focusColor: Colors.grey,
+              ),
+              onPressed: () => _selectVoivodeship(voivodeships[index]),
+            ),
+            itemCount: voivodeships.length,
           ),
         ),
       ],
@@ -116,15 +142,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     }
   }
 
-  _selectCategory(CategoryModel category) {
-    if (category.subCategories.isEmpty) {
-      _selectedCities.add(category);
-      Navigator.of(context).pop([..._selectedCities]);
-    } else {
-      setState(() {
-        _selectedCities.add(category);
-      });
-    }
+  _selectVoivodeship(Voivodeship voivodeship) {
+    setState(() {
+      _selectedVoivodeship = voivodeship;
+    });
   }
 
   _goUp() {
@@ -135,5 +156,9 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
         _selectedCities.removeLast();
       });
     }
+  }
+
+  _selectCity(City city) {
+    _selectedCities.add(city);
   }
 }
