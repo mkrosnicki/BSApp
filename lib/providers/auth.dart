@@ -93,6 +93,11 @@ class Auth with ChangeNotifier {
     prefs.clear();
   }
 
+  Future<void> deleteAccount() async {
+    await _apiProvider.delete('/users/me', token: _token);
+    return logout();
+  }
+
   void _autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();

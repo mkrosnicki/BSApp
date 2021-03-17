@@ -4,7 +4,7 @@ class ProfileOptionsHeader extends StatelessWidget {
 
   final String title;
 
-  ProfileOptionsHeader(this.title);
+  const ProfileOptionsHeader(this.title);
 
   @override
   Widget build(BuildContext context) {

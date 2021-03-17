@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class ProfileOptionItem extends StatelessWidget {
   final String title;
   final String route;
+  final Function function;
 
-  ProfileOptionItem(this.title, this.route);
+  const ProfileOptionItem({this.title, this.route, this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,12 @@ class ProfileOptionItem extends StatelessWidget {
             trailing: Icon(Icons.chevron_right),
             focusColor: Colors.grey,
           ),
-          onPressed: () => _navigateTo(context),
+          onPressed: () {
+            if (function != null) {
+              function();
+            }
+            _navigateTo(context);
+          },
         ),
       ],
     );
