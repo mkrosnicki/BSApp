@@ -15,7 +15,7 @@ class LocationSelectionScreen extends StatefulWidget {
 class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   List<Voivodeship> _allVoivodeships;
   Voivodeship _selectedVoivodeship;
-  List<City> _selectedCities = [];
+  City _selectedCity;
 
   Future<void> _initCategories() {
     if (_allVoivodeships == null) {
@@ -80,16 +80,18 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   _buildCitiesList(List<City> cities) {
     return Column(
       children: [
-        if (_selectedCities.isNotEmpty) ListTile(
-          title: Text('${_selectedCities.elementAt(_selectedCities.length - 1).name}'),
-          focusColor: Colors.grey,
+        FlatButton(
+          child: ListTile(
+            title: Text('Dowolne miasto'),
+            focusColor: Colors.grey,
+          ),
+          onPressed: _selectAllCitiesInVoivodeship,
         ),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
                 title: Text(cities[index].name),
-                // trailing: cities[index].cities.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectCity(cities[index]),
@@ -105,10 +107,6 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   _buildVoivodeshipsList(List<Voivodeship> voivodeships) {
     return Column(
       children: [
-        if (_selectedCities.isNotEmpty) ListTile(
-          title: Text('${_selectedCities.elementAt(_selectedCities.length - 1).name}'),
-          focusColor: Colors.grey,
-        ),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
@@ -147,16 +145,20 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   }
 
   _goUp() {
-    if (_selectedCities.isEmpty) {
-      Navigator.of(context).pop(null);
-    } else {
+    if (_selectedVoivodeship != null) {
       setState(() {
-        _selectedCities.removeLast();
+        _selectedVoivodeship = null;
       });
+    } else {
+      Navigator.of(context).pop([null, null]);
     }
   }
 
+  _selectAllCitiesInVoivodeship() {
+    _selectCity(null);
+  }
+
   _selectCity(City city) {
-    _selectedCities.add(city);
+    Navigator.of(context).pop([_selectedVoivodeship, city]);
   }
 }

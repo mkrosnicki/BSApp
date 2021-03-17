@@ -65,9 +65,9 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   ),
                   ListTile(
                     title: Text('Lokalizacja'),
-                    subtitle: filtersSettings.categories != null
+                    subtitle: filtersSettings.voivodeship != null
                         ? Text(
-                      filtersSettings.categoriesString,
+                      filtersSettings.locationString,
                       style: TextStyle(color: Colors.blue),
                     )
                         : null,
@@ -173,11 +173,14 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openLocationSelector(BuildContext context) async {
-    var selectedCategories = await Navigator.of(context)
+    var locations = await Navigator.of(context)
         .pushNamed(LocationSelectionScreen.routeName);
-    setState(() {
-      // filtersSettings.categories = selectedCategories;
-    });
+    if (locations != null) {
+      setState(() {
+        filtersSettings.voivodeship = (locations as List)[0];
+        filtersSettings.city = (locations as List)[1];
+      });
+    }
   }
 
   _acceptFilters(BuildContext context) {
