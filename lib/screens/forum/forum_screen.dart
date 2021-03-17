@@ -11,7 +11,7 @@ class ForumScreen extends StatelessWidget {
         List.generate(10, (index) => 'Option number $index');
     return Scaffold(
       body: ListView.builder(
-        itemBuilder: (context, index) => ProfileOptionItem(widgets[index], widgets[index]),
+        itemBuilder: (context, index) => ProfileOptionItem(title: widgets[index], route: widgets[index]),
         itemCount: 10,
       ),
       bottomNavigationBar: MyNavigationBar(1),
