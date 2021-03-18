@@ -12,21 +12,24 @@ class FilterSelectionScreen extends StatefulWidget {
 }
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
-  Map<String, dynamic> filtersMap = {
-    'category': null,
-    'phrase': '',
-  };
-  final FilterSettings filtersSettings = FilterSettings();
 
-  FocusNode _optionAFocusNode = FocusNode();
-
-  var isSelected = [true, false];
+  FilterSettings filtersSettings = FilterSettings();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Filtry i sortowanie'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                filtersSettings = FilterSettings();
+              });
+            },
+            child: Text('Wyczyść', style: TextStyle(color: Colors.white),),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -46,7 +49,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   ),
                   ListTile(
                     title: Text('Kategoria'),
-                    subtitle: filtersSettings.categories != null
+                    subtitle: filtersSettings.categories.isNotEmpty
                         ? Text(
                             filtersSettings.categoriesString,
                             style: TextStyle(color: Colors.blue),

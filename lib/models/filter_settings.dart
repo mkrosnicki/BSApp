@@ -7,7 +7,7 @@ import 'package:BSApp/models/voivodeship_model.dart';
 class FilterSettings {
 
   String phrase;
-  List<CategoryModel> categories;
+  List<CategoryModel> categories = [];
   bool showActiveOnly = false;
   bool internetOnly = false;
   Voivodeship voivodeship;
