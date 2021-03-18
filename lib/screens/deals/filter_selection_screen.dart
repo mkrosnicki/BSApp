@@ -1,3 +1,4 @@
+import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
@@ -33,7 +34,15 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Kategoria'),
+                  SwitchListTile(
+                    title: Text('Pokaż tylko aktywne'),
+                    value: filtersSettings.showActiveOnly,
+                    onChanged: (value) {
+                      setState(() {
+                        filtersSettings.showActiveOnly = value;
+                      });
+                    },
+                  ),
                   ListTile(
                     title: Text('Kategoria'),
                     subtitle: filtersSettings.categories != null
@@ -46,20 +55,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     onTap: () => _openCategorySelector(context),
                   ),
                   SwitchListTile(
-                    title: Text('Pokaż tylko aktywne'),
-                    value: filtersSettings.showActiveOnly,
-                    onChanged: (value) {
-                      setState(() {
-                        filtersSettings.showActiveOnly = value;
-                      });
-                    },
-                  ),
-                  SwitchListTile(
                     title: Text('Tylko internetowe okazje'),
-                    value: filtersSettings.showActiveOnly,
+                    value: filtersSettings.internetOnly,
                     onChanged: (value) {
                       setState(() {
-                        filtersSettings.showActiveOnly = value;
+                        filtersSettings.internetOnly = value;
                       });
                     },
                   ),
@@ -67,59 +67,26 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     title: Text('Lokalizacja'),
                     subtitle: filtersSettings.voivodeship != null
                         ? Text(
-                      filtersSettings.locationString,
-                      style: TextStyle(color: Colors.blue),
-                    )
+                            filtersSettings.locationString,
+                            style: TextStyle(color: Colors.blue),
+                          )
                         : null,
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => _openLocationSelector(context),
                   ),
-                  Container(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: ListTile(
-                            title: Text('title1'),
-                          ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: ListTile(
-                            title: Text('title1'),
-                          ),
-                        ),
-                      ],
-                    ),
+                  ListTile(
+                    title: Text('Wiek dziecka'),
+                    subtitle: filtersSettings.ageTypes.isEmpty ? Text('Dowolny') : Text(filtersSettings.ageTypesString, overflow: TextOverflow.ellipsis,),
                   ),
                   Container(
                     width: double.infinity,
-                    alignment: Alignment.center,
-                    child: ToggleButtons(
-                      onPressed: (int index) {
-                        setState(() {
-                          for (int buttonIndex = 0;
-                              buttonIndex < isSelected.length;
-                              buttonIndex++) {
-                            if (buttonIndex == index) {
-                              isSelected[buttonIndex] = true;
-                            } else {
-                              isSelected[buttonIndex] = false;
-                            }
-                          }
-                        });
-                      },
-                      isSelected: isSelected,
-                      children: [
-                        Text('Opcja A'),
-                        Text('Opcja B'),
-                      ],
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceEvenly,
+                      children: _buildAgeTypeChips(),
                     ),
                   ),
                   ListTile(
-                    title: Text('title1'),
+                    title: Text('Sortuj po'),
                   ),
                   ListTile(
                     title: Text('title1'),
@@ -162,6 +129,30 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
         ],
       ),
     );
+  }
+
+  _buildAgeTypeChips() {
+    List<Widget> list = [];
+    AgeType.values
+        .forEach(
+          (e) => list.add(Container(
+            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+            child: ChoiceChip(
+              label: Text(AgeTypeHelper.getString(e)),
+              selected: filtersSettings.ageTypes.contains(e),
+              onSelected: (isSelected) {
+                setState(() {
+                  if (isSelected) {
+                    filtersSettings.ageTypes.add(e);
+                  } else {
+                    filtersSettings.ageTypes.remove(e);
+                  }
+                });
+              },
+            ),
+          )),
+    );
+    return list;
   }
 
   _openCategorySelector(BuildContext context) async {
