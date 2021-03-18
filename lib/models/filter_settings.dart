@@ -9,11 +9,11 @@ class FilterSettings {
   String phrase;
   List<CategoryModel> categories = [];
   bool showActiveOnly = false;
-  bool internetOnly = false;
+  bool showInternetOnly = false;
   Voivodeship voivodeship;
   City city;
   List<AgeType> ageTypes = [];
-  SortingType sortingType = SortingType.NEWEST;
+  SortingType sortBy = SortingType.NEWEST;
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");

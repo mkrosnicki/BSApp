@@ -60,10 +60,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   ),
                   SwitchListTile(
                     title: Text('Tylko internetowe okazje'),
-                    value: filtersSettings.internetOnly,
+                    value: filtersSettings.showInternetOnly,
                     onChanged: (value) {
                       setState(() {
-                        filtersSettings.internetOnly = value;
+                        filtersSettings.showInternetOnly = value;
                         filtersSettings.voivodeship = null;
                         filtersSettings.city = null;
                       });
@@ -79,7 +79,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         : const Text('Cała Polska'),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => _openLocationSelector(context),
-                    enabled: !filtersSettings.internetOnly,
+                    enabled: !filtersSettings.showInternetOnly,
                   ),
                   ListTile(
                     title: Text('Wiek dziecka'),
@@ -159,10 +159,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
             margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
               label: Text(SortingTypeHelper.getString(e)),
-              selected: filtersSettings.sortingType == e,
+              selected: filtersSettings.sortBy == e,
               onSelected: (isSelected) {
                 setState(() {
-                  filtersSettings.sortingType = e;
+                  filtersSettings.sortBy = e;
                 });
               },
             ),
