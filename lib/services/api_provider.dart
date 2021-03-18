@@ -9,8 +9,6 @@ class ApiProvider {
 
   ApiProvider({this.token});
 
-  // final String _baseUrl = "http://YOUR_LOCAL_IP:8080";
-  // final String _domain = "YOUR_LOCAL_IP:8080";
   final _ProtocolType _protocolType = _ProtocolType.HTTP;
   final String _domain = "YOUR_LOCAL_IP:PORT";
 
@@ -72,6 +70,7 @@ class ApiProvider {
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
+      case 201:
         String decodedBody = utf8.decode(response.bodyBytes);
         var responseJson = decodedBody.isNotEmpty
             ? json.decode(decodedBody)

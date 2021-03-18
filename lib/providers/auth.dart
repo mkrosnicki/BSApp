@@ -36,9 +36,6 @@ class Auth with ChangeNotifier {
           'password': password,
         };
     final responseData = await _apiProvider.post(url, body);
-    if (responseData['error'] != null) {
-      throw HttpException(responseData['error']);
-    }
     _token = responseData['token'];
     var decoded = _decodeToken(_token);
     _userId = _extractUserId(decoded);
@@ -56,8 +53,14 @@ class Auth with ChangeNotifier {
     prefs.setString('authData', userData);
   }
 
-  Future<void> signup(String email, String password) async {
-
+  Future<void> signup(String email, String password, String username) async {
+    final url = '/auth/signup';
+    var body = {
+      'email': email,
+      'password': password,
+      'username': username,
+    };
+    await _apiProvider.post(url, body);
   }
 
   Future<bool> tryAutoLogin() async {
