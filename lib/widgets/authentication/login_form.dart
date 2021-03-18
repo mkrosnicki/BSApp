@@ -52,8 +52,10 @@ class _LoginFormState extends State<LoginForm> {
           'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
       if (error.toString().contains('must be a well-formed email address')) {
         errorMessage = 'Email w złym w formacie.';
-      } else if (error.toString().contains('Unauthorized')) {
+      } else if (error.toString().contains('There is no user witch such email.')) {
         errorMessage = 'Nieprawidłowe hasło i / lub login.';
+      } else if (error.toString().contains('Email is not verified')) {
+        errorMessage = 'Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!';
       }
       await _showErrorDialog(errorMessage);
     } catch (error) {
