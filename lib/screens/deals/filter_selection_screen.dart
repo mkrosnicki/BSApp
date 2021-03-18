@@ -51,7 +51,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                             filtersSettings.categoriesString,
                             style: TextStyle(color: Colors.blue),
                           )
-                        : null,
+                        : const Text('Wszystkie kategorie'),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => _openCategorySelector(context),
                   ),
@@ -61,6 +61,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     onChanged: (value) {
                       setState(() {
                         filtersSettings.internetOnly = value;
+                        filtersSettings.voivodeship = null;
+                        filtersSettings.city = null;
                       });
                     },
                   ),
@@ -71,9 +73,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                             filtersSettings.locationString,
                             style: TextStyle(color: Colors.blue),
                           )
-                        : null,
+                        : const Text('Cała Polska'),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => _openLocationSelector(context),
+                    enabled: !filtersSettings.internetOnly,
                   ),
                   ListTile(
                     title: Text('Wiek dziecka'),
