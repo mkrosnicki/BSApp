@@ -33,9 +33,9 @@ class Deals with ChangeNotifier {
     return [...fetchedAddedDeals];
   }
 
-  Future<void> fetchDeals() async {
+  Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
     final List<DealModel> loadedDeals = [];
-    final responseBody = await _apiProvider.get('/deals') as List;
+    final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }

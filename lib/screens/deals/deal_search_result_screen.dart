@@ -1,3 +1,4 @@
+import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
@@ -154,12 +155,12 @@ class DealSearchResultScreen extends StatelessWidget {
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    var returnedValue = await Navigator.of(context).push(new MaterialPageRoute<String>(
+    var returnedValue = await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
         builder: (BuildContext context) {
           return FilterSelectionScreen();
         },
         fullscreenDialog: true));
-    print(returnedValue);
+    Provider.of<Deals>(context).fetchDeals(requestParams: returnedValue.toParamsMap());
   }
 
 }

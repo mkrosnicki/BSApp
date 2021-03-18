@@ -192,6 +192,6 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _acceptFilters(BuildContext context) {
-    Navigator.pop(context, 'jakas wartosc');
+    Navigator.pop(context, filtersSettings);
   }
 }

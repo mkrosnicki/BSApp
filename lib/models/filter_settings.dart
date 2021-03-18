@@ -55,4 +55,8 @@ class FilterSettings {
     }
   }
 
+  @override
+  String toString() {
+    return 'FilterSettings{phrase: $phrase, categories: $categories, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
+  }
 }

@@ -16,7 +16,7 @@ class ApiProvider {
 
 
   Future<dynamic> get(String endpoint, {String token, Map<String, dynamic> requestParams}) async {
-    return _sendRequest(_RequestType.GET, endpoint, token: token);
+    return _sendRequest(_RequestType.GET, endpoint, token: token, requestParams: requestParams);
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> body,
