@@ -4,12 +4,20 @@ enum AgeType {
   SIX_NINE_MONTHS,
   NINE_TWELVE_MONTHS,
   ONE_TWO_YEARS,
-  TWO_YEARS_AND_OLDER
+  TWO_YEARS_AND_OLDER,
 }
 
 class AgeTypeHelper {
 
-  static String getString(AgeType ageType) {
+  static String asString(AgeType ageType) {
+    return ageType.toString().replaceFirst('AgeType.', '');
+  }
+
+  static String asParamString(List<AgeType> ageTypes) {
+    return ageTypes.map((e) => asString(e)).toList().join(",");
+  }
+
+  static String getReadable(AgeType ageType) {
     switch (ageType) {
       case AgeType.ONE_THREE_MONTHS:
         return '1 - 3 miesięcy';

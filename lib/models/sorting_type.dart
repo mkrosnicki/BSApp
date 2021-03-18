@@ -7,7 +7,11 @@ enum SortingType {
 
 class SortingTypeHelper {
 
-  static String getString(SortingType sortingType) {
+  static String asString(SortingType sortingType) {
+    return sortingType.toString().replaceFirst('SortingType.', '');
+  }
+
+  static String getReadable(SortingType sortingType) {
     switch (sortingType) {
       case SortingType.NEWEST:
         return 'Najnowsze';

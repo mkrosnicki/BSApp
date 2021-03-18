@@ -24,7 +24,7 @@ class FilterSettings {
   }
 
   String get ageTypesString {
-    return ageTypes.map((e) => AgeTypeHelper.getString(e)).join(", ");
+    return ageTypes.map((e) => AgeTypeHelper.getReadable(e)).join(", ");
   }
 
   Map<String, dynamic> toParamsMap() {
@@ -33,26 +33,27 @@ class FilterSettings {
       paramsMap.putIfAbsent('phrase', () => phrase);
     }
     if (categories.isNotEmpty) {
-      paramsMap.putIfAbsent('categories', () => categories);
+      paramsMap.putIfAbsent('category', () => categories.last.id);
     }
     if (showActiveOnly) {
-      paramsMap.putIfAbsent('showActiveOnly', () => showActiveOnly);
+      paramsMap.putIfAbsent('showActiveOnly', () => showActiveOnly.toString());
     }
     if (showInternetOnly) {
-      paramsMap.putIfAbsent('showInternetOnly', () => showInternetOnly);
+      paramsMap.putIfAbsent('showInternetOnly', () => showInternetOnly.toString());
     }
     if (voivodeship != null) {
-      paramsMap.putIfAbsent('voivodeship', () => voivodeship);
+      paramsMap.putIfAbsent('voivodeship', () => voivodeship.id);
     }
     if (city != null) {
-      paramsMap.putIfAbsent('city', () => city);
+      paramsMap.putIfAbsent('city', () => city.name);
     }
     if (ageTypes.isNotEmpty) {
-      paramsMap.putIfAbsent('ageTypes', () => ageTypes);
+      paramsMap.putIfAbsent('ageTypes', () => AgeTypeHelper.asParamString(ageTypes));
     }
     if (sortBy != null) {
-      paramsMap.putIfAbsent('sortBy', () => sortBy);
+      paramsMap.putIfAbsent('sortBy', () => SortingTypeHelper.asString(sortBy));
     }
+    return paramsMap;
   }
 
   @override

@@ -135,7 +135,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
       (e) => list.add(Container(
         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
         child: ChoiceChip(
-          label: Text(AgeTypeHelper.getString(e)),
+          label: Text(AgeTypeHelper.getReadable(e)),
           selected: filtersSettings.ageTypes.contains(e),
           onSelected: (isSelected) {
             setState(() {
@@ -158,7 +158,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
           (e) => Container(
             margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(SortingTypeHelper.getString(e)),
+              label: Text(SortingTypeHelper.getReadable(e)),
               selected: filtersSettings.sortBy == e,
               onSelected: (isSelected) {
                 setState(() {

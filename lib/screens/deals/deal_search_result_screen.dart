@@ -9,13 +9,21 @@ import 'package:provider/provider.dart';
 
 import '../common/category_selection_screen.dart';
 
-class DealSearchResultScreen extends StatelessWidget {
+class DealSearchResultScreen extends StatefulWidget {
   static const routeName = '/deal-search';
+
+  @override
+  _DealSearchResultScreenState createState() => _DealSearchResultScreenState();
+}
+
+class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
 
   _openCategorySelector(BuildContext context) async {
     var returnedValue = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
   }
+
+  FilterSettings filterSettings = FilterSettings();
 
   final _searchTextController = TextEditingController();
 
@@ -125,7 +133,7 @@ class DealSearchResultScreen extends StatelessWidget {
               ),
             ),
             FutureBuilder(
-              future: Provider.of<Deals>(context, listen: false).fetchDeals(),
+              future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -160,7 +168,8 @@ class DealSearchResultScreen extends StatelessWidget {
           return FilterSelectionScreen();
         },
         fullscreenDialog: true));
-    Provider.of<Deals>(context).fetchDeals(requestParams: returnedValue.toParamsMap());
+    setState(() {
+      filterSettings = returnedValue;
+    });
   }
-
 }

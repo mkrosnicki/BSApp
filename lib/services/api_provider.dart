@@ -36,7 +36,11 @@ class ApiProvider {
       if (requestType == _RequestType.POST) {
         headers.putIfAbsent('Content-Type', () => 'application/json');
       }
+      print('get');
+      print('requestParams');
+      print(requestParams);
       var uri = _buildUri(endpoint, requestParams);
+      print(uri);
       var response;
       switch (requestType) {
         case _RequestType.DELETE:
