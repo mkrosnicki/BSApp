@@ -51,7 +51,7 @@ class DealItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(deal.dealType.toString()),
-                      Text(deal.category),
+                      Text(deal.categories.last),
                       Text(deal.regularPrice.toString()),
                       Row(children: [
                         Text('${deal.currentPrice.toString()} zł'),

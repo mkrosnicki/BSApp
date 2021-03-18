@@ -7,7 +7,7 @@ class DealModel {
   final String description;
   final String link;
   final DealType dealType;
-  final String category;
+  final List<String> categories;
   final String locationType;
   final String voivodeship;
   final String city;
@@ -26,7 +26,7 @@ class DealModel {
     @required this.description,
     @required this.link,
     @required this.dealType,
-    @required this.category,
+    @required this.categories,
     @required this.locationType,
     @required this.voivodeship,
     @required this.city,

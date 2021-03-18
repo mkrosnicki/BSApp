@@ -9,7 +9,7 @@ class DealMapper {
         description: dealObject['description'],
         link: dealObject['link'],
         dealType: DealTypeMapper.of(dealObject['dealType']),
-        category: dealObject['category']['name'],
+        categories: [...(dealObject['categories'] as List).map((e) => e['name']).toList()],
         locationType: dealObject['locationType'],
         voivodeship: dealObject['voivodeship'],
         city: dealObject['city'],
