@@ -1,5 +1,6 @@
 import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,7 +77,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   ),
                   ListTile(
                     title: Text('Wiek dziecka'),
-                    subtitle: filtersSettings.ageTypes.isEmpty ? Text('Dowolny') : Text(filtersSettings.ageTypesString, overflow: TextOverflow.ellipsis,),
+                    subtitle: filtersSettings.ageTypes.isEmpty
+                        ? Text('Dowolny')
+                        : Text(
+                            filtersSettings.ageTypesString,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                   ),
                   Container(
                     width: double.infinity,
@@ -88,26 +94,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   ListTile(
                     title: Text('Sortuj po'),
                   ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
-                  ),
-                  ListTile(
-                    title: Text('title1'),
+                  Container(
+                    width: double.infinity,
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: _buildSortingTypeChips(),
+                    ),
                   ),
                 ],
               ),
@@ -133,25 +125,44 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
 
   _buildAgeTypeChips() {
     List<Widget> list = [];
-    AgeType.values
-        .forEach(
-          (e) => list.add(Container(
+    AgeType.values.forEach(
+      (e) => list.add(Container(
+        margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+        child: ChoiceChip(
+          label: Text(AgeTypeHelper.getString(e)),
+          selected: filtersSettings.ageTypes.contains(e),
+          onSelected: (isSelected) {
+            setState(() {
+              if (isSelected) {
+                filtersSettings.ageTypes.add(e);
+              } else {
+                filtersSettings.ageTypes.remove(e);
+              }
+            });
+          },
+        ),
+      )),
+    );
+    return list;
+  }
+
+  _buildSortingTypeChips() {
+    List<Widget> list = SortingType.values
+        .map(
+          (e) => Container(
             margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(AgeTypeHelper.getString(e)),
-              selected: filtersSettings.ageTypes.contains(e),
+              label: Text(SortingTypeHelper.getString(e)),
+              selected: filtersSettings.sortingType == e,
               onSelected: (isSelected) {
                 setState(() {
-                  if (isSelected) {
-                    filtersSettings.ageTypes.add(e);
-                  } else {
-                    filtersSettings.ageTypes.remove(e);
-                  }
+                  filtersSettings.sortingType = e;
                 });
               },
             ),
-          )),
-    );
+          ),
+        )
+        .toList();
     return list;
   }
 

@@ -1,6 +1,7 @@
 import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/city_model.dart';
+import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 
 class FilterSettings {
@@ -12,6 +13,7 @@ class FilterSettings {
   Voivodeship voivodeship;
   City city;
   List<AgeType> ageTypes = [];
+  SortingType sortingType = SortingType.NEWEST;
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");
