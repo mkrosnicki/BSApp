@@ -27,4 +27,32 @@ class FilterSettings {
     return ageTypes.map((e) => AgeTypeHelper.getString(e)).join(", ");
   }
 
+  Map<String, dynamic> toParamsMap() {
+    Map<String, dynamic> paramsMap = {};
+    if (phrase != null) {
+      paramsMap.putIfAbsent('phrase', () => phrase);
+    }
+    if (categories.isNotEmpty) {
+      paramsMap.putIfAbsent('categories', () => categories);
+    }
+    if (showActiveOnly) {
+      paramsMap.putIfAbsent('showActiveOnly', () => showActiveOnly);
+    }
+    if (showInternetOnly) {
+      paramsMap.putIfAbsent('showInternetOnly', () => showInternetOnly);
+    }
+    if (voivodeship != null) {
+      paramsMap.putIfAbsent('voivodeship', () => voivodeship);
+    }
+    if (city != null) {
+      paramsMap.putIfAbsent('city', () => city);
+    }
+    if (ageTypes.isNotEmpty) {
+      paramsMap.putIfAbsent('ageTypes', () => ageTypes);
+    }
+    if (sortBy != null) {
+      paramsMap.putIfAbsent('sortBy', () => sortBy);
+    }
+  }
+
 }

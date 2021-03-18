@@ -9,24 +9,26 @@ class ApiProvider {
 
   ApiProvider({this.token});
 
-  final String _baseUrl = "http://YOUR_LOCAL_IP:8080";
+  // final String _baseUrl = "http://YOUR_LOCAL_IP:8080";
+  // final String _domain = "YOUR_LOCAL_IP:8080";
+  final _ProtocolType _protocolType = _ProtocolType.HTTP;
+  final String _domain = "YOUR_LOCAL_IP:PORT";
 
 
-  Future<dynamic> get(String url, {String token}) async {
-    return _sendRequest(_RequestType.GET, url, token: token);
+  Future<dynamic> get(String endpoint, {String token, Map<String, dynamic> requestParams}) async {
+    return _sendRequest(_RequestType.GET, endpoint, token: token);
   }
 
-  Future<dynamic> post(String url, Map<String, dynamic> body,
+  Future<dynamic> post(String endpoint, Map<String, dynamic> body,
       {String token}) async {
-    return _sendRequest(_RequestType.POST, url, body: body, token: token);
+    return _sendRequest(_RequestType.POST, endpoint, body: body, token: token);
   }
 
-  Future<dynamic> delete(String url, {String token}) async {
-    return _sendRequest(_RequestType.DELETE, url, token: token);
+  Future<dynamic> delete(String endpoint, {String token}) async {
+    return _sendRequest(_RequestType.DELETE, endpoint, token: token);
   }
 
-  Future<dynamic> _sendRequest(_RequestType requestType, String url,
-      {Map<String, dynamic> body, String token}) async {
+  Future<dynamic> _sendRequest(_RequestType requestType, String endpoint, {Map<String, dynamic> body, String token, Map<String, dynamic> requestParams}) async {
     var responseJson;
     try {
       Map<String, String> headers = {};
@@ -36,20 +38,21 @@ class ApiProvider {
       if (requestType == _RequestType.POST) {
         headers.putIfAbsent('Content-Type', () => 'application/json');
       }
+      var uri = _buildUri(endpoint, requestParams);
       var response;
       switch (requestType) {
         case _RequestType.DELETE:
-          response = await http.delete(_baseUrl + url, headers: headers);
+          response = await http.delete(uri, headers: headers);
           break;
         case _RequestType.POST:
           response = await http.post(
-            _baseUrl + url,
+            uri,
             body: json.encode(body),
             headers: headers,
           );
           break;
         case _RequestType.GET:
-          response = await http.get(_baseUrl + url, headers: headers);
+          response = await http.get(uri, headers: headers);
           break;
         default:
           throw IllegalRequestException(
@@ -62,11 +65,17 @@ class ApiProvider {
     return responseJson;
   }
 
+  _buildUri(String endpoint, Map<String, dynamic> requestParams) {
+    return _protocolType == _ProtocolType.HTTP ? Uri.http(_domain, endpoint, requestParams) : Uri.https(_domain, endpoint, requestParams);
+  }
+
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
         String decodedBody = utf8.decode(response.bodyBytes);
-        var responseJson = decodedBody.isNotEmpty ? json.decode(decodedBody) : null;
+        var responseJson = decodedBody.isNotEmpty
+            ? json.decode(decodedBody)
+            : null;
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
@@ -84,3 +93,4 @@ class ApiProvider {
 }
 
 enum _RequestType { GET, POST, DELETE }
+enum _ProtocolType { HTTP, HTTPS }
