@@ -183,9 +183,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   _openCategorySelector(BuildContext context) async {
     var selectedCategories = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
-    setState(() {
-      filtersSettings.categories = selectedCategories;
-    });
+    if (selectedCategories != null) {
+      setState(() {
+        filtersSettings.categories = selectedCategories;
+      });
+    }
   }
 
   _openLocationSelector(BuildContext context) async {

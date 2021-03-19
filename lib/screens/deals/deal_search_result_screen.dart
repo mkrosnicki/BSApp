@@ -199,18 +199,18 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   _clearFilterSettings(
-      {bool clearInternetOnly,
-      bool clearActiveOnly,
-      bool clearLocation,
-      bool clearSorting,
-      bool clearPhrase,
-      bool clearCategories,
-      bool clearAgeTypes}) {
+      {bool clearInternetOnly = false,
+      bool clearActiveOnly = false,
+      bool clearLocation = false,
+      bool clearSorting = false,
+      bool clearPhrase = false,
+      bool clearCategories = false,
+      bool clearAgeTypes = false}) {
     setState(() {
-      if (clearInternetOnly != null && clearInternetOnly) {
+      if (clearInternetOnly) {
         filterSettings.clearInternetOnly();
       }
-      if (clearActiveOnly != null && clearActiveOnly) {
+      if (clearActiveOnly) {
         filterSettings.clearActiveOnly();
       }
       if (clearLocation) {
