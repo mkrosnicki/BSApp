@@ -101,6 +101,13 @@ class Auth with ChangeNotifier {
     return logout();
   }
 
+  Future<void> resendVerificationToken(String email) async {
+    var queryParameters = {
+      'email': email,
+    };
+    await _apiProvider.get('/resend-token', requestParams: queryParameters);
+  }
+
   void _autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();
