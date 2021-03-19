@@ -1,28 +1,29 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 
 class Searches with ChangeNotifier {
   ApiProvider _apiProvider = new ApiProvider();
 
-  List<CommentModel> fetchedSavedSearches = [];
+  List<SearchModel> fetchedSavedSearches = [];
   String token;
 
   Searches({this.fetchedSavedSearches, this.token});
 
-  List<CommentModel> get savedSearches {
+  List<SearchModel> get savedSearches {
     return [...fetchedSavedSearches];
   }
 
   Future<void> fetchSavedSearches() async {
-    final List<CommentModel> loadedSearches = [];
+    final List<SearchModel> loadedSearches = [];
     final responseBody =
     await _apiProvider.get('/users/me/subscriptions', token: token) as List;
     if (responseBody == null) {
       print('No Searches Found!');
     }
     responseBody.forEach((element) {
-      loadedSearches.add(CommentModel.of(element));
+      loadedSearches.add(SearchModel.of(element));
     });
     fetchedSavedSearches = loadedSearches;
     notifyListeners();

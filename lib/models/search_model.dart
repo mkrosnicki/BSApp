@@ -29,14 +29,16 @@ class SearchModel {
       this.sortBy});
 
   static SearchModel of(dynamic searchSnapshot) {
+    var voivodeship = searchSnapshot['voivodeship'];
+    var city = searchSnapshot['city'];
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
       categories: (searchSnapshot['categories'] as List).map((e) => CategoryModel.of(e)).toList(),
-      showActiveOnly: bool.fromEnvironment(searchSnapshot['showActiveOnly']),
-      showInternetOnly: bool.fromEnvironment(searchSnapshot['showInternetOnly']),
-      voivodeship: Voivodeship.of(searchSnapshot['voivodeship']),
-      city: City.of(searchSnapshot['city']),
+      showActiveOnly: searchSnapshot['showActiveOnly'],
+      showInternetOnly: searchSnapshot['showInternetOnly'],
+      voivodeship: voivodeship != null ? Voivodeship.of(searchSnapshot['voivodeship']) : null,
+      city: city != null ? City.of(searchSnapshot['city']) : null,
       ageTypes: (searchSnapshot['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList(),
       sortBy: SortingTypeHelper.fromString(searchSnapshot['sortBy']),
     );
