@@ -28,8 +28,7 @@ class Searches with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveSearch(String dealId, String content) async {
-    final saveSearchDto = {'content': content};
+  Future<void> saveSearch(Map<String, dynamic> saveSearchDto) async {
     await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: token);
     notifyListeners();
   }

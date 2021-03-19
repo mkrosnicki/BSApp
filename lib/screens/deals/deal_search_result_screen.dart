@@ -1,13 +1,12 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../common/category_selection_screen.dart';
 
 class DealSearchResultScreen extends StatefulWidget {
   static const routeName = '/deal-search';
@@ -17,11 +16,6 @@ class DealSearchResultScreen extends StatefulWidget {
 }
 
 class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
-  _openCategorySelector(BuildContext context) async {
-    var returnedValue = await Navigator.of(context)
-        .pushNamed(CategorySelectionScreen.routeName);
-  }
-
   FilterSettings filterSettings = FilterSettings();
 
   final _searchTextController = TextEditingController();
@@ -48,7 +42,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             searchInputController: _searchTextController,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Provider.of<Searches>(context, listen: false)
+                  .saveSearch(filterSettings.toSaveSearchDto());
+            },
             child: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Icon(Icons.favorite_border),
@@ -150,64 +147,61 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
 
   _buildFilterChips() {
     List<Widget> chips = [];
-    if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
-      chips.add(
-          InputChip(
-            label: Text('Internetowe'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearInternetOnly: true),
-          )
-      );
+    if (filterSettings.showInternetOnly !=
+        FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
+      chips.add(InputChip(
+        label: Text('Internetowe'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearInternetOnly: true),
+      ));
     }
     if (filterSettings.categories.isNotEmpty) {
-      chips.add(
-          InputChip(
-            label: Text('Kategorie'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearCategories: true),
-          )
-      );
+      chips.add(InputChip(
+        label: Text('Kategorie'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearCategories: true),
+      ));
     }
     if (filterSettings.voivodeship != null) {
-      chips.add(
-          InputChip(
-            label: Text('Lokalizacja'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearSorting: true),
-          )
-      );
+      chips.add(InputChip(
+        label: Text('Lokalizacja'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearSorting: true),
+      ));
     }
-    if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
-      chips.add(
-          InputChip(
-            label: Text('Aktywne'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
-          )
-      );
+    if (filterSettings.showActiveOnly !=
+        FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
+      chips.add(InputChip(
+        label: Text('Aktywne'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
+      ));
     }
     if (filterSettings.ageTypes.isNotEmpty) {
-      chips.add(
-          InputChip(
-            label: Text('Wiek dziecka'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearCategories: true),
-          )
-      );
+      chips.add(InputChip(
+        label: Text('Wiek dziecka'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearCategories: true),
+      ));
     }
     if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
-      chips.add(
-          InputChip(
-            label: Text('Sortowanie'),
-            deleteIcon: Icon(Icons.cancel_outlined),
-            onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
-          )
-      );
+      chips.add(InputChip(
+        label: Text('Sortowanie'),
+        deleteIcon: Icon(Icons.cancel_outlined),
+        onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
+      ));
     }
     return chips;
   }
 
-  _clearFilterSettings({bool clearInternetOnly, bool clearActiveOnly, bool clearLocation, bool clearSorting, bool clearPhrase, bool clearCategories, bool clearAgeTypes}) {
+  _clearFilterSettings(
+      {bool clearInternetOnly,
+      bool clearActiveOnly,
+      bool clearLocation,
+      bool clearSorting,
+      bool clearPhrase,
+      bool clearCategories,
+      bool clearAgeTypes}) {
     setState(() {
       if (clearInternetOnly) {
         filterSettings.clearInternetOnly();

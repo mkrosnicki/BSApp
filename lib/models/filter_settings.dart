@@ -5,7 +5,6 @@ import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 
 class FilterSettings {
-
   static const SortingType DEFAULT_SORTING_TYPE = SortingType.NEWEST;
   static const bool DEFAULT_SHOW_ACTIVE_ONLY = false;
   static const bool DEFAULT_SHOW_INTERNET_ONLY = false;
@@ -24,7 +23,9 @@ class FilterSettings {
   }
 
   String get locationString {
-    return voivodeship != null ? '${voivodeship.name} / ${city != null ? city.name : 'Wszystkie miasta'}' : null;
+    return voivodeship != null
+        ? '${voivodeship.name} / ${city != null ? city.name : 'Wszystkie miasta'}'
+        : null;
   }
 
   String get ageTypesString {
@@ -43,7 +44,8 @@ class FilterSettings {
       paramsMap.putIfAbsent('showActiveOnly', () => showActiveOnly.toString());
     }
     if (showInternetOnly) {
-      paramsMap.putIfAbsent('showInternetOnly', () => showInternetOnly.toString());
+      paramsMap.putIfAbsent(
+          'showInternetOnly', () => showInternetOnly.toString());
     }
     if (voivodeship != null) {
       paramsMap.putIfAbsent('voivodeship', () => voivodeship.id);
@@ -52,7 +54,8 @@ class FilterSettings {
       paramsMap.putIfAbsent('city', () => city.name);
     }
     if (ageTypes.isNotEmpty) {
-      paramsMap.putIfAbsent('ageTypes', () => AgeTypeHelper.asParamString(ageTypes));
+      paramsMap.putIfAbsent(
+          'ageTypes', () => AgeTypeHelper.asParamString(ageTypes));
     }
     if (sortBy != null) {
       paramsMap.putIfAbsent('sortBy', () => SortingTypeHelper.asString(sortBy));
@@ -87,6 +90,20 @@ class FilterSettings {
   clearLocation() {
     this.voivodeship = null;
     this.city = null;
+  }
+
+  Map<String, dynamic> toSaveSearchDto() {
+    Map<String, dynamic> dto = {
+      'phrase': phrase,
+      'categories': categories.map((e) => e.id).toList(),
+      'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
+      'showActiveOnly': showActiveOnly.toString(),
+      'showInternetOnly': showInternetOnly.toString(),
+      'voivodeship': voivodeship != null ? voivodeship.id : null,
+      'city': city != null ? city.name : null,
+      'sortBy': sortBy != null ? SortingTypeHelper.asString(this.sortBy) : null,
+    };
+    return dto;
   }
 
   @override
