@@ -163,13 +163,14 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    var returnedValue = await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+    var newFilterSettings = await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
         builder: (BuildContext context) {
           return FilterSelectionScreen();
         },
+        settings: RouteSettings(arguments: filterSettings),
         fullscreenDialog: true));
     setState(() {
-      filterSettings = returnedValue;
+      filterSettings = newFilterSettings;
     });
   }
 }

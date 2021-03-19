@@ -13,10 +13,18 @@ class FilterSelectionScreen extends StatefulWidget {
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
 
-  FilterSettings filtersSettings = FilterSettings();
+  FilterSettings filtersSettings;
+
+  _initFilterSettings(BuildContext context) {
+    if (filtersSettings == null) {
+      FilterSettings passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
+      filtersSettings = passedFilterSettings != null ? passedFilterSettings : FilterSettings();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _initFilterSettings(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Filtry i sortowanie'),
@@ -39,7 +47,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SwitchListTile(
-                    title: Text('Pokaż tylko aktywne'),
+                    title: const Text('Pokaż tylko aktywne'),
                     value: filtersSettings.showActiveOnly,
                     onChanged: (value) {
                       setState(() {
@@ -48,18 +56,18 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     },
                   ),
                   ListTile(
-                    title: Text('Kategoria'),
+                    title: const Text('Kategoria'),
                     subtitle: filtersSettings.categories.isNotEmpty
                         ? Text(
                             filtersSettings.categoriesString,
                             style: TextStyle(color: Colors.blue),
                           )
                         : const Text('Wszystkie kategorie'),
-                    trailing: Icon(Icons.chevron_right),
+                    trailing: const Icon(Icons.chevron_right),
                     onTap: () => _openCategorySelector(context),
                   ),
                   SwitchListTile(
-                    title: Text('Tylko internetowe okazje'),
+                    title: const Text('Tylko internetowe okazje'),
                     value: filtersSettings.showInternetOnly,
                     onChanged: (value) {
                       setState(() {
@@ -70,7 +78,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     },
                   ),
                   ListTile(
-                    title: Text('Lokalizacja'),
+                    title: const Text('Lokalizacja'),
                     subtitle: filtersSettings.voivodeship != null
                         ? Text(
                             filtersSettings.locationString,
@@ -82,9 +90,9 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     enabled: !filtersSettings.showInternetOnly,
                   ),
                   ListTile(
-                    title: Text('Wiek dziecka'),
+                    title: const Text('Wiek dziecka'),
                     subtitle: filtersSettings.ageTypes.isEmpty
-                        ? Text('Dowolny')
+                        ? const Text('Dowolny')
                         : Text(
                             filtersSettings.ageTypesString,
                             overflow: TextOverflow.ellipsis,
@@ -98,7 +106,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     ),
                   ),
                   ListTile(
-                    title: Text('Sortuj po'),
+                    title: const Text('Sortuj po'),
                   ),
                   Container(
                     width: double.infinity,
@@ -119,7 +127,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
               child: RaisedButton(
-                child: Text('Filtruj'),
+                child: const Text('Filtruj'),
                 onPressed: () => _acceptFilters(context),
               ),
             ),
