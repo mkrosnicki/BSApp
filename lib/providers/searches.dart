@@ -1,4 +1,4 @@
-import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +31,10 @@ class Searches with ChangeNotifier {
 
   Future<void> saveSearch(Map<String, dynamic> saveSearchDto) async {
     await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: token);
-    notifyListeners();
+    return fetchSavedSearches();
+  }
+
+  bool isSaved(FilterSettings filterSettings) {
+    return savedSearches.any((element) => element.isSame(filterSettings));
   }
 }

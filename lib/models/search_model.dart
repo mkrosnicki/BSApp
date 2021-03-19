@@ -1,5 +1,7 @@
+import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
+import 'package:collection/collection.dart';
 
 import 'age_type.dart';
 import 'category_model.dart';
@@ -42,5 +44,18 @@ class SearchModel {
       ageTypes: (searchSnapshot['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList(),
       sortBy: SortingTypeHelper.fromString(searchSnapshot['sortBy']),
     );
+  }
+
+  bool isSame(FilterSettings filterSettings) {
+    Function eq = const ListEquality().equals;
+    return
+      phrase == filterSettings.phrase &&
+          eq(categories, filterSettings.categories) &&
+          showActiveOnly == filterSettings.showActiveOnly &&
+          showInternetOnly == filterSettings.showInternetOnly &&
+          voivodeship == filterSettings.voivodeship &&
+          city == filterSettings.city &&
+          eq(ageTypes, filterSettings.ageTypes) &&
+          sortBy == filterSettings.sortBy;
   }
 }

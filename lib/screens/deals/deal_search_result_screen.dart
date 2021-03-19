@@ -41,14 +41,16 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             onSubmitInputFunction: (_) {},
             searchInputController: _searchTextController,
           ),
-          GestureDetector(
-            onTap: () {
-              Provider.of<Searches>(context, listen: false)
-                  .saveSearch(filterSettings.toSaveSearchDto());
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Icon(Icons.favorite_border),
+          Consumer<Searches>(
+            builder: (context, searchesData, child) =>  GestureDetector(
+              onTap: () {
+                Provider.of<Searches>(context, listen: false)
+                    .saveSearch(filterSettings.toSaveSearchDto());
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: searchesData.isSaved(filterSettings) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+              ),
             ),
           ),
         ],
