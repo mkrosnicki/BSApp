@@ -3,6 +3,7 @@ import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Comments>(
           update: (context, auth, previousComments) {
             return Comments(token: auth.token);
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, Searches>(
+          create: (context) => Searches(),
+          update: (context, auth, previousSearches) {
+            return Searches(fetchedSavedSearches: previousSearches.fetchedSavedSearches, token: auth.token);
           },
         ),
         ChangeNotifierProvider(

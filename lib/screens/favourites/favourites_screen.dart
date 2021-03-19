@@ -1,7 +1,10 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
+import 'package:BSApp/widgets/common/error_info.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:BSApp/widgets/searches/observed_search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +103,31 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                           }
                         },
                       ),
-                      Text('Wyszukiwania'),
+                FutureBuilder(
+                  future: Provider.of<Searches>(context, listen: false).fetchSavedSearches(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      if (snapshot.error != null) {
+                        return ErrorInfo();
+                      } else {
+                        return Consumer<Searches>(
+                          builder: (context, searchesData, child) {
+                            return searchesData.savedSearches.isNotEmpty
+                                ? ListView.builder(
+                              itemBuilder: (context, index) =>
+                                  ObservedSearchItem(searchesData.savedSearches[index]),
+                              itemCount: searchesData.savedSearches.length,
+                            )
+                                : _buildNoObservedSearchesSplashView();
+                          },
+                        );
+                      }
+                    }
+                  },
+                ),
                     ]
                   : [
                       _buildNoObservedDealsSplashView(),
