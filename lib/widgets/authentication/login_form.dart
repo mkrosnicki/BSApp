@@ -48,16 +48,21 @@ class _LoginFormState extends State<LoginForm> {
         _authData['password'],
       );
     } on CustomException catch (error) {
-      var errorMessage =
-          'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
-      if (error.toString().contains('must be a well-formed email address')) {
-        errorMessage = 'Email w złym w formacie.';
-      } else if (error.toString().contains('There is no user witch such email.')) {
-        errorMessage = 'Nieprawidłowe hasło i / lub login.';
-      } else if (error.toString().contains('Email is not verified')) {
-        errorMessage = 'Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!';
+      if (error.toString().contains('Email is not verified')) {
+        //
+        await _showNotVerifiedDialog();
+      } else {
+        var errorMessage =
+            'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
+        if (error.toString().contains('must be a well-formed email address')) {
+          errorMessage = 'Email w złym w formacie.';
+        } else if (error
+            .toString()
+            .contains('There is no user witch such email.')) {
+          errorMessage = 'Nieprawidłowe hasło i / lub login.';
+        }
+        await _showErrorDialog(errorMessage);
       }
-      await _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage =
           'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
@@ -67,6 +72,11 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void _resendActivationToken(BuildContext context) {
+    Provider.of<Auth>(context, listen: false).resendVerificationToken(_emailController.text);
+    Navigator.of(context).pop();
   }
 
   Future<void> _showErrorDialog(String message) async {
@@ -83,6 +93,44 @@ class _LoginFormState extends State<LoginForm> {
             },
           )
         ],
+      ),
+    );
+  }
+
+  Future<void> _showNotVerifiedDialog() async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Błąd logowania'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              "Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n Nie otrzymałeś linku aktywacyjnego? Wyślij go ponownie.",
+            ),
+            Column(crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TextButton(
+                      child: Text(
+                        'Ok',
+                        textAlign: TextAlign.center,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                  TextButton(
+                      child: Text(
+                        'Wyślij link atywacyjny ponownie',
+                        textAlign: TextAlign.center,
+                      ),
+                      onPressed: () {
+                        _resendActivationToken(context);
+                      })
+                ]),
+          ],
+        ),
       ),
     );
   }

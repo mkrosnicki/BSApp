@@ -101,6 +101,10 @@ class Auth with ChangeNotifier {
     return logout();
   }
 
+  Future<void> resendVerificationToken(String email) async {
+    await _apiProvider.get('/resend-token?email=$email');
+  }
+
   void _autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();
