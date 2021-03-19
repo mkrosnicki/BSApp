@@ -4,6 +4,7 @@ import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/common/error_info.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:BSApp/widgets/searches/observed_search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -117,7 +118,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                             return searchesData.savedSearches.isNotEmpty
                                 ? ListView.builder(
                               itemBuilder: (context, index) =>
-                                  Text(searchesData.savedSearches[index].toString()),
+                                  ObservedSearchItem(searchesData.savedSearches[index]),
                               itemCount: searchesData.savedSearches.length,
                             )
                                 : _buildNoObservedSearchesSplashView();
