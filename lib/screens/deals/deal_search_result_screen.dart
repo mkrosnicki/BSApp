@@ -17,7 +17,6 @@ class DealSearchResultScreen extends StatefulWidget {
 }
 
 class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
-
   _openCategorySelector(BuildContext context) async {
     var returnedValue = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
@@ -76,37 +75,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
+                child: ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) =>
-                      GestureDetector(
-                    onTap: () => _openCategorySelector(context),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.filter_list,
-                              size: 14,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 4.0),
-                              child: Text(
-                                'Filtry',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  children: _buildFilterChips(),
                 ),
               ),
             ),
@@ -133,7 +105,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               ),
             ),
             FutureBuilder(
-              future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
+              future: Provider.of<Deals>(context, listen: false)
+                  .fetchDeals(requestParams: filterSettings.toParamsMap()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -163,14 +136,100 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    var newFilterSettings = await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
-        builder: (BuildContext context) {
-          return FilterSelectionScreen();
-        },
-        settings: RouteSettings(arguments: filterSettings),
-        fullscreenDialog: true));
+    var newFilterSettings =
+        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+            builder: (BuildContext context) {
+              return FilterSelectionScreen();
+            },
+            settings: RouteSettings(arguments: filterSettings),
+            fullscreenDialog: true));
     setState(() {
       filterSettings = newFilterSettings;
+    });
+  }
+
+  _buildFilterChips() {
+    List<Widget> chips = [];
+    if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
+      chips.add(
+          InputChip(
+            label: Text('Internetowe'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearInternetOnly: true),
+          )
+      );
+    }
+    if (filterSettings.categories.isNotEmpty) {
+      chips.add(
+          InputChip(
+            label: Text('Kategorie'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearCategories: true),
+          )
+      );
+    }
+    if (filterSettings.voivodeship != null) {
+      chips.add(
+          InputChip(
+            label: Text('Lokalizacja'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearSorting: true),
+          )
+      );
+    }
+    if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
+      chips.add(
+          InputChip(
+            label: Text('Aktywne'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
+          )
+      );
+    }
+    if (filterSettings.ageTypes.isNotEmpty) {
+      chips.add(
+          InputChip(
+            label: Text('Wiek dziecka'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearCategories: true),
+          )
+      );
+    }
+    if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
+      chips.add(
+          InputChip(
+            label: Text('Sortowanie'),
+            deleteIcon: Icon(Icons.cancel_outlined),
+            onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
+          )
+      );
+    }
+    return chips;
+  }
+
+  _clearFilterSettings({bool clearInternetOnly, bool clearActiveOnly, bool clearLocation, bool clearSorting, bool clearPhrase, bool clearCategories, bool clearAgeTypes}) {
+    setState(() {
+      if (clearInternetOnly) {
+        filterSettings.clearInternetOnly();
+      }
+      if (clearActiveOnly) {
+        filterSettings.clearActiveOnly();
+      }
+      if (clearLocation) {
+        filterSettings.clearLocation();
+      }
+      if (clearSorting) {
+        filterSettings.clearSorting();
+      }
+      if (clearPhrase) {
+        filterSettings.clearPhrase();
+      }
+      if (clearCategories) {
+        filterSettings.clearCategories();
+      }
+      if (clearAgeTypes) {
+        filterSettings.clearAgeTypes();
+      }
     });
   }
 }

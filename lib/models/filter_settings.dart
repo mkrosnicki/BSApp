@@ -6,14 +6,18 @@ import 'package:BSApp/models/voivodeship_model.dart';
 
 class FilterSettings {
 
+  static const SortingType DEFAULT_SORTING_TYPE = SortingType.NEWEST;
+  static const bool DEFAULT_SHOW_ACTIVE_ONLY = false;
+  static const bool DEFAULT_SHOW_INTERNET_ONLY = false;
+
   String phrase;
   List<CategoryModel> categories = [];
-  bool showActiveOnly = false;
-  bool showInternetOnly = false;
+  bool showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY;
+  bool showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY;
   Voivodeship voivodeship;
   City city;
   List<AgeType> ageTypes = [];
-  SortingType sortBy = SortingType.NEWEST;
+  SortingType sortBy = DEFAULT_SORTING_TYPE;
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");
@@ -54,6 +58,35 @@ class FilterSettings {
       paramsMap.putIfAbsent('sortBy', () => SortingTypeHelper.asString(sortBy));
     }
     return paramsMap;
+  }
+
+  clearPhrase() {
+    this.phrase = null;
+  }
+
+  clearInternetOnly() {
+    this.showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY;
+  }
+
+  clearActiveOnly() {
+    this.showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY;
+  }
+
+  clearCategories() {
+    this.categories = [];
+  }
+
+  clearAgeTypes() {
+    this.ageTypes = [];
+  }
+
+  clearSorting() {
+    this.sortBy = DEFAULT_SORTING_TYPE;
+  }
+
+  clearLocation() {
+    this.voivodeship = null;
+    this.city = null;
   }
 
   @override
