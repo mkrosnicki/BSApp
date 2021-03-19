@@ -142,9 +142,11 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             },
             settings: RouteSettings(arguments: filterSettings),
             fullscreenDialog: true));
-    setState(() {
-      filterSettings = newFilterSettings;
-    });
+    if (newFilterSettings != null) {
+      setState(() {
+        filterSettings = newFilterSettings;
+      });
+    }
   }
 
   _buildFilterChips() {
