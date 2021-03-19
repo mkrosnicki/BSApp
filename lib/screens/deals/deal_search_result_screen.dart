@@ -205,10 +205,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       bool clearCategories,
       bool clearAgeTypes}) {
     setState(() {
-      if (clearInternetOnly) {
+      if (clearInternetOnly != null && clearInternetOnly) {
         filterSettings.clearInternetOnly();
       }
-      if (clearActiveOnly) {
+      if (clearActiveOnly != null && clearActiveOnly) {
         filterSettings.clearActiveOnly();
       }
       if (clearLocation) {
