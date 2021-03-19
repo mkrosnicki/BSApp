@@ -58,7 +58,6 @@ class ApiProvider {
               'Request $requestType is not supported!');
       }
       responseJson = _response(response);
-      print(responseJson);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
