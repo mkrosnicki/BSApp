@@ -9,6 +9,15 @@ enum AgeType {
 
 class AgeTypeHelper {
 
+  static AgeType fromString(String ageTypeString) {
+    for (var ageType in AgeType.values) {
+      if (asString(ageType) == ageTypeString) {
+        return ageType;
+      }
+    }
+    return null;
+  }
+
   static String asString(AgeType ageType) {
     return ageType.toString().replaceFirst('AgeType.', '');
   }

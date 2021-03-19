@@ -11,6 +11,15 @@ class SortingTypeHelper {
     return sortingType.toString().replaceFirst('SortingType.', '');
   }
 
+  static SortingType fromString(String sortingTypeString) {
+    for (var sortingType in SortingType.values) {
+      if (asString(sortingType) == sortingTypeString) {
+        return sortingType;
+      }
+    }
+    return null;
+  }
+
   static String getReadable(SortingType sortingType) {
     switch (sortingType) {
       case SortingType.NEWEST:
