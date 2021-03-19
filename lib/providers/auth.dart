@@ -102,7 +102,10 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> resendVerificationToken(String email) async {
-    await _apiProvider.get('/resend-token?email=$email');
+    var queryParameters = {
+      'email': email,
+    };
+    await _apiProvider.get('/resend-token', requestParams: queryParameters);
   }
 
   void _autoLogout() {
