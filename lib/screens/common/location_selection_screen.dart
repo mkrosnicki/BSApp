@@ -54,7 +54,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
 
   _buildAppBar() {
     return AppBar(
-      title: Text('Wybierz miejsce'),
+      title: Text('Lokalizacja'),
       automaticallyImplyLeading: false,
       leading: FlatButton(
         onPressed: () => _goUp(),
@@ -82,7 +82,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
       children: [
         FlatButton(
           child: ListTile(
-            title: Text('Dowolne miasto'),
+            title: Text('Całe województwo ${_selectedVoivodeship.name}'),
             focusColor: Colors.grey,
           ),
           onPressed: _selectAllCitiesInVoivodeship,
@@ -112,7 +112,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
                 title: Text(voivodeships[index].name),
-                subtitle: Text('${voivodeships[index].cities.length}'),
+                subtitle: Text('${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}'),
                 trailing: voivodeships[index].cities.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
                 focusColor: Colors.grey,
               ),
@@ -125,16 +125,14 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     );
   }
 
-  String _getCategoriesSuffix(int numOfCategories) {
-    int lastDigit = numOfCategories % 10;
-    if (numOfCategories == 1) {
-      return 'kategoria';
-    } else if (numOfCategories >= 11 && numOfCategories <= 14) {
-      return 'kategorii';
+  String _getCitiesSuffix(int numOfCities) {
+    int lastDigit = numOfCities % 10;
+    if (numOfCities == 1) {
+      return 'miasto';
     } else if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {
-      return 'kategorie';
+      return 'miasta';
     } else {
-      return 'kategorii';
+      return 'miast';
     }
   }
 
