@@ -10,7 +10,8 @@ class ApiProvider {
   ApiProvider({this.token});
 
   final _ProtocolType _protocolType = _ProtocolType.HTTP;
-  final String _domain = "YOUR_LOCAL_IP:PORT";
+  // final String _domain = "YOUR_LOCAL_IP:PORT";
+  final String _domain = "192.168.1.139:8080";
 
 
   Future<dynamic> get(String endpoint, {String token, Map<String, dynamic> requestParams}) async {

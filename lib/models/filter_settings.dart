@@ -18,6 +18,17 @@ class FilterSettings {
   List<AgeType> ageTypes = [];
   SortingType sortBy = DEFAULT_SORTING_TYPE;
 
+
+  FilterSettings(
+      {this.phrase,
+      this.categories = const [],
+      this.showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY,
+      this.showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY,
+      this.voivodeship,
+      this.city,
+      this.ageTypes = const [],
+      this.sortBy = DEFAULT_SORTING_TYPE});
+
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");
   }

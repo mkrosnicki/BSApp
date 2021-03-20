@@ -1,3 +1,4 @@
+import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
@@ -30,7 +31,7 @@ class _DealsScreenState extends State<DealsScreen> {
           AppBarSearchInput(
             onTapInputFunction: () => _showSearchPanel(true),
             onSubmitInputFunction: (searchText) {
-              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: searchText);
+              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings(phrase: searchText));
               _showSearchPanel(false);
             },
             searchInputController: _searchTextController,
