@@ -82,6 +82,14 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           title: Text('${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
           focusColor: Colors.grey,
         ),
+        if (_selectedCategories.isNotEmpty) FlatButton(
+          onPressed: () => _finishSelection(),
+          child: ListTile(
+            title: Text('Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+            subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+            focusColor: Colors.grey,
+          ),
+        ),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
@@ -116,12 +124,16 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   _selectCategory(CategoryModel category) {
     if (category.subCategories.isEmpty) {
       _selectedCategories.add(category);
-      Navigator.of(context).pop([..._selectedCategories]);
+      _finishSelection();
     } else {
       setState(() {
         _selectedCategories.add(category);
       });
     }
+  }
+
+  _finishSelection() {
+    Navigator.of(context).pop([..._selectedCategories]);
   }
 
   _goUp() {
