@@ -37,4 +37,9 @@ class Searches with ChangeNotifier {
   bool isSaved(FilterSettings filterSettings) {
     return savedSearches.any((element) => element.isSame(filterSettings));
   }
+
+  Future<void> deleteSearch(String searchId) async {
+    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: token);
+    return fetchSavedSearches();
+  }
 }

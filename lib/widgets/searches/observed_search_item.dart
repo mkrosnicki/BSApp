@@ -1,7 +1,9 @@
 import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/search_model.dart';
+import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ObservedSearchItem extends StatelessWidget {
   final SearchModel searchModel;
@@ -28,6 +30,12 @@ class ObservedSearchItem extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed(DealSearchResultScreen.routeName, arguments: searchModel.toFilterSettings());
           },
           child: Text('Zobacz wyniki'),
+        ),
+        GestureDetector(
+          onTap: () {
+            Provider.of<Searches>(context, listen: false).deleteSearch(searchModel.id);
+          },
+          child: Text('Przestań obserwować'),
         ),
         Divider()
       ],
