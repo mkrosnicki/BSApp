@@ -46,6 +46,19 @@ class SearchModel {
     );
   }
 
+  FilterSettings toFilterSettings() {
+    var filterSettings = new FilterSettings();
+    filterSettings.phrase = phrase;
+    filterSettings.categories = categories;
+    filterSettings.ageTypes = ageTypes;
+    filterSettings.showActiveOnly = showActiveOnly;
+    filterSettings.showInternetOnly = showInternetOnly;
+    filterSettings.voivodeship = voivodeship;
+    filterSettings.city = city;
+    filterSettings.sortBy = sortBy;
+    return filterSettings;
+  }
+
   bool isSame(FilterSettings filterSettings) {
     Function eq = const ListEquality().equals;
     return

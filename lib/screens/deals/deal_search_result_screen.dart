@@ -16,11 +16,19 @@ class DealSearchResultScreen extends StatefulWidget {
 }
 
 class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
-  FilterSettings filterSettings = FilterSettings();
+  FilterSettings filterSettings;
 
   final _searchTextController = TextEditingController();
 
+  _initFilterSettings() {
+    if (filterSettings == null) {
+      var passedFilterSettings = ModalRoute.of(context).settings.arguments;
+      filterSettings = passedFilterSettings != null ? passedFilterSettings : FilterSettings();
+    }
+  }
+
   _createSearchBox(BuildContext context) {
+    _initFilterSettings();
     _searchTextController.text =
         ModalRoute.of(context).settings.arguments as String;
     return Container(
