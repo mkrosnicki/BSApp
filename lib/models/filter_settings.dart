@@ -19,15 +19,9 @@ class FilterSettings {
   SortingType sortBy = DEFAULT_SORTING_TYPE;
 
 
-  FilterSettings(
-      {this.phrase,
-      this.categories,
-      this.showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY,
-      this.showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY,
-      this.voivodeship,
-      this.city,
-      this.ageTypes,
-      this.sortBy = DEFAULT_SORTING_TYPE}) : categories = categories ?? [], ageTypes = ageTypes ?? [];
+  FilterSettings();
+
+  FilterSettings.phrase(this.phrase);
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");

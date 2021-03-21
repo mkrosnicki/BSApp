@@ -31,7 +31,7 @@ class _DealsScreenState extends State<DealsScreen> {
           AppBarSearchInput(
             onTapInputFunction: () => _showSearchPanel(true),
             onSubmitInputFunction: (searchText) {
-              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings(phrase: searchText));
+              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings.phrase(searchText));
               _showSearchPanel(false);
             },
             searchInputController: _searchTextController,
