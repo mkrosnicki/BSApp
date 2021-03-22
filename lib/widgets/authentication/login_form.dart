@@ -1,5 +1,6 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/util/util_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +76,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _resendActivationToken(BuildContext context) {
-    Provider.of<Auth>(context, listen: false).resendVerificationToken(_emailController.text);
+    Provider.of<Auth>(context, listen: false)
+        .resendVerificationToken(_emailController.text);
     Navigator.of(context).pop();
   }
 
@@ -192,18 +194,27 @@ class _LoginFormState extends State<LoginForm> {
                       },
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text(
-                          'Nie pamiętasz hasła? - Trudno, masz problem :D'), // TODO
-                    ),
-                    Container(
                       width: double.infinity,
                       child: ElevatedButton(
                         child: Text('Zaloguj się'),
                         onPressed: _submit,
                       ),
                     ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 15.0),
+                        padding: const EdgeInsets.all(8.0),
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) =>
+                                      Theme.of(context).accentColor),
+                            ),
+                            onPressed: () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName),
+                            child: Text(
+                              'Nie pamiętasz hasła? Możesz zresetować je tutaj.',
+                              textAlign: TextAlign.center,
+                            ))),
                   ],
                 ),
               ),

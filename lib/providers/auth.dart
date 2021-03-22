@@ -108,6 +108,13 @@ class Auth with ChangeNotifier {
     await _apiProvider.get('/resend-token', requestParams: queryParameters);
   }
 
+  Future<void> resetUserPassword(String email) async {
+    var queryParameters = {
+      'email': email,
+    };
+    await _apiProvider.get('/auth/reset-password', requestParams: queryParameters);
+  }
+
   void _autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();

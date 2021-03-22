@@ -5,6 +5,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
           DealSearchResultScreen.routeName: (ctx) => DealSearchResultScreen(),
           CategorySelectionScreen.routeName: (ctx) => CategorySelectionScreen(),
           LocationSelectionScreen.routeName: (ctx) => LocationSelectionScreen(),
+          ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
         },
       ),
     );
