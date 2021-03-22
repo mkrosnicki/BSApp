@@ -16,13 +16,16 @@ class DealItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              deal.title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                deal.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

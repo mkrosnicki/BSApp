@@ -8,9 +8,8 @@ import 'comment_item.dart';
 class DealDetailsComments extends StatelessWidget {
 
   final DealModel deal;
-  final Function setCommentModeFunction;
 
-  DealDetailsComments(this.deal, this.setCommentModeFunction);
+  DealDetailsComments(this.deal,);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class DealDetailsComments extends StatelessWidget {
                       return Consumer<Comments>(
                         builder: (context, commentsData, child) => Column(
                           children: commentsData.dealComments
-                              .map((comment) => CommentItem(comment, setCommentModeFunction))
+                              .map((comment) => CommentItem(comment))
                               .toList(),
                         ),
                       );

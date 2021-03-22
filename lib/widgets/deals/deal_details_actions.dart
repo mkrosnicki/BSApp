@@ -1,11 +1,10 @@
-import 'package:BSApp/models/comment_mode.dart';
+import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealDetailsActions extends StatelessWidget {
 
-  final Function setCommentModeFunction;
-
-  DealDetailsActions(this.setCommentModeFunction);
+  DealDetailsActions();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,11 @@ class DealDetailsActions extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildActionItem('Lubię to', Icons.thumb_up, () {}),
-                _buildActionItem('Skomentuj', Icons.mode_comment_outlined, () => setCommentModeFunction(CommentMode.COMMENT_DEAL)),
+                _buildActionItem(
+                  'Skomentuj',
+                  Icons.mode_comment_outlined,
+                  () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
+                ),
               ],
             ),
           ),
@@ -36,10 +39,16 @@ class DealDetailsActions extends StatelessWidget {
       child: Container(
         child: Row(
           children: [
-            Icon(iconData, size: 18,),
+            Icon(
+              iconData,
+              size: 18,
+            ),
             Container(
               padding: EdgeInsets.only(left: 4.0),
-              child: Text(title, style: TextStyle(fontSize: 14,)),
+              child: Text(title,
+                  style: TextStyle(
+                    fontSize: 14,
+                  )),
             ),
           ],
         ),

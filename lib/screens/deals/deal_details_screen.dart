@@ -1,14 +1,14 @@
-import 'package:BSApp/models/comment_mode.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
 import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class DealDetailsScreen extends StatefulWidget {
   static const routeName = '/deal-details';
@@ -18,13 +18,14 @@ class DealDetailsScreen extends StatefulWidget {
 }
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> {
-  CommentMode _commentMode = CommentMode.NONE;
-  String _commentToReplyId;
+
+
 
   @override
   Widget build(BuildContext context) {
     final dealId = ModalRoute.of(context).settings.arguments as String;
     final deal = Provider.of<Deals>(context, listen: false).findById(dealId);
+    Provider.of<DealReplyState>(context, listen: false).resetLazy();
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -43,15 +44,21 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                         'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
                     _buildDealActionsSection(deal),
                     DealDetailsDescription(deal),
-                    DealDetailsActions(_setCommentMode),
-                    DealDetailsComments(deal, _setCommentMode),
+                    DealDetailsActions(),
+                    DealDetailsComments(deal),
                     // _buildCommentsSection(deal)
                   ],
                 ),
               ),
             ),
-            if (_commentMode != CommentMode.NONE)
-              DealDetailsNewComment(dealId, _commentMode, _commentToReplyId),
+            Consumer<DealReplyState>(
+              builder: (context, replyState, child) {
+                ReplyState currentReplyState = replyState.replyState;
+                String commentId = replyState.commentId;
+                return currentReplyState != ReplyState.NONE ? DealDetailsNewComment(
+                    dealId, currentReplyState, commentId) : Container();
+              },
+            ),
           ],
         ),
       ),
@@ -73,21 +80,19 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () => _toggleFavourites(deal, isFavourite),
+                onTap: () => _toggleFavourites(deal, isFavourite, isUserLoggedIn),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 0.0, horizontal: 8.0),
-                  child: isUserLoggedIn
-                      ? isFavourite
-                          ? Icon(
-                              Icons.favorite,
-                              size: 24,
-                            )
-                          : Icon(
-                              Icons.favorite_border,
-                              size: 24,
-                            )
-                      : Icon(null),
+                  child: isFavourite
+                      ? Icon(
+                    Icons.favorite,
+                    size: 24,
+                  )
+                      : Icon(
+                    Icons.favorite_border,
+                    size: 24,
+                  ),
                 ),
               ),
             ],
@@ -97,8 +102,10 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
     );
   }
 
-  _toggleFavourites(DealModel deal, bool isFavourite) {
-    if (isFavourite) {
+  _toggleFavourites(DealModel deal, bool isFavourite, bool isUserLoggedIn) {
+    if (!isUserLoggedIn) {
+      _showLoginScreen(context);
+    } else if (isFavourite) {
       Provider.of<Deals>(context, listen: false)
           .deleteFromObservedDeals(deal.id);
     } else {
@@ -106,10 +113,11 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
     }
   }
 
-  _setCommentMode(CommentMode commentMode, {String commentToReplyId}) {
-    setState(() {
-      _commentMode = commentMode;
-      _commentToReplyId = commentToReplyId;
-    });
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 }
