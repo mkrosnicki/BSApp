@@ -33,6 +33,9 @@ class _LoginFormState extends State<LoginForm> {
   );
 
   Future<void> _submit() async {
+
+    bool wasError = false;
+
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -49,6 +52,7 @@ class _LoginFormState extends State<LoginForm> {
         _authData['password'],
       );
     } on CustomException catch (error) {
+      wasError = true;
       if (error.toString().contains('Email is not verified')) {
         //
         await _showNotVerifiedDialog();
@@ -65,14 +69,19 @@ class _LoginFormState extends State<LoginForm> {
         await _showErrorDialog(errorMessage);
       }
     } catch (error) {
+      wasError = true;
       const errorMessage =
           'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
       await _showErrorDialog(errorMessage);
     }
 
-    setState(() {
-      _isLoading = false;
-    });
+    if (wasError) {
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   void _resendActivationToken(BuildContext context) {
