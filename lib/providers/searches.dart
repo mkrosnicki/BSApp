@@ -44,4 +44,13 @@ class Searches with ChangeNotifier {
     await _apiProvider.delete('/users/me/subscriptions/$searchId', token: token);
     return fetchSavedSearches();
   }
+
+  void update(String token) async {
+    this.token = token;
+    if (token == null) {
+      fetchedSavedSearches = [];
+    } else {
+      await fetchSavedSearches();
+    }
+  }
 }
