@@ -22,9 +22,7 @@ class DealDetailsActions extends StatelessWidget {
                 _buildActionItem(
                   'Skomentuj',
                   Icons.mode_comment_outlined,
-                  () {
-                    Provider.of<DealReplyState>(context, listen: false).startDealReply();
-                  },
+                  () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
                 ),
               ],
             ),

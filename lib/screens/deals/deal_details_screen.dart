@@ -2,6 +2,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
@@ -18,11 +19,13 @@ class DealDetailsScreen extends StatefulWidget {
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> {
 
+
+
   @override
   Widget build(BuildContext context) {
     final dealId = ModalRoute.of(context).settings.arguments as String;
     final deal = Provider.of<Deals>(context, listen: false).findById(dealId);
-    Provider.of<DealReplyState>(context, listen: false).reset();
+    Provider.of<DealReplyState>(context, listen: false).resetLazy();
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -77,21 +80,19 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () => _toggleFavourites(deal, isFavourite),
+                onTap: () => _toggleFavourites(deal, isFavourite, isUserLoggedIn),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 0.0, horizontal: 8.0),
-                  child: isUserLoggedIn
-                      ? isFavourite
-                          ? Icon(
-                              Icons.favorite,
-                              size: 24,
-                            )
-                          : Icon(
-                              Icons.favorite_border,
-                              size: 24,
-                            )
-                      : Icon(null),
+                  child: isFavourite
+                      ? Icon(
+                    Icons.favorite,
+                    size: 24,
+                  )
+                      : Icon(
+                    Icons.favorite_border,
+                    size: 24,
+                  ),
                 ),
               ),
             ],
@@ -101,12 +102,22 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
     );
   }
 
-  _toggleFavourites(DealModel deal, bool isFavourite) {
-    if (isFavourite) {
+  _toggleFavourites(DealModel deal, bool isFavourite, bool isUserLoggedIn) {
+    if (!isUserLoggedIn) {
+      _showLoginScreen(context);
+    } else if (isFavourite) {
       Provider.of<Deals>(context, listen: false)
           .deleteFromObservedDeals(deal.id);
     } else {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 }

@@ -13,6 +13,11 @@ class DealReplyState with ChangeNotifier {
     return _commentIdToReply;
   }
 
+  void resetLazy() {
+    _commentIdToReply = commentId;
+    _currentReplyState = replyState;
+  }
+
   void reset() {
     _setReplyState(ReplyState.NONE, null);
   }
