@@ -16,4 +16,14 @@ class Voivodeship {
         cities: (voivodeshipSnapshot['cities'] as List).map((e) => City.of(e)).toList()
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Voivodeship &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

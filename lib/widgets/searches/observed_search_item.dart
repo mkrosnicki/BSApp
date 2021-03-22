@@ -27,7 +27,7 @@ class ObservedSearchItem extends StatelessWidget {
         Text(AgeTypeHelper.asParamString(searchModel.ageTypes)),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(DealSearchResultScreen.routeName, arguments: searchModel.toFilterSettings());
+            Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: searchModel.toFilterSettings());
           },
           child: Text('Zobacz wyniki'),
         ),
