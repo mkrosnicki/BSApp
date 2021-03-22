@@ -1,5 +1,7 @@
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,19 +45,42 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                 },
               ),
             ),
-            FlatButton(
-              onPressed: _commentText.trim().isEmpty
-                  ? null
-                  : () => widget.replyState == ReplyState.REPLY_DEAL
-                      ? _addCommentToDeal()
-                      : _addReplyToComment(),
-              child: Text('Wyślij'),
+            Consumer<Auth>(
+              builder: (context, authData, child) {
+                bool isUserLoggedIn = authData.isAuthenticated;
+                return FlatButton(
+                  onPressed: () => _addReply(isUserLoggedIn),
+                  child: Text('Wyślij'),
+                );
+              },
             ),
           ],
         ),
       ),
     );
   }
+
+  _addReply(bool isUserLoggedIn) async {
+    if (_commentText.trim().isEmpty) {
+      return null;
+    }
+    if (!isUserLoggedIn) {
+      _showLoginScreen(context);
+    } else {
+      return widget.replyState == ReplyState.REPLY_DEAL
+          ? _addCommentToDeal()
+          : _addReplyToComment();
+    }
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
+  }
+
 
   _addReplyToComment() async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(
