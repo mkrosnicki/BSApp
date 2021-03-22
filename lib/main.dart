@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         ChangeNotifierProxyProvider<Auth, Searches>(
-          create: (context) => Searches(),
+          create: (context) => Searches.empty(),
           update: (context, auth, previousSearches) {
             return Searches(fetchedSavedSearches: previousSearches.fetchedSavedSearches, token: auth.token);
           },

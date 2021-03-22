@@ -11,6 +11,8 @@ class Searches with ChangeNotifier {
 
   Searches({this.fetchedSavedSearches, this.token});
 
+  Searches.empty();
+
   List<SearchModel> get savedSearches {
     return [...fetchedSavedSearches];
   }
