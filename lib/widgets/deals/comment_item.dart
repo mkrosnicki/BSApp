@@ -1,29 +1,30 @@
-import 'package:BSApp/models/comment_mode.dart';
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CommentItem extends StatelessWidget {
   final CommentModel comment;
-  final Function setCommentModeFunction;
 
-  CommentItem(this.comment, this.setCommentModeFunction);
+  CommentItem(this.comment);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildComment(comment),
+        _buildComment(context, comment),
         Padding(
           padding: EdgeInsets.only(left: 30.0),
           child: Column(
-            children: comment.subComments.map((reply) => _buildComment(reply)).toList(),
+            children: comment.subComments.map((reply) => _buildComment(context, reply))
+                .toList(),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildComment(CommentModel comment) {
+  Widget _buildComment(BuildContext context, CommentModel comment) {
     return Column(
       children: [
         Padding(
@@ -45,7 +46,7 @@ class CommentItem extends StatelessWidget {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
                 child: Text(comment.content),
               ),
               if (comment.parentId == null)
@@ -53,8 +54,7 @@ class CommentItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => setCommentModeFunction(CommentMode.REPLY_COMMENT,
-                          commentToReplyId: comment.id),
+                      onTap: () => Provider.of<DealReplyState>(context, listen: false).startCommentReply(comment.id),
                       child: Text(
                         'Odpowiedz',
                         style: TextStyle(
