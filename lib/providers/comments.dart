@@ -9,6 +9,8 @@ class Comments with ChangeNotifier {
   List<CommentModel> fetchedAddedComments = [];
   String token;
 
+  Comments.empty();
+
   Comments({this.fetchedDealComments, this.fetchedAddedComments, this.token});
 
   List<CommentModel> get dealComments {

@@ -18,6 +18,8 @@ class Deals with ChangeNotifier {
   List<DealModel> fetchedAddedDeals = [];
   String token;
 
+  Deals.empty();
+
   Deals({this.allDeals, this.fetchedObservedDeals, this.token});
 
 

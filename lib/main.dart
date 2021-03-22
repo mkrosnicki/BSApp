@@ -33,14 +33,16 @@ class MyApp extends StatelessWidget {
           create: (_) => Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Deals>(
+          create: (context) => Deals.empty(),
           update: (context, auth, previousDeals) {
             return Deals(
-                allDeals: previousDeals != null ? previousDeals.deals : [],
-                fetchedObservedDeals: previousDeals != null ? previousDeals.fetchedObservedDeals : [],
+                allDeals: previousDeals.deals,
+                fetchedObservedDeals: auth.isAuthenticated ? previousDeals.fetchedObservedDeals : [],
                 token: auth.token);
           },
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
+          create: (context) => Comments.empty(),
           update: (context, auth, previousComments) {
             return Comments(token: auth.token);
           },
