@@ -12,13 +12,15 @@ class FilterSelectionScreen extends StatefulWidget {
 }
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
-
   FilterSettings filtersSettings;
 
   _initFilterSettings(BuildContext context) {
     if (filtersSettings == null) {
-      FilterSettings passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
-      filtersSettings = passedFilterSettings != null ? passedFilterSettings : FilterSettings();
+      FilterSettings passedFilterSettings =
+          ModalRoute.of(context).settings.arguments as FilterSettings;
+      filtersSettings = passedFilterSettings != null
+          ? passedFilterSettings
+          : FilterSettings();
     }
   }
 
@@ -35,7 +37,13 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                 filtersSettings = FilterSettings();
               });
             },
-            child: Text('Wyczyść', style: TextStyle(color: Colors.white),),
+            child: TextButton(
+              onPressed: _clearFilters,
+              child: Text(
+                'Wyczyść',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           )
         ],
       ),
@@ -199,6 +207,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
         filtersSettings.city = (locations as List)[1];
       });
     }
+  }
+
+  _clearFilters() {
+    setState(() {
+      filtersSettings.clearAll();
+    });
   }
 
   _acceptFilters(BuildContext context) {

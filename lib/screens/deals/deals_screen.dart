@@ -80,12 +80,6 @@ class _DealsScreenState extends State<DealsScreen> {
               child: Icon(Icons.filter_list),
             ),
           ),
-          if (!_isSearchPanelVisible) InkWell(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
-              child: Icon(Icons.favorite_border),
-            ),
-          ),
           if (_isSearchPanelVisible)
             GestureDetector(
               onTap: () => _showSearchPanel(false),
