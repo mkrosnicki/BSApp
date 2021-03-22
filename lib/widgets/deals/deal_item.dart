@@ -16,19 +16,6 @@ class DealItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                deal.title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +40,20 @@ class DealItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(deal.dealType.toString()),
-                      Text(deal.categories.last),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+                          child: Text(
+                            deal.title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(deal.regularPrice.toString()),
                       Text(deal.regularPrice.toString()),
                       Row(children: [
                         Text('${deal.currentPrice.toString()} zł'),
