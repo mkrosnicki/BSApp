@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 class DealModel {
   final String id;
+  final DateTime addedAt;
+  final String addedById;
+  final String addedByUsername;
+  final String addedByAvatarPath;
   final String title;
   final String description;
   final String link;
@@ -22,6 +26,10 @@ class DealModel {
 
   DealModel({
     @required this.id,
+    @required this.addedAt,
+    @required this.addedById,
+    @required this.addedByUsername,
+    @required this.addedByAvatarPath,
     @required this.title,
     @required this.description,
     @required this.link,

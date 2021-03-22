@@ -53,6 +53,7 @@ class DealItem extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Text(deal.addedByUsername),
                       Text(deal.regularPrice.toString()),
                       Text(deal.regularPrice.toString()),
                       Row(children: [

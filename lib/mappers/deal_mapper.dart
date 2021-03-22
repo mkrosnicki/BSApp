@@ -3,8 +3,13 @@ import 'package:BSApp/models/deal_model.dart';
 
 class DealMapper {
   static DealModel of(dynamic dealObject) {
+    print(dealObject);
     return DealModel(
         id: dealObject['id'],
+        addedAt: DateTime.parse(dealObject['addedAt']),
+        addedById: dealObject['addedById'],
+        addedByUsername: dealObject['addedByUsername'],
+        addedByAvatarPath: dealObject['addedByAvatarPath'],
         title: dealObject['title'],
         description: dealObject['description'],
         link: dealObject['link'],
