@@ -97,6 +97,27 @@ class FilterSettings {
     this.city = null;
   }
 
+  clearAll() {
+    clearPhrase();
+    clearInternetOnly();
+    clearActiveOnly();
+    clearCategories();
+    clearAgeTypes();
+    clearSorting();
+    clearLocation();
+  }
+
+  bool areDefaults() {
+    return
+        showInternetOnly == DEFAULT_SHOW_INTERNET_ONLY &&
+        showActiveOnly == DEFAULT_SHOW_ACTIVE_ONLY &&
+        categories.isEmpty &&
+        ageTypes.isEmpty &&
+        sortBy == DEFAULT_SORTING_TYPE &&
+        city == null &&
+        voivodeship == null;
+  }
+
   Map<String, dynamic> toSaveSearchDto() {
     Map<String, dynamic> dto = {
       'phrase': phrase,

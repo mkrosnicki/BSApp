@@ -24,7 +24,9 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   _initFilterSettings() {
     if (filterSettings == null) {
       var passedFilterSettings = ModalRoute.of(context).settings.arguments;
-      filterSettings = passedFilterSettings != null ? passedFilterSettings : FilterSettings();
+      filterSettings = passedFilterSettings != null
+          ? passedFilterSettings
+          : FilterSettings();
       _searchTextController.text = filterSettings.phrase;
     }
   }
@@ -50,7 +52,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             searchInputController: _searchTextController,
           ),
           Consumer<Searches>(
-            builder: (context, searchesData, child) =>  GestureDetector(
+            builder: (context, searchesData, child) => GestureDetector(
               onTap: () {
                 if (searchesData.token == null) {
                   _showLoginScreen(context);
@@ -60,7 +62,9 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: searchesData.isSaved(filterSettings) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                child: searchesData.isSaved(filterSettings)
+                    ? Icon(Icons.favorite)
+                    : Icon(Icons.favorite_border),
               ),
             ),
           ),
@@ -80,7 +84,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(
+            if (!filterSettings.areDefaults()) SizedBox(
               height: 50,
               width: double.infinity,
               child: Padding(
@@ -103,14 +107,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                     'Znalezione okazje',
                     style: TextStyle(fontSize: 18),
                   ),
-                  InkWell(
-                    onTap: () => _showFilterSelectionDialog(context),
-                    customBorder: CircleBorder(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Icon(Icons.filter_list),
-                    ),
-                  )
+                  TextButton(
+                    onPressed: () => _showFilterSelectionDialog(context),
+                    child: Text('Edytuj filtry'),
+                  ),
                 ],
               ),
             ),
@@ -251,6 +251,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   _saveSearch() {
-    Provider.of<Searches>(context, listen: false).saveSearch(filterSettings.toSaveSearchDto());
+    Provider.of<Searches>(context, listen: false)
+        .saveSearch(filterSettings.toSaveSearchDto());
   }
 }

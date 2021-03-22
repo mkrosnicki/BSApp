@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'deal_search_result_screen.dart';
-import 'filter_selection_screen.dart';
 
 class DealsScreen extends StatefulWidget {
   static const routeName = '/deals';
@@ -31,25 +30,26 @@ class _DealsScreenState extends State<DealsScreen> {
           AppBarSearchInput(
             onTapInputFunction: () => _showSearchPanel(true),
             onSubmitInputFunction: (searchText) {
-              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings.phrase(searchText));
+              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
+                  arguments: FilterSettings.phrase(searchText));
               _showSearchPanel(false);
             },
             searchInputController: _searchTextController,
           ),
-          if (_isSearchPanelVisible)
-            GestureDetector(
-              onTap: () => _showSearchPanel(false),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Anuluj',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-            ),
+          // if (_isSearchPanelVisible)
+          //   GestureDetector(
+          //     onTap: () => _showSearchPanel(false),
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(left: 8.0),
+          //       child: Text(
+          //         'Anuluj',
+          //         style: TextStyle(
+          //           color: Colors.white,
+          //           fontSize: 12,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
@@ -73,6 +73,33 @@ class _DealsScreenState extends State<DealsScreen> {
       appBar: AppBar(
         titleSpacing: 8,
         title: _createSearchBox(),
+        actions: [
+          if (!_isSearchPanelVisible) InkWell(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
+              child: Icon(Icons.filter_list),
+            ),
+          ),
+          if (!_isSearchPanelVisible) InkWell(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
+              child: Icon(Icons.favorite_border),
+            ),
+          ),
+          if (_isSearchPanelVisible)
+            GestureDetector(
+              onTap: () => _showSearchPanel(false),
+              child: TextButton(
+                child: Text(
+                  'Anuluj',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            )
+        ],
       ),
       body: !_isSearchPanelVisible
           ? FutureBuilder(
