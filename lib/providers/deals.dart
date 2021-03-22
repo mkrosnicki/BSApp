@@ -94,4 +94,15 @@ class Deals with ChangeNotifier {
   isObservedDeal(DealModel deal) {
     return fetchedObservedDeals.contains(deal);
   }
+
+  void update(String token) async {
+    this.token = token;
+    if (token == null) {
+      fetchedObservedDeals = [];
+      fetchedAddedDeals = [];
+    } else {
+      await fetchAddedDeals();
+      await fetchObservedDeals();
+    }
+  }
 }

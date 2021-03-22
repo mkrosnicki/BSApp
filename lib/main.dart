@@ -34,12 +34,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Deals>(
           create: (context) => Deals.empty(),
-          update: (context, auth, previousDeals) {
-            return Deals(
-                allDeals: previousDeals.deals,
-                fetchedObservedDeals: auth.isAuthenticated ? previousDeals.fetchedObservedDeals : [],
-                token: auth.token);
-          },
+          lazy: true,
+          update: (context, auth, previousDeals) => previousDeals..update(auth.token),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
