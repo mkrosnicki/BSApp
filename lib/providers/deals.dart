@@ -1,13 +1,7 @@
 
-import 'package:BSApp/mappers/deal_mapper.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
-
-enum DealType {
-  COUPON,
-  OCCASION,
-}
 
 class Deals with ChangeNotifier {
 
@@ -42,7 +36,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      loadedDeals.add(DealMapper.of(element));
+      loadedDeals.add(DealModel.of(element));
     });
     allDeals = loadedDeals;
     notifyListeners();
@@ -56,7 +50,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      fetchedDeals.add(DealMapper.of(element));
+      fetchedDeals.add(DealModel.of(element));
     });
     fetchedObservedDeals = fetchedDeals;
     notifyListeners();
@@ -70,7 +64,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      fetchedDeals.add(DealMapper.of(element));
+      fetchedDeals.add(DealModel.of(element));
     });
     fetchedAddedDeals = fetchedDeals;
     notifyListeners();

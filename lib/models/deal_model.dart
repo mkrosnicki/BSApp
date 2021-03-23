@@ -1,4 +1,4 @@
-import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/models/deal_type.dart';
 import 'package:flutter/material.dart';
 
 class DealModel {
@@ -47,6 +47,32 @@ class DealModel {
     @required this.numberOfComments,
     @required this.points,
   });
+
+  static DealModel of(dynamic dealObject) {
+    return DealModel(
+        id: dealObject['id'],
+        addedAt: DateTime.parse(dealObject['addedAt']),
+        addedById: dealObject['addedById'],
+        addedByUsername: dealObject['addedByUsername'],
+        addedByAvatarPath: dealObject['addedByAvatarPath'],
+        title: dealObject['title'],
+        description: dealObject['description'],
+        link: dealObject['link'],
+        dealType: DealTypeHelper.of(dealObject['dealType']),
+        categories: [...(dealObject['categories'] as List).map((e) => e['name']).toList()],
+        locationType: dealObject['locationType'],
+        voivodeship: dealObject['voivodeship'],
+        city: dealObject['city'],
+        locationDescription: dealObject['locationDescription'],
+        currentPrice: dealObject['currentPrice'],
+        regularPrice: dealObject['regularPrice'],
+        shippingPrice: dealObject['shippingPrice'],
+        startDate: DateTime.parse(dealObject['startDate']),
+        endDate: DateTime.parse(dealObject['endDate']),
+        numberOfComments: dealObject['numberOfComments'],
+        points: dealObject['points']);
+  }
+
 
   String get discountString {
     if (dealType == DealType.OCCASION) {

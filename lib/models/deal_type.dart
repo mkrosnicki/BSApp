@@ -1,6 +1,9 @@
-import 'package:BSApp/providers/deals.dart';
+enum DealType {
+  COUPON,
+  OCCASION,
+}
 
-class DealTypeMapper {
+class DealTypeHelper {
 
   static DealType of(String dealType) {
     switch(dealType) {
@@ -14,5 +17,4 @@ class DealTypeMapper {
         throw Exception('Not known deal type!');
     }
   }
-
 }
