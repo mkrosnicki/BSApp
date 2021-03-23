@@ -122,6 +122,6 @@ class DealItem extends StatelessWidget {
   }
 
   _navigateToUserProfileScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: deal.addedById);
   }
 }
