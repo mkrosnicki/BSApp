@@ -66,9 +66,19 @@ class DealItem extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Icon(CupertinoIcons.hand_thumbsdown, size: 18.0, color: Colors.white,),
-                                      Text('2', style: TextStyle(color: Colors.white)),
-                                      Icon(CupertinoIcons.hand_thumbsup, size: 18.0, color: Colors.white,),
+                                      Icon(
+                                        CupertinoIcons.hand_thumbsdown,
+                                        size: 18.0,
+                                        color: Colors.white,
+                                      ),
+                                      Text('2',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      Icon(
+                                        CupertinoIcons.hand_thumbsup,
+                                        size: 18.0,
+                                        color: Colors.white,
+                                      ),
                                     ],
                                   ),
                                   margin: EdgeInsets.all(5.0),
@@ -77,8 +87,8 @@ class DealItem extends StatelessWidget {
                               ),
                             ),
                             // Positioned(
-                            //   right: 2.0,
-                            //   bottom: 0,
+                            //   top: 0.0,
+                            //   left: 0.0,
                             //   child: Container(
                             //     clipBehavior: Clip.hardEdge,
                             //     padding: EdgeInsets.all(4.0),
@@ -175,14 +185,16 @@ class DealItem extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
                                   children: [
                                     // Text('${deal.regularPrice.toString()} zł'),
                                     // Padding(
                                     //     padding: EdgeInsets.all(4.0),
                                     //     child: Text('•')),
                                     Text(
-                                      '${deal.currentPrice.toString()} zł',
+                                      '${deal.currentPrice.toString()} zł ',
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontSize: 16,
@@ -191,7 +203,14 @@ class DealItem extends StatelessWidget {
                                     // Padding(
                                     //     padding: EdgeInsets.all(4.0),
                                     //     child: Text('•')),
-                                    Text('(${deal.discountString})'),
+                                    Text(
+                                      '${deal.regularPrice} zł',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black54,
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
                                   ],
                                 )
                               ],
@@ -248,12 +267,16 @@ class DealItem extends StatelessWidget {
                                     direction: Axis.horizontal,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Flexible(
                                         flex: 1,
                                         child: Flex(
                                           direction: Axis.horizontal,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Icon(
                                               CupertinoIcons.hand_thumbsup,
@@ -269,7 +292,10 @@ class DealItem extends StatelessWidget {
                                       ),
                                       Flexible(
                                         flex: 1,
-                                        child: Text('Sprawdź'),
+                                        child: Text('ZOBACZ',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            )),
                                       ),
                                     ],
                                   ),
