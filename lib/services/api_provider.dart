@@ -35,7 +35,7 @@ class ApiProvider {
         headers.putIfAbsent("Authorization", () => 'Bearer $token');
       }
       if (requestType == _RequestType.POST) {
-        headers.putIfAbsent('Content-Type', () => 'application/json');
+        headers.putIfAbsent('Content-Type', () => 'application/json;charset=UTF-8');
       }
       var uri = _buildUri(endpoint, requestParams);
       print(uri);
@@ -73,6 +73,7 @@ class ApiProvider {
     switch (response.statusCode) {
       case 200:
       case 201:
+      case 202:
         String decodedBody = utf8.decode(response.bodyBytes);
         var responseJson = decodedBody.isNotEmpty
             ? json.decode(decodedBody)

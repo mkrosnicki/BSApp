@@ -28,7 +28,7 @@ class ProfileOptionsList extends StatelessWidget {
       const ProfileOptionItem(title: 'title1', route: '/favourites'),
       const ProfileOptionsHeader('Ustawienia'),
       const ProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
-      const ProfileOptionItem(title: 'Zmień hasło', route: '/favourites'),
+      const ProfileOptionItem(title: 'Zmień hasło', route: '/change-password'),
       const ProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
       ProfileOptionItem(
         title: 'Usuń konto',

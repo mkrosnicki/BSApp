@@ -115,6 +115,16 @@ class Auth with ChangeNotifier {
     await _apiProvider.get('/auth/reset-password', requestParams: queryParameters);
   }
 
+  Future<void> changeUserPassword(String currentPassword, String newPassword) async {
+    var url = '/auth/change-password';
+    var body = {
+      'userId': _userId,
+      'currentPassword': currentPassword,
+      'newPassword': newPassword,
+    };
+    await _apiProvider.post(url, body);
+  }
+
   void _autoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();
