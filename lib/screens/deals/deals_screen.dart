@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -75,6 +76,7 @@ class _DealsScreenState extends State<DealsScreen> {
         title: _createSearchBox(),
         actions: [
           if (!_isSearchPanelVisible) InkWell(
+            onTap: () => _showFilterSelectionDialog(context),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
               child: Icon(Icons.filter_list),
@@ -133,4 +135,19 @@ class _DealsScreenState extends State<DealsScreen> {
   Future<void> _refreshDeals(BuildContext context) async {
     await Provider.of<Deals>(context, listen: false).fetchDeals();
   }
+
+  Future _showFilterSelectionDialog(BuildContext context) async {
+    var newFilterSettings =
+    await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+        builder: (BuildContext context) {
+          return FilterSelectionScreen();
+        },
+        settings: RouteSettings(arguments: FilterSettings()),
+        fullscreenDialog: true));
+    if (newFilterSettings != null) {
+      Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
+          arguments: newFilterSettings);
+    }
+  }
+
 }

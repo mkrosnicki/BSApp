@@ -135,7 +135,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
               child: RaisedButton(
-                child: const Text('Filtruj'),
+                child: const Text('Pokaż wyniki'),
                 onPressed: () => _acceptFilters(context),
               ),
             ),
