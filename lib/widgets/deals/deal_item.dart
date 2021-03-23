@@ -1,5 +1,6 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
+import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class DealItem extends StatelessWidget {
@@ -26,7 +27,9 @@ class DealItem extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id);
+                      Navigator.of(context).pushNamed(
+                          DealDetailsScreen.routeName,
+                          arguments: deal.id);
                     },
                     child: Image.network(
                         'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
@@ -36,14 +39,18 @@ class DealItem extends StatelessWidget {
               Flexible(
                 flex: 60,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 0.0, horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal.id),
+                        onTap: () => Navigator.of(context).pushNamed(
+                            DealDetailsScreen.routeName,
+                            arguments: deal.id),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 0.0),
                           child: Text(
                             deal.title,
                             style: TextStyle(
@@ -53,14 +60,23 @@ class DealItem extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(deal.addedByUsername),
+                      GestureDetector(
+                        onTap: () => _navigateToUserProfileScreen(context),
+                        child: Text(
+                          deal.addedByUsername,
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
                       Text(deal.regularPrice.toString()),
                       Text(deal.regularPrice.toString()),
-                      Row(children: [
-                        Text('${deal.currentPrice.toString()} zł'),
-                        Padding(padding: EdgeInsets.all(4.0), child: Text('•')),
-                        Text(deal.discountString),
-                      ],),
+                      Row(
+                        children: [
+                          Text('${deal.currentPrice.toString()} zł'),
+                          Padding(
+                              padding: EdgeInsets.all(4.0), child: Text('•')),
+                          Text(deal.discountString),
+                        ],
+                      ),
                       Text(deal.description),
                     ],
                   ),
@@ -74,17 +90,26 @@ class DealItem extends StatelessWidget {
             child: Container(
               color: Color.fromRGBO(249, 250, 251, 1),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                      child: Icon(Icons.favorite_border, size: 16,),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 8.0),
+                      child: Icon(
+                        Icons.favorite_border,
+                        size: 16,
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-                      child: Icon(Icons.mark_chat_unread_outlined, size: 16,),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 8.0),
+                      child: Icon(
+                        Icons.mark_chat_unread_outlined,
+                        size: 16,
+                      ),
                     ),
                   ],
                 ),
@@ -94,5 +119,9 @@ class DealItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _navigateToUserProfileScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
   }
 }

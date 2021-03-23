@@ -17,6 +17,7 @@ import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
           CategorySelectionScreen.routeName: (ctx) => CategorySelectionScreen(),
           LocationSelectionScreen.routeName: (ctx) => LocationSelectionScreen(),
           ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
+          UserProfileScreen.routeName: (ctx) => UserProfileScreen(),
         },
       ),
     );
