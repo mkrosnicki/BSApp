@@ -23,7 +23,7 @@ class DealItem extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 flex: 35,
@@ -36,16 +36,18 @@ class DealItem extends StatelessWidget {
                           arguments: deal.id);
                     },
                     child: Stack(
-                      fit: StackFit.loose,
+                      fit: StackFit.passthrough,
                       children: [
                         Container(
                           height: 100,
+                          width: double.infinity,
                           child: Image.network(
-                            'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg',
+                            'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
+                            fit: BoxFit.cover,
                           ),
                         ),
                         Positioned(
-                          right: 8,
+                          right: 0,
                           bottom: 0,
                           child: Container(
                             padding: EdgeInsets.all(2.0),
@@ -79,70 +81,72 @@ class DealItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () =>
-                            Navigator.of(context).pushNamed(
-                                DealDetailsScreen.routeName,
-                                arguments: deal.id),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 0.0),
-                          child: Flex(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            direction: Axis.horizontal,
-                            children: [
-                              Flexible(
-                                flex: 8,
-                                child: Text(
-                                  deal.title,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  // overflow: TextOverflow.clip,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 2,
-                                child: Consumer<Auth>(
-                                  builder: (context, authData, child) => Consumer<Deals>(
-                                    builder: (context, dealsData, child) {
-                                      return GestureDetector(
-                                        onTap: () => _toggleFavourites(context, deal, dealsData.isObservedDeal(deal), authData.isAuthenticated),
-                                        child: dealsData.isObservedDeal(deal) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
-                                      );
-                                    },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(
+                                  DealDetailsScreen.routeName,
+                                  arguments: deal.id),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: Flex(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              direction: Axis.horizontal,
+                              children: [
+                                Flexible(
+                                  flex: 8,
+                                  child: Text(
+                                    deal.title,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    // overflow: TextOverflow.clip,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Flexible(
+                                  flex: 2,
+                                  child: Consumer<Auth>(
+                                    builder: (context, authData, child) => Consumer<Deals>(
+                                      builder: (context, dealsData, child) {
+                                        return GestureDetector(
+                                          onTap: () => _toggleFavourites(context, deal, dealsData.isObservedDeal(deal), authData.isAuthenticated),
+                                          child: dealsData.isObservedDeal(deal) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () => _navigateToUserProfileScreen(context),
-                        child: Text(
-                          deal.addedByUsername,
-                          style: TextStyle(color: Colors.blue),
+                        Row(
+                          children: [
+                            Text('${deal.regularPrice.toString()} zł'),
+                            Padding(
+                                padding: EdgeInsets.all(4.0), child: Text('•')),
+                            Text('${deal.currentPrice.toString()} zł'),
+                            Padding(
+                                padding: EdgeInsets.all(4.0), child: Text('•')),
+                            Text(deal.discountString),
+                          ],
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Text('${deal.regularPrice.toString()} zł'),
-                          Padding(
-                              padding: EdgeInsets.all(4.0), child: Text('•')),
-                          Text('${deal.currentPrice.toString()} zł'),
-                          Padding(
-                              padding: EdgeInsets.all(4.0), child: Text('•')),
-                          Text(deal.discountString),
-                        ],
-                      ),
-                      Text(deal.description),
-                    ],
+                        GestureDetector(
+                          onTap: () => _navigateToUserProfileScreen(context),
+                          child: Text(
+                            deal.addedByUsername,
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                        Text(deal.description),
+                      ],
+                    ),
                   ),
                 ),
               ),
