@@ -4,6 +4,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +37,12 @@ class DealItem extends StatelessWidget {
                           arguments: deal.id);
                     },
                     child: Stack(
-                      fit: StackFit.passthrough,
+                      fit: StackFit.loose,
                       children: [
+                        Container(
+                          height: 110,
+                          width: double.infinity,
+                        ),
                         Container(
                           height: 100,
                           width: double.infinity,
@@ -46,31 +51,46 @@ class DealItem extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            padding: EdgeInsets.all(2.0),
-                            // color: Theme.of(context).accentColor,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Theme
-                                  .of(context)
-                                  .accentColor,
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: 16,
-                              minHeight: 16,
-                            ),
-                            child: Text(
-                              'value',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 10,
+                        new Container(
+                          alignment: Alignment.topCenter,
+                          padding: new EdgeInsets.only(
+                              top: 85.0, right: 0.0, left: 0.0),
+                          child: new Container(
+                            height: 35.0,
+                            width: MediaQuery.of(context).size.width,
+                            child: new Card(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(CupertinoIcons.hand_thumbsup, size: 16,),
+                                  Text('2'),
+                                  Icon(CupertinoIcons.hand_thumbsup, size: 16,),
+                                ],
                               ),
+                              margin: EdgeInsets.all(5.0),
+                              color: Colors.white,
                             ),
                           ),
-                        )
+                        ),
+                        // Positioned(
+                        //   right: 2.0,
+                        //   bottom: 0,
+                        //   child: Container(
+                        //     clipBehavior: Clip.hardEdge,
+                        //     padding: EdgeInsets.all(4.0),
+                        //     // color: Theme.of(context).accentColor,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(20.0),
+                        //       border: Border.all(color: Colors.grey),
+                        //       color: Colors.white,
+                        //     ),
+                        //     constraints: BoxConstraints(
+                        //       minWidth: 14,
+                        //       minHeight: 14,
+                        //     ),
+                        //     child: Center(child: Icon(Icons.thumb_up_outlined, size: 20.0,),),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -87,10 +107,9 @@ class DealItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GestureDetector(
-                          onTap: () =>
-                              Navigator.of(context).pushNamed(
-                                  DealDetailsScreen.routeName,
-                                  arguments: deal.id),
+                          onTap: () => Navigator.of(context).pushNamed(
+                              DealDetailsScreen.routeName,
+                              arguments: deal.id),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5.0),
                             child: Flex(
@@ -112,11 +131,18 @@ class DealItem extends StatelessWidget {
                                 Flexible(
                                   flex: 2,
                                   child: Consumer<Auth>(
-                                    builder: (context, authData, child) => Consumer<Deals>(
+                                    builder: (context, authData, child) =>
+                                        Consumer<Deals>(
                                       builder: (context, dealsData, child) {
                                         return GestureDetector(
-                                          onTap: () => _toggleFavourites(context, deal, dealsData.isObservedDeal(deal), authData.isAuthenticated),
-                                          child: dealsData.isObservedDeal(deal) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                                          onTap: () => _toggleFavourites(
+                                              context,
+                                              deal,
+                                              dealsData.isObservedDeal(deal),
+                                              authData.isAuthenticated),
+                                          child: dealsData.isObservedDeal(deal)
+                                              ? Icon(Icons.favorite)
+                                              : Icon(Icons.favorite_border),
                                         );
                                       },
                                     ),
@@ -162,7 +188,8 @@ class DealItem extends StatelessWidget {
         .pushNamed(UserProfileScreen.routeName, arguments: deal.addedById);
   }
 
-  _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite, bool isUserLoggedIn) {
+  _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
+      bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
       _showLoginScreen(context);
     } else if (isFavourite) {
