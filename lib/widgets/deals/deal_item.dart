@@ -16,7 +16,7 @@ class DealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
       color: Colors.white,
       child: Flex(
         direction: Axis.vertical,
@@ -30,7 +30,7 @@ class DealItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 35,
+                    flex: 40,
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: GestureDetector(
@@ -111,7 +111,7 @@ class DealItem extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    flex: 65,
+                    flex: 60,
                     child: Container(
                       height: 120,
                       child: Padding(
