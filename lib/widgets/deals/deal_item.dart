@@ -1,7 +1,11 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealItem extends StatelessWidget {
   final DealModel deal;
@@ -48,7 +52,9 @@ class DealItem extends StatelessWidget {
                             // color: Theme.of(context).accentColor,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: Theme.of(context).accentColor,
+                              color: Theme
+                                  .of(context)
+                                  .accentColor,
                             ),
                             constraints: BoxConstraints(
                               minWidth: 16,
@@ -77,9 +83,10 @@ class DealItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                            DealDetailsScreen.routeName,
-                            arguments: deal.id),
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(
+                                DealDetailsScreen.routeName,
+                                arguments: deal.id),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 0.0),
@@ -101,7 +108,16 @@ class DealItem extends StatelessWidget {
                               ),
                               Flexible(
                                 flex: 2,
-                                child: Icon(Icons.favorite_border),
+                                child: Consumer<Auth>(
+                                  builder: (context, authData, child) => Consumer<Deals>(
+                                    builder: (context, dealsData, child) {
+                                      return GestureDetector(
+                                        onTap: () => _toggleFavourites(context, deal, dealsData.isObservedDeal(deal), authData.isAuthenticated),
+                                        child: dealsData.isObservedDeal(deal) ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -140,5 +156,24 @@ class DealItem extends StatelessWidget {
   _navigateToUserProfileScreen(BuildContext context) {
     Navigator.of(context)
         .pushNamed(UserProfileScreen.routeName, arguments: deal.addedById);
+  }
+
+  _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite, bool isUserLoggedIn) {
+    if (!isUserLoggedIn) {
+      _showLoginScreen(context);
+    } else if (isFavourite) {
+      Provider.of<Deals>(context, listen: false)
+          .deleteFromObservedDeals(deal.id);
+    } else {
+      Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
+    }
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 }

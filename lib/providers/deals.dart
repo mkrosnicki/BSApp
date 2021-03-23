@@ -85,7 +85,7 @@ class Deals with ChangeNotifier {
     return allDeals.firstWhere((deal) => deal.id == dealId);
   }
 
-  isObservedDeal(DealModel deal) {
+  bool isObservedDeal(DealModel deal) {
     return fetchedObservedDeals.contains(deal);
   }
 
