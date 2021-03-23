@@ -47,41 +47,35 @@ class DealItem extends StatelessWidget {
                               width: double.infinity,
                             ),
                             Container(
-                              height: 120,
+                              height: 130,
                               width: double.infinity,
                               child: Image.network(
                                 'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            // Container(
-                            //   alignment: Alignment.topCenter,
-                            //   padding: new EdgeInsets.only(
-                            //       top: 85.0, right: 0.0, left: 0.0),
-                            //   child: new Container(
-                            //     height: 35.0,
-                            //     width: MediaQuery.of(context).size.width,
-                            //     child: Card(
-                            //       child: Row(
-                            //         mainAxisAlignment:
-                            //             MainAxisAlignment.spaceEvenly,
-                            //         children: [
-                            //           Icon(
-                            //             CupertinoIcons.hand_thumbsup,
-                            //             size: 16,
-                            //           ),
-                            //           Text('2'),
-                            //           Icon(
-                            //             CupertinoIcons.hand_thumbsup,
-                            //             size: 16,
-                            //           ),
-                            //         ],
-                            //       ),
-                            //       margin: EdgeInsets.all(5.0),
-                            //       color: Colors.white,
-                            //     ),
-                            //   ),
-                            // ),
+                            Container(
+                              alignment: Alignment.topCenter,
+                              padding: new EdgeInsets.only(
+                                  top: 95.0, right: 0.0, left: 0.0),
+                              child: new Container(
+                                height: 35.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: Card(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(CupertinoIcons.hand_thumbsdown, size: 18.0, color: Colors.white,),
+                                      Text('2', style: TextStyle(color: Colors.white)),
+                                      Icon(CupertinoIcons.hand_thumbsup, size: 18.0, color: Colors.white,),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(5.0),
+                                  color: Colors.black12,
+                                ),
+                              ),
+                            ),
                             // Positioned(
                             //   right: 2.0,
                             //   bottom: 0,
@@ -92,13 +86,13 @@ class DealItem extends StatelessWidget {
                             //     decoration: BoxDecoration(
                             //       borderRadius: BorderRadius.circular(20.0),
                             //       border: Border.all(color: Colors.grey),
-                            //       color: Colors.white,
+                            //       color: Colors.black26,
                             //     ),
                             //     constraints: BoxConstraints(
-                            //       minWidth: 14,
+                            //       minWidth: 100,
                             //       minHeight: 14,
                             //     ),
-                            //     child: Center(child: Icon(Icons.thumb_up_outlined, size: 20.0,),),
+                            //     child: Center(child: Icon(CupertinoIcons.hand_thumbsup, size: 18.0, color: Colors.white,),),
                             //   ),
                             // ),
                           ],
@@ -109,7 +103,7 @@ class DealItem extends StatelessWidget {
                   Flexible(
                     flex: 65,
                     child: Container(
-                      height: 110,
+                      height: 120,
                       child: Padding(
                         padding: EdgeInsets.only(left: 14.0),
                         child: Flex(
@@ -248,34 +242,37 @@ class DealItem extends StatelessWidget {
                                     color: Colors.grey,
                                   ),
                                 ),
-                                Flex(
-                                  direction: Axis.horizontal,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      flex: 1,
-                                      child: Flex(
-                                        direction: Axis.horizontal,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Icon(
-                                            CupertinoIcons.hand_thumbsup,
-                                            size: 16,
-                                          ),
-                                          Text('23'),
-                                          Icon(
-                                            CupertinoIcons.hand_thumbsup,
-                                            size: 16,
-                                          ),
-                                        ],
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Flex(
+                                    direction: Axis.horizontal,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 1,
+                                        child: Flex(
+                                          direction: Axis.horizontal,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Icon(
+                                              CupertinoIcons.hand_thumbsup,
+                                              size: 16,
+                                            ),
+                                            Text('23'),
+                                            Icon(
+                                              CupertinoIcons.hand_thumbsup,
+                                              size: 16,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Flexible(
-                                      flex: 1,
-                                      child: Text('Sprawdź'),
-                                    ),
-                                  ],
+                                      Flexible(
+                                        flex: 1,
+                                        child: Text('Sprawdź'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
