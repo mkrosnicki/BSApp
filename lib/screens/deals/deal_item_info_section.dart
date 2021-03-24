@@ -34,7 +34,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
       builder: (context, authData, child) => Container(
         height: 120,
         child: Padding(
-          padding: EdgeInsets.only(left: 14.0),
+          padding: EdgeInsets.only(left: 14.0, right: 10.0, top: 5.0, bottom: 0.0),
           child: Flex(
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,8 +77,8 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                         dealsData.isObservedDeal(widget.deal),
                                         authData.isAuthenticated),
                                     child: dealsData.isObservedDeal(widget.deal)
-                                        ? Icon(Icons.favorite)
-                                        : Icon(Icons.favorite_border),
+                                        ? Icon(CupertinoIcons.heart_fill, size: 20)
+                                        : Icon(CupertinoIcons.heart, size: 20),
                                   );
                                 },
                               ),

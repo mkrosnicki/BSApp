@@ -13,11 +13,12 @@ class MyNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black, width: 0.1))),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: Color.fromRGBO(212, 227, 235, 1), width: 0.5))),
       child: BottomNavigationBar(
           // Color.fromRGBO(99, 137, 217, 1)
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
+
         fixedColor: Color.fromRGBO(99, 137, 217, 1),
         unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
