@@ -86,7 +86,6 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> voteForMinus(String dealId) async {
-    print(dealId);
     return _addVoteToDeal(dealId, false);
   }
 

@@ -9,7 +9,6 @@ class Users with ChangeNotifier {
 
   Future<void> fetchUser(String userId) async {
     final responseBody = await _apiProvider.get('/users/$userId') as Map;
-    print(responseBody);
     if (responseBody == null) {
       print('No User Found!');
     }

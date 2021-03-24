@@ -9,7 +9,6 @@ class Voivodeship {
   Voivodeship({this.id, this.name, this.cities});
 
   static Voivodeship of(dynamic voivodeshipSnapshot) {
-    print(voivodeshipSnapshot);
     return Voivodeship(
         id: voivodeshipSnapshot['id'],
         name: voivodeshipSnapshot['name'],

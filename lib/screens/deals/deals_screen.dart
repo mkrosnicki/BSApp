@@ -105,7 +105,6 @@ class _DealsScreenState extends State<DealsScreen> {
                   return Center(child: CircularProgressIndicator());
                 } else {
                   if (snapshot.error != null) {
-                    print(snapshot.error);
                     return Center(
                       child: Text('An error occurred!'),
                     );
