@@ -26,18 +26,21 @@ class _CommentItemState extends State<CommentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildComment(context, widget.comment),
-        Padding(
-          padding: EdgeInsets.only(left: 30.0),
-          child: Column(
-            children: widget.comment.subComments
-                .map((reply) => _buildComment(context, reply))
-                .toList(),
+    return Material(
+      color: Colors.white,
+      child: Column(
+        children: [
+          _buildComment(context, widget.comment),
+          Padding(
+            padding: EdgeInsets.only(left: 30.0),
+            child: Column(
+              children: widget.comment.subComments
+                  .map((reply) => _buildComment(context, reply))
+                  .toList(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -46,7 +49,13 @@ class _CommentItemState extends State<CommentItem> {
       fontSize: 12,
       color: Colors.grey,
     );
-    return Column(
+    var userInfoBoldTextStyle = const TextStyle(
+      fontSize: 11,
+      color: Colors.grey,
+      fontWeight: FontWeight.bold
+    );
+    return Flex(
+      direction: Axis.vertical,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
@@ -64,49 +73,62 @@ class _CommentItemState extends State<CommentItem> {
                     child: Image.network(
                         'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 4.0),
-                          child: Text(
-                            comment.adderInfo.username,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Flex(
+                        direction: Axis.vertical,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Flex(
+                            direction: Axis.horizontal,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 6.0),
+                                child: Text(
+                                  comment.adderInfo.username,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${_dateFormat.format(comment.addedAt)}',
+                                style: userInfoTextStyle,
+                              ),
+                            ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${_dateFormat.format(comment.adderInfo.registeredAt)}',
-                              style: userInfoTextStyle,
-                            ),
-                            Text(
-                              ' • ',
-                              style: userInfoTextStyle,
-                            ),
-                            Text(
-                              'Okazje: ${comment.adderInfo.addedDeals}',
-                              style: userInfoTextStyle,
-                            ),
-                            Text(
-                              ' • ',
-                              style: userInfoTextStyle,
-                            ),
-                            Text(
-                              'Komentarze: ${comment.adderInfo.addedComments}',
-                              style: userInfoTextStyle,
-                            ),
-                          ],
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              Text(
+                                '${comment.adderInfo.addedDeals}',
+                                style: userInfoBoldTextStyle,
+                              ),
+                              Text(
+                                ' okazje',
+                                style: userInfoTextStyle,
+                              ),
+                              Text(
+                                ' • ',
+                                style: userInfoTextStyle,
+                              ),
+                              Text(
+                                '${comment.adderInfo.addedComments}',
+                                style: userInfoBoldTextStyle,
+                              ),
+                              Text(
+                                ' komentarz(e)',
+                                style: userInfoTextStyle,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

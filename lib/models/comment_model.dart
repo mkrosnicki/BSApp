@@ -6,6 +6,7 @@ class CommentModel {
   final List<CommentModel> subComments;
   final int points;
   final String parentId;
+  final DateTime addedAt;
   final AdderInfoModel adderInfo;
 
   CommentModel(
@@ -14,6 +15,7 @@ class CommentModel {
       this.subComments,
       this.points,
       this.parentId,
+      this.addedAt,
       this.adderInfo});
 
   static CommentModel of(dynamic commentSnapshot) {
@@ -25,6 +27,7 @@ class CommentModel {
       subComments: (commentSnapshot['subComments'] as List)
           .map((e) => CommentModel.of(e))
           .toList(),
+      addedAt: DateTime.parse(commentSnapshot['addedAt']),
       adderInfo: AdderInfoModel.of(commentSnapshot['adderInfo']),
     );
   }
