@@ -124,51 +124,50 @@ class _DealItemState extends State<DealItem> {
                       ),
                     ),
                   ),
-                  Flexible(
-                    flex: 60,
-                    child: Container(
-                      height: 120,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 14.0),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Flex(
-                              direction: Axis.vertical,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed(
-                                              DealDetailsScreen.routeName,
-                                              arguments: widget.deal.id),
-                                      child: Flex(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        direction: Axis.horizontal,
-                                        children: [
-                                          Flexible(
-                                            flex: 8,
-                                            child: Text(
-                                              widget.deal.title,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
+                  Consumer<Auth>(
+                    builder: (context, authData, child) => Flexible(
+                      flex: 60,
+                      child: Container(
+                        height: 120,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 14.0),
+                          child: Flex(
+                            direction: Axis.vertical,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flex(
+                                direction: Axis.vertical,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed(
+                                                DealDetailsScreen.routeName,
+                                                arguments: widget.deal.id),
+                                        child: Flex(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          direction: Axis.horizontal,
+                                          children: [
+                                            Flexible(
+                                              flex: 8,
+                                              child: Text(
+                                                widget.deal.title,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                // overflow: TextOverflow.ellipsis,
+                                                overflow: TextOverflow.clip,
                                               ),
-                                              // overflow: TextOverflow.ellipsis,
-                                              overflow: TextOverflow.clip,
                                             ),
-                                          ),
-                                          Flexible(
-                                            flex: 2,
-                                            child: Consumer<Auth>(
-                                              builder:
-                                                  (context, authData, child) =>
-                                                      Consumer<Deals>(
+                                            Flexible(
+                                              flex: 2,
+                                              child: Consumer<Deals>(
                                                 builder: (context, dealsData,
                                                     child) {
                                                   return GestureDetector(
@@ -192,114 +191,114 @@ class _DealItemState extends State<DealItem> {
                                                 },
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  textBaseline: TextBaseline.alphabetic,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
-                                  children: [
-                                    // Text('${deal.regularPrice.toString()} zł'),
-                                    // Padding(
-                                    //     padding: EdgeInsets.all(4.0),
-                                    //     child: Text('•')),
-                                    Text(
-                                      '${widget.deal.currentPrice.toString()} zł ',
-                                      style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    // Padding(
-                                    //     padding: EdgeInsets.all(4.0),
-                                    //     child: Text('•')),
-                                    Text(
-                                      '${widget.deal.regularPrice} zł',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Flex(
-                              direction: Axis.vertical,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Lokalizacja: Internet',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                                Text(
-                                  'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Flex(
-                                    direction: Axis.horizontal,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Consumer<Deals>(
-                                        builder: (context, dealsData, child) => Flexible(
-                                          flex: 1,
-                                          child: Flex(
-                                            direction: Axis.horizontal,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: _voteForMinus,
-                                                child: Icon(
-                                                  CupertinoIcons
-                                                      .hand_thumbsdown,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                              Text(dealsData.findById(widget.deal.id).points
-                                                  .toString()),
-                                              GestureDetector(
-                                                onTap: _voteForPlus,
-                                                child: Icon(
-                                                  CupertinoIcons.hand_thumbsup,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                          ],
                                         ),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: Text('ZOBACZ',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.baseline,
+                                    children: [
+                                      Text(
+                                        '${widget.deal.currentPrice.toString()} zł ',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        '${widget.deal.regularPrice} zł',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Flex(
+                                direction: Axis.vertical,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Lokalizacja: Internet',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Flex(
+                                      direction: Axis.horizontal,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Consumer<Deals>(
+                                          builder:
+                                              (context, dealsData, child) =>
+                                                  Flexible(
+                                            flex: 1,
+                                            child: Flex(
+                                              direction: Axis.horizontal,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () => _vote(authData.isAuthenticated, false),
+                                                  child: Icon(
+                                                    CupertinoIcons
+                                                        .hand_thumbsdown,
+                                                    size: 16,
+                                                  ),
+                                                ),
+                                                Text(dealsData
+                                                    .findById(widget.deal.id)
+                                                    .points
+                                                    .toString()),
+                                                GestureDetector(
+                                                  onTap: () => _vote(authData.isAuthenticated, true),
+                                                  child: Icon(
+                                                    CupertinoIcons
+                                                        .hand_thumbsup,
+                                                    size: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 1,
+                                          child: Text('ZOBACZ',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -311,6 +310,18 @@ class _DealItemState extends State<DealItem> {
         ],
       ),
     );
+  }
+
+  _vote(bool isAuthenticated, bool isPositive) {
+    if (!isAuthenticated) {
+      _showLoginScreen(context);
+    } else {
+      if (isPositive) {
+        _voteForPlus();
+      } else {
+        _voteForMinus();
+      }
+    }
   }
 
   _voteForPlus() {
