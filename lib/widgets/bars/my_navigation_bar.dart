@@ -2,6 +2,7 @@ import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigationBar extends StatelessWidget {
@@ -11,40 +12,44 @@ class MyNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: Color.fromRGBO(99, 137, 217, 1),
-      type: BottomNavigationBarType.fixed,
-      fixedColor: Colors.white,
-      unselectedItemColor: Color.fromRGBO(249, 250, 251, 1),
-      currentIndex: _selectedIndex,
-      // selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-      onTap: (index) => navigate(context, index),
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          label: 'Okazje',
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          label: 'Forum',
-          icon: Icon(Icons.article_outlined),
-          activeIcon: Icon(Icons.article),
-        ),
-        BottomNavigationBarItem(
-          label: 'Obserwowane',
-          icon: Icon(Icons.favorite_border),
-          activeIcon: Icon(Icons.favorite),
-        ),
-        BottomNavigationBarItem(
-          label: 'Konto',
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-        ),
-        // BottomNavigationBarItem(
-        //   label: 'Home',
-        //   icon: Icon(Icons.access_alarm),
-        // ),
-      ],
+    return Container(
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black, width: 0.1))),
+      child: BottomNavigationBar(
+          // Color.fromRGBO(99, 137, 217, 1)
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        fixedColor: Color.fromRGBO(99, 137, 217, 1),
+        unselectedItemColor: Colors.black,
+        currentIndex: _selectedIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 0,
+        // selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        onTap: (index) => navigate(context, index),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(CupertinoIcons.rectangle_stack, size: 20,),
+            // activeIcon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(CupertinoIcons.bubble_left, size: 20),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(CupertinoIcons.suit_heart, size: 20),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(CupertinoIcons.line_horizontal_3, size: 20,),
+          ),
+          // BottomNavigationBarItem(
+          //   label: 'Home',
+          //   icon: Icon(Icons.access_alarm),
+          // ),
+        ],
+      ),
     );
   }
 
