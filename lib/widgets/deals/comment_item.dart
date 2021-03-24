@@ -1,22 +1,38 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
-class CommentItem extends StatelessWidget {
+class CommentItem extends StatefulWidget {
   final CommentModel comment;
 
   CommentItem(this.comment);
 
   @override
+  _CommentItemState createState() => _CommentItemState();
+}
+
+class _CommentItemState extends State<CommentItem> {
+
+  DateFormat _dateFormat;
+
+  @override
+  void initState() {
+    initializeDateFormatting();
+    _dateFormat = new DateFormat.yMMMMd('pl');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildComment(context, comment),
+        _buildComment(context, widget.comment),
         Padding(
           padding: EdgeInsets.only(left: 30.0),
           child: Column(
-            children: comment.subComments
+            children: widget.comment.subComments
                 .map((reply) => _buildComment(context, reply))
                 .toList(),
           ),
@@ -26,6 +42,10 @@ class CommentItem extends StatelessWidget {
   }
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
+    var userInfoTextStyle = const TextStyle(
+      fontSize: 12,
+      color: Colors.grey,
+    );
     return Column(
       children: [
         Padding(
@@ -55,18 +75,36 @@ class CommentItem extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(bottom: 4.0),
                           child: Text(
-                            comment.username,
+                            comment.adderInfo.username,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        Text(
-                          '${comment.username}',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              '${_dateFormat.format(comment.adderInfo.registeredAt)}',
+                              style: userInfoTextStyle,
+                            ),
+                            Text(
+                              ' • ',
+                              style: userInfoTextStyle,
+                            ),
+                            Text(
+                              'Okazje: ${comment.adderInfo.addedDeals}',
+                              style: userInfoTextStyle,
+                            ),
+                            Text(
+                              ' • ',
+                              style: userInfoTextStyle,
+                            ),
+                            Text(
+                              'Komentarze: ${comment.adderInfo.addedComments}',
+                              style: userInfoTextStyle,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -76,7 +114,10 @@ class CommentItem extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Text(comment.content, style: TextStyle(fontSize: 13),),
+                child: Text(
+                  comment.content,
+                  style: TextStyle(fontSize: 13),
+                ),
               ),
               if (comment.parentId == null)
                 Row(
