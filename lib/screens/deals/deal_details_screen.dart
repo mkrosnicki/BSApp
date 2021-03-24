@@ -3,6 +3,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
@@ -18,7 +19,6 @@ class DealDetailsScreen extends StatefulWidget {
 }
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> {
-
 
 
   @override
@@ -119,5 +119,10 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
           return LoginRegistrationScreen();
         },
         fullscreenDialog: true));
+  }
+
+  _navigateToUserProfileScreen(BuildContext context, DealModel deal) {
+    Navigator.of(context)
+        .pushNamed(UserProfileScreen.routeName, arguments: deal.addedById);
   }
 }

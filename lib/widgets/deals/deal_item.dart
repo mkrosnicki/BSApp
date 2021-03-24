@@ -6,12 +6,28 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
-class DealItem extends StatelessWidget {
+class DealItem extends StatefulWidget {
   final DealModel deal;
 
   DealItem(this.deal);
+
+  @override
+  _DealItemState createState() => _DealItemState();
+}
+
+class _DealItemState extends State<DealItem> {
+
+  DateFormat _dateFormat;
+
+  @override
+  void initState() {
+    initializeDateFormatting();
+    _dateFormat = new DateFormat.yMMMMd('pl');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +53,7 @@ class DealItem extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).pushNamed(
                               DealDetailsScreen.routeName,
-                              arguments: deal.id);
+                              arguments: widget.deal.id);
                         },
                         child: Stack(
                           fit: StackFit.loose,
@@ -131,7 +147,7 @@ class DealItem extends StatelessWidget {
                                       onTap: () => Navigator.of(context)
                                           .pushNamed(
                                               DealDetailsScreen.routeName,
-                                              arguments: deal.id),
+                                              arguments: widget.deal.id),
                                       child: Flex(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -140,7 +156,7 @@ class DealItem extends StatelessWidget {
                                           Flexible(
                                             flex: 8,
                                             child: Text(
-                                              deal.title,
+                                              widget.deal.title,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
@@ -161,15 +177,15 @@ class DealItem extends StatelessWidget {
                                                     onTap: () =>
                                                         _toggleFavourites(
                                                             context,
-                                                            deal,
+                                                            widget.deal,
                                                             dealsData
                                                                 .isObservedDeal(
-                                                                    deal),
+                                                                    widget.deal),
                                                             authData
                                                                 .isAuthenticated),
                                                     child: dealsData
                                                             .isObservedDeal(
-                                                                deal)
+                                                                widget.deal)
                                                         ? Icon(Icons.favorite)
                                                         : Icon(Icons
                                                             .favorite_border),
@@ -194,7 +210,7 @@ class DealItem extends StatelessWidget {
                                     //     padding: EdgeInsets.all(4.0),
                                     //     child: Text('•')),
                                     Text(
-                                      '${deal.currentPrice.toString()} zł ',
+                                      '${widget.deal.currentPrice.toString()} zł ',
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontSize: 16,
@@ -204,7 +220,7 @@ class DealItem extends StatelessWidget {
                                     //     padding: EdgeInsets.all(4.0),
                                     //     child: Text('•')),
                                     Text(
-                                      '${deal.regularPrice} zł',
+                                      '${widget.deal.regularPrice} zł',
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black54,
@@ -215,34 +231,6 @@ class DealItem extends StatelessWidget {
                                 )
                               ],
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.start,
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     // Text('${deal.regularPrice.toString()} zł'),
-                            //     // Padding(
-                            //     //     padding: EdgeInsets.all(4.0),
-                            //     //     child: Text('•')),
-                            //     Text(
-                            //       '${deal.currentPrice.toString()} zł',
-                            //       style: TextStyle(
-                            //           color: Colors.blue,
-                            //           fontSize: 16,
-                            //           fontWeight: FontWeight.bold),
-                            //     ),
-                            //     Padding(
-                            //         padding: EdgeInsets.all(4.0),
-                            //         child: Text('•')),
-                            //     Text('(${deal.discountString})'),
-                            //   ],
-                            // ),
-                            // GestureDetector(
-                            //   onTap: () => _navigateToUserProfileScreen(context),
-                            //   child: Text(
-                            //     deal.addedByUsername,
-                            //     style: TextStyle(color: Colors.blue),
-                            //   ),
-                            // ),
                             Flex(
                               direction: Axis.vertical,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,14 +239,14 @@ class DealItem extends StatelessWidget {
                                   'Lokalizacja: Internet',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey,
+                                    color: Colors.black54,
                                   ),
                                 ),
                                 Text(
-                                  'Dodana: ${deal.addedAt.toUtc()}',
+                                  'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey,
+                                    color: Colors.black54,
                                   ),
                                 ),
                                 Padding(
@@ -311,41 +299,9 @@ class DealItem extends StatelessWidget {
               ),
             ],
           ),
-          // Flex(
-          //   direction: Axis.horizontal,
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Flexible(
-          //       flex: 35,
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //         children: [
-          //           Icon(
-          //             CupertinoIcons.hand_thumbsup,
-          //             size: 16,
-          //           ),
-          //           Text('2'),
-          //           Icon(
-          //             CupertinoIcons.hand_thumbsup,
-          //             size: 16,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     Flexible(
-          //       flex: 65,
-          //       child: Text('a'),
-          //     ),
-          //   ],
-          // )
         ],
       ),
     );
-  }
-
-  _navigateToUserProfileScreen(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(UserProfileScreen.routeName, arguments: deal.addedById);
   }
 
   _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
