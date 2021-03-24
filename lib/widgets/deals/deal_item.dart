@@ -262,24 +262,48 @@ class _DealItemState extends State<DealItem> {
                                                       .spaceBetween,
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () => _vote(authData.isAuthenticated, false),
-                                                  child: Icon(
-                                                    CupertinoIcons
-                                                        .hand_thumbsdown,
-                                                    size: 16,
-                                                  ),
+                                                  onTap: () => _vote(
+                                                      authData.isAuthenticated,
+                                                      false),
+                                                  child: Provider.of<Deals>(
+                                                              context)
+                                                          .wasVotedNegativelyBy(
+                                                              widget.deal.id,
+                                                              authData.userId)
+                                                      ? Icon(
+                                                          CupertinoIcons
+                                                              .hand_thumbsdown_fill,
+                                                          size: 16,
+                                                        )
+                                                      : Icon(
+                                                          CupertinoIcons
+                                                              .hand_thumbsdown,
+                                                          size: 16,
+                                                        ),
                                                 ),
                                                 Text(dealsData
                                                     .findById(widget.deal.id)
                                                     .numberOfPoints
                                                     .toString()),
                                                 GestureDetector(
-                                                  onTap: () => _vote(authData.isAuthenticated, true),
-                                                  child: Icon(
-                                                    CupertinoIcons
-                                                        .hand_thumbsup,
-                                                    size: 16,
-                                                  ),
+                                                  onTap: () => _vote(
+                                                      authData.isAuthenticated,
+                                                      true),
+                                                  child: Provider.of<Deals>(
+                                                              context)
+                                                          .wasVotedPositivelyBy(
+                                                              widget.deal.id,
+                                                              authData.userId)
+                                                      ? Icon(
+                                                          CupertinoIcons
+                                                              .hand_thumbsup_fill,
+                                                          size: 16,
+                                                        )
+                                                      : Icon(
+                                                          CupertinoIcons
+                                                              .hand_thumbsup,
+                                                          size: 16,
+                                                        ),
                                                 ),
                                               ],
                                             ),
@@ -316,20 +340,9 @@ class _DealItemState extends State<DealItem> {
     if (!isAuthenticated) {
       _showLoginScreen(context);
     } else {
-      if (isPositive) {
-        _voteForPlus();
-      } else {
-        _voteForMinus();
-      }
+      Provider.of<Deals>(context, listen: false)
+          .voteForDeal(widget.deal.id, isPositive);
     }
-  }
-
-  _voteForPlus() {
-    Provider.of<Deals>(context, listen: false).voteForPlus(widget.deal.id);
-  }
-
-  _voteForMinus() {
-    Provider.of<Deals>(context, listen: false).voteForMinus(widget.deal.id);
   }
 
   _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,

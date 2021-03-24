@@ -83,21 +83,21 @@ class Deals with ChangeNotifier {
     return fetchObservedDeals();
   }
 
-  Future<void> voteForPlus(String dealId) async {
-    return _addVoteToDeal(dealId, true);
-  }
-
-  Future<void> voteForMinus(String dealId) async {
-    return _addVoteToDeal(dealId, false);
-  }
-
-  Future<void> _addVoteToDeal(String dealId, bool isPositive) async {
+  Future<void> voteForDeal(String dealId, bool isPositive) async {
     await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: token);
     return fetchDeals();
   }
 
-  findById(String dealId) {
+  DealModel findById(String dealId) {
     return allDeals.firstWhere((deal) => deal.id == dealId);
+  }
+
+  bool wasVotedPositivelyBy(String dealId, String userId) {
+    return findById(dealId).positiveVoters.any((element) => element == userId);
+  }
+
+  bool wasVotedNegativelyBy(String dealId, String userId) {
+    return findById(dealId).negativeVoters.any((element) => element == userId);
   }
 
   bool isObservedDeal(DealModel deal) {
