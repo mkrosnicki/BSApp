@@ -16,7 +16,8 @@ class CommentItem extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 30.0),
           child: Column(
-            children: comment.subComments.map((reply) => _buildComment(context, reply))
+            children: comment.subComments
+                .map((reply) => _buildComment(context, reply))
                 .toList(),
           ),
         ),
@@ -32,29 +33,59 @@ class CommentItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Flex(
+                direction: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 40,
-                    height: 40,
+                    width: 60,
+                    height: 60,
                     child: Image.network(
                         'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg'),
                   ),
-                  Text(comment.username),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            comment.username,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '${comment.username}',
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0),
-                child: Text(comment.content),
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                child: Text(comment.content, style: TextStyle(fontSize: 13),),
               ),
               if (comment.parentId == null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => Provider.of<DealReplyState>(context, listen: false).startCommentReply(comment.id),
+                      onTap: () =>
+                          Provider.of<DealReplyState>(context, listen: false)
+                              .startCommentReply(comment.id),
                       child: Text(
                         'Odpowiedz',
                         style: TextStyle(
