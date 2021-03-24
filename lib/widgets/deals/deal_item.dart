@@ -3,11 +3,10 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
-import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DealItem extends StatefulWidget {
@@ -20,7 +19,6 @@ class DealItem extends StatefulWidget {
 }
 
 class _DealItemState extends State<DealItem> {
-
   DateFormat _dateFormat;
 
   @override
@@ -180,7 +178,8 @@ class _DealItemState extends State<DealItem> {
                                                             widget.deal,
                                                             dealsData
                                                                 .isObservedDeal(
-                                                                    widget.deal),
+                                                                    widget
+                                                                        .deal),
                                                             authData
                                                                 .isAuthenticated),
                                                     child: dealsData
@@ -257,25 +256,35 @@ class _DealItemState extends State<DealItem> {
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Flexible(
-                                        flex: 1,
-                                        child: Flex(
-                                          direction: Axis.horizontal,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons.hand_thumbsup,
-                                              size: 16,
-                                            ),
-                                            Text('23'),
-                                            Icon(
-                                              CupertinoIcons.hand_thumbsup,
-                                              size: 16,
-                                            ),
-                                          ],
+                                      Consumer<Deals>(
+                                        builder: (context, dealsData, child) => Flexible(
+                                          flex: 1,
+                                          child: Flex(
+                                            direction: Axis.horizontal,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: _voteForMinus,
+                                                child: Icon(
+                                                  CupertinoIcons
+                                                      .hand_thumbsdown,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                              Text(dealsData.findById(widget.deal.id).points
+                                                  .toString()),
+                                              GestureDetector(
+                                                onTap: _voteForPlus,
+                                                child: Icon(
+                                                  CupertinoIcons.hand_thumbsup,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Flexible(
@@ -302,6 +311,14 @@ class _DealItemState extends State<DealItem> {
         ],
       ),
     );
+  }
+
+  _voteForPlus() {
+    Provider.of<Deals>(context, listen: false).voteForPlus(widget.deal.id);
+  }
+
+  _voteForMinus() {
+    Provider.of<Deals>(context, listen: false).voteForMinus(widget.deal.id);
   }
 
   _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
