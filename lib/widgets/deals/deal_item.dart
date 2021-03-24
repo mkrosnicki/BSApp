@@ -271,7 +271,7 @@ class _DealItemState extends State<DealItem> {
                                                 ),
                                                 Text(dealsData
                                                     .findById(widget.deal.id)
-                                                    .points
+                                                    .numberOfPoints
                                                     .toString()),
                                                 GestureDetector(
                                                   onTap: () => _vote(authData.isAuthenticated, true),

@@ -22,7 +22,9 @@ class DealModel {
   final DateTime startDate;
   final DateTime endDate;
   final int numberOfComments;
-  final int points;
+  final int numberOfPoints;
+  final List<String> positiveVoters;
+  final List<String> negativeVoters;
 
   DealModel({
     @required this.id,
@@ -45,7 +47,9 @@ class DealModel {
     @required this.startDate,
     @required this.endDate,
     @required this.numberOfComments,
-    @required this.points,
+    @required this.numberOfPoints,
+    @required this.positiveVoters,
+    @required this.negativeVoters,
   });
 
   static DealModel of(dynamic dealObject) {
@@ -70,7 +74,10 @@ class DealModel {
         startDate: DateTime.parse(dealObject['startDate']),
         endDate: DateTime.parse(dealObject['endDate']),
         numberOfComments: dealObject['numberOfComments'],
-        points: dealObject['points']);
+        numberOfPoints: dealObject['numberOfPoints'],
+        positiveVoters: [...dealObject['positiveVoters'] as List],
+        negativeVoters: [...dealObject['negativeVoters'] as List],
+    );
   }
 
 

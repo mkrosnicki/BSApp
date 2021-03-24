@@ -35,10 +35,12 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       print('No Deals Found!');
     }
+    // print(responseBody);
     responseBody.forEach((element) {
       loadedDeals.add(DealModel.of(element));
     });
     allDeals = loadedDeals;
+    print(allDeals);
     notifyListeners();
   }
 
