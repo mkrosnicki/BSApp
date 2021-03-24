@@ -1,8 +1,9 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CommentItem extends StatefulWidget {
@@ -15,7 +16,6 @@ class CommentItem extends StatefulWidget {
 }
 
 class _CommentItemState extends State<CommentItem> {
-
   DateFormat _dateFormat;
 
   @override
@@ -32,7 +32,7 @@ class _CommentItemState extends State<CommentItem> {
         children: [
           _buildComment(context, widget.comment),
           Padding(
-            padding: EdgeInsets.only(left: 30.0),
+            padding: EdgeInsets.only(left: 20.0),
             child: Column(
               children: widget.comment.subComments
                   .map((reply) => _buildComment(context, reply))
@@ -50,15 +50,12 @@ class _CommentItemState extends State<CommentItem> {
       color: Colors.grey,
     );
     var userInfoBoldTextStyle = const TextStyle(
-      fontSize: 11,
-      color: Colors.grey,
-      fontWeight: FontWeight.bold
-    );
+        fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
     return Flex(
       direction: Axis.vertical,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -143,21 +140,11 @@ class _CommentItemState extends State<CommentItem> {
               ),
               if (comment.parentId == null)
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () =>
-                          Provider.of<DealReplyState>(context, listen: false)
-                              .startCommentReply(comment.id),
-                      child: Text(
-                        'Odpowiedz',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    _buildActionButton(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown, function: () => _startCommentReply(comment.id), trailing: '6'),
+                    _buildActionButton(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup, function: () => _startCommentReply(comment.id), trailing: '6'),
+                    _buildActionButton(label: 'Odpowiedz', iconData: CupertinoIcons.reply, function: () => _startCommentReply(comment.id)),
                   ],
                 )
             ],
@@ -166,5 +153,72 @@ class _CommentItemState extends State<CommentItem> {
         Divider(),
       ],
     );
+  }
+
+  _buildActionButton({String label, IconData iconData, Function function, String trailing}) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            side: MaterialStateProperty.all(
+              BorderSide.lerp(
+                  BorderSide(
+                    style: BorderStyle.solid,
+                    color: Color.fromRGBO(212, 227, 235, 1),
+                    width: 0.8,
+                  ),
+                  BorderSide(
+                    style: BorderStyle.solid,
+                    color: Color.fromRGBO(212, 227, 235, 1),
+                    width: 0.8,
+                  ),
+                  0.0),
+            ),
+            elevation: MaterialStateProperty.all(0.0),
+            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0)),
+            alignment: Alignment.center,
+            minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
+          ),
+          onPressed: function,
+          child: Flex(
+            direction: Axis.horizontal,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (label != null) Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.grey,
+                    letterSpacing: 0.1
+                  ),
+                ),
+              ),
+              if (iconData != null) Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(iconData, size: 12, color: Colors.grey),
+              ),
+              if (trailing != null) Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(trailing,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    )),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _startCommentReply(String commentId) {
+    Provider.of<DealReplyState>(context, listen: false)
+        .startCommentReply(commentId);
   }
 }
