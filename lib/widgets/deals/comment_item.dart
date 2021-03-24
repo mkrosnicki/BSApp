@@ -138,7 +138,7 @@ class _CommentItemState extends State<CommentItem> {
                   style: TextStyle(fontSize: 13),
                 ),
               ),
-              if (comment.parentId == null)
+              // if (comment.parentId == null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
