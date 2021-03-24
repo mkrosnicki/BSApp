@@ -1,15 +1,17 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'comment_item.dart';
 
 class DealDetailsComments extends StatelessWidget {
-
   final DealModel deal;
 
-  DealDetailsComments(this.deal,);
+  DealDetailsComments(
+    this.deal,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +24,28 @@ class DealDetailsComments extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Komentarze', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                  Text('Napisz komentarz', style: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold),),
+                  Text(
+                    'Komentarze',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  GestureDetector(
+                    onTap: () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
+                    child: Text(
+                      'Napisz komentarz',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
               ),
             ),
