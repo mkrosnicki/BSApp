@@ -15,6 +15,8 @@ class DealDetailsActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(deal.numberOfNegativeVotes);
+    print(deal.numberOfPositiveVotes);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -32,7 +34,7 @@ class DealDetailsActions extends StatelessWidget {
                 _buildButtonWithPaddings(
                     label: 'Przydatna',
                     iconData: CupertinoIcons.hand_thumbsup_fill,
-                    function: () => _vote(context, authData.isAuthenticated, false),
+                    function: () => _vote(context, authData.isAuthenticated, true),
                     trailing: '${deal.numberOfPositiveVotes}'),
               ],
             ),
