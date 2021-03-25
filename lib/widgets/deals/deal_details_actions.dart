@@ -1,9 +1,8 @@
-import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:BSApp/widgets/common/my_border_icon_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DealDetailsActions extends StatelessWidget {
-
   DealDetailsActions();
 
   @override
@@ -13,19 +12,20 @@ class DealDetailsActions extends StatelessWidget {
       child: Column(
         children: [
           Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildActionItem('Lubię to', Icons.thumb_up, () {}),
-                _buildActionItem(
-                  'Skomentuj',
-                  Icons.mode_comment_outlined,
-                  () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildButtonWithPaddings(
+                  label: 'Nieprzydatna',
+                  iconData: CupertinoIcons.hand_thumbsdown_fill,
+                  function: () {},
+                  trailing: '2'),
+              _buildButtonWithPaddings(
+                  label: 'Przydatna',
+                  iconData: CupertinoIcons.hand_thumbsup_fill,
+                  function: () {},
+                  trailing: '2'),
+            ],
           ),
           Divider(),
         ],
@@ -33,25 +33,21 @@ class DealDetailsActions extends StatelessWidget {
     );
   }
 
-  _buildActionItem(String title, IconData iconData, Function function) {
-    return GestureDetector(
-      onTap: function,
-      child: Container(
-        child: Row(
-          children: [
-            Icon(
-              iconData,
-              size: 18,
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 4.0),
-              child: Text(title,
-                  style: TextStyle(
-                    fontSize: 14,
-                  )),
-            ),
-          ],
-        ),
+  _buildButtonWithPaddings(
+      {String label,
+      IconData iconData,
+      Function function,
+      String trailing,
+      bool isActive = false}) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+        child: MyBorderIconButton(
+            label: label,
+            iconData: iconData,
+            function: function,
+            trailing: trailing,
+            isActive: isActive),
       ),
     );
   }
