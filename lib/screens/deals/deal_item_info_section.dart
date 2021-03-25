@@ -2,6 +2,8 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/widgets/common/green_voting_button.dart';
+import 'package:BSApp/widgets/common/red_voting_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -34,7 +36,8 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
       builder: (context, authData, child) => Container(
         height: 120,
         child: Padding(
-          padding: EdgeInsets.only(left: 14.0, right: 10.0, top: 5.0, bottom: 0.0),
+          padding:
+              EdgeInsets.only(left: 14.0, right: 10.0, top: 5.0, bottom: 0.0),
           child: Flex(
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +80,8 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                         dealsData.isObservedDeal(widget.deal),
                                         authData.isAuthenticated),
                                     child: dealsData.isObservedDeal(widget.deal)
-                                        ? Icon(CupertinoIcons.heart_fill, size: 20)
+                                        ? Icon(CupertinoIcons.heart_fill,
+                                            size: 20)
                                         : Icon(CupertinoIcons.heart, size: 20),
                                   );
                                 },
@@ -113,6 +117,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
               ),
               Flex(
                 direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -130,7 +135,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Flex(
                       direction: Axis.horizontal,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,50 +149,41 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
-                                  onTap: () =>
-                                      _vote(authData.isAuthenticated, false),
-                                  child: Provider.of<Deals>(context)
+                                Row(
+                                  children: [
+                                    RedVotingButton(
+                                      trailing: dealsData
+                                          .findById(widget.deal.id)
+                                          .numberOfNegativeVotes
+                                          .toString(),
+                                      function: () => _vote(
+                                          authData.isAuthenticated, false),
+                                      isActive: Provider.of<Deals>(context)
                                           .wasVotedNegativelyBy(
-                                              widget.deal.id, authData.userId)
-                                      ? Icon(
-                                          CupertinoIcons.hand_thumbsdown_fill,
-                                          size: 16,
-                                        )
-                                      : Icon(
-                                          CupertinoIcons.hand_thumbsdown,
-                                          size: 16,
-                                        ),
-                                ),
-                                Text(dealsData
-                                    .findById(widget.deal.id)
-                                    .numberOfPositiveVotes
-                                    .toString()),
-                                GestureDetector(
-                                  onTap: () =>
-                                      _vote(authData.isAuthenticated, true),
-                                  child: Provider.of<Deals>(context)
+                                              widget.deal.id, authData.userId),
+                                    ),
+                                    GreenVotingButton(
+                                      trailing: dealsData
+                                          .findById(widget.deal.id)
+                                          .numberOfPositiveVotes
+                                          .toString(),
+                                      function: () =>
+                                          _vote(authData.isAuthenticated, true),
+                                      isActive: Provider.of<Deals>(context)
                                           .wasVotedPositivelyBy(
-                                              widget.deal.id, authData.userId)
-                                      ? Icon(
-                                          CupertinoIcons.hand_thumbsup_fill,
-                                          size: 16,
-                                        )
-                                      : Icon(
-                                          CupertinoIcons.hand_thumbsup,
-                                          size: 16,
-                                        ),
+                                              widget.deal.id, authData.userId),
+                                    ),
+                                  ],
                                 ),
+                                Text(
+                                  'ZOBACZ',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Text('ZOBACZ',
-                              style: TextStyle(
-                                fontSize: 12,
-                              )),
                         ),
                       ],
                     ),

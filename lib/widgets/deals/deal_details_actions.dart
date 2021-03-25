@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DealDetailsActions extends StatelessWidget {
-
   final DealModel deal;
 
   DealDetailsActions(this.deal);
@@ -27,15 +26,25 @@ class DealDetailsActions extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildButtonWithPaddings(
-                    label: 'Nieprzydatna',
-                    iconData: CupertinoIcons.hand_thumbsdown_fill,
-                    function: () => _vote(context, authData.isAuthenticated, false),
-                    trailing: '${deal.numberOfNegativeVotes}'),
+                  label: 'Nieprzydatna',
+                  iconData: CupertinoIcons.hand_thumbsdown_fill,
+                  function: () =>
+                      _vote(context, authData.isAuthenticated, false),
+                  trailing: '${deal.numberOfNegativeVotes}',
+                  color: Colors.red,
+                  isActive: Provider.of<Deals>(context)
+                      .wasVotedNegativelyBy(deal.id, authData.userId),
+                ),
                 _buildButtonWithPaddings(
-                    label: 'Przydatna',
-                    iconData: CupertinoIcons.hand_thumbsup_fill,
-                    function: () => _vote(context, authData.isAuthenticated, true),
-                    trailing: '${deal.numberOfPositiveVotes}'),
+                  label: 'Przydatna',
+                  iconData: CupertinoIcons.hand_thumbsup_fill,
+                  function: () =>
+                      _vote(context, authData.isAuthenticated, true),
+                  trailing: '${deal.numberOfPositiveVotes}',
+                  color: Colors.green,
+                  isActive: Provider.of<Deals>(context)
+                      .wasVotedPositivelyBy(deal.id, authData.userId),
+                ),
               ],
             ),
           ),
@@ -50,6 +59,7 @@ class DealDetailsActions extends StatelessWidget {
       IconData iconData,
       Function function,
       String trailing,
+      Color color,
       bool isActive = false}) {
     return Expanded(
       child: Padding(
@@ -59,6 +69,7 @@ class DealDetailsActions extends StatelessWidget {
             iconData: iconData,
             function: function,
             trailing: trailing,
+            color: color,
             isActive: isActive),
       ),
     );

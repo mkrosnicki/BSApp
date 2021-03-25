@@ -30,34 +30,6 @@ class DealItemImageSection extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Container(
-            alignment: Alignment.topCenter,
-            padding: new EdgeInsets.only(top: 95.0, right: 0.0, left: 0.0),
-            child: new Container(
-              height: 35.0,
-              width: MediaQuery.of(context).size.width,
-              child: Card(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(
-                      CupertinoIcons.hand_thumbsdown,
-                      size: 18.0,
-                      color: Colors.white,
-                    ),
-                    Text('2', style: TextStyle(color: Colors.white)),
-                    Icon(
-                      CupertinoIcons.hand_thumbsup,
-                      size: 18.0,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-                margin: EdgeInsets.all(5.0),
-                color: Colors.black12,
-              ),
-            ),
-          ),
           // Positioned(
           //   top: 0.0,
           //   left: 0.0,
