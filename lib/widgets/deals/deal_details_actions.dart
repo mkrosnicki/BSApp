@@ -10,42 +10,43 @@ import 'package:provider/provider.dart';
 class DealDetailsActions extends StatelessWidget {
   final DealModel deal;
 
+  // todo pass only deal id?
   DealDetailsActions(this.deal);
 
   @override
   Widget build(BuildContext context) {
-    print(deal.numberOfNegativeVotes);
-    print(deal.numberOfPositiveVotes);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Divider(),
-          Consumer<Auth>(
-            builder: (context, authData, child) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildButtonWithPaddings(
-                  label: 'Nieprzydatna',
-                  iconData: CupertinoIcons.hand_thumbsdown_fill,
-                  function: () =>
-                      _vote(context, authData.isAuthenticated, false),
-                  trailing: '${deal.numberOfNegativeVotes}',
-                  color: Colors.red,
-                  isActive: Provider.of<Deals>(context)
-                      .wasVotedNegativelyBy(deal.id, authData.userId),
-                ),
-                _buildButtonWithPaddings(
-                  label: 'Przydatna',
-                  iconData: CupertinoIcons.hand_thumbsup_fill,
-                  function: () =>
-                      _vote(context, authData.isAuthenticated, true),
-                  trailing: '${deal.numberOfPositiveVotes}',
-                  color: Colors.green,
-                  isActive: Provider.of<Deals>(context)
-                      .wasVotedPositivelyBy(deal.id, authData.userId),
-                ),
-              ],
+          Consumer<Deals>(
+              builder: (context, dealsData, child) => Consumer<Auth>(
+              builder: (context, authData, child) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildButtonWithPaddings(
+                    label: 'Nieprzydatna',
+                    iconData: CupertinoIcons.hand_thumbsdown_fill,
+                    function: () =>
+                        _vote(context, authData.isAuthenticated, false),
+                    trailing: '${dealsData.findById(deal.id).numberOfNegativeVotes}',
+                    color: Colors.red,
+                    isActive: Provider.of<Deals>(context)
+                        .wasVotedNegativelyBy(deal.id, authData.userId),
+                  ),
+                  _buildButtonWithPaddings(
+                    label: 'Przydatna',
+                    iconData: CupertinoIcons.hand_thumbsup_fill,
+                    function: () =>
+                        _vote(context, authData.isAuthenticated, true),
+                    trailing: '${dealsData.findById(deal.id).numberOfPositiveVotes}',
+                    color: Colors.green,
+                    isActive: Provider.of<Deals>(context)
+                        .wasVotedPositivelyBy(deal.id, authData.userId),
+                  ),
+                ],
+              ),
             ),
           ),
           Divider(),

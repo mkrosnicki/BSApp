@@ -68,34 +68,35 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
   _buildDealActionsSection(DealModel deal) {
     final isUserLoggedIn =
         Provider.of<Auth>(context, listen: false).isAuthenticated;
-    bool isFavourite = Provider.of<Deals>(context).isObservedDeal(deal);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-      child: Container(
-        color: Color.fromRGBO(249, 250, 251, 1),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              GestureDetector(
-                onTap: () => _toggleFavourites(deal, isFavourite, isUserLoggedIn),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 0.0, horizontal: 8.0),
-                  child: isFavourite
-                      ? Icon(
-                    Icons.favorite,
-                    size: 24,
-                  )
-                      : Icon(
-                    Icons.favorite_border,
-                    size: 24,
+    return Consumer<Deals>(
+      builder: (context, dealsData, child) =>   Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+        child: Container(
+          color: Color.fromRGBO(249, 250, 251, 1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () => _toggleFavourites(deal, dealsData.isObservedDeal(deal), isUserLoggedIn),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0.0, horizontal: 8.0),
+                    child: dealsData.isObservedDeal(deal)
+                        ? Icon(
+                      Icons.favorite,
+                      size: 24,
+                    )
+                        : Icon(
+                      Icons.favorite_border,
+                      size: 24,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
