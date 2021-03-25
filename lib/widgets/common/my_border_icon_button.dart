@@ -18,48 +18,51 @@ class MyBorderIconButton extends StatelessWidget {
     var textColor = color != null && isActive ? color : Colors.grey;
     // var textColor = Colors.blue;
     // Color.fromRGBO(40, 167, 69, 1)
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        side: MaterialStateProperty.all<BorderSide>(
-          BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid)
+    return SizedBox(
+      height: 25,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          side: MaterialStateProperty.all<BorderSide>(
+            BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid)
+          ),
+          elevation: MaterialStateProperty.all(0.0),
+          padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0)),
+          alignment: Alignment.center,
+          minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
         ),
-        elevation: MaterialStateProperty.all(0.0),
-        padding: MaterialStateProperty.all<EdgeInsets>(
-            EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0)),
-        alignment: Alignment.center,
-        minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
-      ),
-      onPressed: function,
-      child: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (label != null)
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                label,
-                style: TextStyle(
-                    fontSize: 11, color: textColor, letterSpacing: 0.1, fontWeight: FontWeight.w400),
-              ),
-            ),
-          if (iconData != null)
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Icon(iconData, size: 12, color: textColor),
-            ),
-          if (trailing != null)
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(trailing,
+        onPressed: function,
+        child: Flex(
+          direction: Axis.horizontal,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (label != null)
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  label,
                   style: TextStyle(
-                    fontSize: 11,
-                    color: textColor,
-                  )),
-            ),
-        ],
+                      fontSize: 11, color: textColor, letterSpacing: 0.1, fontWeight: FontWeight.w400),
+                ),
+              ),
+            if (iconData != null)
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(iconData, size: 12, color: textColor),
+              ),
+            if (trailing != null)
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(trailing,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: textColor,
+                    )),
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -34,14 +34,13 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (context, authData, child) => Container(
-        height: 120,
+        height: 130,
         child: Padding(
           padding:
-              EdgeInsets.only(left: 14.0, right: 10.0, top: 5.0, bottom: 0.0),
+              EdgeInsets.only(left: 14.0, right: 10.0, top: 5.0, bottom: 5.0),
           child: Flex(
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
             children: [
               Flex(
                 direction: Axis.vertical,
@@ -115,81 +114,84 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                   )
                 ],
               ),
-              Flex(
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Lokalizacja: Internet',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
+              Container(
+                width: double.infinity,
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Lokalizacja: Internet',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.black54,
+                    Text(
+                      'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Consumer<Deals>(
-                          builder: (context, dealsData, child) => Flexible(
-                            flex: 1,
-                            child: Flex(
-                              direction: Axis.horizontal,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                alignment: Alignment.bottomLeft,
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Consumer<Deals>(
+                      builder: (context, dealsData, child) => Expanded(
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Wrap(
                               children: [
-                                Row(
-                                  children: [
-                                    RedVotingButton(
-                                      trailing: dealsData
-                                          .findById(widget.deal.id)
-                                          .numberOfNegativeVotes
-                                          .toString(),
-                                      function: () => _vote(
-                                          authData.isAuthenticated, false),
-                                      isActive: Provider.of<Deals>(context)
-                                          .wasVotedNegativelyBy(
-                                              widget.deal.id, authData.userId),
-                                    ),
-                                    GreenVotingButton(
-                                      trailing: dealsData
-                                          .findById(widget.deal.id)
-                                          .numberOfPositiveVotes
-                                          .toString(),
-                                      function: () =>
-                                          _vote(authData.isAuthenticated, true),
-                                      isActive: Provider.of<Deals>(context)
-                                          .wasVotedPositivelyBy(
-                                              widget.deal.id, authData.userId),
-                                    ),
-                                  ],
+                                RedVotingButton(
+                                  trailing: dealsData
+                                      .findById(widget.deal.id)
+                                      .numberOfNegativeVotes
+                                      .toString(),
+                                  function: () =>
+                                      _vote(authData.isAuthenticated, false),
+                                  isActive: Provider.of<Deals>(context)
+                                      .wasVotedNegativelyBy(
+                                      widget.deal.id, authData.userId),
                                 ),
-                                Text(
-                                  'ZOBACZ',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                )
+                                GreenVotingButton(
+                                  trailing: dealsData
+                                      .findById(widget.deal.id)
+                                      .numberOfPositiveVotes
+                                      .toString(),
+                                  function: () =>
+                                      _vote(authData.isAuthenticated, true),
+                                  isActive: Provider.of<Deals>(context)
+                                      .wasVotedPositivelyBy(
+                                      widget.deal.id, authData.userId),
+                                ),
                               ],
                             ),
-                          ),
+                            Text(
+                              'ZOBACZ',
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            )
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
