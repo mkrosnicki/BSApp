@@ -1,7 +1,7 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/http_exception.dart';
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/util/util_functions.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +24,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     filled: true,
-    fillColor: UtilFunctions.hexToColor('#e4e6e8'),
-    focusColor: UtilFunctions.hexToColor('#e4e6e8'),
+    fillColor: MyColorsProvider.hexToColor('#e4e6e8'),
+    focusColor: MyColorsProvider.hexToColor('#e4e6e8'),
     border: UnderlineInputBorder(
       borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),

@@ -1,5 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -143,9 +144,9 @@ class _CommentItemState extends State<CommentItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildButtonWithPaddings(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown, function: () => _startCommentReply(comment.id), trailing: '6'),
-                    _buildButtonWithPaddings(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup, function: () => _startCommentReply(comment.id), trailing: '6'),
-                    _buildButtonWithPaddings(label: 'Odpowiedz', iconData: CupertinoIcons.reply, function: () => _startCommentReply(comment.id)),
+                    _buildButtonWithPaddings(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: Colors.red),
+                    _buildButtonWithPaddings(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: MyColorsProvider.GREEN, isActive: true),
+                    _buildButtonWithPaddings(label: 'Odpowiedz', iconData: CupertinoIcons.reply_thick_solid, function: () => _startCommentReply(comment.id), color: Colors.blue, isActive: true),
                   ],
                 )
             ],
@@ -156,11 +157,11 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  _buildButtonWithPaddings({String label, IconData iconData, Function function, String trailing, bool isActive = false}) {
+  _buildButtonWithPaddings({String label, IconData iconData, Function function, String trailing, bool isActive = false, Color color}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: MyBorderIconButton(label: label, iconData: iconData, function: function, trailing: trailing, isActive: isActive),
+        child: MyBorderIconButton(label: label, iconData: iconData, function: function, trailing: trailing, isActive: isActive, color: color),
       ),
     );
   }
