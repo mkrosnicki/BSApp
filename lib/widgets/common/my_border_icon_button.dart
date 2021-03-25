@@ -1,3 +1,4 @@
+import 'package:BSApp/util/util_functions.dart';
 import 'package:flutter/material.dart';
 
 class MyBorderIconButton extends StatelessWidget {
@@ -13,26 +14,17 @@ class MyBorderIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var borderColor = isActive ? Colors.blue : Color.fromRGBO(212, 227, 235, 1);
     var textColor = isActive ? Colors.blue : Colors.grey;
+    // var textColor = Colors.blue;
+    // Color.fromRGBO(40, 167, 69, 1)
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        side: MaterialStateProperty.all(
-          BorderSide.lerp(
-              BorderSide(
-                style: BorderStyle.solid,
-                color: borderColor,
-                width: 0.8,
-              ),
-              BorderSide(
-                style: BorderStyle.solid,
-                color: borderColor,
-                width: 0.8,
-              ),
-              0.0),
+        side: MaterialStateProperty.all<BorderSide>(
+          BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid)
         ),
         elevation: MaterialStateProperty.all(0.0),
         padding: MaterialStateProperty.all<EdgeInsets>(
-            EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0)),
+            EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0)),
         alignment: Alignment.center,
         minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
       ),
@@ -48,7 +40,7 @@ class MyBorderIconButton extends StatelessWidget {
               child: Text(
                 label,
                 style: TextStyle(
-                    fontSize: 11, color: textColor, letterSpacing: 0.1),
+                    fontSize: 11, color: textColor, letterSpacing: 0.1, fontWeight: FontWeight.w400),
               ),
             ),
           if (iconData != null)
