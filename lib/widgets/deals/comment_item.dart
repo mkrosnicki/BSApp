@@ -67,14 +67,15 @@ class _CommentItemState extends State<CommentItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 60,
-                    height: 60,
+                    width: 50,
+                    height: 50,
                     child: Image.network(
-                        'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg'),
+                        'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg', fit: BoxFit.cover,),
                   ),
                   Expanded(
-                    child: Padding(
+                    child: Container(
                       padding: const EdgeInsets.all(4.0),
+                      margin: const EdgeInsets.only(left: 4.0),
                       child: Flex(
                         direction: Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -132,23 +133,26 @@ class _CommentItemState extends State<CommentItem> {
                   ),
                 ],
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Text(
-                  comment.content,
-                  style: TextStyle(fontSize: 13),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                  child: Text(
+                    comment.content,
+                    style: TextStyle(fontSize: 13),
+                  ),
                 ),
               ),
-              // if (comment.parentId == null)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildButtonWithPaddings(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: Colors.red),
-                    _buildButtonWithPaddings(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: MyColorsProvider.GREEN, isActive: true),
-                    _buildButtonWithPaddings(label: 'Odpowiedz', iconData: CupertinoIcons.reply_thick_solid, function: () => _startCommentReply(comment.id), color: Colors.blue, isActive: true),
-                  ],
-                )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildButtonWithPaddings(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: Colors.red),
+                  _buildButtonWithPaddings(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: MyColorsProvider.GREEN, isActive: true),
+                  _buildButtonWithPaddings(label: 'Odpowiedz', iconData: CupertinoIcons.reply_thick_solid, function: () => _startCommentReply(comment.id), color: Colors.blue, isActive: true),
+                ],
+              )
+
             ],
           ),
         ),
