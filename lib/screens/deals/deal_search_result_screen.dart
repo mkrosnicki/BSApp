@@ -6,6 +6,7 @@ import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +44,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             onTap: () => Navigator.of(context).pop(),
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.arrow_back),
+              child: Icon(CupertinoIcons.back, color: Colors.black87),
             ),
           ),
           AppBarSearchInput(
@@ -63,8 +64,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: searchesData.isSaved(filterSettings)
-                    ? Icon(Icons.favorite)
-                    : Icon(Icons.favorite_border),
+                    ? Icon(CupertinoIcons.heart_fill, color: Colors.black87)
+                    : Icon(CupertinoIcons.heart, color: Colors.black87),
               ),
             ),
           ),
