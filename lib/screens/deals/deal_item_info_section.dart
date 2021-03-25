@@ -183,6 +183,8 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               'ZOBACZ',
                               style: TextStyle(
                                 fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
                               ),
                             )
                           ],
