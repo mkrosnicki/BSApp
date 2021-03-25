@@ -33,7 +33,7 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
             RegistrationForm()
           ],
         ),
-        bottomNavigationBar: MyNavigationBar(3),
+        bottomNavigationBar: MyNavigationBar(4),
       ),
     );
   }

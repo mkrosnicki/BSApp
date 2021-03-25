@@ -23,7 +23,7 @@ class ProfileOptionsScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomNavigationBar: MyNavigationBar(3),
+          bottomNavigationBar: MyNavigationBar(4),
         );
       } else {
         return MainAuthScreen();
