@@ -2,6 +2,7 @@ import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +14,11 @@ class MyNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: Color.fromRGBO(212, 227, 235, 1), width: 0.5))),
+      decoration: BoxDecoration(border: Border(top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5))),
       child: BottomNavigationBar(
           // Color.fromRGBO(99, 137, 217, 1)
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-
         fixedColor: Color.fromRGBO(99, 137, 217, 1),
         unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,

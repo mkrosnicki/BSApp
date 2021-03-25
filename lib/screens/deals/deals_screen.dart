@@ -1,9 +1,11 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,20 +39,6 @@ class _DealsScreenState extends State<DealsScreen> {
             },
             searchInputController: _searchTextController,
           ),
-          // if (_isSearchPanelVisible)
-          //   GestureDetector(
-          //     onTap: () => _showSearchPanel(false),
-          //     child: Padding(
-          //       padding: const EdgeInsets.only(left: 8.0),
-          //       child: Text(
-          //         'Anuluj',
-          //         style: TextStyle(
-          //           color: Colors.white,
-          //           fontSize: 12,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
         ],
       ),
     );
@@ -71,31 +59,43 @@ class _DealsScreenState extends State<DealsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 8,
-        title: _createSearchBox(),
-        actions: [
-          if (!_isSearchPanelVisible) InkWell(
-            onTap: () => _showFilterSelectionDialog(context),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
-              child: Icon(Icons.filter_list),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          titleSpacing: 8,
+          title: _createSearchBox(),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          bottom: PreferredSize(
+              child: Container(
+                color: MyColorsProvider.GREY_BORDER_COLOR,
+                height: 0.5,
+              ),
+              preferredSize: Size.fromHeight(4.0)),
+          actions: [
+            if (!_isSearchPanelVisible) InkWell(
+              onTap: () => _showFilterSelectionDialog(context),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
+                child: Icon(CupertinoIcons.slider_horizontal_3, color: Colors.black87,),
+              ),
             ),
-          ),
-          if (_isSearchPanelVisible)
-            GestureDetector(
-              onTap: () => _showSearchPanel(false),
-              child: TextButton(
-                child: Text(
-                  'Anuluj',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+            if (_isSearchPanelVisible)
+              GestureDetector(
+                onTap: () => _showSearchPanel(false),
+                child: TextButton(
+                  child: Text(
+                    'Anuluj',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 12,
+                      letterSpacing: 0.3,
+                    ),
                   ),
                 ),
-              ),
-            )
-        ],
+              )
+          ],
+        ),
       ),
       body: !_isSearchPanelVisible
           ? FutureBuilder(

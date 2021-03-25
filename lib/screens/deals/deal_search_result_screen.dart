@@ -80,6 +80,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           titleSpacing: 8,
           title: _createSearchBox(context),
           automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,

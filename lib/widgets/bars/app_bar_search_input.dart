@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBarSearchInput extends StatefulWidget {
@@ -23,15 +24,15 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         onSubmitted: widget.onSubmitInputFunction,
         controller: widget.searchInputController,
         keyboardType: TextInputType.text,
-        cursorColor: Colors.grey,
         autofocus: false,
+        cursorColor: Colors.black87,
         style: TextStyle(
           color: Colors.black87,
         ),
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: Icon(CupertinoIcons.search, color: Colors.black54,),
             prefixIconConstraints: BoxConstraints.tight(
-              Size.square(30),
+              Size.square(25),
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(8),
@@ -46,10 +47,12 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
             hintText: 'Czego szukasz?',
+            hintStyle: TextStyle(fontSize: 14,),
             isDense: true,
             filled: true,
-            fillColor: Colors.white,
-            focusColor: Colors.white),
+            fillColor: Color.fromRGBO(240, 240, 240, 1),
+            focusColor: Color.fromRGBO(227, 227, 227, 1),
+        ),
       ),
     );
   }
