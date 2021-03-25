@@ -44,7 +44,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
                         'https://dadi-shop.pl/img/sklep-z-w%C3%B3zkami-dla-dzieci-g%C5%82%C4%99bokie-spacerowe-dadi-shop-logo-1526467719.jpg'),
                     _buildDealActionsSection(deal),
                     DealDetailsDescription(deal),
-                    DealDetailsActions(),
+                    DealDetailsActions(deal),
                     DealDetailsComments(deal),
                     // _buildCommentsSection(deal)
                   ],

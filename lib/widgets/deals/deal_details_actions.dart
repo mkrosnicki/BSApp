@@ -1,9 +1,17 @@
+import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealDetailsActions extends StatelessWidget {
-  DealDetailsActions();
+
+  final DealModel deal;
+
+  DealDetailsActions(this.deal);
 
   @override
   Widget build(BuildContext context) {
@@ -12,20 +20,22 @@ class DealDetailsActions extends StatelessWidget {
       child: Column(
         children: [
           Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildButtonWithPaddings(
-                  label: 'Nieprzydatna',
-                  iconData: CupertinoIcons.hand_thumbsdown_fill,
-                  function: () {},
-                  trailing: '2'),
-              _buildButtonWithPaddings(
-                  label: 'Przydatna',
-                  iconData: CupertinoIcons.hand_thumbsup_fill,
-                  function: () {},
-                  trailing: '2'),
-            ],
+          Consumer<Auth>(
+            builder: (context, authData, child) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildButtonWithPaddings(
+                    label: 'Nieprzydatna',
+                    iconData: CupertinoIcons.hand_thumbsdown_fill,
+                    function: () => _vote(context, authData.isAuthenticated, false),
+                    trailing: '${deal.numberOfNegativeVotes}'),
+                _buildButtonWithPaddings(
+                    label: 'Przydatna',
+                    iconData: CupertinoIcons.hand_thumbsup_fill,
+                    function: () => _vote(context, authData.isAuthenticated, false),
+                    trailing: '${deal.numberOfPositiveVotes}'),
+              ],
+            ),
           ),
           Divider(),
         ],
@@ -50,5 +60,22 @@ class DealDetailsActions extends StatelessWidget {
             isActive: isActive),
       ),
     );
+  }
+
+  _vote(BuildContext context, bool isAuthenticated, bool isPositive) {
+    if (!isAuthenticated) {
+      _showLoginScreen(context);
+    } else {
+      Provider.of<Deals>(context, listen: false)
+          .voteForDeal(deal.id, isPositive);
+    }
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 }

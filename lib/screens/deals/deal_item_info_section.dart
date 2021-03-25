@@ -161,7 +161,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                 ),
                                 Text(dealsData
                                     .findById(widget.deal.id)
-                                    .numberOfPoints
+                                    .numberOfPositiveVotes
                                     .toString()),
                                 GestureDetector(
                                   onTap: () =>

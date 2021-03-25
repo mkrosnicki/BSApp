@@ -22,7 +22,8 @@ class DealModel {
   final DateTime startDate;
   final DateTime endDate;
   final int numberOfComments;
-  final int numberOfPoints;
+  final int numberOfPositiveVotes;
+  final int numberOfNegativeVotes;
   final List<String> positiveVoters;
   final List<String> negativeVoters;
 
@@ -47,39 +48,42 @@ class DealModel {
     @required this.startDate,
     @required this.endDate,
     @required this.numberOfComments,
-    @required this.numberOfPoints,
+    @required this.numberOfPositiveVotes,
+    @required this.numberOfNegativeVotes,
     @required this.positiveVoters,
     @required this.negativeVoters,
   });
 
   static DealModel of(dynamic dealObject) {
     return DealModel(
-        id: dealObject['id'],
-        addedAt: DateTime.parse(dealObject['addedAt']),
-        addedById: dealObject['addedById'],
-        addedByUsername: dealObject['addedByUsername'],
-        addedByAvatarPath: dealObject['addedByAvatarPath'],
-        title: dealObject['title'],
-        description: dealObject['description'],
-        link: dealObject['link'],
-        dealType: DealTypeHelper.of(dealObject['dealType']),
-        categories: [...(dealObject['categories'] as List).map((e) => e['name']).toList()],
-        locationType: dealObject['locationType'],
-        voivodeship: dealObject['voivodeship'],
-        city: dealObject['city'],
-        locationDescription: dealObject['locationDescription'],
-        currentPrice: dealObject['currentPrice'],
-        regularPrice: dealObject['regularPrice'],
-        shippingPrice: dealObject['shippingPrice'],
-        startDate: DateTime.parse(dealObject['startDate']),
-        endDate: DateTime.parse(dealObject['endDate']),
-        numberOfComments: dealObject['numberOfComments'],
-        numberOfPoints: dealObject['numberOfPoints'],
-        positiveVoters: [...dealObject['positiveVoters'] as List],
-        negativeVoters: [...dealObject['negativeVoters'] as List],
+      id: dealObject['id'],
+      addedAt: DateTime.parse(dealObject['addedAt']),
+      addedById: dealObject['addedById'],
+      addedByUsername: dealObject['addedByUsername'],
+      addedByAvatarPath: dealObject['addedByAvatarPath'],
+      title: dealObject['title'],
+      description: dealObject['description'],
+      link: dealObject['link'],
+      dealType: DealTypeHelper.of(dealObject['dealType']),
+      categories: [
+        ...(dealObject['categories'] as List).map((e) => e['name']).toList()
+      ],
+      locationType: dealObject['locationType'],
+      voivodeship: dealObject['voivodeship'],
+      city: dealObject['city'],
+      locationDescription: dealObject['locationDescription'],
+      currentPrice: dealObject['currentPrice'],
+      regularPrice: dealObject['regularPrice'],
+      shippingPrice: dealObject['shippingPrice'],
+      startDate: DateTime.parse(dealObject['startDate']),
+      endDate: DateTime.parse(dealObject['endDate']),
+      numberOfComments: dealObject['numberOfComments'],
+      numberOfPositiveVotes: dealObject['numberOfPositiveVotes'],
+      numberOfNegativeVotes: dealObject['numberOfNegativeVotes'],
+      positiveVoters: [...dealObject['positiveVoters'] as List],
+      negativeVoters: [...dealObject['negativeVoters'] as List],
     );
   }
-
 
   String get discountString {
     if (dealType == DealType.OCCASION) {
@@ -97,7 +101,7 @@ class DealModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is DealModel && runtimeType == other.runtimeType && id == other.id;
+      other is DealModel && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
