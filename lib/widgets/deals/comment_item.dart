@@ -147,7 +147,7 @@ class _CommentItemState extends State<CommentItem> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 12.0),
+                      horizontal: 12.0, vertical: 16.0),
                   child: Wrap(
                     children: [
                       if (_displayRepliedUsername(comment)) Text(
