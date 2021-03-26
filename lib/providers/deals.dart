@@ -40,7 +40,6 @@ class Deals with ChangeNotifier {
       loadedDeals.add(DealModel.of(element));
     });
     allDeals = loadedDeals;
-    print(allDeals);
     notifyListeners();
   }
 

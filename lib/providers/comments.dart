@@ -84,7 +84,6 @@ class Comments with ChangeNotifier {
   }
 
   bool wasVotedPositivelyBy(String commentId, String userId) {
-    print(commentId);
     return findById(commentId).positiveVoters.any((element) => element == userId);
   }
 

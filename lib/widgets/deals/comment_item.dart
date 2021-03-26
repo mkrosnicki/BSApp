@@ -53,7 +53,6 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
-    print(comment.replyForUsername);
     var userInfoTextStyle = const TextStyle(
       fontSize: 12,
       color: Colors.grey,

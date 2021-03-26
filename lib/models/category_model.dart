@@ -23,4 +23,9 @@ class CategoryModel {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'CategoryModel{id: $id, name: $name, subCategories: $subCategories}';
+  }
 }

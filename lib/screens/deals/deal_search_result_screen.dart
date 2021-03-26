@@ -89,20 +89,22 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (!filterSettings.areDefaults()) SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: _buildFilterChips(),
+            if (!filterSettings.areDefaults())
+              SizedBox(
+                height: 40,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children: _buildFilterChips(),
+                  ),
                 ),
               ),
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
               child: Container(
                 color: Colors.white,
                 padding:
@@ -113,11 +115,16 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   children: [
                     Text(
                       'Znalezione okazje',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () => _showFilterSelectionDialog(context),
-                      child: Text('Edytuj filtry', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
+                      child: Text(
+                        'Edytuj filtry',
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -175,24 +182,40 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
       chips.add(InputChip(
         label: Text('Internetowe'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         onDeleted: () => _clearFilterSettings(clearInternetOnly: true),
       ));
     }
     if (filterSettings.categories.isNotEmpty) {
       chips.add(InputChip(
-        label: Text('Kategorie', style: TextStyle(fontSize: 12),),
-        deleteIcon: Icon(CupertinoIcons.clear, size: 12,),
+        label: Text(
+          'Kategorie',
+          style: TextStyle(fontSize: 12),
+        ),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         elevation: 0,
+        labelPadding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+
         onDeleted: () => _clearFilterSettings(clearCategories: true),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       ));
     }
     if (filterSettings.voivodeship != null) {
       chips.add(InputChip(
         label: Text('Lokalizacja'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         onDeleted: () => _clearFilterSettings(clearSorting: true),
       ));
     }
@@ -200,21 +223,30 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
       chips.add(InputChip(
         label: Text('Aktywne'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
       ));
     }
     if (filterSettings.ageTypes.isNotEmpty) {
       chips.add(InputChip(
         label: Text('Wiek dziecka'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         onDeleted: () => _clearFilterSettings(clearCategories: true),
       ));
     }
     if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
       chips.add(InputChip(
         label: Text('Sortowanie'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        deleteIcon: Icon(
+          CupertinoIcons.clear,
+          size: 12,
+        ),
         onDeleted: () => _clearFilterSettings(clearActiveOnly: true),
       ));
     }

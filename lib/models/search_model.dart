@@ -60,7 +60,7 @@ class SearchModel {
   }
 
   bool isSame(FilterSettings filterSettings) {
-    Function eq = const ListEquality().equals;
+    Function eq = const DeepCollectionEquality.unordered().equals;
     return
       phrase == filterSettings.phrase &&
           eq(categories, filterSettings.categories) &&
@@ -70,5 +70,10 @@ class SearchModel {
           city == filterSettings.city &&
           eq(ageTypes, filterSettings.ageTypes) &&
           sortBy == filterSettings.sortBy;
+  }
+
+  @override
+  String toString() {
+    return 'SearchModel{id: $id, phrase: $phrase, categories: $categories, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
   }
 }
