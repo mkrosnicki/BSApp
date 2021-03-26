@@ -47,10 +47,10 @@ class _DealDetailsScreenState extends State<DealDetailsScreen>
 
   bool _scrollListener(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.axis == Axis.vertical) {
-      _ColorAnimationController.animateTo(scrollInfo.metrics.pixels / 350);
+      _ColorAnimationController.animateTo(scrollInfo.metrics.pixels / 175);
 
       _TextAnimationController.animateTo(
-          (scrollInfo.metrics.pixels - 350) / 50);
+          (scrollInfo.metrics.pixels - 175) / 50);
       return true;
     }
   }
