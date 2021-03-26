@@ -25,7 +25,7 @@ class DealDetailsComments extends StatelessWidget {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+                  const EdgeInsets.only(top: 5.0, bottom: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
