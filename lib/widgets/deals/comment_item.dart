@@ -48,6 +48,7 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
+    print(comment.replyForUsername);
     var userInfoTextStyle = const TextStyle(
       fontSize: 12,
       color: Colors.grey,
@@ -145,7 +146,7 @@ class _CommentItemState extends State<CommentItem> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12.0, vertical: 12.0),
                   child: Text(
-                    comment.content,
+                    '${comment.replyForUsername != null ? comment.replyForUsername + comment.content : comment.content}',
                     style: TextStyle(fontSize: 13),
                   ),
                 ),
