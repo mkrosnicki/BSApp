@@ -94,7 +94,8 @@ class _CommentItemState extends State<CommentItem> {
                               Container(
                                 margin: EdgeInsets.only(bottom: 6.0),
                                 child: GestureDetector(
-                                  onTap: () => _navigateToUserProfileScreen(comment.adderInfo.id),
+                                  onTap: () => _navigateToUserProfileScreen(
+                                      comment.adderInfo.id),
                                   child: Text(
                                     comment.adderInfo.username,
                                     style: TextStyle(
@@ -145,9 +146,17 @@ class _CommentItemState extends State<CommentItem> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12.0, vertical: 12.0),
-                  child: Text(
-                    '${comment.replyForUsername != null ? comment.replyForUsername + comment.content : comment.content}',
-                    style: TextStyle(fontSize: 13),
+                  child: Wrap(
+                    children: [
+                      if (_displayRepliedUsername(comment)) Text(
+                        '@${comment.replyForUsername} ',
+                        style: TextStyle(fontSize: 13, color: Colors.blue),
+                      ),
+                      Text(
+                        comment.content,
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -204,12 +213,21 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
+  bool _displayRepliedUsername(CommentModel comment) {
+    return !_isReplyToParent(comment) && comment.replyForUsername != null;
+  }
+
+  bool _isReplyToParent(CommentModel comment) {
+    return comment.parentId == comment.replyForId;
+  }
+
   _startCommentReply(String commentId) {
     Provider.of<DealReplyState>(context, listen: false)
         .startCommentReply(commentId);
   }
 
   _navigateToUserProfileScreen(String userId) {
-    Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
+    Navigator.of(context)
+        .pushNamed(UserProfileScreen.routeName, arguments: userId);
   }
 }
