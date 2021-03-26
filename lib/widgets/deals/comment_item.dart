@@ -2,6 +2,7 @@ import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -175,7 +176,7 @@ class _CommentItemState extends State<CommentItem> {
                         label: 'Nie lubię',
                         iconData: CupertinoIcons.hand_thumbsdown_fill,
                         function: () =>
-                            _voteForComment(widget.dealId, comment.id, false),
+                            _voteForComment(widget.dealId, comment.id, false, authData.isAuthenticated),
                         trailing: comment.numberOfNegativeVotes.toString(),
                         color: Colors.red,
                         isActive: commentsData.wasVotedNegativelyBy(
@@ -185,7 +186,7 @@ class _CommentItemState extends State<CommentItem> {
                           label: 'Lubię',
                           iconData: CupertinoIcons.hand_thumbsup_fill,
                           function: () =>
-                              _voteForComment(widget.dealId, comment.id, true),
+                              _voteForComment(widget.dealId, comment.id, true, authData.isAuthenticated),
                           trailing: comment.numberOfPositiveVotes.toString(),
                           color: MyColorsProvider.GREEN,
                           isActive: commentsData.wasVotedPositivelyBy(
@@ -229,9 +230,21 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  _voteForComment(String dealId, String commentId, bool isPositive) {
-    Provider.of<Comments>(context, listen: false)
-        .voteForComment(dealId, commentId, isPositive);
+  _voteForComment(String dealId, String commentId, bool isPositive, isAuthenticated) {
+    if (!isAuthenticated) {
+      _showLoginScreen(context);
+    } else {
+      Provider.of<Comments>(context, listen: false)
+          .voteForComment(dealId, commentId, isPositive);
+    }
+  }
+
+  _showLoginScreen(BuildContext context) {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return LoginRegistrationScreen();
+        },
+        fullscreenDialog: true));
   }
 
   bool _displayRepliedUsername(CommentModel comment) {
