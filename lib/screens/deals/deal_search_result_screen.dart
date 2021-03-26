@@ -3,6 +3,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -82,6 +83,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           title: _createSearchBox(context),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
+          elevation: 0,
+          bottom: AppBarBottomBorder(),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -99,21 +102,25 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Flex(
-                direction: Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Znalezione okazje',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  TextButton(
-                    onPressed: () => _showFilterSelectionDialog(context),
-                    child: Text('Edytuj filtry'),
-                  ),
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+              child: Container(
+                color: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Znalezione okazje',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () => _showFilterSelectionDialog(context),
+                      child: Text('Edytuj filtry', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
+                    ),
+                  ],
+                ),
               ),
             ),
             FutureBuilder(
@@ -174,9 +181,12 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     }
     if (filterSettings.categories.isNotEmpty) {
       chips.add(InputChip(
-        label: Text('Kategorie'),
-        deleteIcon: Icon(Icons.cancel_outlined),
+        label: Text('Kategorie', style: TextStyle(fontSize: 12),),
+        deleteIcon: Icon(CupertinoIcons.clear, size: 12,),
+        elevation: 0,
         onDeleted: () => _clearFilterSettings(clearCategories: true),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       ));
     }
     if (filterSettings.voivodeship != null) {
