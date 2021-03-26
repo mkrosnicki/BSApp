@@ -49,10 +49,10 @@ class CommentModel {
           .toList(),
       addedAt: DateTime.parse(commentSnapshot['addedAt']),
       adderInfo: AdderInfoModel.of(commentSnapshot['adderInfo']),
-      numberOfPositiveVotes: 0,
-      numberOfNegativeVotes: 0,
-      positiveVoters: [],
-      negativeVoters: [],
+      numberOfPositiveVotes: commentSnapshot['numberOfPositiveVotes'],
+      numberOfNegativeVotes: commentSnapshot['numberOfNegativeVotes'],
+      positiveVoters: [...commentSnapshot['positiveVoters'] as List],
+      negativeVoters: [...commentSnapshot['negativeVoters'] as List],
     );
   }
 
