@@ -15,7 +15,9 @@ class DealDetailsActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      color: Colors.white,
+      margin: EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
@@ -49,7 +51,6 @@ class DealDetailsActions extends StatelessWidget {
               ),
             ),
           ),
-          Divider(),
         ],
       ),
     );

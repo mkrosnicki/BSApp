@@ -16,8 +16,8 @@ class DealDetailsComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       width: double.infinity,
-      // color: Color.fromRGBO(249, 250, 251, 1),
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),

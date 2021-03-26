@@ -30,7 +30,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> {
       body: Container(
         margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
         padding: const EdgeInsets.all(0),
-        color: Colors.white,
+        // color: Colors.white,
         child: Column(
           children: [
             Expanded(

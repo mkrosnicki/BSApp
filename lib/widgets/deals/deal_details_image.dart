@@ -19,6 +19,7 @@ class DealDetailsImage extends StatelessWidget {
     return Stack(
       children: [
         Container(
+          color: Colors.white,
           height: imageHeight + 20,
           width: double.infinity,
         ),
