@@ -13,12 +13,20 @@ class Comments with ChangeNotifier {
 
   Comments({this.fetchedDealComments, this.fetchedAddedComments, this.token});
 
-  List<CommentModel> get dealComments {
+  List<CommentModel> get allDealComments {
     return [...fetchedDealComments];
   }
 
-  List<CommentModel> get addedComments {
+  List<CommentModel> get mainDealComments {
+    return fetchedDealComments.where((element) => element.parentId == null).toList();
+  }
+
+  List<CommentModel> get allAddedComments {
     return [...fetchedAddedComments];
+  }
+
+  List<CommentModel> get mainAddedComments {
+    return fetchedAddedComments.where((element) => element.parentId == null).toList();
   }
 
   Future<void> fetchCommentsForDeal(String dealId) async {
@@ -29,7 +37,9 @@ class Comments with ChangeNotifier {
       print('No Comments Found!');
     }
     responseBody.forEach((element) {
-      loadedComments.add(CommentModel.of(element));
+      var comment = CommentModel.of(element);
+      loadedComments.add(comment);
+      loadedComments.addAll(comment.subComments);
     });
     fetchedDealComments = loadedComments;
     notifyListeners();
@@ -43,7 +53,9 @@ class Comments with ChangeNotifier {
       print('No Comments Found!');
     }
     responseBody.forEach((element) {
-      loadedComments.add(CommentModel.of(element));
+      var comment = CommentModel.of(element);
+      loadedComments.add(comment);
+      loadedComments.addAll(comment.subComments);
     });
     fetchedAddedComments = loadedComments;
     notifyListeners();
@@ -67,14 +79,16 @@ class Comments with ChangeNotifier {
   }
 
   CommentModel findById(String commentId) {
-    return fetchedDealComments.firstWhere((comment) => comment.id == commentId);
+    // print(fetchedDealComments);
+    return allDealComments.firstWhere((comment) => comment.id == commentId);
   }
 
-  bool wasVotedPositivelyBy(String dealId, String userId) {
-    return findById(dealId).positiveVoters.any((element) => element == userId);
+  bool wasVotedPositivelyBy(String commentId, String userId) {
+    print(commentId);
+    return findById(commentId).positiveVoters.any((element) => element == userId);
   }
 
-  bool wasVotedNegativelyBy(String dealId, String userId) {
-    return findById(dealId).negativeVoters.any((element) => element == userId);
+  bool wasVotedNegativelyBy(String commentId, String userId) {
+    return findById(commentId).negativeVoters.any((element) => element == userId);
   }
 }

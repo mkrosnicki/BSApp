@@ -1,4 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
@@ -152,10 +153,11 @@ class _CommentItemState extends State<CommentItem> {
                       horizontal: 12.0, vertical: 16.0),
                   child: Wrap(
                     children: [
-                      if (_displayRepliedUsername(comment)) Text(
-                        '@${comment.replyForUsername} ',
-                        style: TextStyle(fontSize: 13, color: Colors.blue),
-                      ),
+                      if (_displayRepliedUsername(comment))
+                        Text(
+                          '@${comment.replyForUsername} ',
+                          style: TextStyle(fontSize: 13, color: Colors.blue),
+                        ),
                       Text(
                         comment.content,
                         style: TextStyle(fontSize: 13),
@@ -164,29 +166,39 @@ class _CommentItemState extends State<CommentItem> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildButtonWithPaddings(
-                      label: 'Nie lubię',
-                      iconData: CupertinoIcons.hand_thumbsdown_fill,
-                      function: () => _voteForComment(widget.dealId, comment.id, false),
-                      trailing: comment.numberOfNegativeVotes.toString(),
-                      color: Colors.red),
-                  _buildButtonWithPaddings(
-                      label: 'Lubię',
-                      iconData: CupertinoIcons.hand_thumbsup_fill,
-                      function: () => _voteForComment(widget.dealId, comment.id, true),
-                      trailing: comment.numberOfPositiveVotes.toString(),
-                      color: MyColorsProvider.GREEN,
-                      isActive: true),
-                  _buildButtonWithPaddings(
-                      label: 'Odpowiedz',
-                      iconData: CupertinoIcons.reply_thick_solid,
-                      function: () => _startCommentReply(comment.id),
-                      color: Colors.blue,
-                      isActive: true),
-                ],
+              Consumer<Auth>(
+                builder: (context, authData, child) => Consumer<Comments>(
+                  builder: (context, commentsData, child) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildButtonWithPaddings(
+                        label: 'Nie lubię',
+                        iconData: CupertinoIcons.hand_thumbsdown_fill,
+                        function: () =>
+                            _voteForComment(widget.dealId, comment.id, false),
+                        trailing: comment.numberOfNegativeVotes.toString(),
+                        color: Colors.red,
+                        isActive: commentsData.wasVotedNegativelyBy(
+                            comment.id, authData.userId),
+                      ),
+                      _buildButtonWithPaddings(
+                          label: 'Lubię',
+                          iconData: CupertinoIcons.hand_thumbsup_fill,
+                          function: () =>
+                              _voteForComment(widget.dealId, comment.id, true),
+                          trailing: comment.numberOfPositiveVotes.toString(),
+                          color: MyColorsProvider.GREEN,
+                          isActive: commentsData.wasVotedPositivelyBy(
+                              comment.id, authData.userId)),
+                      _buildButtonWithPaddings(
+                          label: 'Odpowiedz',
+                          iconData: CupertinoIcons.reply_thick_solid,
+                          function: () => _startCommentReply(comment.id),
+                          color: Colors.blue,
+                          isActive: true),
+                    ],
+                  ),
+                ),
               )
             ],
           ),
@@ -218,7 +230,8 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   _voteForComment(String dealId, String commentId, bool isPositive) {
-    Provider.of<Comments>(context, listen: false).voteForComment(dealId, commentId, isPositive);
+    Provider.of<Comments>(context, listen: false)
+        .voteForComment(dealId, commentId, isPositive);
   }
 
   bool _displayRepliedUsername(CommentModel comment) {

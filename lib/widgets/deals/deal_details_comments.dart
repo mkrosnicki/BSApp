@@ -63,7 +63,7 @@ class DealDetailsComments extends StatelessWidget {
                   } else {
                     return Consumer<Comments>(
                       builder: (context, commentsData, child) => Column(
-                        children: commentsData.dealComments
+                        children: commentsData.mainDealComments
                             .map((comment) => CommentItem(deal.id, comment))
                             .toList(),
                       ),

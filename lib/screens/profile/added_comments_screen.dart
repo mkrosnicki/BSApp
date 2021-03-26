@@ -28,8 +28,8 @@ class AddedCommentsScreen extends StatelessWidget {
                 builder: (context, commentsData, child) =>
                     ListView.builder(
                       itemBuilder: (context, index) =>
-                          Text(commentsData.addedComments[index].content),
-                      itemCount: commentsData.addedComments.length,
+                          Text(commentsData.allAddedComments[index].content),
+                      itemCount: commentsData.allAddedComments.length,
                     ),
               );
             }
