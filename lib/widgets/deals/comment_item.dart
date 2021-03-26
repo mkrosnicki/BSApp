@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,7 +107,8 @@ class _CommentItemState extends State<CommentItem> {
                                 ),
                               ),
                               Text(
-                                '${_dateFormat.format(comment.addedAt)}',
+                                // '${_dateFormat.format(comment.addedAt)}',
+                                '${DateUtil.timeAgoString(comment.addedAt)}',
                                 style: userInfoTextStyle,
                               ),
                             ],
