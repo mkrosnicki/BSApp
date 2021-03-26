@@ -104,6 +104,10 @@ class Deals with ChangeNotifier {
     return fetchedObservedDeals.contains(deal);
   }
 
+  bool isObservedDealById(String dealId) {
+    return fetchedObservedDeals.any((deal) => deal.id == dealId);
+  }
+
   void update(String token) async {
     this.token = token;
     if (token == null) {

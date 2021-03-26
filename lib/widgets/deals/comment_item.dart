@@ -1,5 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
+import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,7 +71,9 @@ class _CommentItemState extends State<CommentItem> {
                     width: 50,
                     height: 50,
                     child: Image.network(
-                        'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg', fit: BoxFit.cover,),
+                      'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Expanded(
                     child: Container(
@@ -89,11 +92,14 @@ class _CommentItemState extends State<CommentItem> {
                             children: [
                               Container(
                                 margin: EdgeInsets.only(bottom: 6.0),
-                                child: Text(
-                                  comment.adderInfo.username,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
+                                child: GestureDetector(
+                                  onTap: () => _navigateToUserProfileScreen(comment.adderInfo.id),
+                                  child: Text(
+                                    comment.adderInfo.username,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -136,8 +142,8 @@ class _CommentItemState extends State<CommentItem> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 12.0),
                   child: Text(
                     comment.content,
                     style: TextStyle(fontSize: 13),
@@ -147,12 +153,27 @@ class _CommentItemState extends State<CommentItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildButtonWithPaddings(label: 'Nie lubię', iconData: CupertinoIcons.hand_thumbsdown_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: Colors.red),
-                  _buildButtonWithPaddings(label: 'Lubię', iconData: CupertinoIcons.hand_thumbsup_fill, function: () => _startCommentReply(comment.id), trailing: '6', color: MyColorsProvider.GREEN, isActive: true),
-                  _buildButtonWithPaddings(label: 'Odpowiedz', iconData: CupertinoIcons.reply_thick_solid, function: () => _startCommentReply(comment.id), color: Colors.blue, isActive: true),
+                  _buildButtonWithPaddings(
+                      label: 'Nie lubię',
+                      iconData: CupertinoIcons.hand_thumbsdown_fill,
+                      function: () => _startCommentReply(comment.id),
+                      trailing: '6',
+                      color: Colors.red),
+                  _buildButtonWithPaddings(
+                      label: 'Lubię',
+                      iconData: CupertinoIcons.hand_thumbsup_fill,
+                      function: () => _startCommentReply(comment.id),
+                      trailing: '6',
+                      color: MyColorsProvider.GREEN,
+                      isActive: true),
+                  _buildButtonWithPaddings(
+                      label: 'Odpowiedz',
+                      iconData: CupertinoIcons.reply_thick_solid,
+                      function: () => _startCommentReply(comment.id),
+                      color: Colors.blue,
+                      isActive: true),
                 ],
               )
-
             ],
           ),
         ),
@@ -161,11 +182,23 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  _buildButtonWithPaddings({String label, IconData iconData, Function function, String trailing, bool isActive = false, Color color}) {
+  _buildButtonWithPaddings(
+      {String label,
+      IconData iconData,
+      Function function,
+      String trailing,
+      bool isActive = false,
+      Color color}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: MyBorderIconButton(label: label, iconData: iconData, function: function, trailing: trailing, isActive: isActive, color: color),
+        child: MyBorderIconButton(
+            label: label,
+            iconData: iconData,
+            function: function,
+            trailing: trailing,
+            isActive: isActive,
+            color: color),
       ),
     );
   }
@@ -173,5 +206,9 @@ class _CommentItemState extends State<CommentItem> {
   _startCommentReply(String commentId) {
     Provider.of<DealReplyState>(context, listen: false)
         .startCommentReply(commentId);
+  }
+
+  _navigateToUserProfileScreen(String userId) {
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
   }
 }
