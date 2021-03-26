@@ -64,7 +64,7 @@ class DealDetailsComments extends StatelessWidget {
                     return Consumer<Comments>(
                       builder: (context, commentsData, child) => Column(
                         children: commentsData.dealComments
-                            .map((comment) => CommentItem(comment))
+                            .map((comment) => CommentItem(deal.id, comment))
                             .toList(),
                       ),
                     );

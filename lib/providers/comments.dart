@@ -60,4 +60,21 @@ class Comments with ChangeNotifier {
     await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: token);
     return fetchCommentsForDeal(dealId);
   }
+
+  Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
+    await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: token);
+    return fetchCommentsForDeal(dealId);
+  }
+
+  CommentModel findById(String commentId) {
+    return fetchedDealComments.firstWhere((comment) => comment.id == commentId);
+  }
+
+  bool wasVotedPositivelyBy(String dealId, String userId) {
+    return findById(dealId).positiveVoters.any((element) => element == userId);
+  }
+
+  bool wasVotedNegativelyBy(String dealId, String userId) {
+    return findById(dealId).negativeVoters.any((element) => element == userId);
+  }
 }

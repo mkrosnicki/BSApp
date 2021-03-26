@@ -12,6 +12,10 @@ class CommentModel {
   final String replyForUsername;
   final DateTime addedAt;
   final AdderInfoModel adderInfo;
+  final int numberOfPositiveVotes;
+  final int numberOfNegativeVotes;
+  final List<String> positiveVoters;
+  final List<String> negativeVoters;
 
   CommentModel(
       {this.id,
@@ -24,7 +28,11 @@ class CommentModel {
       this.replyForUserId,
       this.replyForUsername,
       this.addedAt,
-      this.adderInfo});
+      this.adderInfo,
+      this.numberOfPositiveVotes,
+      this.numberOfNegativeVotes,
+      this.positiveVoters,
+      this.negativeVoters});
 
   static CommentModel of(dynamic commentSnapshot) {
     return CommentModel(
@@ -41,6 +49,10 @@ class CommentModel {
           .toList(),
       addedAt: DateTime.parse(commentSnapshot['addedAt']),
       adderInfo: AdderInfoModel.of(commentSnapshot['adderInfo']),
+      numberOfPositiveVotes: 0,
+      numberOfNegativeVotes: 0,
+      positiveVoters: [],
+      negativeVoters: [],
     );
   }
 

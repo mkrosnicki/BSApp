@@ -1,4 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
@@ -12,8 +13,9 @@ import 'package:provider/provider.dart';
 
 class CommentItem extends StatefulWidget {
   final CommentModel comment;
+  final String dealId;
 
-  CommentItem(this.comment);
+  CommentItem(this.dealId, this.comment);
 
   @override
   _CommentItemState createState() => _CommentItemState();
@@ -168,14 +170,14 @@ class _CommentItemState extends State<CommentItem> {
                   _buildButtonWithPaddings(
                       label: 'Nie lubię',
                       iconData: CupertinoIcons.hand_thumbsdown_fill,
-                      function: () => _startCommentReply(comment.id),
-                      trailing: '6',
+                      function: () => _voteForComment(widget.dealId, comment.id, false),
+                      trailing: comment.numberOfNegativeVotes.toString(),
                       color: Colors.red),
                   _buildButtonWithPaddings(
                       label: 'Lubię',
                       iconData: CupertinoIcons.hand_thumbsup_fill,
-                      function: () => _startCommentReply(comment.id),
-                      trailing: '6',
+                      function: () => _voteForComment(widget.dealId, comment.id, true),
+                      trailing: comment.numberOfPositiveVotes.toString(),
                       color: MyColorsProvider.GREEN,
                       isActive: true),
                   _buildButtonWithPaddings(
@@ -213,6 +215,10 @@ class _CommentItemState extends State<CommentItem> {
             color: color),
       ),
     );
+  }
+
+  _voteForComment(String dealId, String commentId, bool isPositive) {
+    Provider.of<Comments>(context, listen: false).voteForComment(dealId, commentId, isPositive);
   }
 
   bool _displayRepliedUsername(CommentModel comment) {
