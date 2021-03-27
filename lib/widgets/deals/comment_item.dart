@@ -177,7 +177,7 @@ class _CommentItemState extends State<CommentItem> {
                       children: [
                         Wrap(
                           children: [
-                            _buildButtonWithPadding(
+                            MyBorderIconButton(
                               iconData: CupertinoIcons.hand_thumbsdown_fill,
                               function: () => _voteForComment(widget.dealId,
                                   comment.id, false, authData.isAuthenticated),
@@ -186,8 +186,9 @@ class _CommentItemState extends State<CommentItem> {
                               color: Colors.red,
                               isActive: commentsData.wasVotedNegativelyBy(
                                   comment.id, authData.userId),
+                              showBorder: false,
                             ),
-                            _buildButtonWithPadding(
+                            MyBorderIconButton(
                                 iconData: CupertinoIcons.hand_thumbsup_fill,
                                 function: () => _voteForComment(widget.dealId,
                                     comment.id, true, authData.isAuthenticated),
@@ -195,15 +196,18 @@ class _CommentItemState extends State<CommentItem> {
                                     comment.numberOfPositiveVotes.toString(),
                                 color: MyColorsProvider.GREEN,
                                 isActive: commentsData.wasVotedPositivelyBy(
-                                    comment.id, authData.userId)),
+                                    comment.id, authData.userId),
+                              showBorder: false,
+                            ),
                           ],
                         ),
-                        _buildButtonWithPadding(
+                        MyBorderIconButton(
                             label: 'Odpowiedz',
                             function: () => _startCommentReply(comment.id),
                             color: Colors.blue,
                             isBold: true,
                             fontSize: 13,
+                            showBorder: false,
                             isActive: true),
                       ],
                     ),
@@ -215,30 +219,6 @@ class _CommentItemState extends State<CommentItem> {
         ),
         Divider(),
       ],
-    );
-  }
-
-  _buildButtonWithPadding(
-      {String label,
-      IconData iconData,
-      Function function,
-      String trailing,
-        bool isBold = false,
-        double fontSize,
-      bool isActive = false,
-      Color color}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-      child: MyBorderIconButton(
-          label: label,
-          iconData: iconData,
-          function: function,
-          trailing: trailing,
-          fontSize: fontSize,
-          isBold: isBold,
-          isActive: isActive,
-          showBorder: false,
-          color: color),
     );
   }
 
