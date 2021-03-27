@@ -62,7 +62,8 @@ class _CommentItemState extends State<CommentItem> {
     return Flex(
       direction: Axis.vertical,
       children: [
-        Padding(
+        Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class _CommentItemState extends State<CommentItem> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Expanded(
+                  Flexible(
                     child: Container(
                       padding: const EdgeInsets.all(4.0),
                       margin: const EdgeInsets.only(left: 4.0),
@@ -168,35 +169,44 @@ class _CommentItemState extends State<CommentItem> {
               ),
               Consumer<Auth>(
                 builder: (context, authData, child) => Consumer<Comments>(
-                  builder: (context, commentsData, child) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildButtonWithPaddings(
-                        label: 'Nie lubię',
-                        iconData: CupertinoIcons.hand_thumbsdown_fill,
-                        function: () =>
-                            _voteForComment(widget.dealId, comment.id, false, authData.isAuthenticated),
-                        trailing: comment.numberOfNegativeVotes.toString(),
-                        color: Colors.red,
-                        isActive: commentsData.wasVotedNegativelyBy(
-                            comment.id, authData.userId),
-                      ),
-                      _buildButtonWithPaddings(
-                          label: 'Lubię',
-                          iconData: CupertinoIcons.hand_thumbsup_fill,
-                          function: () =>
-                              _voteForComment(widget.dealId, comment.id, true, authData.isAuthenticated),
-                          trailing: comment.numberOfPositiveVotes.toString(),
-                          color: MyColorsProvider.GREEN,
-                          isActive: commentsData.wasVotedPositivelyBy(
-                              comment.id, authData.userId)),
-                      _buildButtonWithPaddings(
-                          label: 'Odpowiedz',
-                          iconData: CupertinoIcons.reply_thick_solid,
-                          function: () => _startCommentReply(comment.id),
-                          color: Colors.blue,
-                          isActive: true),
-                    ],
+                  builder: (context, commentsData, child) => Container(
+                    width: double.infinity,
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Wrap(
+                          children: [
+                            _buildButtonWithPadding(
+                              iconData: CupertinoIcons.hand_thumbsdown_fill,
+                              function: () => _voteForComment(widget.dealId,
+                                  comment.id, false, authData.isAuthenticated),
+                              trailing:
+                                  comment.numberOfNegativeVotes.toString(),
+                              color: Colors.red,
+                              isActive: commentsData.wasVotedNegativelyBy(
+                                  comment.id, authData.userId),
+                            ),
+                            _buildButtonWithPadding(
+                                iconData: CupertinoIcons.hand_thumbsup_fill,
+                                function: () => _voteForComment(widget.dealId,
+                                    comment.id, true, authData.isAuthenticated),
+                                trailing:
+                                    comment.numberOfPositiveVotes.toString(),
+                                color: MyColorsProvider.GREEN,
+                                isActive: commentsData.wasVotedPositivelyBy(
+                                    comment.id, authData.userId)),
+                          ],
+                        ),
+                        _buildButtonWithPadding(
+                            label: 'Odpowiedz',
+                            function: () => _startCommentReply(comment.id),
+                            color: Colors.blue,
+                            isBold: true,
+                            fontSize: 13,
+                            isActive: true),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -208,28 +218,32 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  _buildButtonWithPaddings(
+  _buildButtonWithPadding(
       {String label,
       IconData iconData,
       Function function,
       String trailing,
+        bool isBold = false,
+        double fontSize,
       bool isActive = false,
       Color color}) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: MyBorderIconButton(
-            label: label,
-            iconData: iconData,
-            function: function,
-            trailing: trailing,
-            isActive: isActive,
-            color: color),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+      child: MyBorderIconButton(
+          label: label,
+          iconData: iconData,
+          function: function,
+          trailing: trailing,
+          fontSize: fontSize,
+          isBold: isBold,
+          isActive: isActive,
+          showBorder: false,
+          color: color),
     );
   }
 
-  _voteForComment(String dealId, String commentId, bool isPositive, isAuthenticated) {
+  _voteForComment(
+      String dealId, String commentId, bool isPositive, isAuthenticated) {
     if (!isAuthenticated) {
       _showLoginScreen(context);
     } else {

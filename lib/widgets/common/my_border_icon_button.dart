@@ -7,9 +7,12 @@ class MyBorderIconButton extends StatelessWidget {
   final Function function;
   final String trailing;
   final bool isActive;
+  final bool showBorder;
+  final double fontSize;
+  final bool isBold;
   final Color color;
 
-  MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color});
+  MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class MyBorderIconButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           side: MaterialStateProperty.all<BorderSide>(
-            BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid)
+            showBorder ? BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid) : BorderSide(style: BorderStyle.none)
           ),
           elevation: MaterialStateProperty.all(0.0),
           padding: MaterialStateProperty.all<EdgeInsets>(
@@ -44,7 +47,7 @@ class MyBorderIconButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: TextStyle(
-                      fontSize: 11, color: textColor, letterSpacing: 0.1, fontWeight: FontWeight.w400),
+                      fontSize: 11, color: textColor, letterSpacing: 0.1, fontWeight: isBold ? FontWeight.bold : FontWeight.w400),
                 ),
               ),
             if (iconData != null)
