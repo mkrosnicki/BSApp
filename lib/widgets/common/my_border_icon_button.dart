@@ -53,7 +53,7 @@ class MyBorderIconButton extends StatelessWidget {
             if (iconData != null)
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Icon(iconData, size: 12, color: textColor),
+                child: Icon(iconData, size: fontSize, color: textColor),
               ),
             if (trailing != null)
               Padding(

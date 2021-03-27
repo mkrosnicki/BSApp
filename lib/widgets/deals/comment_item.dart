@@ -187,6 +187,7 @@ class _CommentItemState extends State<CommentItem> {
                               isActive: commentsData.wasVotedNegativelyBy(
                                   comment.id, authData.userId),
                               showBorder: false,
+                              fontSize: 13,
                             ),
                             MyBorderIconButton(
                                 iconData: CupertinoIcons.hand_thumbsup_fill,
@@ -198,6 +199,7 @@ class _CommentItemState extends State<CommentItem> {
                                 isActive: commentsData.wasVotedPositivelyBy(
                                     comment.id, authData.userId),
                               showBorder: false,
+                              fontSize: 13,
                             ),
                           ],
                         ),
