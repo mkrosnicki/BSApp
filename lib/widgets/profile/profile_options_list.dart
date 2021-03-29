@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
@@ -21,14 +22,9 @@ class ProfileOptionsList extends StatelessWidget {
       const ProfileOptionItem(title: 'Dodane posty', route: '/favourites'),
       const ProfileOptionItem(
           title: 'Dodane komentarze', route: AddedCommentsScreen.routeName),
-      const ProfileOptionsHeader('Obserwowane'),
-      const ProfileOptionItem(title: 'title1', route: '/favourites'),
-      const ProfileOptionItem(title: 'title1', route: '/favourites'),
-      const ProfileOptionItem(title: 'title1', route: '/favourites'),
-      const ProfileOptionItem(title: 'title1', route: '/favourites'),
       const ProfileOptionsHeader('Ustawienia'),
       const ProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
-      const ProfileOptionItem(title: 'Zmień hasło', route: '/change-password'),
+      const ProfileOptionItem(title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
       const ProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
       ProfileOptionItem(
         title: 'Usuń konto',

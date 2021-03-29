@@ -14,6 +14,11 @@ class ProfileOptionsScreen extends StatelessWidget {
     return Consumer<Auth>(builder: (context, auth, child) {
       if (auth.isAuthenticated) {
         return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(0.0),
+            child: AppBar(),
+          ),
+          backgroundColor: Colors.white,
           body: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
