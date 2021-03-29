@@ -35,14 +35,14 @@ class ProfileOptionsUserInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 7.0),
               child: Text(
-                'Witaj, ${authData.me.username}',
+                authData.isAuthenticated ? 'Witaj, ${authData.me.username}' : 'Witaj w BSAPP',
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Padding(
+            if (authData.isAuthenticated) Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
               child: Text(
                 'Zobacz profil',
