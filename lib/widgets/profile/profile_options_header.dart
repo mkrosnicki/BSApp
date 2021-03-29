@@ -9,7 +9,7 @@ class ProfileOptionsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
       child: Text(
         title,
         style: TextStyle(

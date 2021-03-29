@@ -7,6 +7,7 @@ class ProfileOptionsUserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+      // color: Color.fromRGBO(243, 241, 241, 1.0),
       decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

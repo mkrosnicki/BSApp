@@ -36,6 +36,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchMe() async {
+    print('fetch me');
     var responseBody = await _apiProvider.get('/users/me', token: _token);
     _me = UserModel.of(responseBody);
     print(_me);
@@ -49,6 +50,8 @@ class Auth with ChangeNotifier {
         };
     final responseData = await _apiProvider.post(url, body);
     _token = responseData['token'];
+    print('before fetching');
+    await fetchMe();
     var decoded = _decodeToken(_token);
     _userId = _extractUserId(decoded);
     _expiryDate = _extractExpiryDate(decoded);
@@ -63,7 +66,6 @@ class Auth with ChangeNotifier {
       },
     );
     prefs.setString('authData', userData);
-    return fetchMe();
   }
 
   Future<void> signup(String email, String password, String username) async {

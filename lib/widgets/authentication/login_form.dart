@@ -51,6 +51,7 @@ class _LoginFormState extends State<LoginForm> {
         _authData['email'],
         _authData['password'],
       );
+      print('end login');
     } on CustomException catch (error) {
       wasError = true;
       if (error.toString().contains('Email is not verified')) {
@@ -73,14 +74,14 @@ class _LoginFormState extends State<LoginForm> {
       const errorMessage =
           'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
       await _showErrorDialog(errorMessage);
-    }
-
-    if (wasError) {
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      Navigator.of(context).pop();
+    } finally {
+      if (wasError) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        Navigator.of(context).pop();
+      }
     }
   }
 
