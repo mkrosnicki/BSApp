@@ -33,6 +33,11 @@ class ProfileOptionsList extends StatelessWidget {
         route: DealsScreen.routeName,
         function: () => _deleteAccountFunction(context),
       ),
+      const ProfileOptionsHeader('Informacje'),
+      const ProfileOptionItem(title: 'Kontakt', route: '/favourites'),
+      const ProfileOptionItem(title: 'Regulamin', route: '/favourites'),
+      const ProfileOptionItem(title: 'Polityka prywatności', route: '/favourites'),
+      const ProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
       LogoutButton(),
     ];
     return Flexible(

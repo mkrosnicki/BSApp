@@ -1,10 +1,20 @@
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
+import 'package:BSApp/widgets/profile/profile_option_item.dart';
+import 'package:BSApp/widgets/profile/profile_options_header.dart';
 import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
 import 'package:flutter/material.dart';
 
 import 'login_registration_screen.dart';
 
 class MainAuthScreen extends StatelessWidget {
+  final menuOptions = [
+    const ProfileOptionsHeader('Informacje'),
+    const ProfileOptionItem(title: 'Kontakt', route: '/favourites'),
+    const ProfileOptionItem(title: 'Regulamin', route: '/favourites'),
+    const ProfileOptionItem(title: 'Polityka prywatności', route: '/favourites'),
+    const ProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,14 +23,24 @@ class MainAuthScreen extends StatelessWidget {
         child: Column(
           children: [
             ProfileOptionsUserInfo(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
+              child: Text('Zaloguj się aby korzystać ze wszystkich funkcjonalności.'),
+            ),
             Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(10.0),
+              width: MediaQuery.of(context).size.width * 0.9,
+              padding: const EdgeInsets.only(bottom: 20.0),
               child: ElevatedButton(
-                child: Text('Zaloguj się lub Załóż konto'),
+                child: Text('Zaloguj się lub Załóż konto', style: TextStyle(fontSize: 14),),
                 onPressed: () => _showLoginScreen(context),
               ),
             ),
+            Flexible(
+              child: ListView.builder(
+                itemBuilder: (context, index) => menuOptions[index],
+                itemCount: menuOptions.length,
+              ),
+            )
           ],
         ),
       ),
