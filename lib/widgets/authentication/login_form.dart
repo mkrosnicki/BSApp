@@ -22,8 +22,9 @@ class _LoginFormState extends State<LoginForm> {
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     filled: true,
-    fillColor: MyColorsProvider.hexToColor('#e4e6e8'),
-    focusColor: MyColorsProvider.hexToColor('#e4e6e8'),
+    fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
+    focusColor: MyColorsProvider.SUPER_LIGHT_GREY,
+    hintText: 'gfdsgfds',
     border: UnderlineInputBorder(
       borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),
@@ -31,6 +32,10 @@ class _LoginFormState extends State<LoginForm> {
       borderSide: const BorderSide(width: 0),
     ),
   );
+
+  _getFormFieldDecoration(String hintText) {
+    return formFieldDecoration.copyWith(hintText: hintText);
+  }
 
   Future<void> _submit() async {
     bool wasError = false;
@@ -170,47 +175,43 @@ class _LoginFormState extends State<LoginForm> {
                             fontSize: 18),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('E-mail'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _emailController,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: _getFormFieldDecoration('E-mail'),
+                        validator: (value) {
+                          if (value.isEmpty || !value.contains('@')) {
+                            return 'Nieprawidłowy e-mail!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['email'] = value;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: _emailController,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.isEmpty || !value.contains('@')) {
-                          return 'Nieprawidłowy e-mail!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['email'] = value;
-                      },
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Hasło'),
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      cursorColor: Colors.black,
-                      obscureText: true,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return 'Za krótkie hasło!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        cursorColor: Colors.black,
+                        obscureText: true,
+                        decoration: _getFormFieldDecoration('Hasło'),
+                        validator: (value) {
+                          if (value.length < 3) {
+                            return 'Za krótkie hasło!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['password'] = value;
+                        },
+                      ),
                     ),
                     Container(
                       width: double.infinity,
