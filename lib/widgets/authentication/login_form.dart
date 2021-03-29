@@ -1,7 +1,8 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,23 +19,9 @@ class _LoginFormState extends State<LoginForm> {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
 
-  var formFieldDecoration = InputDecoration(
-    enabledBorder: InputBorder.none,
-    focusedErrorBorder: InputBorder.none,
-    filled: true,
-    fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
-    focusColor: MyColorsProvider.SUPER_LIGHT_GREY,
-    hintText: 'gfdsgfds',
-    border: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0),
-    ),
-  );
-
   _getFormFieldDecoration(String hintText) {
-    return formFieldDecoration.copyWith(hintText: hintText);
+    return MyStylingProvider.textFormFieldDecoration()
+        .copyWith(hintText: hintText);
   }
 
   Future<void> _submit() async {
@@ -166,7 +153,8 @@ class _LoginFormState extends State<LoginForm> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
                       child: Text(
                         'Zaloguj się',
                         style: TextStyle(
@@ -176,7 +164,8 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
                       child: TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
@@ -195,7 +184,8 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
                       child: TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
@@ -216,16 +206,7 @@ class _LoginFormState extends State<LoginForm> {
                     Container(
                       width: double.infinity,
                       margin: EdgeInsets.only(top: 6.0),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(MyColorsProvider.BLUE),
-                        ),
-                        child: Text(
-                          'Zaloguj się',
-                        ),
-                        onPressed: _submit,
-                      ),
+                      child: PrimaryButton('Zaloguj się', _submit),
                     ),
                     Container(
                       alignment: Alignment.centerRight,
