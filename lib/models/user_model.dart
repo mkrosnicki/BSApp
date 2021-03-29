@@ -5,11 +5,11 @@ class UserModel {
 
   UserModel({this.id, this.username, this.registeredAt});
 
-  static UserModel of(dynamic citySnapshot) {
+  static UserModel of(dynamic userSnapshot) {
     return UserModel(
-      id: citySnapshot['id'],
-      username: citySnapshot['username'],
-      registeredAt: DateTime.parse(citySnapshot['registeredAt']),
+      id: userSnapshot['id'],
+      username: userSnapshot['username'],
+      registeredAt: DateTime.parse(userSnapshot['registeredAt']),
     );
   }
 
@@ -20,4 +20,9 @@ class UserModel {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'UserModel{id: $id, username: $username, registeredAt: $registeredAt}';
+  }
 }

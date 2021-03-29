@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:BSApp/models/http_exception.dart';
+import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
   Timer _authTimer;
+  UserModel _me;
 
   bool get isAuthenticated {
     return _token != null;
@@ -27,6 +29,16 @@ class Auth with ChangeNotifier {
 
   String get userId {
     return _userId;
+  }
+
+  UserModel get me {
+    return _me;
+  }
+
+  Future<void> fetchMe() async {
+    var responseBody = await _apiProvider.get('/users/me', token: _token);
+    _me = UserModel.of(responseBody);
+    print(_me);
   }
 
   Future<void> login(String email, String password) async {
@@ -51,6 +63,7 @@ class Auth with ChangeNotifier {
       },
     );
     prefs.setString('authData', userData);
+    return fetchMe();
   }
 
   Future<void> signup(String email, String password, String username) async {
@@ -86,6 +99,7 @@ class Auth with ChangeNotifier {
     _token = null;
     _userId = null;
     _expiryDate = null;
+    _me = null;
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;

@@ -9,13 +9,6 @@ class ProfileOptionItem extends StatelessWidget {
 
   const ProfileOptionItem({this.title, this.route, this.function});
 
-  // PreferredSize(
-  // child: Container(
-  // color: MyColorsProvider.GREY_BORDER_COLOR,
-  // height: 0.5,
-  // ),
-  // preferredSize: aPreferredSize);
-
   @override
   Widget build(BuildContext context) {
     return FlatButton(
