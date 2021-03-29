@@ -4,6 +4,10 @@ class DateUtil {
 
   static final DateFormat _dateFormat = new DateFormat.yMMMMd('pl');
 
+  static String getFormatted(DateTime dateTime) {
+    return _dateFormat.format(dateTime);
+  }
+
   static String timeAgoString(DateTime dateTime) {
     var diff = DateTime.now().difference(dateTime);
     if (diff.inDays >= 1) {
