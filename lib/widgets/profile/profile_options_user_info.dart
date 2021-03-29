@@ -17,41 +17,43 @@ class ProfileOptionsUserInfo extends StatelessWidget {
             ],
           )
       ),
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(15.0),
-            child: CircleAvatar(
-              minRadius: 40,
-              maxRadius: 40,
-              backgroundImage: NetworkImage(
-                'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
+      child: Consumer<Auth>(
+        builder: (context, authData, child) =>  Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(15.0),
+              child: CircleAvatar(
+                minRadius: 40,
+                maxRadius: 40,
+                backgroundImage: NetworkImage(
+                  'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 7.0),
-            child: Text(
-              'Witaj w BSAPP',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 7.0),
+              child: Text(
+                'Witaj, ${authData.me.username}',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: Text(
-              'Zobacz profil',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-                fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: Text(
+                'Zobacz profil',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
