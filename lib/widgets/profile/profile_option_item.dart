@@ -9,23 +9,19 @@ class ProfileOptionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FlatButton(
-          child: ListTile(
-            title: Text(title),
-            trailing: Icon(Icons.chevron_right),
-            focusColor: Colors.grey,
-          ),
-          onPressed: () {
-            _preformAction(context);
-          },
-        ),
-      ],
+    return FlatButton(
+      child: ListTile(
+        title: Text(title),
+        trailing: Icon(Icons.chevron_right),
+        focusColor: Colors.grey,
+      ),
+      onPressed: () {
+        _preformAction(context);
+      },
     );
   }
 
-  void _preformAction(BuildContext context) async{
+  void _preformAction(BuildContext context) async {
     var shouldNavigate = true;
     if (function != null) {
       shouldNavigate = await function();

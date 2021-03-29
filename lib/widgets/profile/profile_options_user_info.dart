@@ -21,7 +21,7 @@ class ProfileOptionsUserInfo extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(15.0),
             child: CircleAvatar(
               minRadius: 40,
               maxRadius: 40,
@@ -47,31 +47,6 @@ class ProfileOptionsUserInfo extends StatelessWidget {
       ),
     );
   }
-
-  // Center(
-  // child: Container(
-  // decoration: BoxDecoration(
-  // gradient: LinearGradient(
-  // begin: Alignment.topRight,
-  // end: Alignment.bottomLeft,
-  // colors: [
-  // Colors.blue,
-  // Colors.red,
-  // ],
-  // )
-  // ),
-  // child: Center(
-  // child: Text(
-  // 'Hello Gradient!',
-  // style: TextStyle(
-  // fontSize: 48.0,
-  // fontWeight: FontWeight.bold,
-  // color: Colors.white,
-  // ),
-  // ),
-  // ),
-  // ),
-  // ),
 
   void _logout(BuildContext context) async {
     await Provider.of<Auth>(context, listen: false).logout();
