@@ -30,25 +30,29 @@ class ProfileOptionsUserInfo extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            'Witaj w BSAPP',
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 7.0),
+            child: Text(
+              'Witaj w BSAPP',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          Container(
-            child: RaisedButton(
-              onPressed: () => _logout(context),
-              child: Text('Wyloguj'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: Text(
+              'Zobacz profil',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  void _logout(BuildContext context) async {
-    await Provider.of<Auth>(context, listen: false).logout();
   }
 }

@@ -4,6 +4,7 @@ import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/services/api_provider.dart';
+import 'package:BSApp/widgets/profile/logout_button.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
 import 'package:confirm_dialog/confirm_dialog.dart';
@@ -24,13 +25,15 @@ class ProfileOptionsList extends StatelessWidget {
           title: 'Dodane komentarze', route: AddedCommentsScreen.routeName),
       const ProfileOptionsHeader('Ustawienia'),
       const ProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
-      const ProfileOptionItem(title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
+      const ProfileOptionItem(
+          title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
       const ProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
       ProfileOptionItem(
         title: 'Usuń konto',
         route: DealsScreen.routeName,
         function: () => _deleteAccountFunction(context),
       ),
+      LogoutButton(),
     ];
     return Flexible(
       child: ListView.builder(
@@ -46,7 +49,8 @@ class ProfileOptionsList extends StatelessWidget {
       textOK: Text('POTWIERDZAM - Usuń konto'),
       textCancel: Text('Anuluj'),
       title: Text('Usuwanie konta'),
-      content: Text('Czy jesteś pewien, że chcesz usunąć konto? Nie można cofnąc tej operacj!'),
+      content: Text(
+          'Czy jesteś pewien, że chcesz usunąć konto? Nie można cofnąc tej operacj!'),
     );
     if (shouldDelete) {
       await Provider.of<Auth>(context, listen: false).deleteAccount();
