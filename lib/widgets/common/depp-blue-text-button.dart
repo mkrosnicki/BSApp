@@ -1,11 +1,11 @@
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
-class PrimaryButton extends StatelessWidget {
+class DeepBlueTextButton extends StatelessWidget {
   final String label;
   final Function function;
 
-  PrimaryButton(this.label, this.function);
+  DeepBlueTextButton(this.label, this.function);
 
   @override
   Widget build(BuildContext context) {
