@@ -2,6 +2,7 @@ import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/grey-text-button.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -218,14 +219,8 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         onPressed: () => Navigator.of(context)
                             .pushNamed(ResetPasswordScreen.routeName),
-                        child: Text(
-                          'Nie pamiętasz hasła?',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13),
-                          textAlign: TextAlign.center,
-                        ),
+                        child: GreyTextButton('Nie pamiętasz hasła?', () => Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName)),
                       ),
                     )
                   ],

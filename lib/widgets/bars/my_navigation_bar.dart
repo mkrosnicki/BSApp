@@ -19,7 +19,7 @@ class MyNavigationBar extends StatelessWidget {
           // Color.fromRGBO(99, 137, 217, 1)
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        fixedColor: Color.fromRGBO(99, 137, 217, 1),
+        fixedColor: MyColorsProvider.DEEP_BLUE,
         unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         showSelectedLabels: false,
