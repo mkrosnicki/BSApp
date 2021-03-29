@@ -24,8 +24,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     filled: true,
-    fillColor: MyColorsProvider.hexToColor('#e4e6e8'),
-    focusColor: MyColorsProvider.hexToColor('#e4e6e8'),
+    fillColor: MyColorsProvider.GREY_BORDER_COLOR,
+    focusColor: MyColorsProvider.GREY_BORDER_COLOR,
     border: UnderlineInputBorder(
       borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),

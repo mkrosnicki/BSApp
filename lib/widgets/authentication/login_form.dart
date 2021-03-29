@@ -33,7 +33,6 @@ class _LoginFormState extends State<LoginForm> {
   );
 
   Future<void> _submit() async {
-
     bool wasError = false;
 
     if (!_formKey.currentState.validate()) {
@@ -162,6 +161,16 @@ class _LoginFormState extends State<LoginForm> {
                 child: Column(
                   children: [
                     Container(
+                      padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+                      child: Text(
+                        'Zaloguj się',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                    Container(
                       padding: const EdgeInsets.all(8.0),
                       alignment: Alignment.centerLeft,
                       child: const Text('E-mail'),
@@ -205,26 +214,38 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     Container(
                       width: double.infinity,
+                      margin: EdgeInsets.only(top: 6.0),
                       child: ElevatedButton(
-                        child: Text('Zaloguj się'),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(MyColorsProvider.BLUE),
+                        ),
+                        child: Text(
+                          'Zaloguj się',
+                        ),
                         onPressed: _submit,
                       ),
                     ),
                     Container(
-                        margin: const EdgeInsets.only(top: 15.0),
-                        padding: const EdgeInsets.all(8.0),
-                        alignment: Alignment.centerLeft,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) =>
-                                      Theme.of(context).accentColor),
-                            ),
-                            onPressed: () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName),
-                            child: Text(
-                              'Nie pamiętasz hasła? Możesz zresetować je tutaj.',
-                              textAlign: TextAlign.center,
-                            ))),
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        ),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName),
+                        child: Text(
+                          'Nie pamiętasz hasła?',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

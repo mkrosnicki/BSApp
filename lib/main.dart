@@ -5,8 +5,8 @@ import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/searches.dart';
-import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Deals>(
           create: (context) => Deals.empty(),
           lazy: true,
-          update: (context, auth, previousDeals) => previousDeals..update(auth.token),
+          update: (context, auth, previousDeals) =>
+              previousDeals..update(auth.token),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Searches>(
           create: (context) => Searches.empty(),
-          update: (context, auth, previousSearches) => previousSearches..update(auth.token),
+          update: (context, auth, previousSearches) =>
+              previousSearches..update(auth.token),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
