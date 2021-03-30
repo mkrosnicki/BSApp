@@ -17,8 +17,11 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
 
   Future<void> _initCategories() {
     if (_allCategories == null) {
-      return Provider.of<Categories>(context, listen: false).fetchCategories().then((_) {
-        _allCategories = Provider.of<Categories>(context, listen: false).categories;
+      return Provider.of<Categories>(context, listen: false)
+          .fetchCategories()
+          .then((_) {
+        _allCategories =
+            Provider.of<Categories>(context, listen: false).categories;
       });
     } else {
       return Future(() => {});
@@ -46,7 +49,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 }
               },
             )
-          : _buildCategoriesList(_selectedCategories.elementAt(_selectedCategories.length - 1).subCategories),
+          : _buildCategoriesList(_selectedCategories
+              .elementAt(_selectedCategories.length - 1)
+              .subCategories),
     );
   }
 
@@ -78,25 +83,40 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   _buildCategoriesList(List<CategoryModel> categories) {
     return Column(
       children: [
-        if (_selectedCategories.isNotEmpty) ListTile(
-          title: Text('${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
-          focusColor: Colors.grey,
-        ),
-        if (_selectedCategories.isNotEmpty) FlatButton(
-          onPressed: () => _finishSelection(),
-          child: ListTile(
-            title: Text('Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
-            subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+        if (_selectedCategories.isNotEmpty)
+          ListTile(
+            title: Text(
+                '${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
             focusColor: Colors.grey,
           ),
-        ),
+        if (_selectedCategories.isNotEmpty)
+          FlatButton(
+            onPressed: () => _finishSelection(),
+            child: ListTile(
+              title: Text(
+                  'Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+              subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+              focusColor: Colors.grey,
+            ),
+          ),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
                 title: Text(categories[index].name),
-                subtitle: Text('${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                trailing: categories[index].subCategories.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                leading: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.asset(
+                    'assets/images/car.png',
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                subtitle: Text(
+                    '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
+                trailing: categories[index].subCategories.isEmpty
+                    ? Icon(null)
+                    : Icon(Icons.chevron_right),
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectCategory(categories[index]),
