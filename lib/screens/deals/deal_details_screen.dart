@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
@@ -104,10 +105,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen>
                 child: AnimatedBuilder(
                   animation: _ColorAnimationController,
                   builder: (context, child) => AppBar(
-                    leading: GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Icon(CupertinoIcons.back),
-                    ),
+                    leading: const AppBarBackButton(Colors.white),
                     automaticallyImplyLeading: false,
                     backgroundColor: _colorTween.value,
                     elevation: 0,

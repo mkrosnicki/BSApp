@@ -37,7 +37,7 @@ class UserProfileScreen extends StatelessWidget {
                 elevation: 0,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
-                leading: AppBarBackButton(),
+                leading: const AppBarBackButton(Colors.black),
                 // bottom: AppBarBottomBorder(),
               ),
               body: Flex(
