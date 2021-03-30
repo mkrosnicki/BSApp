@@ -25,7 +25,7 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
           centerTitle: true,
           automaticallyImplyLeading: false,
           elevation: 0.0,
-          leading: AppBarCloseButton(Colors.white),
+          leading: const AppBarCloseButton(Colors.white),
           backgroundColor: MyColorsProvider.BLUE,
           bottom: TabBar(
             indicatorWeight: 3.0,

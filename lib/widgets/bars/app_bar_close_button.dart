@@ -5,7 +5,7 @@ class AppBarCloseButton extends StatelessWidget {
 
   final Color color;
 
-  AppBarCloseButton(this.color);
+  const AppBarCloseButton(this.color);
 
   @override
   Widget build(BuildContext context) {

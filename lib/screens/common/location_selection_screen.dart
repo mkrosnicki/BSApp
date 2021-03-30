@@ -48,7 +48,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
           icon: MyIconsProvider.BACK_BLACK_ICON,
         ),
         actions: [
-          AppBarCloseButton(Colors.black),
+          const AppBarCloseButton(Colors.black),
         ],
       ),
       body: _selectedVoivodeship == null

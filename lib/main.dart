@@ -15,6 +15,7 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
+import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
@@ -94,6 +95,7 @@ class MyApp extends StatelessWidget {
           AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
+          ForumCategoryScreen.routeName: (ctx) => ForumCategoryScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
           DealDetailsScreen.routeName: (ctx) => DealDetailsScreen(),
           DealSearchResultScreen.routeName: (ctx) => DealSearchResultScreen(),
