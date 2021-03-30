@@ -1,5 +1,11 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
+import 'package:BSApp/util/my_icons_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/app_bar_button.dart';
+import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +37,21 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: AppBar(
+        title: const Text('Wybierz kategorię', style: MyStylingProvider.TEXT_BLACK,),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        bottom: const AppBarBottomBorder(),
+        leading: AppBarButton(
+          icon: MyIconsProvider.BACK_BLACK_ICON,
+          onPress: () => _goUp(),
+        ),
+        actions: [
+          AppBarCloseButton(Colors.black),
+        ],
+      ),
       body: _selectedCategories.isEmpty
           ? FutureBuilder(
               future: _initCategories(),
@@ -52,31 +72,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           : _buildCategoriesList(_selectedCategories
               .elementAt(_selectedCategories.length - 1)
               .subCategories),
-    );
-  }
-
-  _buildAppBar() {
-    return AppBar(
-      title: Text('Wybierz kategorię'),
-      automaticallyImplyLeading: false,
-      leading: FlatButton(
-        onPressed: () => _goUp(),
-        child: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-      ),
-      actions: [
-        FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Icon(
-            Icons.clear,
-            color: Colors.white,
-          ),
-        )
-      ],
     );
   }
 
@@ -102,7 +97,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
+              padding: EdgeInsets.zero,
               child: ListTile(
+                tileColor: Colors.white,
                 title: Text(categories[index].name),
                 leading: SizedBox(
                   height: 40,
@@ -115,8 +112,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 subtitle: Text(
                     '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
                 trailing: categories[index].subCategories.isEmpty
-                    ? Icon(null)
-                    : Icon(Icons.chevron_right),
+                    ? MyIconsProvider.NONE
+                    : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectCategory(categories[index]),

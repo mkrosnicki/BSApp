@@ -9,11 +9,9 @@ class AppBarCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: TextButton(
-        child: Icon(CupertinoIcons.clear, color: color,),
-      ),
+    return TextButton(
+      onPressed: () => Navigator.of(context).pop(),
+      child: Icon(CupertinoIcons.clear, color: color,),
     );
   }
 }

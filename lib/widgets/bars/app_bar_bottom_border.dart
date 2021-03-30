@@ -5,6 +5,8 @@ class AppBarBottomBorder extends StatelessWidget implements PreferredSizeWidget 
 
   static const Size aPreferredSize = Size.fromHeight(4.0);
 
+  const AppBarBottomBorder();
+
   @override
   Widget build(BuildContext context) {
     return PreferredSize(

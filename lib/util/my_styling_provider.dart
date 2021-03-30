@@ -34,4 +34,5 @@ class MyStylingProvider {
   }
 
   static const TextStyle TEXT_BLACK = const TextStyle(color: Colors.black);
+  static const TextStyle TEXT_WHITE = const TextStyle(color: Colors.white);
 }
