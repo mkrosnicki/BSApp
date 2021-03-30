@@ -1,6 +1,11 @@
 import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/util/my_icons_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/app_bar_button.dart';
+import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +35,22 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Lokalizacja', style: MyStylingProvider.TEXT_BLACK,),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        bottom: const AppBarBottomBorder(),
+        leading: AppBarButton(
+          onPress: () => _goUp(),
+          icon: MyIconsProvider.BACK_BLACK_ICON,
+        ),
+        actions: [
+          AppBarCloseButton(Colors.black),
+        ],
+      ),
       body: _selectedVoivodeship == null
           ? FutureBuilder(
               future: _initCategories(),
@@ -49,31 +69,6 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               },
             )
           : _buildCitiesList(_selectedVoivodeship.cities),
-    );
-  }
-
-  _buildAppBar() {
-    return AppBar(
-      title: Text('Lokalizacja'),
-      automaticallyImplyLeading: false,
-      leading: FlatButton(
-        onPressed: () => _goUp(),
-        child: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-      ),
-      actions: [
-        FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Icon(
-            Icons.clear,
-            color: Colors.white,
-          ),
-        )
-      ],
     );
   }
 
@@ -113,7 +108,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               child: ListTile(
                 title: Text(voivodeships[index].name),
                 subtitle: Text('${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}'),
-                trailing: voivodeships[index].cities.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                trailing: voivodeships[index].cities.isEmpty ? MyIconsProvider.NONE : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectVoivodeship(voivodeships[index]),

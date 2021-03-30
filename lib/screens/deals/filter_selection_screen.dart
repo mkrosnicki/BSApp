@@ -3,6 +3,11 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
+import 'package:BSApp/util/my_icons_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,119 +33,119 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   Widget build(BuildContext context) {
     _initFilterSettings(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Filtry i sortowanie'),
+        title: const Text('Filtry i sortowanie', style: MyStylingProvider.TEXT_BLACK,),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        bottom: const AppBarBottomBorder(),
+        leading: AppBarCloseButton(Colors.black),
         actions: [
           TextButton(
-            onPressed: () {
-              setState(() {
-                filtersSettings = FilterSettings();
-              });
-            },
-            child: TextButton(
-              onPressed: _clearFilters,
-              child: Text(
-                'Wyczyść',
-                style: TextStyle(color: Colors.white),
-              ),
+            onPressed: _clearFilters,
+            child: const Text(
+              'Wyczyść',
+              style: MyStylingProvider.TEXT_BLACK,
             ),
-          )
+          ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SwitchListTile(
-                    title: const Text('Pokaż tylko aktywne'),
-                    value: filtersSettings.showActiveOnly,
-                    onChanged: (value) {
-                      setState(() {
-                        filtersSettings.showActiveOnly = value;
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Kategoria'),
-                    subtitle: filtersSettings.categories.isNotEmpty
-                        ? Text(
-                            filtersSettings.categoriesString,
-                            style: TextStyle(color: Colors.blue),
-                          )
-                        : const Text('Wszystkie kategorie'),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => _openCategorySelector(context),
-                  ),
-                  SwitchListTile(
-                    title: const Text('Tylko internetowe okazje'),
-                    value: filtersSettings.showInternetOnly,
-                    onChanged: (value) {
-                      setState(() {
-                        filtersSettings.showInternetOnly = value;
-                        filtersSettings.voivodeship = null;
-                        filtersSettings.city = null;
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Lokalizacja'),
-                    subtitle: filtersSettings.voivodeship != null
-                        ? Text(
-                            filtersSettings.locationString,
-                            style: TextStyle(color: Colors.blue),
-                          )
-                        : const Text('Cała Polska'),
-                    trailing: Icon(Icons.chevron_right),
-                    onTap: () => _openLocationSelector(context),
-                    enabled: !filtersSettings.showInternetOnly,
-                  ),
-                  ListTile(
-                    title: const Text('Wiek dziecka'),
-                    subtitle: filtersSettings.ageTypes.isEmpty
-                        ? const Text('Dowolny')
-                        : Text(
-                            filtersSettings.ageTypesString,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceEvenly,
-                      children: _buildAgeTypeChips(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SwitchListTile(
+                      title: const Text('Pokaż tylko aktywne'),
+                      value: filtersSettings.showActiveOnly,
+                      onChanged: (value) {
+                        setState(() {
+                          filtersSettings.showActiveOnly = value;
+                        });
+                      },
                     ),
-                  ),
-                  ListTile(
-                    title: const Text('Sortuj po'),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      children: _buildSortingTypeChips(),
+                    ListTile(
+                      title: const Text('Kategoria'),
+                      subtitle: filtersSettings.categories.isNotEmpty
+                          ? Text(
+                              filtersSettings.categoriesString,
+                              style: MyStylingProvider.TEXT_BLUE,
+                            )
+                          : const Text('Wszystkie kategorie'),
+                      trailing: MyIconsProvider.FORWARD_ICON,
+                      onTap: () => _openCategorySelector(context),
                     ),
-                  ),
-                ],
+                    SwitchListTile(
+                      title: const Text('Tylko internetowe okazje'),
+                      value: filtersSettings.showInternetOnly,
+                      onChanged: (value) {
+                        setState(() {
+                          filtersSettings.showInternetOnly = value;
+                          filtersSettings.voivodeship = null;
+                          filtersSettings.city = null;
+                        });
+                      },
+                    ),
+                    ListTile(
+                      title: const Text('Lokalizacja'),
+                      subtitle: filtersSettings.voivodeship != null
+                          ? Text(
+                              filtersSettings.locationString,
+                              style: MyStylingProvider.TEXT_BLUE,
+                            )
+                          : const Text('Cała Polska'),
+                      trailing: MyIconsProvider.FORWARD_ICON,
+                      onTap: () => _openLocationSelector(context),
+                      enabled: !filtersSettings.showInternetOnly,
+                    ),
+                    ListTile(
+                      title: const Text('Wiek dziecka'),
+                      subtitle: filtersSettings.ageTypes.isEmpty
+                          ? const Text('Dowolny')
+                          : Text(
+                              filtersSettings.ageTypesString,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        alignment: WrapAlignment.spaceEvenly,
+                        children: _buildAgeTypeChips(),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Sortuj po'),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        children: _buildSortingTypeChips(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Card(
-            elevation: 10,
-            margin: EdgeInsets.zero,
-            child: Container(
-              width: double.infinity,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-              child: RaisedButton(
-                child: const Text('Pokaż wyniki'),
-                onPressed: () => _acceptFilters(context),
+            Card(
+              elevation: 10,
+              margin: EdgeInsets.zero,
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                child: PrimaryButton('Pokaż wyniki', () => _acceptFilters(context),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -149,7 +154,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     List<Widget> list = [];
     AgeType.values.forEach(
       (e) => list.add(Container(
-        margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+        margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
         child: ChoiceChip(
           label: Text(AgeTypeHelper.getReadable(e)),
           selected: filtersSettings.ageTypes.contains(e),
@@ -172,7 +177,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     List<Widget> list = SortingType.values
         .map(
           (e) => Container(
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
               label: Text(SortingTypeHelper.getReadable(e)),
               selected: filtersSettings.sortBy == e,

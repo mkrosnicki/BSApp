@@ -5,7 +5,7 @@ class PrimaryButton extends StatelessWidget {
   final String label;
   final Function function;
 
-  PrimaryButton(this.label, this.function);
+  const PrimaryButton(this.label, this.function);
 
   @override
   Widget build(BuildContext context) {
