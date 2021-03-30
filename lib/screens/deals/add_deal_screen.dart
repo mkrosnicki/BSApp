@@ -1,11 +1,14 @@
+import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/age_type.dart';
-import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/city_model.dart';
+import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddDealScreen extends StatefulWidget {
   static const routeName = '/add-deal';
@@ -18,46 +21,98 @@ class _AddDealScreenState extends State<AddDealScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
 
-  List<CategoryModel> categories = [];
-  AgeType ageType;
-  _LocationType locationType;
-  City city;
-  Voivodeship voivodeship;
+  var _newdeal = AddDealModel();
+  DateTime _validFrom = DateTime.now();
+  DateTime _validTo = DateTime.now();
+
+  City _city;
+  Voivodeship _voivodeship;
   bool showInternetOnly = true;
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    print(_newdeal.toString());
+    Provider.of<Deals>(context, listen: false).createNewDeal(_newdeal);
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Dodaj nową okazje!'),
-          ),
+        title: Text('Dodaj nową okazje!'),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Dodaj nową okazje'),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Tytuł ogłoszenia'),
-                TextFormField(),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź tytuł';
+                    } else if (value.length < 5) {
+                      return 'Tytuł musi mieć conajmniej 5 znaków';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _newdeal.title = value;
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Link do okazji'),
-                TextFormField(),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź link do okazji';
+                    } else if (!isUrl(value)) {
+                      return 'Podany ciąg znaków nie jest adresem URL';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _newdeal.urlLocation = value;
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Opis'),
-                TextFormField(),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź opis';
+                    } else if (value.length < 10) {
+                      return 'Opis powinien mieć conajmniej 10 znaków';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    _newdeal.description = value;
+                  },
+                ),
                 ListTile(
                   title: const Text('Kategoria'),
-                  subtitle: categories.isNotEmpty
+                  subtitle: _newdeal.categories.isNotEmpty
                       ? Text(
                     categoriesString,
                     style: TextStyle(color: Colors.blue),
@@ -68,7 +123,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 ),
                 ListTile(
                   title: const Text('Wiek dziecka'),
-                  subtitle: ageType == null
+                  subtitle: _newdeal.ageType == null
                       ? const Text('Dowolny')
                       : Text(
                     ageTypesString,
@@ -95,7 +150,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 ),
                 ListTile(
                   title: const Text('Lokalizacja'),
-                  subtitle: voivodeship != null
+                  subtitle: _newdeal.voivodeship != null
                       ? Text(
                     locationString,
                     style: TextStyle(color: Colors.blue),
@@ -109,37 +164,85 @@ class _AddDealScreenState extends State<AddDealScreen> {
                   height: 10,
                 ),
                 Text('Okazja zaczyna się:'),
-                TextFormField(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "${_validFrom.toLocal()}".split(' ')[0],
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _selectDate(context, DateType.VALID_FROM), // Refer step 3
+                      child: Text(
+                        'Wybierz date',
+                        style:
+                        TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Okazja kończy się:'),
-                TextFormField(),
-                SizedBox(
-                  height: 10,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "${_validTo.toLocal()}".split(' ')[0],
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _selectDate(context, DateType.VALID_TO), // Refer step 3
+                      child: Text(
+                        'Wybierz date',
+                        style:
+                        TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
-                Text('Kod promocji'),
-                TextFormField(),
-                SizedBox(
-                  height: 10,
-                ),
-                Text('Wartość zniżki'),
-                TextFormField(),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Regularna cena'),
-                TextFormField(),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    _newdeal.regularPrice = double.parse(value);
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Aktualna cena'),
-                TextFormField(),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    _newdeal.currentPrice = double.parse(value);
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 Text('Koszt dostawy'),
-                TextFormField(),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    _newdeal.shippingPrice = double.parse(value);
+                  },
+                ),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    child: Text('Dodaj ogłoszenie'),
+                    onPressed: _submit,
+                  ),
+                ),
               ],
             ),
           ),
@@ -150,25 +253,41 @@ class _AddDealScreenState extends State<AddDealScreen> {
   }
 
   String get categoriesString {
-    return categories.map((e) => e.name).join(" / ");
+    return _newdeal.categories.map((e) => e.name).join(" / ");
   }
 
   String get ageTypesString {
-    return AgeTypeHelper.getReadable(ageType);
+    return AgeTypeHelper.getReadable(_newdeal.ageType);
   }
 
-  String get locationString {
-    return voivodeship != null
-        ? '${voivodeship.name} / ${city != null ? city.name : 'Wszystkie miasta'}'
-        : null;
-  }
 
   _openCategorySelector(BuildContext context) async {
     var selectedCategories = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
-        categories = selectedCategories;
+        _newdeal.categories = selectedCategories;
+      });
+    }
+  }
+
+  _selectDate(BuildContext context, DateType dateType) async {
+    var now = DateTime.now();
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null) {
+      setState(() {
+        if (dateType == DateType.VALID_TO) {
+          _validTo = picked;
+          _newdeal.validTo = _validTo;
+        } else if (dateType == DateType.VALID_FROM) {
+          _validFrom = picked;
+          _newdeal.validFrom = _validFrom;
+        }
       });
     }
   }
@@ -180,13 +299,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
         child: ChoiceChip(
           label: Text(AgeTypeHelper.getReadable(e)),
-          selected: ageType == e,
+          selected: _newdeal.ageType == e,
           onSelected: (isSelected) {
             setState(() {
               if (isSelected) {
-                ageType = e;
+                _newdeal.ageType = e;
               } else {
-                ageType = null;
+                _newdeal.ageType = null;
               }
             });
           },
@@ -197,20 +316,21 @@ class _AddDealScreenState extends State<AddDealScreen> {
   }
 
   _buildLocationTypeChips() {
-    List<Widget> list = _LocationType.values
+    List<Widget> list = LocationType.values
         .map(
           (e) => Container(
             margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(_LocationTypeHelper.getReadable(e)),
-              selected: locationType == e,
+              label: Text(LocationTypeHelper.getReadable(e)),
+              selected: _newdeal.locationType == e,
               onSelected: (isSelected) {
                 setState(() {
-                  locationType = e;
-                  if (locationType == _LocationType.LOCAL) {
+                  _newdeal.locationType = e;
+                  if (_newdeal.locationType == LocationType.LOCAL) {
                     showInternetOnly = false;
                   } else {
                     showInternetOnly = true;
+                    _newdeal.clearLocation();
                   }
                 });
               },
@@ -226,24 +346,35 @@ class _AddDealScreenState extends State<AddDealScreen> {
         .pushNamed(LocationSelectionScreen.routeName);
     if (locations != null) {
       setState(() {
-        voivodeship = (locations as List)[0];
-        city = (locations as List)[1];
+        var voivodeship = ((locations as List)[0] as Voivodeship);
+        if (voivodeship != null) {
+          _newdeal.voivodeship = voivodeship.id;
+          _voivodeship = voivodeship;
+        } else {
+          _newdeal.voivodeship = null;
+          _voivodeship = null;
+        }
+        var city = ((locations as List)[1] as City);
+        if (city != null) {
+          _newdeal.city = city.id;
+          _city = city;
+        } else {
+          _newdeal.city = null;
+          _city = null;
+        }
       });
     }
   }
-}
 
+  String get locationString {
+    return _voivodeship != null
+        ? '${_voivodeship.name} / ${_city != null ? _city.name : 'Wszystkie miasta'}'
+        : null;
+  }
 
-
-enum _LocationType {INTERNET, LOCAL}
-
-class _LocationTypeHelper {
-  static String getReadable(_LocationType type) {
-    switch (type) {
-      case _LocationType.INTERNET:
-        return 'Okzaja w internecie';
-      case _LocationType.LOCAL:
-        return 'Okazja stacjonarna';
-    }
+  bool isUrl(String value) {
+    return Uri.parse(value).isAbsolute;
   }
 }
+
+enum DateType {VALID_FROM, VALID_TO}
