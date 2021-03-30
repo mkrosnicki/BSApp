@@ -21,7 +21,7 @@ class _LoginFormState extends State<LoginForm> {
   var _passwordController = TextEditingController();
 
   _getFormFieldDecoration(String hintText) {
-    return MyStylingProvider.textFormFieldDecoration()
+    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
         .copyWith(hintText: hintText);
   }
 
