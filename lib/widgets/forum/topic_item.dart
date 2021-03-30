@@ -1,3 +1,4 @@
+import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,6 @@ class TopicItem extends StatelessWidget {
   }
 
   _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(route);
+    Navigator.of(context).pushNamed(TopicScreen.routeName);
   }
 }
