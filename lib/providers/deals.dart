@@ -1,4 +1,5 @@
 
+import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,11 @@ class Deals with ChangeNotifier {
   Future<void> voteForDeal(String dealId, bool isPositive) async {
     await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: token);
     return fetchDeals();
+  }
+
+  Future<void> createNewDeal(AddDealModel newDeal) async {
+    return await _apiProvider.post('/deals', newDeal.toDto(), token: token);
+    // return fetchDeals();
   }
 
   DealModel findById(String dealId) {

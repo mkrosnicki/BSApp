@@ -137,7 +137,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
           },
         ),
       ),
-      bottomNavigationBar: MyNavigationBar(2),
+      bottomNavigationBar: MyNavigationBar(3),
     );
   }
 

@@ -44,7 +44,7 @@ class MainAuthScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: MyNavigationBar(3),
+      bottomNavigationBar: MyNavigationBar(4),
     );
   }
 

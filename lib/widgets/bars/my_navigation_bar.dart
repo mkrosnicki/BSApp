@@ -1,3 +1,4 @@
+import 'package:BSApp/screens/deals/add_deal_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
@@ -39,6 +40,10 @@ class MyNavigationBar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             label: '',
+            icon: Icon(CupertinoIcons.add, size: 20),
+          ),
+          BottomNavigationBarItem(
+            label: '',
             icon: Icon(CupertinoIcons.suit_heart, size: 20),
           ),
           BottomNavigationBarItem(
@@ -67,9 +72,12 @@ class MyNavigationBar extends StatelessWidget {
         Navigator.of(context).pushReplacementNamed(ForumScreen.routeName);
         break;
       case 2:
-        Navigator.of(context).pushReplacementNamed(FavouritesScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(AddDealScreen.routeName);
         break;
       case 3:
+        Navigator.of(context).pushReplacementNamed(FavouritesScreen.routeName);
+        break;
+      case 4:
         Navigator.of(context).pushReplacementNamed(ProfileOptionsScreen.routeName);
         break;
     }
