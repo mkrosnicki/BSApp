@@ -90,7 +90,7 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> createNewDeal(AddDealModel newDeal) async {
-    return await _apiProvider.post('/deals', {'createDealDto': newDeal}, token: token);
+    return await _apiProvider.post('/deals', newDeal.toDto(), token: token);
     // return fetchDeals();
   }
 

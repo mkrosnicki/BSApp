@@ -8,9 +8,11 @@ class AddDealModel {
   String _title;
   String _urlLocation;
   String _description;
+  String _locationDescription;
   List<CategoryModel> _categories = [];
-  AgeType _ageType;
+  List<AgeType> _ageTypes = [];
   LocationType _locationType;
+  String _voivodeship;
   String _city;
   DateTime _validFrom;
   DateTime _validTo;
@@ -19,12 +21,15 @@ class AddDealModel {
   double _regularPrice;
   double _currentPrice;
   double _shippingPrice;
-  String _voivodeship;
 
+
+  DateTime get validFrom => _validFrom;
+
+  DateTime get validTo => _validTo;
 
   List<CategoryModel> get categories => _categories;
 
-  AgeType get ageType => _ageType;
+  List<AgeType> get ageTypes => _ageTypes;
 
   String get city => _city;
 
@@ -44,12 +49,12 @@ class AddDealModel {
     _description = value;
   }
 
-  set categories(List<CategoryModel> value) {
-    _categories = value;
+  set locationDescription(String value) {
+    _locationDescription = value;
   }
 
-  set ageType(AgeType value) {
-    _ageType = value;
+  set categories(List<CategoryModel> value) {
+    _categories = value;
   }
 
   set locationType(LocationType value) {
@@ -97,8 +102,29 @@ class AddDealModel {
     _city = null;
   }
 
+  Map<String, dynamic> toDto() {
+    return {
+      'dealType': 'OCCASION',
+      'title': _title,
+      'link': _urlLocation,
+      'description': _description,
+      'locationDescription': _locationDescription,
+      'categoriesIds': _categories.map((e) => e.id).toList(),
+      'ageTypes': _ageTypes.map((e) => e.index).toList(),
+      'locationType': _locationType.index,
+      'city': _city,
+      'voivodeship': _voivodeship,
+      'startDate': _validFrom.toIso8601String(),
+      'endDate': _validTo.toIso8601String(),
+      'code': _dealCode,
+      'currentPrice': _currentPrice,
+      'regularPrice': _regularPrice,
+      'shippingPrice': _shippingPrice,
+    };
+  }
+
   @override
   String toString() {
-    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_categories, _ageType: $_ageType, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice}';
+    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_categories, _ageType: $_ageTypes, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice}';
   }
 }

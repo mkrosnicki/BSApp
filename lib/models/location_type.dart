@@ -7,7 +7,7 @@ class LocationTypeHelper {
   static String getReadable(LocationType type) {
     switch (type) {
       case LocationType.INTERNET:
-        return 'Okzaja w internecie';
+        return 'Okazja w internecie';
       case LocationType.LOCAL:
         return 'Okazja stacjonarna';
     }
