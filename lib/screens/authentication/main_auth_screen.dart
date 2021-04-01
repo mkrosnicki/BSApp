@@ -1,4 +1,3 @@
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
@@ -42,7 +41,6 @@ class MainAuthScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: MyNavigationBar(4),
     );
   }
 

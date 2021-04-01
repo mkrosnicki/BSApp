@@ -1,7 +1,6 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/common/error_info.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:BSApp/widgets/searches/observed_search_item.dart';
@@ -137,7 +136,6 @@ class _FavouritesScreenState extends State<FavouritesScreen>
           },
         ),
       ),
-      bottomNavigationBar: MyNavigationBar(3),
     );
   }
 

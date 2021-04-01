@@ -2,7 +2,6 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/authentication/login_form.dart';
 import 'package:BSApp/widgets/authentication/registration_form.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +43,6 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
         body: TabBarView(
           children: [LoginForm(), RegistrationForm()],
         ),
-        bottomNavigationBar: MyNavigationBar(4),
       ),
     );
   }

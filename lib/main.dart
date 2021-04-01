@@ -19,6 +19,7 @@ import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
+import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
@@ -89,7 +90,7 @@ class MyApp extends StatelessWidget {
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: DealsScreen(),
+        home: MainScreen(),
         routes: {
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
           ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),

@@ -5,7 +5,6 @@ import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -157,8 +156,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               },
             ),
           ],
-        ),
-        bottomNavigationBar: MyNavigationBar(0));
+        ),);
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {

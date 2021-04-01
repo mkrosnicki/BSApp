@@ -1,6 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/profile/profile_options_list.dart';
 import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class ProfileOptionsScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomNavigationBar: MyNavigationBar(4),
         );
       } else {
         return MainAuthScreen();

@@ -1,10 +1,7 @@
-import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
-import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class ForumCategoryScreen extends StatelessWidget {
@@ -35,7 +32,6 @@ class ForumCategoryScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: MyNavigationBar(1),
     );
   }
 }

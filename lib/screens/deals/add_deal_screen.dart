@@ -8,7 +8,6 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -331,7 +330,6 @@ class _AddDealScreenState extends State<AddDealScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: MyNavigationBar(2),
     );
   }
 

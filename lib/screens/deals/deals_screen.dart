@@ -1,10 +1,8 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
-import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +121,6 @@ class _DealsScreenState extends State<DealsScreen> {
           : Center(
               child: Text('Brak ostatnich wyszukiwań'),
             ),
-      bottomNavigationBar: MyNavigationBar(0),
     );
   }
 
