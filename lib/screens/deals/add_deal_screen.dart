@@ -4,10 +4,11 @@ import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
-import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/widgets/bars/my_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -69,9 +70,29 @@ class _AddDealScreenState extends State<AddDealScreen> {
 
   @override
   void initState() {
+    super.initState();
+    _checkForAuthentication();
     _newdeal.locationType = LocationType.INTERNET;
     _newdeal.validFrom = DateTime.now();
     _newdeal.validTo = DateTime.now();
+  }
+
+  void _checkForAuthentication() {
+    var isAuthenticated = Provider.of<Auth>(context, listen: false).isAuthenticated;
+    print(isAuthenticated);
+    if (!isAuthenticated) {
+      _showLoginScreen();
+    }
+  }
+
+  void _showLoginScreen() {
+    Future.delayed(Duration.zero, () {
+      Navigator.of(context).push(new MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+            return LoginRegistrationScreen();
+          },
+          fullscreenDialog: true));
+    });
   }
 
   @override
