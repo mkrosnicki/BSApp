@@ -1,3 +1,5 @@
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/deals/add_deal_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
@@ -6,6 +8,7 @@ import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final int _selectedIndex;
@@ -82,7 +85,16 @@ class MyNavigationBar extends StatelessWidget {
         navigator.pushReplacementNamed(ForumScreen.routeName);
         break;
       case 2:
-        navigator.pushReplacementNamed(AddDealScreen.routeName);
+        var isAuthenticated = Provider.of<Auth>(context, listen: false).isAuthenticated;
+        if (!isAuthenticated) {
+          Navigator.of(context).push(new MaterialPageRoute<Null>(
+              builder: (BuildContext context) {
+                return LoginRegistrationScreen();
+              },
+              fullscreenDialog: true));
+        } else {
+          navigator.pushReplacementNamed(AddDealScreen.routeName);
+        }
         break;
       case 3:
         navigator.pushReplacementNamed(FavouritesScreen.routeName);
