@@ -1,9 +1,12 @@
 import 'package:BSApp/models/custom_exception.dart';
-import 'package:BSApp/models/http_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'form-title.dart';
 
 class RegistrationForm extends StatefulWidget {
   @override
@@ -20,12 +23,17 @@ class _RegistrationFormState extends State<RegistrationForm> {
   var _passwordController = TextEditingController();
   var _confirmPasswordController = TextEditingController();
 
+  _getFormFieldDecoration(String hintText) {
+    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
+        .copyWith(hintText: hintText);
+  }
+
   var formFieldDecoration = InputDecoration(
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     filled: true,
-    fillColor: MyColorsProvider.hexToColor('#e4e6e8'),
-    focusColor: MyColorsProvider.hexToColor('#e4e6e8'),
+    fillColor: MyColorsProvider.GREY_BORDER_COLOR,
+    focusColor: MyColorsProvider.GREY_BORDER_COLOR,
     border: UnderlineInputBorder(
       borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),
@@ -109,96 +117,91 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('E-mail'),
+                    FormTitle('Zarejestruj się'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _emailController,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: _getFormFieldDecoration('E-mail'),
+                        validator: (value) {
+                          if (value.isEmpty || !value.contains('@')) {
+                            return 'Nieprawidłowy e-mail!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['email'] = value;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: _emailController,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.isEmpty || !value.contains('@')) {
-                          return 'Nieprawidłowy e-mail!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['email'] = value;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _nameController,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: _getFormFieldDecoration('Imię'),
+                        validator: (value) {
+                          if (value.length < 3) {
+                            return 'Za krótkie imie, wprowadź conajmnie 3 znaki.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['username'] = value;
+                        },
+                      ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Twoje imie'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        cursorColor: Colors.black,
+                        obscureText: true,
+                        decoration: _getFormFieldDecoration('Hasło'),
+                        validator: (value) {
+                          if (value.length < 3) {
+                            return 'Za krótkie hasło!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['password'] = value;
+                        },
+                      ),
                     ),
-                    TextFormField(
-                      controller: _nameController,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return 'Za krótkie imie, wprowadź conajmnie 3 znaki.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['username'] = value;
-                      },
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Hasło'),
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      cursorColor: Colors.black,
-                      obscureText: true,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return 'Za krótkie hasło!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Potwierdź hasło'),
-                    ),
-                    TextFormField(
-                      controller: _confirmPasswordController,
-                      cursorColor: Colors.black,
-                      obscureText: true,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value != _passwordController.text) {
-                          return 'Hasła nie są takie same!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _confirmPasswordController,
+                        cursorColor: Colors.black,
+                        obscureText: true,
+                        decoration: _getFormFieldDecoration('Potwiedź hasło'),
+                        validator: (value) {
+                          if (value != _passwordController.text) {
+                            return 'Hasła nie są takie same!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['password'] = value;
+                        },
+                      ),
                     ),
                     Container(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        child: Text('Rejestracja'),
-                        onPressed: _submit,
-                      ),
+                      margin: EdgeInsets.only(top: 6.0),
+                      child: PrimaryButton('Stwórz konto', _submit),
                     ),
                   ],
                 ),

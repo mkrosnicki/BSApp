@@ -1,5 +1,11 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
+import 'package:BSApp/util/my_icons_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/app_bar_button.dart';
+import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +23,11 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
 
   Future<void> _initCategories() {
     if (_allCategories == null) {
-      return Provider.of<Categories>(context, listen: false).fetchCategories().then((_) {
-        _allCategories = Provider.of<Categories>(context, listen: false).categories;
+      return Provider.of<Categories>(context, listen: false)
+          .fetchCategories()
+          .then((_) {
+        _allCategories =
+            Provider.of<Categories>(context, listen: false).categories;
       });
     } else {
       return Future(() => {});
@@ -28,7 +37,21 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: AppBar(
+        title: const Text('Wybierz kategorię', style: MyStylingProvider.TEXT_BLACK,),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        bottom: const AppBarBottomBorder(),
+        leading: AppBarButton(
+          icon: MyIconsProvider.BACK_BLACK_ICON,
+          onPress: () => _goUp(),
+        ),
+        actions: [
+          const AppBarCloseButton(Colors.black),
+        ],
+      ),
       body: _selectedCategories.isEmpty
           ? FutureBuilder(
               future: _initCategories(),
@@ -46,57 +69,51 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 }
               },
             )
-          : _buildCategoriesList(_selectedCategories.elementAt(_selectedCategories.length - 1).subCategories),
-    );
-  }
-
-  _buildAppBar() {
-    return AppBar(
-      title: Text('Wybierz kategorię'),
-      automaticallyImplyLeading: false,
-      leading: FlatButton(
-        onPressed: () => _goUp(),
-        child: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-      ),
-      actions: [
-        FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Icon(
-            Icons.clear,
-            color: Colors.white,
-          ),
-        )
-      ],
+          : _buildCategoriesList(_selectedCategories
+              .elementAt(_selectedCategories.length - 1)
+              .subCategories),
     );
   }
 
   _buildCategoriesList(List<CategoryModel> categories) {
     return Column(
       children: [
-        if (_selectedCategories.isNotEmpty) ListTile(
-          title: Text('${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
-          focusColor: Colors.grey,
-        ),
-        if (_selectedCategories.isNotEmpty) FlatButton(
-          onPressed: () => _finishSelection(),
-          child: ListTile(
-            title: Text('Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
-            subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+        if (_selectedCategories.isNotEmpty)
+          ListTile(
+            title: Text(
+                '${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
             focusColor: Colors.grey,
           ),
-        ),
+        if (_selectedCategories.isNotEmpty)
+          FlatButton(
+            onPressed: () => _finishSelection(),
+            child: ListTile(
+              title: Text(
+                  'Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+              subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+              focusColor: Colors.grey,
+            ),
+          ),
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
+              padding: EdgeInsets.zero,
               child: ListTile(
+                tileColor: Colors.white,
                 title: Text(categories[index].name),
-                subtitle: Text('${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                trailing: categories[index].subCategories.isEmpty ? Icon(null) : Icon(Icons.chevron_right),
+                leading: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.asset(
+                    'assets/images/car.png',
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                subtitle: Text(
+                    '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
+                trailing: categories[index].subCategories.isEmpty
+                    ? MyIconsProvider.NONE
+                    : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectCategory(categories[index]),

@@ -1,9 +1,10 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/common/content_or_progress_indicator.dart';
 import 'package:BSApp/widgets/profile/user_profile_content.dart';
 import 'package:BSApp/widgets/profile/user_profile_main_info.dart';
-import 'package:BSApp/widgets/profile/user_profile_scrollable_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,41 +19,32 @@ class UserProfileScreen extends StatelessWidget {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return FutureBuilder(
       future: _initUser(context, userId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          if (snapshot.error != null) {
-            return Center(
-              child: Text('An error occurred!'),
-            );
-          } else {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  'Profil',
-                  style: TextStyle(color: Colors.black),
-                ),
-                backgroundColor: Colors.white,
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                leading: AppBarBackButton(),
-                // bottom: AppBarBottomBorder(),
-              ),
-              body: Flex(
-                direction: Axis.vertical,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  UserProfileMainInfo(_user),
-                  UserProfileContent(),
-                ],
-              ),
-            );
-          }
-        }
-      },
+      builder: (context, snapshot) => ContentOrProgressIndicator(
+        snapshot: snapshot,
+        content: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Profil',
+              style: MyStylingProvider.TEXT_BLACK,
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            leading: const AppBarBackButton(Colors.black),
+            // bottom: AppBarBottomBorder(),
+          ),
+          body: Flex(
+            direction: Axis.vertical,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              UserProfileMainInfo(_user),
+              UserProfileContent(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

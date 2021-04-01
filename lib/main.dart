@@ -5,8 +5,8 @@ import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/searches.dart';
-import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
@@ -16,7 +16,9 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
+import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
+import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
@@ -40,7 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Deals>(
           create: (context) => Deals.empty(),
           lazy: true,
-          update: (context, auth, previousDeals) => previousDeals..update(auth.token),
+          update: (context, auth, previousDeals) =>
+              previousDeals..update(auth.token),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
@@ -50,7 +53,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Searches>(
           create: (context) => Searches.empty(),
-          update: (context, auth, previousSearches) => previousSearches..update(auth.token),
+          update: (context, auth, previousSearches) =>
+              previousSearches..update(auth.token),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
@@ -93,6 +97,8 @@ class MyApp extends StatelessWidget {
           AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
+          ForumCategoryScreen.routeName: (ctx) => ForumCategoryScreen(),
+          TopicScreen.routeName: (ctx) => TopicScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
           DealDetailsScreen.routeName: (ctx) => DealDetailsScreen(),
           DealSearchResultScreen.routeName: (ctx) => DealSearchResultScreen(),

@@ -1,19 +1,20 @@
+import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileOptionItem extends StatelessWidget {
+class TopicItem extends StatelessWidget {
   final String title;
   final String route;
   final Function function;
 
-  const ProfileOptionItem({this.title, this.route, this.function});
+  const TopicItem({this.title, this.route, this.function});
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       padding: EdgeInsets.zero,
       child: ListTile(
+        tileColor: Colors.white,
         title: Text(title, style: TextStyle(fontSize: 14),),
         trailing: Icon(Icons.chevron_right),
         focusColor: Colors.grey,
@@ -36,6 +37,6 @@ class ProfileOptionItem extends StatelessWidget {
   }
 
   _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(route);
+    Navigator.of(context).pushNamed(TopicScreen.routeName);
   }
 }

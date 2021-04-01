@@ -15,12 +15,16 @@ class MyNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5))),
+      decoration: const BoxDecoration(
+        border: const Border(
+          top: const BorderSide(
+              color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+        ),
+      ),
       child: BottomNavigationBar(
-          // Color.fromRGBO(99, 137, 217, 1)
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        fixedColor: Color.fromRGBO(99, 137, 217, 1),
+        fixedColor: MyColorsProvider.DEEP_BLUE,
         unselectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         showSelectedLabels: false,
@@ -29,26 +33,32 @@ class MyNavigationBar extends StatelessWidget {
         // selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         onTap: (index) => navigate(context, index),
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: '',
-            icon: Icon(CupertinoIcons.rectangle_stack, size: 20,),
+            icon: const Icon(
+              CupertinoIcons.rectangle_stack,
+              size: 20,
+            ),
             // activeIcon: Icon(Icons.home),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: '',
-            icon: Icon(CupertinoIcons.bubble_left, size: 20),
+            icon: const Icon(CupertinoIcons.bubble_left, size: 20),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: '',
             icon: Icon(CupertinoIcons.add, size: 20),
           ),
           BottomNavigationBarItem(
             label: '',
-            icon: Icon(CupertinoIcons.suit_heart, size: 20),
+            icon: const Icon(CupertinoIcons.suit_heart, size: 20),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: '',
-            icon: Icon(CupertinoIcons.line_horizontal_3, size: 20,),
+            icon: const Icon(
+              CupertinoIcons.line_horizontal_3,
+              size: 20,
+            ),
           ),
           // BottomNavigationBarItem(
           //   label: 'Home',
@@ -66,19 +76,19 @@ class MyNavigationBar extends StatelessWidget {
     }
     switch (index) {
       case 0:
-        Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
+        navigator.pushReplacementNamed(DealsScreen.routeName);
         break;
       case 1:
-        Navigator.of(context).pushReplacementNamed(ForumScreen.routeName);
+        navigator.pushReplacementNamed(ForumScreen.routeName);
         break;
       case 2:
-        Navigator.of(context).pushReplacementNamed(AddDealScreen.routeName);
+        navigator.pushReplacementNamed(AddDealScreen.routeName);
         break;
       case 3:
-        Navigator.of(context).pushReplacementNamed(FavouritesScreen.routeName);
+        navigator.pushReplacementNamed(FavouritesScreen.routeName);
         break;
       case 4:
-        Navigator.of(context).pushReplacementNamed(ProfileOptionsScreen.routeName);
+        navigator.pushReplacementNamed(ProfileOptionsScreen.routeName);
         break;
     }
   }

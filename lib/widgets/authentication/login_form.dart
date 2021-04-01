@@ -1,7 +1,9 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/grey-text-button.dart';
+import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,22 +20,12 @@ class _LoginFormState extends State<LoginForm> {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
 
-  var formFieldDecoration = InputDecoration(
-    enabledBorder: InputBorder.none,
-    focusedErrorBorder: InputBorder.none,
-    filled: true,
-    fillColor: MyColorsProvider.hexToColor('#e4e6e8'),
-    focusColor: MyColorsProvider.hexToColor('#e4e6e8'),
-    border: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0),
-    ),
-  );
+  _getFormFieldDecoration(String hintText) {
+    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
+        .copyWith(hintText: hintText);
+  }
 
   Future<void> _submit() async {
-
     bool wasError = false;
 
     if (!_formKey.currentState.validate()) {
@@ -162,69 +154,75 @@ class _LoginFormState extends State<LoginForm> {
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('E-mail'),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
+                      child: Text(
+                        'Zaloguj się',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
-                    TextFormField(
-                      controller: _emailController,
-                      cursorColor: Colors.black,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.isEmpty || !value.contains('@')) {
-                          return 'Nieprawidłowy e-mail!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['email'] = value;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _emailController,
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: _getFormFieldDecoration('E-mail'),
+                        validator: (value) {
+                          if (value.isEmpty || !value.contains('@')) {
+                            return 'Nieprawidłowy e-mail!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['email'] = value;
+                        },
+                      ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.centerLeft,
-                      child: const Text('Hasło'),
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      cursorColor: Colors.black,
-                      obscureText: true,
-                      decoration: formFieldDecoration,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return 'Za krótkie hasło!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _authData['password'] = value;
-                      },
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        child: Text('Zaloguj się'),
-                        onPressed: _submit,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 0.0),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        cursorColor: Colors.black,
+                        obscureText: true,
+                        decoration: _getFormFieldDecoration('Hasło'),
+                        validator: (value) {
+                          if (value.length < 3) {
+                            return 'Za krótkie hasło!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          _authData['password'] = value;
+                        },
                       ),
                     ),
                     Container(
-                        margin: const EdgeInsets.only(top: 15.0),
-                        padding: const EdgeInsets.all(8.0),
-                        alignment: Alignment.centerLeft,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) =>
-                                      Theme.of(context).accentColor),
-                            ),
-                            onPressed: () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName),
-                            child: Text(
-                              'Nie pamiętasz hasła? Możesz zresetować je tutaj.',
-                              textAlign: TextAlign.center,
-                            ))),
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 6.0),
+                      child: PrimaryButton('Zaloguj się', _submit),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        ),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName),
+                        child: GreyTextButton('Nie pamiętasz hasła?', () => Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName)),
+                      ),
+                    )
                   ],
                 ),
               ),
