@@ -73,7 +73,7 @@ class ForumScreen extends StatelessWidget {
                             content: 'Blablabla jakaś tam treść blabla dupa dupa',
                             adderInfo: AdderInfoModel(
                               id: '1',
-                              username: 'fake user',
+                              username: 'FakeUser',
                               registeredAt: DateTime(2020),
                               addedDeals: 5,
                               addedComments: 5,

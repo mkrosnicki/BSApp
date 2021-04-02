@@ -42,7 +42,7 @@ class TopicItem extends StatelessWidget {
                   .copyWith(fontSize: 12, color: Colors.black54),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 10.0),
               child: Row(
                 children: [
                   Text(

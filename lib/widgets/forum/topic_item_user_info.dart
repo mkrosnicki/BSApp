@@ -2,6 +2,7 @@ import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopicItemUserInfo extends StatelessWidget {
@@ -51,19 +52,15 @@ class TopicItemUserInfo extends StatelessWidget {
                             context, topic.adderInfo.id),
                         child: Text(
                           topic.adderInfo.username,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.deepOrange
+                            fontWeight: FontWeight.w500,
+                            color: Colors.blue.shade300,
                           ),
                         ),
                       ),
                     ),
-                    Text(
-                      // '${_dateFormat.format(comment.addedAt)}',
-                      '${DateUtil.timeAgoString(topic.addedAt)}',
-                      style: userInfoTextStyle,
-                    ),
+                    const Icon(CupertinoIcons.chevron_down, size: 16, color: Colors.black54,),
                   ],
                 ),
               ],
