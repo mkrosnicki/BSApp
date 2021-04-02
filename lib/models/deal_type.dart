@@ -17,4 +17,8 @@ class DealTypeHelper {
         throw Exception('Not known deal type!');
     }
   }
+
+  static String asString(DealType dealType) {
+    return dealType.toString().replaceFirst('DealType.', '');
+  }
 }

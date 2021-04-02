@@ -1,10 +1,12 @@
 import 'package:BSApp/models/age_type.dart';
+import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
 
 import 'category_model.dart';
 
 class AddDealModel {
 
+  final DealType dealType;
   String _title;
   String _urlLocation;
   String _description;
@@ -21,6 +23,8 @@ class AddDealModel {
   double _regularPrice;
   double _currentPrice;
   double _shippingPrice;
+
+  AddDealModel(this.dealType);
 
 
   DateTime get validFrom => _validFrom;
@@ -104,7 +108,7 @@ class AddDealModel {
 
   Map<String, dynamic> toDto() {
     return {
-      'dealType': 'OCCASION',
+      'dealType': DealTypeHelper.asString(dealType),
       'title': _title,
       'link': _urlLocation,
       'description': _description,
