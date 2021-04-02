@@ -4,7 +4,7 @@ import 'package:BSApp/widgets/profile/profile_options_header.dart';
 import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
 import 'package:flutter/material.dart';
 
-import 'login_registration_screen.dart';
+import 'auth_screen_provider.dart';
 
 class MainAuthScreen extends StatelessWidget {
   final menuOptions = [
@@ -30,7 +30,7 @@ class MainAuthScreen extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: PrimaryButton('Zaloguj się lub załóż konto', () => _showLoginScreen(context)),
+              child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
             ),
             Flexible(
               child: ListView.builder(
@@ -42,13 +42,5 @@ class MainAuthScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 }

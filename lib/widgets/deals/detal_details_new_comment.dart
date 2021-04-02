@@ -1,7 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
-import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -65,22 +65,13 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
       return null;
     }
     if (!isUserLoggedIn) {
-      _showLoginScreen(context);
+      AuthScreenProvider.showLoginScreen(context);
     } else {
       return widget.replyState == ReplyState.REPLY_DEAL
           ? _addCommentToDeal()
           : _addReplyToComment();
     }
   }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
-  }
-
 
   _addReplyToComment() async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(

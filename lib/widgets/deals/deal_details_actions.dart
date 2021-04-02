@@ -1,7 +1,7 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,18 +79,10 @@ class DealDetailsActions extends StatelessWidget {
 
   _vote(BuildContext context, bool isAuthenticated, bool isPositive) {
     if (!isAuthenticated) {
-      _showLoginScreen(context);
+      AuthScreenProvider.showLoginScreen(context);
     } else {
       Provider.of<Deals>(context, listen: false)
           .voteForDeal(deal.id, isPositive);
     }
-  }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 }
