@@ -2,14 +2,16 @@ class CategoryModel {
 
   final String id;
   final String name;
+  final String description;
   final List<CategoryModel> subCategories;
 
-  CategoryModel({this.id, this.name, this.subCategories});
+  CategoryModel({this.id, this.name, this.description, this.subCategories});
 
   static CategoryModel of(dynamic categorySnapshot) {
     return CategoryModel(
       id: categorySnapshot['id'],
       name: categorySnapshot['name'],
+      description: categorySnapshot['description'],
       subCategories: (categorySnapshot['subCategories'] as List).map((e) => CategoryModel.of(e)).toList()
     );
   }
