@@ -1,7 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
-import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
@@ -56,7 +56,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             builder: (context, searchesData, child) => GestureDetector(
               onTap: () {
                 if (searchesData.token == null) {
-                  _showLoginScreen(context);
+                  AuthScreenProvider.showLoginScreen(context);
                 } else {
                   _saveSearch();
                 }
@@ -282,14 +282,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         filterSettings.clearAgeTypes();
       }
     });
-  }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 
   _saveSearch() {

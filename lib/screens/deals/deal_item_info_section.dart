@@ -1,7 +1,7 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/widgets/common/green_voting_button.dart';
 import 'package:BSApp/widgets/common/red_voting_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +26,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
 
   @override
   void initState() {
+    super.initState();
     initializeDateFormatting();
     _dateFormat = new DateFormat.yMMMMd('pl');
   }
@@ -203,7 +204,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
 
   _vote(bool isAuthenticated, bool isPositive) {
     if (!isAuthenticated) {
-      _showLoginScreen(context);
+      AuthScreenProvider.showLoginScreen(context);
     } else {
       Provider.of<Deals>(context, listen: false)
           .voteForDeal(widget.deal.id, isPositive);
@@ -213,20 +214,12 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
   _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
       bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
-      _showLoginScreen(context);
+      AuthScreenProvider.showLoginScreen(context);
     } else if (isFavourite) {
       Provider.of<Deals>(context, listen: false)
           .deleteFromObservedDeals(deal.id);
     } else {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }
-  }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 }

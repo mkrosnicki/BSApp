@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'authentication/login_registration_screen.dart';
 import 'deals/add_deal_screen.dart';
 import 'favourites/favourites_screen.dart';
 import 'forum/forum_screen.dart';
@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   void _onItemTapped(int index) {
     final addDealScreen = 2;
     if (!_isAuthenticated() && index == addDealScreen) {
-      _showLoginScreen();
+      AuthScreenProvider.showLoginScreen(context);
     } else {
       setState(() {
         _selectedIndex = index;
@@ -39,14 +39,6 @@ class _MainScreenState extends State<MainScreen> {
 
   bool _isAuthenticated() {
     return Provider.of<Auth>(context, listen: false).isAuthenticated;
-  }
-
-  void _showLoginScreen() {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 
   @override

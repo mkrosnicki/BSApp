@@ -1,7 +1,6 @@
-import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/authentication/login_registration_screen.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,20 +60,12 @@ class DealDetailsImage extends StatelessWidget {
 
   _toggleFavourites(BuildContext context, String dealId, bool isFavourite, bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
-      _showLoginScreen(context);
+      AuthScreenProvider.showLoginScreen(context);
     } else if (isFavourite) {
       Provider.of<Deals>(context, listen: false)
           .deleteFromObservedDeals(dealId);
     } else {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(dealId);
     }
-  }
-
-  _showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return LoginRegistrationScreen();
-        },
-        fullscreenDialog: true));
   }
 }
