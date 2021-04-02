@@ -16,6 +16,14 @@ class ForumCategoryItem extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: ListTile(
         tileColor: Colors.white,
+        leading: SizedBox(
+          height: 40,
+          width: 40,
+          child: Image.asset(
+            'assets/images/car.png',
+            fit: BoxFit.fitHeight,
+          ),
+        ),
         title: Text(title, style: TextStyle(fontSize: 14),),
         subtitle: Text(description, style: TextStyle(fontSize: 12),),
         trailing: MyIconsProvider.FORWARD_ICON,

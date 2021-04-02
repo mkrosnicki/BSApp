@@ -6,6 +6,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/providers/topic_categories.dart';
+import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
@@ -57,6 +58,12 @@ class MyApp extends StatelessWidget {
           create: (context) => Searches.empty(),
           update: (context, auth, previousSearches) =>
               previousSearches..update(auth.token),
+        ),
+        ChangeNotifierProxyProvider<Auth, Topics>(
+          create: (context) => Topics.empty(),
+          lazy: true,
+          update: (context, auth, previousTopics) =>
+          previousTopics..update(auth.token),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
