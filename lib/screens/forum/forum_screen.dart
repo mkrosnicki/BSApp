@@ -86,7 +86,7 @@ class ForumScreen extends StatelessWidget {
                       return Column(
                         children: _allCategories
                             .map((e) =>
-                                ForumCategoryItem(title: e.name, description: 'jakis opis', id: e.id,))
+                                ForumCategoryItem(title: e.name, description: e.description, id: e.id,))
                             .toList(),
                       );
                     }
