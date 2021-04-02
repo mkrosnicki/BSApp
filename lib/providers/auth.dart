@@ -36,10 +36,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchMe() async {
-    print('fetch me');
     var responseBody = await _apiProvider.get('/users/me', token: _token);
     _me = UserModel.of(responseBody);
-    print(_me);
   }
 
   Future<void> login(String email, String password) async {
@@ -50,7 +48,6 @@ class Auth with ChangeNotifier {
         };
     final responseData = await _apiProvider.post(url, body);
     _token = responseData['token'];
-    print('before fetching');
     await fetchMe();
     var decoded = _decodeToken(_token);
     _userId = _extractUserId(decoded);

@@ -42,9 +42,7 @@ class ForumCategoryScreen extends StatelessWidget {
               } else {
                 return Consumer<Topics>(
                   builder: (context, topicsData, child) => ListView.builder(
-                    itemBuilder: (context, index) => TopicItem(
-                        title: topicsData.topics[index].title,
-                        function: () {}),
+                    itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
                     itemCount: topicsData.topics.length,
                   ),
                 );

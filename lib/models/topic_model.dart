@@ -29,7 +29,6 @@ class TopicModel {
   });
 
   static TopicModel of(dynamic topicSnapshot) {
-    print(topicSnapshot);
     return TopicModel(
       id: topicSnapshot['id'],
       addedAt: DateTime.parse(topicSnapshot['addedAt']),

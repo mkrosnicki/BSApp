@@ -43,7 +43,6 @@ class _LoginFormState extends State<LoginForm> {
         _authData['email'],
         _authData['password'],
       );
-      print('end login');
     } on CustomException catch (error) {
       wasError = true;
       if (error.toString().contains('Email is not verified')) {

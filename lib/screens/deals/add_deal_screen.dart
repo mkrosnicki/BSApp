@@ -38,7 +38,6 @@ class _AddDealScreenState extends State<AddDealScreen> {
     setState(() {
       _isLoading = true;
     });
-    print(_newDeal.toString());
     try {
       setState(() {
         _isLoading = true;

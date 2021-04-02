@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_category_model.dart';
+import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -63,7 +64,7 @@ class ForumScreen extends StatelessWidget {
               ),
               ...widgets
                   .sublist(0, 2)
-                  .map((e) => TopicItem(title: 'a', route: 'a'))
+                  .map((e) => TopicItem(TopicModel(id: '1', title: 'Jakiś placeholder')))
                   .toList(),
               ListTile(
                 title: Text(

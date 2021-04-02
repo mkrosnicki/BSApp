@@ -28,6 +28,6 @@ class CategoryModel {
 
   @override
   String toString() {
-    return 'CategoryModel{id: $id, name: $name, subCategories: $subCategories}';
+    return 'CategoryModel{id: $id, name: $name, description: $description, subCategories: $subCategories}';
   }
 }

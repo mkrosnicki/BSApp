@@ -109,8 +109,10 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                     fit: BoxFit.fitHeight,
                   ),
                 ),
+                // subtitle: Text(
+                //     '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
                 subtitle: Text(
-                    '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
+                    '${categories[index].description}'),
                 trailing: categories[index].subCategories.isEmpty
                     ? MyIconsProvider.NONE
                     : MyIconsProvider.FORWARD_ICON,
