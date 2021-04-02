@@ -1,6 +1,6 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/forum/topic_item_user_info.dart';
 import 'package:flutter/material.dart';
 
@@ -24,15 +24,65 @@ class TopicItem extends StatelessWidget {
           children: [
             TopicItemUserInfo(topic),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
               child: Text(
                 topic.title,
-                style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 16),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 15),
               ),
             ),
             Text(
-              topic.content,
-              style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 12, color: Colors.black54),
+              shortenTo(topic.content + topic.content + topic.content + topic.content + topic.content, 100),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontSize: 12, color: Colors.black54),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    // '${_dateFormat.format(comment.addedAt)}',
+                    '${DateUtil.timeAgoString(topic.addedAt)}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontSize: 11, color: Colors.black38),
+                  ),
+                  Text(
+                    ' • ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontSize: 11, color: Colors.black38),
+                  ),
+                  Text(
+                    '10 odpowiedzi',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontSize: 11, color: Colors.black38),
+                  ),
+                  Text(
+                    ' • ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontSize: 11, color: Colors.black38),
+                  ),
+                  Text(
+                    '10 odpowiedzi',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontSize: 11, color: Colors.black38),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -43,5 +93,13 @@ class TopicItem extends StatelessWidget {
 
   _navigateTo(BuildContext context) {
     Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic);
+  }
+
+  String shortenTo(String input, int length) {
+    if (input.length <= length) {
+      return input;
+    } else {
+      return input.substring(0, length) + "...";
+    }
   }
 }

@@ -65,19 +65,21 @@ class ForumScreen extends StatelessWidget {
               ),
               ...widgets
                   .sublist(0, 2)
-                  .map((e) => TopicItem(TopicModel(
-                      id: '1',
-                      addedAt: DateTime.now(),
-                      title: 'Jakiś placeholder',
-                      content: 'Jakiś placeholder',
-                      adderInfo: AdderInfoModel(
-                        id: '1',
-                        username: 'fake user',
-                        registeredAt: DateTime(2020),
-                        addedDeals: 5,
-                        addedComments: 5,
-                        addedPosts: 5,
-                      ))))
+                  .map((e) => TopicItem(
+                        TopicModel(
+                            id: '1',
+                            addedAt: DateTime.now(),
+                            title: 'Jakiś fajny temat do dyskusji',
+                            content: 'Blablabla jakaś tam treść blabla dupa dupa',
+                            adderInfo: AdderInfoModel(
+                              id: '1',
+                              username: 'fake user',
+                              registeredAt: DateTime(2020),
+                              addedDeals: 5,
+                              addedComments: 5,
+                              addedPosts: 5,
+                            )),
+                      ))
                   .toList(),
               ListTile(
                 title: Text(

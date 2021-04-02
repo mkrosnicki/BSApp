@@ -22,12 +22,11 @@ class TopicItemUserInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 50,
-          height: 50,
-          child: Image.network(
+        CircleAvatar(
+          minRadius: 10,
+          maxRadius: 10,
+          backgroundImage: NetworkImage(
             'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-            fit: BoxFit.cover,
           ),
         ),
         Flexible(
@@ -37,24 +36,25 @@ class TopicItemUserInfo extends StatelessWidget {
             child: Flex(
               direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 6.0),
+                      margin: EdgeInsets.zero,
                       child: GestureDetector(
                         onTap: () => _navigateToUserProfileScreen(
                             context, topic.adderInfo.id),
                         child: Text(
                           topic.adderInfo.username,
                           style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.deepOrange
                           ),
                         ),
                       ),
@@ -62,30 +62,6 @@ class TopicItemUserInfo extends StatelessWidget {
                     Text(
                       // '${_dateFormat.format(comment.addedAt)}',
                       '${DateUtil.timeAgoString(topic.addedAt)}',
-                      style: userInfoTextStyle,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '${topic.adderInfo.addedDeals}',
-                      style: userInfoBoldTextStyle,
-                    ),
-                    const Text(
-                      ' okazje',
-                      style: userInfoTextStyle,
-                    ),
-                    const Text(
-                      ' • ',
-                      style: userInfoTextStyle,
-                    ),
-                    Text(
-                      '${topic.adderInfo.addedComments}',
-                      style: userInfoBoldTextStyle,
-                    ),
-                    const Text(
-                      ' komentarz(e)',
                       style: userInfoTextStyle,
                     ),
                   ],
