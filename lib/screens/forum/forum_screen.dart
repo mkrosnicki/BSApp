@@ -1,3 +1,5 @@
+import 'package:BSApp/models/topic_category_model.dart';
+import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
@@ -6,9 +8,25 @@ import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/forum/forum_category_item.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ForumScreen extends StatelessWidget {
   static const routeName = '/forum';
+
+  List<TopicCategoryModel> _allCategories;
+
+  Future<void> _initCategories(BuildContext context) {
+    if (_allCategories == null) {
+      return Provider.of<TopicCategories>(context, listen: false)
+          .fetchTopicCategories()
+          .then((_) {
+        _allCategories = Provider.of<TopicCategories>(context, listen: false)
+            .topicCategories;
+      });
+    } else {
+      return Future(() => {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +72,27 @@ class ForumScreen extends StatelessWidget {
                 ),
                 focusColor: Colors.grey,
               ),
-              ...widgets
-                  .map((e) => ForumCategoryItem(title: 'a', route: 'a'))
-                  .toList(),
+              FutureBuilder(
+                future: _initCategories(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    if (snapshot.error != null) {
+                      return Center(
+                        child: Text('An error occurred!'),
+                      );
+                    } else {
+                      return Column(
+                        children: _allCategories
+                            .map((e) =>
+                                ForumCategoryItem(title: e.name, description: 'jakis opis', id: e.id,))
+                            .toList(),
+                      );
+                    }
+                  }
+                },
+              )
             ],
           ),
         ),

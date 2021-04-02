@@ -5,6 +5,7 @@ import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/searches.dart';
+import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TopicCategories(),
         ),
         ChangeNotifierProvider(
           create: (_) => Locations(),
