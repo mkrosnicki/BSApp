@@ -8,6 +8,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
+import 'package:BSApp/widgets/bars/app_bar_add_deal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
   bool _isLoading = false;
   var _locationDescriptionController = TextEditingController();
 
-  var _newdeal = AddDealModel();
+  var _newDeal = AddDealModel();
 
   City _city;
   Voivodeship _voivodeship;
@@ -37,12 +38,12 @@ class _AddDealScreenState extends State<AddDealScreen> {
     setState(() {
       _isLoading = true;
     });
-    print(_newdeal.toString());
+    print(_newDeal.toString());
     try {
       setState(() {
         _isLoading = true;
       });
-      await Provider.of<Deals>(context, listen: false).createNewDeal(_newdeal);
+      await Provider.of<Deals>(context, listen: false).createNewDeal(_newDeal);
       setState(() {
         _isLoading = false;
       });
@@ -68,17 +69,15 @@ class _AddDealScreenState extends State<AddDealScreen> {
   @override
   void initState() {
     super.initState();
-    _newdeal.locationType = LocationType.INTERNET;
-    _newdeal.validFrom = DateTime.now();
-    _newdeal.validTo = DateTime.now();
+    _newDeal.locationType = LocationType.INTERNET;
+    _newDeal.validFrom = DateTime.now();
+    _newDeal.validTo = DateTime.now();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dodaj nową okazje!'),
-      ),
+      appBar: AppBarAddDeal(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -106,7 +105,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           }
                         },
                         onSaved: (value) {
-                          _newdeal.title = value;
+                          _newDeal.title = value;
                         },
                       ),
                       SizedBox(
@@ -124,7 +123,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           }
                         },
                         onSaved: (value) {
-                          _newdeal.description = value;
+                          _newDeal.description = value;
                         },
                       ),
                       SizedBox(
@@ -153,7 +152,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                           }
                         },
                         onSaved: (value) {
-                          _newdeal.urlLocation = value;
+                          _newDeal.urlLocation = value;
                         },
                       ),
                       SizedBox(
@@ -161,7 +160,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                       ),
                       ListTile(
                         title: const Text('Lokalizacja'),
-                        subtitle: _newdeal.voivodeship != null
+                        subtitle: _newDeal.voivodeship != null
                             ? Text(
                                 locationString,
                                 style: TextStyle(color: Colors.blue),
@@ -179,12 +178,12 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         controller: _locationDescriptionController,
                         enabled: !showInternetOnly,
                         onSaved: (value) {
-                          _newdeal.locationDescription = value;
+                          _newDeal.locationDescription = value;
                         },
                       ),
                       ListTile(
                         title: const Text('Kategoria'),
-                        subtitle: _newdeal.categories.isNotEmpty
+                        subtitle: _newDeal.categories.isNotEmpty
                             ? Text(
                                 categoriesString,
                                 style: TextStyle(color: Colors.blue),
@@ -195,7 +194,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                       ),
                       ListTile(
                         title: const Text('Wiek dziecka'),
-                        subtitle: _newdeal.ageTypes.isEmpty
+                        subtitle: _newDeal.ageTypes.isEmpty
                             ? const Text('Dowolny')
                             : Text(
                                 ageTypesString,
@@ -217,7 +216,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            "${_newdeal.validFrom.toLocal()}".split(' ')[0],
+                            "${_newDeal.validFrom.toLocal()}".split(' ')[0],
                           ),
                           SizedBox(
                             height: 20.0,
@@ -243,7 +242,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            "${_newdeal.validTo.toLocal()}".split(' ')[0],
+                            "${_newDeal.validTo.toLocal()}".split(' ')[0],
                           ),
                           SizedBox(
                             height: 20.0,
@@ -277,7 +276,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         },
                         keyboardType: TextInputType.number,
                         onSaved: (value) {
-                          _newdeal.regularPrice = double.parse(value);
+                          _newDeal.regularPrice = double.parse(value);
                         },
                       ),
                       SizedBox(
@@ -296,7 +295,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         },
                         keyboardType: TextInputType.number,
                         onSaved: (value) {
-                          _newdeal.currentPrice = double.parse(value);
+                          _newDeal.currentPrice = double.parse(value);
                         },
                       ),
                       SizedBox(
@@ -315,7 +314,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
                         },
                         keyboardType: TextInputType.number,
                         onSaved: (value) {
-                          _newdeal.shippingPrice = double.parse(value);
+                          _newDeal.shippingPrice = double.parse(value);
                         },
                       ),
                       Container(
@@ -334,11 +333,11 @@ class _AddDealScreenState extends State<AddDealScreen> {
   }
 
   String get categoriesString {
-    return _newdeal.categories.map((e) => e.name).join(" / ");
+    return _newDeal.categories.map((e) => e.name).join(" / ");
   }
 
   String get ageTypesString {
-    return _newdeal.ageTypes
+    return _newDeal.ageTypes
         .map((e) => AgeTypeHelper.getReadable(e))
         .join(", ");
   }
@@ -348,7 +347,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
         .pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
-        _newdeal.categories = selectedCategories;
+        _newDeal.categories = selectedCategories;
       });
     }
   }
@@ -364,9 +363,9 @@ class _AddDealScreenState extends State<AddDealScreen> {
     if (picked != null) {
       setState(() {
         if (dateType == DateType.VALID_TO) {
-          _newdeal.validTo = picked;
+          _newDeal.validTo = picked;
         } else if (dateType == DateType.VALID_FROM) {
-          _newdeal.validFrom = picked;
+          _newDeal.validFrom = picked;
         }
       });
     }
@@ -379,13 +378,13 @@ class _AddDealScreenState extends State<AddDealScreen> {
         margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
         child: ChoiceChip(
           label: Text(AgeTypeHelper.getReadable(e)),
-          selected: _newdeal.ageTypes.contains(e),
+          selected: _newDeal.ageTypes.contains(e),
           onSelected: (isSelected) {
             setState(() {
               if (isSelected) {
-                _newdeal.ageTypes.add(e);
+                _newDeal.ageTypes.add(e);
               } else {
-                _newdeal.ageTypes.remove(e);
+                _newDeal.ageTypes.remove(e);
               }
             });
           },
@@ -402,16 +401,16 @@ class _AddDealScreenState extends State<AddDealScreen> {
             margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
               label: Text(LocationTypeHelper.getReadable(e)),
-              selected: _newdeal.locationType == e,
+              selected: _newDeal.locationType == e,
               onSelected: (isSelected) {
                 setState(() {
-                  _newdeal.locationType = e;
-                  if (_newdeal.locationType == LocationType.LOCAL) {
+                  _newDeal.locationType = e;
+                  if (_newDeal.locationType == LocationType.LOCAL) {
                     showInternetOnly = false;
                     _locationDescriptionController.clear();
                   } else {
                     showInternetOnly = true;
-                    _newdeal.clearLocation();
+                    _newDeal.clearLocation();
                   }
                 });
               },
@@ -429,18 +428,18 @@ class _AddDealScreenState extends State<AddDealScreen> {
       setState(() {
         var voivodeship = ((locations as List)[0] as Voivodeship);
         if (voivodeship != null) {
-          _newdeal.voivodeship = voivodeship.id;
+          _newDeal.voivodeship = voivodeship.id;
           _voivodeship = voivodeship;
         } else {
-          _newdeal.voivodeship = null;
+          _newDeal.voivodeship = null;
           _voivodeship = null;
         }
         var city = ((locations as List)[1] as City);
         if (city != null) {
-          _newdeal.city = city.id;
+          _newDeal.city = city.id;
           _city = city;
         } else {
-          _newdeal.city = null;
+          _newDeal.city = null;
           _city = null;
         }
       });
