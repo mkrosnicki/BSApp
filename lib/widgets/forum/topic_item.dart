@@ -1,6 +1,7 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/forum/topic_item_user_info.dart';
 import 'package:flutter/material.dart';
 
 class TopicItem extends StatelessWidget {
@@ -10,16 +11,33 @@ class TopicItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      child: ListTile(
-        tileColor: Colors.white,
-        title: Text(topic.title, style: TextStyle(fontSize: 14),),
-        trailing: Icon(Icons.chevron_right),
-        focusColor: Colors.grey,
+    print(topic);
+    return GestureDetector(
+      child: Container(
+        alignment: Alignment.topLeft,
+        color: Colors.white,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TopicItemUserInfo(topic),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+              child: Text(
+                topic.title,
+                style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 16),
+              ),
+            ),
+            Text(
+              topic.content,
+              style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 12, color: Colors.black54),
+            ),
+          ],
+        ),
       ),
-      shape: Border(bottom: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () => _navigateTo(context),
+      onTap: () => _navigateTo(context),
     );
   }
 

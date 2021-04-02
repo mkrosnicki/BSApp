@@ -1,3 +1,4 @@
+import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
@@ -64,7 +65,19 @@ class ForumScreen extends StatelessWidget {
               ),
               ...widgets
                   .sublist(0, 2)
-                  .map((e) => TopicItem(TopicModel(id: '1', title: 'Jakiś placeholder')))
+                  .map((e) => TopicItem(TopicModel(
+                      id: '1',
+                      addedAt: DateTime.now(),
+                      title: 'Jakiś placeholder',
+                      content: 'Jakiś placeholder',
+                      adderInfo: AdderInfoModel(
+                        id: '1',
+                        username: 'fake user',
+                        registeredAt: DateTime(2020),
+                        addedDeals: 5,
+                        addedComments: 5,
+                        addedPosts: 5,
+                      ))))
                   .toList(),
               ListTile(
                 title: Text(
@@ -86,8 +99,11 @@ class ForumScreen extends StatelessWidget {
                     } else {
                       return Column(
                         children: _allCategories
-                            .map((e) =>
-                                ForumCategoryItem(title: e.name, description: e.description, id: e.id,))
+                            .map((e) => ForumCategoryItem(
+                                  title: e.name,
+                                  description: e.description,
+                                  id: e.id,
+                                ))
                             .toList(),
                       );
                     }

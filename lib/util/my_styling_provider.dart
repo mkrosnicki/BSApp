@@ -33,6 +33,8 @@ class MyStylingProvider {
     );
   }
 
+  static const Border GREY_BORDER = Border(bottom: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5));
+
   static const TextStyle TEXT_BLACK = const TextStyle(color: Colors.black87);
   static const TextStyle TEXT_WHITE = const TextStyle(color: Colors.white);
   static const TextStyle TEXT_BLUE = const TextStyle(color: Colors.blue);

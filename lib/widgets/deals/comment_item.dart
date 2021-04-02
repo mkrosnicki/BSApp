@@ -7,6 +7,7 @@ import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
+import 'package:BSApp/widgets/deals/comment_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -53,12 +54,6 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
-    var userInfoTextStyle = const TextStyle(
-      fontSize: 12,
-      color: Colors.grey,
-    );
-    var userInfoBoldTextStyle = const TextStyle(
-        fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
     return Flex(
       direction: Axis.vertical,
       children: [
@@ -68,85 +63,7 @@ class _CommentItemState extends State<CommentItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flex(
-                direction: Axis.horizontal,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Image.network(
-                      'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.all(4.0),
-                      margin: const EdgeInsets.only(left: 4.0),
-                      child: Flex(
-                        direction: Axis.vertical,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Flex(
-                            direction: Axis.horizontal,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 6.0),
-                                child: GestureDetector(
-                                  onTap: () => _navigateToUserProfileScreen(
-                                      comment.adderInfo.id),
-                                  child: Text(
-                                    comment.adderInfo.username,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                // '${_dateFormat.format(comment.addedAt)}',
-                                '${DateUtil.timeAgoString(comment.addedAt)}',
-                                style: userInfoTextStyle,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                '${comment.adderInfo.addedDeals}',
-                                style: userInfoBoldTextStyle,
-                              ),
-                              Text(
-                                ' okazje',
-                                style: userInfoTextStyle,
-                              ),
-                              Text(
-                                ' • ',
-                                style: userInfoTextStyle,
-                              ),
-                              Text(
-                                '${comment.adderInfo.addedComments}',
-                                style: userInfoBoldTextStyle,
-                              ),
-                              Text(
-                                ' komentarz(e)',
-                                style: userInfoTextStyle,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              CommentItemUserInfo(comment),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -245,10 +162,5 @@ class _CommentItemState extends State<CommentItem> {
   _startCommentReply(String commentId) {
     Provider.of<DealReplyState>(context, listen: false)
         .startCommentReply(commentId);
-  }
-
-  _navigateToUserProfileScreen(String userId) {
-    Navigator.of(context)
-        .pushNamed(UserProfileScreen.routeName, arguments: userId);
   }
 }
