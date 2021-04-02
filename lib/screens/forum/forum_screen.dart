@@ -56,12 +56,13 @@ class ForumScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ListTile(
-                title: Text(
+              Container(
+                padding: EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: Text(
                   'Popularne wątki',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 16),
                 ),
-                focusColor: Colors.grey,
               ),
               ...widgets
                   .sublist(0, 2)
@@ -81,12 +82,13 @@ class ForumScreen extends StatelessWidget {
                             )),
                       ))
                   .toList(),
-              ListTile(
-                title: Text(
+              Container(
+                padding: EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: Text(
                   'Kategorie',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 16),
                 ),
-                focusColor: Colors.grey,
               ),
               FutureBuilder(
                 future: _initCategories(context),
