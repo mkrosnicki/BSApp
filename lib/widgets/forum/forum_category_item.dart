@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class ForumCategoryItem extends StatelessWidget {
   final String title;
-  final String route;
-  final Function function;
+  final String description;
+  final String id;
 
-  const ForumCategoryItem({this.title, this.route, this.function});
+  const ForumCategoryItem({this.title, this.description, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +17,16 @@ class ForumCategoryItem extends StatelessWidget {
       child: ListTile(
         tileColor: Colors.white,
         title: Text(title, style: TextStyle(fontSize: 14),),
+        subtitle: Text(description, style: TextStyle(fontSize: 12),),
         trailing: MyIconsProvider.FORWARD_ICON,
         focusColor: Colors.grey,
       ),
       shape: Border(bottom: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () {
-        _preformAction(context);
-      },
+      onPressed: () => _navigateToForum(context),
     );
   }
 
-  void _preformAction(BuildContext context) async {
-    var shouldNavigate = true;
-    if (function != null) {
-      shouldNavigate = await function();
-    }
-    if (shouldNavigate) {
-      _navigateTo(context);
-    }
-  }
-
-  _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(ForumCategoryScreen.routeName);
+  void _navigateToForum(BuildContext context) async {
+    Navigator.of(context).pushNamed(ForumCategoryScreen.routeName, arguments: id);
   }
 }
