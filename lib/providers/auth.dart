@@ -94,6 +94,7 @@ class Auth with ChangeNotifier {
     _expiryDate = expiryDate;
     notifyListeners();
     _autoLogout();
+    await fetchMe();
     return true;
   }
 
