@@ -1,3 +1,4 @@
+import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
@@ -6,12 +7,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopicItemUserInfo extends StatelessWidget {
-  final TopicModel topic;
+  final AdderInfoModel adderInfo;
+  final DateTime addedAt;
 
-  const TopicItemUserInfo(this.topic);
+  const TopicItemUserInfo(this.adderInfo, this.addedAt);
 
   @override
   Widget build(BuildContext context) {
+    const userInfoBoldTextStyle = const TextStyle(
+        fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
+    const userInfoTextStyle = const TextStyle(
+      fontSize: 13,
+      color: Colors.grey,
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
       child: Flex(
@@ -20,11 +28,11 @@ class TopicItemUserInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            minRadius: 13,
-            maxRadius: 13,
-            backgroundImage: NetworkImage(
-              'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-            ),
+            minRadius: 15,
+            maxRadius: 15,
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.green,
+            child: Text(adderInfo.username.substring(0, 1)),
           ),
           Flexible(
             child: Container(
@@ -41,24 +49,41 @@ class TopicItemUserInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        margin: EdgeInsets.zero,
-                        child: GestureDetector(
-                          onTap: () => _navigateToUserProfileScreen(
-                              context, topic.adderInfo.id),
-                          child: Text(
-                            topic.adderInfo.username,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue.shade300,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.zero,
+                            child: GestureDetector(
+                              onTap: () => _navigateToUserProfileScreen(
+                                  context, adderInfo.id),
+                              child: Text(
+                                adderInfo.username,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blue,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Row(
+                            children: [
+                              Text(
+                                '${adderInfo.addedPosts}',
+                                style: userInfoBoldTextStyle,
+                              ),
+                              const Text(
+                                ' posty',
+                                style: userInfoTextStyle,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       Text(
                         // '${_dateFormat.format(comment.addedAt)}',
-                        '${DateUtil.timeAgoString(topic.addedAt)}',
+                        '${DateUtil.timeAgoString(addedAt)}',
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2

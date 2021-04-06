@@ -1,5 +1,6 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/widgets/forum/post_item_user_info.dart';
+import 'package:BSApp/widgets/forum/topic_item_user_info.dart';
 import 'package:flutter/material.dart';
 
 class PostItem extends StatelessWidget {
@@ -18,7 +19,7 @@ class PostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PostItemUserInfo(post),
+          TopicItemUserInfo(post.adderInfo, post.addedAt),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
             child: Text(
