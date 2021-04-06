@@ -6,7 +6,7 @@ import 'category_model.dart';
 
 class AddDealModel {
 
-  final DealType dealType;
+  DealType _dealType;
   String _title;
   String _urlLocation;
   String _description;
@@ -24,9 +24,6 @@ class AddDealModel {
   double _currentPrice;
   double _shippingPrice;
 
-  AddDealModel(this.dealType);
-
-
   DateTime get validFrom => _validFrom;
 
   DateTime get validTo => _validTo;
@@ -40,6 +37,10 @@ class AddDealModel {
   LocationType get locationType => _locationType;
 
   String get voivodeship => _voivodeship;
+
+  set dealType(DealType value) {
+    _dealType = value;
+  }
 
   set title(String value) {
     _title = value;
@@ -108,7 +109,7 @@ class AddDealModel {
 
   Map<String, dynamic> toDto() {
     return {
-      'dealType': DealTypeHelper.asString(dealType),
+      'dealType': DealTypeHelper.asString(_dealType),
       'title': _title,
       'link': _urlLocation,
       'description': _description,

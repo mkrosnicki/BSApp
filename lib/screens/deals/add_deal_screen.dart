@@ -1,3 +1,5 @@
+import 'package:BSApp/models/add_deal_model.dart';
+import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_deal.dart';
 import 'package:BSApp/widgets/deals/occasion_form.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,15 @@ class AddDealScreen extends StatefulWidget {
 }
 
 class _AddDealScreenState extends State<AddDealScreen> {
+  var _newDeal = AddDealModel();
+
+  @override
+  void initState() {
+    super.initState();
+    _newDeal.locationType = LocationType.INTERNET;
+    _newDeal.validFrom = DateTime.now();
+    _newDeal.validTo = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
       child: Scaffold(
         appBar: AppBarAddDeal(),
         body: TabBarView(
-          children: [OccasionForm(), Text('COUPON - TO BE DONE!')],
+          children: [OccasionForm(_newDeal), Text('COUPON - TO BE DONE!')],
         ),
       ),
     );
