@@ -17,7 +17,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TopicItemUserInfo(topic),
+          TopicItemUserInfo(topic.adderInfo, topic.addedAt),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
             child: Text(
