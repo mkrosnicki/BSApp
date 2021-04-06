@@ -1,7 +1,9 @@
 import 'package:BSApp/providers/topics.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +22,7 @@ class _TopicScreenState extends State<TopicScreen> {
 
   @override
   void initState() {
-    isInReplyState = false;
+    isInReplyState = true;
   }
 
   @override
@@ -30,7 +32,7 @@ class _TopicScreenState extends State<TopicScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Forum',
+          'Wątek',
           style: MyStylingProvider.TEXT_BLACK,
         ),
         automaticallyImplyLeading: false,
@@ -38,6 +40,7 @@ class _TopicScreenState extends State<TopicScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: const AppBarBackButton(Colors.black),
+        bottom: const AppBarBottomBorder(),
         actions: [
           TextButton(
             onPressed: () {}, // todo dodaj do obserwowanych
@@ -77,22 +80,48 @@ class _TopicScreenState extends State<TopicScreen> {
                   if (isInReplyState)
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      // height: MediaQuery.of(context).size.height * 0.1,
+                      height: 50.0,
+                      padding: const EdgeInsets.only(left: 10.0),
                       color: Colors.white,
-                      child: Center(
-                        child: TextField(
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            labelText: 'Napisz komentarz',
-                            fillColor: Colors.white,
-                            filled: true,
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Flexible(
+                            child: TextField(
+                              style: TextStyle(fontSize: 14),
+                              autofocus: false,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Napisz...',
+                                filled: true,
+                                isDense: true,
+                                fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
+                                contentPadding: const EdgeInsets.only(
+                                    left: 12.0, bottom: 8.0, top: 8.0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(style: BorderStyle.none),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: MyColorsProvider.SUPER_LIGHT_GREY),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                // setState(() {
+                                //   _commentText = value;
+                                // });
+                              },
+                            ),
                           ),
-                          onChanged: (value) {
-                            // setState(() {
-                            //   _commentText = value;
-                            // });
-                          },
-                        ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Icon(CupertinoIcons.chevron_right),
+                          ),
+                        ],
                       ),
                     ),
                 ],
