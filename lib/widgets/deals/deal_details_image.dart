@@ -14,7 +14,7 @@ class DealDetailsImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double imageHeight = screenHeight * 0.4;
+    double imageHeight = screenHeight * 0.35;
     return Stack(
       children: [
         Container(

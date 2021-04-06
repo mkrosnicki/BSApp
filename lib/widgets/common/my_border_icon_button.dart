@@ -47,7 +47,7 @@ class MyBorderIconButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, color: textColor, letterSpacing: 0.1, fontWeight: isBold ? FontWeight.bold : FontWeight.w400),
+                      fontSize: fontSize, color: textColor, letterSpacing: 0.1, fontWeight: isBold ? FontWeight.w700 : FontWeight.w400),
                 ),
               ),
             if (iconData != null)

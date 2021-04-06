@@ -17,6 +17,10 @@ class CommentItemUserInfo extends StatelessWidget {
     );
     const userInfoBoldTextStyle = const TextStyle(
         fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
+    var textStyle = Theme.of(context)
+        .textTheme
+        .bodyText2
+        .copyWith(fontSize: 11, color: Colors.black38);
     return Flex(
       direction: Axis.horizontal,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,15 +43,16 @@ class CommentItemUserInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 6.0),
+                      // margin: EdgeInsets.only(bottom: 6.0),
                       child: GestureDetector(
                         onTap: () => _navigateToUserProfileScreen(
                             context, comment.adderInfo.id),
                         child: Text(
                           comment.adderInfo.username,
                           style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue,
                           ),
                         ),
                       ),
@@ -55,7 +60,10 @@ class CommentItemUserInfo extends StatelessWidget {
                     Text(
                       // '${_dateFormat.format(comment.addedAt)}',
                       '${DateUtil.timeAgoString(comment.addedAt)}',
-                      style: userInfoTextStyle,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 11, color: Colors.black38),
                     ),
                   ],
                 ),
@@ -63,23 +71,23 @@ class CommentItemUserInfo extends StatelessWidget {
                   children: [
                     Text(
                       '${comment.adderInfo.addedDeals}',
-                      style: userInfoBoldTextStyle,
+                      style: textStyle,
                     ),
-                    const Text(
+                    Text(
                       ' okazje',
-                      style: userInfoTextStyle,
+                      style: textStyle,
                     ),
-                    const Text(
+                    Text(
                       ' • ',
-                      style: userInfoTextStyle,
+                      style: textStyle,
                     ),
                     Text(
                       '${comment.adderInfo.addedComments}',
-                      style: userInfoBoldTextStyle,
+                      style: textStyle,
                     ),
-                    const Text(
+                    Text(
                       ' komentarz(e)',
-                      style: userInfoTextStyle,
+                      style: textStyle,
                     ),
                   ],
                 ),

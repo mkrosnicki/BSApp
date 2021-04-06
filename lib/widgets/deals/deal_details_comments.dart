@@ -18,7 +18,7 @@ class DealDetailsComments extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      padding: const EdgeInsets.only(top: 5.0,),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
         child: Column(
@@ -29,21 +29,21 @@ class DealDetailsComments extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Komentarze',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700),
                   ),
                   GestureDetector(
                     onTap: () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
-                    child: Text(
+                    child: const Text(
                       'Napisz komentarz',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.blue,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],

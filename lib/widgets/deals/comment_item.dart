@@ -29,7 +29,7 @@ class _CommentItemState extends State<CommentItem> {
         children: [
           _buildComment(context, widget.comment),
           Padding(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: EdgeInsets.only(left: 15.0),
             child: Column(
               children: widget.comment.subComments
                   .map((reply) => _buildComment(context, reply))
@@ -66,7 +66,7 @@ class _CommentItemState extends State<CommentItem> {
                         ),
                       Text(
                         comment.content,
-                        style: TextStyle(fontSize: 13),
+                        style: TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
@@ -113,7 +113,7 @@ class _CommentItemState extends State<CommentItem> {
                             function: () => _startCommentReply(comment.id),
                             color: Colors.blue,
                             isBold: true,
-                            fontSize: 13,
+                            fontSize: 12,
                             showBorder: false,
                             isActive: true),
                       ],

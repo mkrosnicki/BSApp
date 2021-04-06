@@ -44,12 +44,8 @@ class ForumScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         bottom: const AppBarBottomBorder(),
-        leading: AppBarButton(
-          icon: MyIconsProvider.BACK_BLACK_ICON,
-          onPress: () => {},
-        ),
         actions: [
-          const AppBarCloseButton(Colors.black),
+          // const AppBarCloseButton(Colors.black),
         ],
       ),
       body: SafeArea(
