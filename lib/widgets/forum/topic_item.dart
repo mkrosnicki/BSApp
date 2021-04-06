@@ -11,7 +11,6 @@ class TopicItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(topic);
     return GestureDetector(
       child: Container(
         alignment: Alignment.topLeft,
@@ -92,7 +91,7 @@ class TopicItem extends StatelessWidget {
   }
 
   _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic);
+    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic.id);
   }
 
   String shortenTo(String input, int length) {

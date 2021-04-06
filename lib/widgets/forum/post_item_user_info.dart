@@ -1,14 +1,15 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TopicItemUserInfo extends StatelessWidget {
-  final TopicModel topic;
+class PostItemUserInfo extends StatelessWidget {
+  final PostModel post;
 
-  const TopicItemUserInfo(this.topic);
+  const PostItemUserInfo(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +19,8 @@ class TopicItemUserInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
-          minRadius: 13,
-          maxRadius: 13,
+          minRadius: 10,
+          maxRadius: 10,
           backgroundImage: NetworkImage(
             'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
           ),
@@ -43,9 +44,9 @@ class TopicItemUserInfo extends StatelessWidget {
                       margin: EdgeInsets.zero,
                       child: GestureDetector(
                         onTap: () => _navigateToUserProfileScreen(
-                            context, topic.adderInfo.id),
+                            context, post.adderInfo.id),
                         child: Text(
-                          topic.adderInfo.username,
+                          post.adderInfo.username,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -54,14 +55,7 @@ class TopicItemUserInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      // '${_dateFormat.format(comment.addedAt)}',
-                      '${DateUtil.timeAgoString(topic.addedAt)}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          .copyWith(fontSize: 11, color: Colors.black38),
-                    ),
+                    const Icon(CupertinoIcons.chevron_down, size: 16, color: Colors.black54,),
                   ],
                 ),
               ],
