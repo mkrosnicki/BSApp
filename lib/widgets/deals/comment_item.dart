@@ -3,15 +3,11 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
-import 'package:BSApp/screens/users/user_profile_screen.dart';
-import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:BSApp/widgets/deals/comment_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CommentItem extends StatefulWidget {
@@ -25,14 +21,6 @@ class CommentItem extends StatefulWidget {
 }
 
 class _CommentItemState extends State<CommentItem> {
-  DateFormat _dateFormat;
-
-  @override
-  void initState() {
-    initializeDateFormatting();
-    _dateFormat = new DateFormat.yMMMMd('pl');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -107,14 +95,14 @@ class _CommentItemState extends State<CommentItem> {
                               fontSize: 13,
                             ),
                             MyBorderIconButton(
-                                iconData: CupertinoIcons.hand_thumbsup_fill,
-                                function: () => _voteForComment(widget.dealId,
-                                    comment.id, true, authData.isAuthenticated),
-                                trailing:
-                                    comment.numberOfPositiveVotes.toString(),
-                                color: MyColorsProvider.GREEN,
-                                isActive: commentsData.wasVotedPositivelyBy(
-                                    comment.id, authData.userId),
+                              iconData: CupertinoIcons.hand_thumbsup_fill,
+                              function: () => _voteForComment(widget.dealId,
+                                  comment.id, true, authData.isAuthenticated),
+                              trailing:
+                                  comment.numberOfPositiveVotes.toString(),
+                              color: MyColorsProvider.GREEN,
+                              isActive: commentsData.wasVotedPositivelyBy(
+                                  comment.id, authData.userId),
                               showBorder: false,
                               fontSize: 13,
                             ),

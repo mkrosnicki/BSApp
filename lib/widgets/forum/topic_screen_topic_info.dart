@@ -1,5 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/widgets/forum/topic_item_user_info.dart';
+import 'package:BSApp/widgets/forum/post_item_user_info.dart';
 import 'package:flutter/material.dart';
 
 class TopicScreenTopicInfo extends StatelessWidget {
@@ -17,7 +17,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TopicItemUserInfo(topic.adderInfo, topic.addedAt),
+          PostItemUserInfo(topic.adderInfo, topic.addedAt),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
             child: Text(

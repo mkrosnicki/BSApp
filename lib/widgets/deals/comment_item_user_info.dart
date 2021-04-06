@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class CommentItemUserInfo extends StatelessWidget {
@@ -21,14 +22,7 @@ class CommentItemUserInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 50,
-          height: 50,
-          child: Image.network(
-            'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
+        UserAvatar(username: comment.adderInfo.username, radius: 18,),
         Flexible(
           child: Container(
             padding: const EdgeInsets.all(4.0),

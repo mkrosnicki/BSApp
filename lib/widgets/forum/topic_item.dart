@@ -1,6 +1,7 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class TopicItem extends StatelessWidget {
@@ -27,13 +28,7 @@ class TopicItem extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
-                    child: CircleAvatar(
-                      minRadius: 18,
-                      maxRadius: 18,
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green,
-                      child: Text(topic.adderInfo.username.substring(0, 1)),
-                    ),
+                    child: UserAvatar(username: topic.adderInfo.username, radius: 18,),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
