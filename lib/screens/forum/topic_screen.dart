@@ -76,6 +76,7 @@ class _TopicScreenState extends State<TopicScreen> {
                       ),
                     ),
                   ),
+                  Container(color: Colors.green, height: 40),
                   Container(
                     width: double.infinity,
                     // height: MediaQuery.of(context).size.height * 0.1,
