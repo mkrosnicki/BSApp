@@ -7,6 +7,7 @@ class TopicModel {
   final AdderInfoModel adderInfo;
   final String title;
   final String content;
+  final bool pinned;
   final List<String> categories;
   final int numberOfPosts;
   final int numberOfPositiveVotes;
@@ -20,6 +21,7 @@ class TopicModel {
     @required this.adderInfo,
     @required this.title,
     @required this.content,
+    @required this.pinned,
     @required this.categories,
     @required this.numberOfPosts,
     @required this.numberOfPositiveVotes,
@@ -35,6 +37,7 @@ class TopicModel {
       adderInfo: AdderInfoModel.of(topicSnapshot['adderInfo']),
       title: topicSnapshot['title'],
       content: topicSnapshot['content'],
+      pinned: topicSnapshot['pinned'],
       categories: [
         ...(topicSnapshot['categories'] as List).map((e) => e['name']).toList()
       ],
@@ -46,9 +49,10 @@ class TopicModel {
     );
   }
 
+
   @override
   String toString() {
-    return 'TopicModel{id: $id, addedAt: $addedAt, adderInfoModel: $adderInfo, title: $title, content: $content, categories: $categories, numberOfPosts: $numberOfPosts, numberOfPositiveVotes: $numberOfPositiveVotes, numberOfNegativeVotes: $numberOfNegativeVotes, positiveVoters: $positiveVoters, negativeVoters: $negativeVoters}';
+    return 'TopicModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, title: $title, content: $content, isPinned: $pinned, categories: $categories, numberOfPosts: $numberOfPosts, numberOfPositiveVotes: $numberOfPositiveVotes, numberOfNegativeVotes: $numberOfNegativeVotes, positiveVoters: $positiveVoters, negativeVoters: $negativeVoters}';
   }
 
   @override

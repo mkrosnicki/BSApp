@@ -36,6 +36,7 @@ class Topics with ChangeNotifier {
     // print(responseBody);
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.of(element));
+      print(TopicModel.of(element));
     });
     allTopics = loadedTopics;
     notifyListeners();

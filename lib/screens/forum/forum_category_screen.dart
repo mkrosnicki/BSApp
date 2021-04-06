@@ -15,7 +15,7 @@ class ForumCategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Forum',
+          'Tematy',
           style: MyStylingProvider.TEXT_BLACK,
         ),
         automaticallyImplyLeading: false,
@@ -24,9 +24,6 @@ class ForumCategoryScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         bottom: const AppBarBottomBorder(),
         leading: const AppBarBackButton(Colors.black),
-        actions: [
-          const AppBarCloseButton(Colors.black),
-        ],
       ),
       body: SafeArea(
         child: FutureBuilder(
