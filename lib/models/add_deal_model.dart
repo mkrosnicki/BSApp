@@ -15,7 +15,9 @@ class AddDealModel {
   List<AgeType> _ageTypes = [];
   LocationType _locationType;
   String _voivodeship;
+  String _voivodeshipReadable;
   String _city;
+  String _cityReadable;
   DateTime _validFrom;
   DateTime _validTo;
   String _dealCode;
@@ -34,9 +36,13 @@ class AddDealModel {
 
   String get city => _city;
 
+  String get cityReadable => _cityReadable;
+
   LocationType get locationType => _locationType;
 
   String get voivodeship => _voivodeship;
+
+  String get voivodeshipReadable => _voivodeshipReadable;
 
   set dealType(DealType value) {
     _dealType = value;
@@ -70,6 +76,10 @@ class AddDealModel {
     _city = value;
   }
 
+  set cityReadable(String value) {
+    _cityReadable = value;
+  }
+
   set validFrom(DateTime value) {
     _validFrom = value;
   }
@@ -100,6 +110,10 @@ class AddDealModel {
 
   set voivodeship(String value) {
     _voivodeship = value;
+  }
+
+  set voivodeshipReadable(String value) {
+    _voivodeshipReadable = value;
   }
 
   void clearLocation() {
