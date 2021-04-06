@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'adder_info_model.dart';
 
 class PostModel {
-
   final String id;
   final DateTime addedAt;
   final AdderInfoModel adderInfo;
@@ -36,7 +35,6 @@ class PostModel {
       replyForUsername: topicSnapshot['replyForUsername'],
     );
   }
-
 
   @override
   String toString() {

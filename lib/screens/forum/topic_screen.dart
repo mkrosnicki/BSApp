@@ -4,6 +4,7 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
+import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class _TopicScreenState extends State<TopicScreen> {
                       child: Column(
                         children: [
                           TopicScreenTopicInfo(topic),
+                          TopicScreenPosts(topic),
                         ],
                       ),
                     ),

@@ -4,6 +4,7 @@ import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
@@ -64,6 +65,12 @@ class MyApp extends StatelessWidget {
           lazy: true,
           update: (context, auth, previousTopics) =>
           previousTopics..update(auth.token),
+        ),
+        ChangeNotifierProxyProvider<Auth, Posts>(
+          create: (context) => Posts.empty(),
+          lazy: true,
+          update: (context, auth, previousPosts) =>
+          previousPosts..update(auth.token),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),

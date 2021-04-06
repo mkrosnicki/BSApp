@@ -19,8 +19,8 @@ class PostItemUserInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
-          minRadius: 10,
-          maxRadius: 10,
+          minRadius: 12,
+          maxRadius: 12,
           backgroundImage: NetworkImage(
             'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
           ),
@@ -55,7 +55,14 @@ class PostItemUserInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Icon(CupertinoIcons.chevron_down, size: 16, color: Colors.black54,),
+                    Text(
+                      // '${_dateFormat.format(comment.addedAt)}',
+                      '${DateUtil.timeAgoString(post.addedAt)}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 11, color: Colors.black38),
+                    ),
                   ],
                 ),
               ],
