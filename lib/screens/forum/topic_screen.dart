@@ -2,8 +2,6 @@ import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
-import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
-import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,10 +37,15 @@ class _TopicScreenState extends State<TopicScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          const AppBarCloseButton(Colors.black),
+          TextButton(
+            onPressed: () {}, // todo dodaj do obserwowanych
+            child: Icon(
+              CupertinoIcons.heart,
+              color: Colors.black87,
+            ),
+          ),
         ],
       ),
       body: GestureDetector(

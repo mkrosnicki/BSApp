@@ -22,13 +22,13 @@ class TopicScreenTopicInfo extends StatelessWidget {
           TopicItemUserInfo(topic),
           Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
+            const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
             child: Text(
               topic.title,
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
           Text(
