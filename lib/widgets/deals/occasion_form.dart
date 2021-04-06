@@ -1,14 +1,12 @@
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/age_type.dart';
-import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
-import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
-import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
+import 'package:BSApp/widgets/deals/localisation_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,8 +25,7 @@ class _OccasionFormState extends State<OccasionForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
   var _locationDescriptionController = TextEditingController();
-  var _newDeal;
-  City _city;
+  AddDealModel _newDeal;
 
   @override
   void initState() {
@@ -36,8 +33,6 @@ class _OccasionFormState extends State<OccasionForm> {
     _newDeal = widget.newDeal;
     _newDeal.dealType = DealType.OCCASION;
   }
-
-  Voivodeship _voivodeship;
   bool showInternetOnly = true;
 
   Future<void> _submit() async {
@@ -175,12 +170,12 @@ class _OccasionFormState extends State<OccasionForm> {
                       title: const Text('Lokalizacja'),
                       subtitle: _newDeal.voivodeship != null
                           ? Text(
-                              locationString,
+                              locationString(_newDeal),
                               style: TextStyle(color: Colors.blue),
                             )
                           : const Text('Cała Polska'),
                       trailing: Icon(Icons.chevron_right),
-                      onTap: () => _openLocationSelector(context),
+                      onTap: () => _openLocationSelector(),
                       enabled: !showInternetOnly,
                     ),
                     SizedBox(
@@ -419,35 +414,9 @@ class _OccasionFormState extends State<OccasionForm> {
     return list;
   }
 
-  _openLocationSelector(BuildContext context) async {
-    var locations = await Navigator.of(context)
-        .pushNamed(LocationSelectionScreen.routeName);
-    if (locations != null) {
-      setState(() {
-        var voivodeship = ((locations as List)[0] as Voivodeship);
-        if (voivodeship != null) {
-          _newDeal.voivodeship = voivodeship.id;
-          _voivodeship = voivodeship;
-        } else {
-          _newDeal.voivodeship = null;
-          _voivodeship = null;
-        }
-        var city = ((locations as List)[1] as City);
-        if (city != null) {
-          _newDeal.city = city.id;
-          _city = city;
-        } else {
-          _newDeal.city = null;
-          _city = null;
-        }
-      });
-    }
-  }
-
-  String get locationString {
-    return _voivodeship != null
-        ? '${_voivodeship.name} / ${_city != null ? _city.name : 'Wszystkie miasta'}'
-        : null;
+  _openLocationSelector() async {
+    await openLocationSelector(context, _newDeal);
+    setState(() {});
   }
 
   bool _isUrl(String value) {
