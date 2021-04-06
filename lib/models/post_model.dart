@@ -9,11 +9,9 @@ class PostModel {
   final AdderInfoModel adderInfo;
   final String content;
   final String quote;
-  final int numberOfPosts;
-  final int numberOfPositiveVotes;
-  final int numberOfNegativeVotes;
-  final List<String> positiveVoters;
-  final List<String> negativeVoters;
+  final String replyForId;
+  final String replyForUserId;
+  final String replyForUsername;
 
   PostModel({
     @required this.id,
@@ -21,11 +19,9 @@ class PostModel {
     @required this.adderInfo,
     @required this.content,
     @required this.quote,
-    @required this.numberOfPosts,
-    @required this.numberOfPositiveVotes,
-    @required this.numberOfNegativeVotes,
-    @required this.positiveVoters,
-    @required this.negativeVoters,
+    @required this.replyForId,
+    @required this.replyForUserId,
+    @required this.replyForUsername,
   });
 
   static PostModel of(dynamic topicSnapshot) {
@@ -35,18 +31,16 @@ class PostModel {
       adderInfo: AdderInfoModel.of(topicSnapshot['adderInfo']),
       content: topicSnapshot['content'],
       quote: topicSnapshot['quote'],
-      numberOfPosts: topicSnapshot['numberOfPosts'],
-      numberOfPositiveVotes: topicSnapshot['numberOfPositiveVotes'],
-      numberOfNegativeVotes: topicSnapshot['numberOfNegativeVotes'],
-      positiveVoters: [...topicSnapshot['positiveVoters'] as List],
-      negativeVoters: [...topicSnapshot['negativeVoters'] as List],
+      replyForId: topicSnapshot['replyForId'],
+      replyForUserId: topicSnapshot['replyForUserId'],
+      replyForUsername: topicSnapshot['replyForUsername'],
     );
   }
 
 
   @override
   String toString() {
-    return 'PostModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, content: $content, quote: $quote, numberOfPosts: $numberOfPosts, numberOfPositiveVotes: $numberOfPositiveVotes, numberOfNegativeVotes: $numberOfNegativeVotes, positiveVoters: $positiveVoters, negativeVoters: $negativeVoters}';
+    return 'PostModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, content: $content, quote: $quote, replyForId: $replyForId, replyForUserId: $replyForUserId, replyForUsername: $replyForUsername}';
   }
 
   @override
