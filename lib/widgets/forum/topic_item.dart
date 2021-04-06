@@ -18,72 +18,101 @@ class TopicItem extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TopicItemUserInfo(topic),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
-              child: Text(
-                topic.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(fontSize: 14),
-              ),
-            ),
-            Text(
-              shortenTo(topic.content + topic.content + topic.content + topic.content + topic.content, 100),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(fontSize: 12, color: Colors.black54),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // TopicItemUserInfo(topic),
+              Row(
                 children: [
-                  Text(
-                    // '${_dateFormat.format(comment.addedAt)}',
-                    '${DateUtil.timeAgoString(topic.addedAt)}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 11, color: Colors.black38),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
+                    child: CircleAvatar(
+                      minRadius: 18,
+                      maxRadius: 18,
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.green,
+                      child: Text(topic.adderInfo.username.substring(0, 1)),
+                    ),
                   ),
-                  Text(
-                    ' • ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 11, color: Colors.black38),
-                  ),
-                  Text(
-                    '10 odpowiedzi',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 11, color: Colors.black38),
-                  ),
-                  Text(
-                    ' • ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 11, color: Colors.black38),
-                  ),
-                  Text(
-                    '10 odpowiedzi',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontSize: 11, color: Colors.black38),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          topic.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w400,),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                '${topic.adderInfo.username}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(fontSize: 12, color: Colors.blue, fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                ' • ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(fontSize: 12, color: Colors.black38),
+                              ),
+                              Text(
+                                // '${_dateFormat.format(comment.addedAt)}',
+                                '${DateUtil.timeAgoString(topic.addedAt)}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(fontSize: 12, color: Colors.black38),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 00.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '10 odpowiedzi',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 11, color: Colors.black38),
+                    ),
+                    Text(
+                      ' • ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 11, color: Colors.black38),
+                    ),
+                    Text(
+                      '10 odpowiedzi',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontSize: 11, color: Colors.black38),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       onTap: () => _navigateTo(context),
