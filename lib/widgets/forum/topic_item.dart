@@ -30,7 +30,7 @@ class TopicItem extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    .copyWith(fontSize: 15),
+                    .copyWith(fontSize: 14),
               ),
             ),
             Text(
