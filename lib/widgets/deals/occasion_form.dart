@@ -8,6 +8,7 @@ import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
+import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,19 +57,32 @@ class _OccasionFormState extends State<OccasionForm> {
       setState(() {
         _isLoading = false;
       });
-      await _showInformationDialog('Sukces!', 'Ogłoszenie zostało dodane');
+      await showInformationDialog(
+        context,
+        Text('Sukces!'),
+        Text('Ogłoszenie zostało dodane'),
+        Text('Ok'),
+      );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
       var errorMessage = 'Coś poszło nie tak. Spróbuj później!';
       if (error.toString().contains('Unauthorized')) {
         errorMessage = 'W celu dodania ogłoszenia zaloguj się!';
       }
-      await _showInformationDialog(
-          'Błąd podczas dodawania ogłoszenia', errorMessage);
+      await showInformationDialog(
+        context,
+        Text('Błąd podczas dodawania ogłoszenia'),
+        Text(errorMessage),
+        Text('Ok'),
+      );
     } catch (error) {
       const errorMessage = 'Coś poszło nie tak. Spróbuj później!';
-      await _showInformationDialog(
-          'Błąd podczas dodawania ogłoszenia', errorMessage);
+      await showInformationDialog(
+        context,
+        Text('Błąd podczas dodawania ogłoszenia'),
+        Text(errorMessage),
+        Text('Ok'),
+      );
     }
     setState(() {
       _isLoading = false;
@@ -438,23 +452,5 @@ class _OccasionFormState extends State<OccasionForm> {
 
   bool _isUrl(String value) {
     return Uri.parse(value).isAbsolute;
-  }
-
-  Future<void> _showInformationDialog(String title, String message) async {
-    await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Ok'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
   }
 }

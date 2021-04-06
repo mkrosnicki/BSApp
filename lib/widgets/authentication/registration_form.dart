@@ -2,6 +2,7 @@ import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,39 +69,25 @@ class _RegistrationFormState extends State<RegistrationForm> {
           .contains('must be a well-formed email address')) {
         errorMessage = 'Email został podany w złym formacie!';
       }
-      await _showInformationDialog('Błąd rejestracji', errorMessage);
+      await showInformationDialog(context, Text('Błąd rejestracji'), Text(errorMessage), Text('Ok'));
     } catch (error) {
       const errorMessage =
           'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
-      await _showInformationDialog('Błąd rejestracji', errorMessage);
+      await showInformationDialog(context, Text('Błąd rejestracji'), Text(errorMessage), Text('Ok'));
     }
 
     setState(() {
       _isLoading = false;
     });
     if (signUpSuccessful) {
-      await _showInformationDialog('Konto zostało utworzone.',
-          'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.');
+      await showInformationDialog(
+          context,
+          Text('Konto zostało utworzone.'),
+          Text(
+              'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.'),
+          Text('Ok'));
       Navigator.of(context).pop();
     }
-  }
-
-  Future<void> _showInformationDialog(String title, String message) async {
-    await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Ok'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
   }
 
   @override
