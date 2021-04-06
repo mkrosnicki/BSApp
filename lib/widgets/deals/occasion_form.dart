@@ -8,11 +8,16 @@ import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
-import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'deal_date.dart';
+
 class OccasionForm extends StatefulWidget {
+  final AddDealModel newDeal;
+
+  const OccasionForm(this.newDeal);
+
   @override
   _OccasionFormState createState() => _OccasionFormState();
 }
@@ -21,8 +26,16 @@ class _OccasionFormState extends State<OccasionForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
   var _locationDescriptionController = TextEditingController();
-  var _newDeal = AddDealModel(DealType.OCCASION);
+  var _newDeal;
   City _city;
+
+  @override
+  void initState() {
+    super.initState();
+    _newDeal = widget.newDeal;
+    _newDeal.dealType = DealType.OCCASION;
+  }
+
   Voivodeship _voivodeship;
   bool showInternetOnly = true;
 
@@ -60,14 +73,6 @@ class _OccasionFormState extends State<OccasionForm> {
     setState(() {
       _isLoading = false;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _newDeal.locationType = LocationType.INTERNET;
-    _newDeal.validFrom = DateTime.now();
-    _newDeal.validTo = DateTime.now();
   }
 
   @override
@@ -217,7 +222,7 @@ class _OccasionFormState extends State<OccasionForm> {
                         ),
                         ElevatedButton(
                           onPressed: () =>
-                              _selectDate(context, DateType.VALID_FROM),
+                              _selectDate(DealDateType.VALID_FROM),
                           // Refer step 3
                           child: Text(
                             'Wybierz date',
@@ -243,7 +248,7 @@ class _OccasionFormState extends State<OccasionForm> {
                         ),
                         ElevatedButton(
                           onPressed: () =>
-                              _selectDate(context, DateType.VALID_TO),
+                              _selectDate(DealDateType.VALID_TO),
                           // Refer step 3
                           child: Text(
                             'Wybierz date',
@@ -325,6 +330,11 @@ class _OccasionFormState extends State<OccasionForm> {
           );
   }
 
+  void _selectDate(DealDateType dateType) async {
+    await DealDateSelector.selectDateFor(_newDeal, context, dateType);
+    setState(() {});
+  }
+
   String get categoriesString {
     return _newDeal.categories.map((e) => e.name).join(" / ");
   }
@@ -341,25 +351,6 @@ class _OccasionFormState extends State<OccasionForm> {
     if (selectedCategories != null) {
       setState(() {
         _newDeal.categories = selectedCategories;
-      });
-    }
-  }
-
-  _selectDate(BuildContext context, DateType dateType) async {
-    var now = DateTime.now();
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null) {
-      setState(() {
-        if (dateType == DateType.VALID_TO) {
-          _newDeal.validTo = picked;
-        } else if (dateType == DateType.VALID_FROM) {
-          _newDeal.validFrom = picked;
-        }
       });
     }
   }
@@ -467,5 +458,3 @@ class _OccasionFormState extends State<OccasionForm> {
     );
   }
 }
-
-enum DateType { VALID_FROM, VALID_TO }
