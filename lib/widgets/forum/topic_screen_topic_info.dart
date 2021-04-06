@@ -15,7 +15,6 @@ class TopicScreenTopicInfo extends StatelessWidget {
       alignment: Alignment.topLeft,
       color: Colors.white,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +28,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
-                  .copyWith(fontSize: 15),
+                  .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
             ),
           ),
           Text(
@@ -37,7 +36,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyText2
-                .copyWith(fontSize: 12, color: Colors.black54),
+                .copyWith(fontSize: 12, color: Colors.black87),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),

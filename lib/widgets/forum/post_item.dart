@@ -19,12 +19,15 @@ class PostItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PostItemUserInfo(post),
-          Text(
-            post.content,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 12, color: Colors.black54),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+            child: Text(
+              post.content + post.content + post.content + post.content + post.content + post.content + post.content + post.content + post.content,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontSize: 12, color: Colors.black87),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
