@@ -12,7 +12,7 @@ class PostModel {
   final String replyForUserId;
   final String replyForUsername;
 
-  PostModel({
+  const PostModel({
     @required this.id,
     @required this.addedAt,
     @required this.adderInfo,
