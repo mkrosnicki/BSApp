@@ -61,7 +61,6 @@ class TopicItem extends StatelessWidget {
                                     .copyWith(fontSize: 12, color: Colors.black38),
                               ),
                               Text(
-                                // '${_dateFormat.format(comment.addedAt)}',
                                 '${DateUtil.timeAgoString(topic.addedAt)}',
                                 style: Theme.of(context)
                                     .textTheme
