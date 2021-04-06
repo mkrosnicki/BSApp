@@ -1,6 +1,7 @@
 import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,13 +26,7 @@ class PostItemUserInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(
-            minRadius: 15,
-            maxRadius: 15,
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.green,
-            child: Text(adderInfo.username.substring(0, 1)),
-          ),
+          UserAvatar(username: adderInfo.username, radius: 15,),
           Flexible(
             child: Container(
               padding: const EdgeInsets.all(4.0),
