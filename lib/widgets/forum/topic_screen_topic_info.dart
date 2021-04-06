@@ -1,6 +1,4 @@
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/screens/forum/topic_screen.dart';
-import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/forum/topic_item_user_info.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +19,11 @@ class TopicScreenTopicInfo extends StatelessWidget {
         children: [
           TopicItemUserInfo(topic),
           Padding(
-            padding:
-            const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+            padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
             child: Text(
               topic.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              style:
+                  Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 15),
             ),
           ),
           Text(
@@ -57,5 +52,4 @@ class TopicScreenTopicInfo extends StatelessWidget {
       ),
     );
   }
-
 }

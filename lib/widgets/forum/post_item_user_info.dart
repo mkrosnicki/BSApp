@@ -19,11 +19,11 @@ class PostItemUserInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CircleAvatar(
-          minRadius: 12,
-          maxRadius: 12,
-          backgroundImage: NetworkImage(
-            'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-          ),
+          minRadius: 15,
+          maxRadius: 15,
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.green,
+          child: Text(post.adderInfo.username.substring(0, 1)),
         ),
         Flexible(
           child: Container(

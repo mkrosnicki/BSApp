@@ -20,11 +20,11 @@ class TopicItemUserInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            minRadius: 13,
-            maxRadius: 13,
-            backgroundImage: NetworkImage(
-              'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
-            ),
+            minRadius: 15,
+            maxRadius: 15,
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.green,
+            child: Text(topic.adderInfo.username.substring(0, 1)),
           ),
           Flexible(
             child: Container(
