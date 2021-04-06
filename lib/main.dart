@@ -4,6 +4,7 @@ import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/providers/post_reply_state.dart';
 import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/providers/topic_categories.dart';
@@ -83,6 +84,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => DealReplyState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PostReplyState(),
         ),
         ChangeNotifierProvider(
           create: (_) => Users(),

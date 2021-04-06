@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/post_reply_state.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -28,6 +29,7 @@ class _TopicScreenState extends State<TopicScreen> {
   Widget build(BuildContext context) {
     final topicId = ModalRoute.of(context).settings.arguments as String;
     final topic = Provider.of<Topics>(context, listen: false).findById(topicId);
+    Provider.of<PostReplyState>(context, listen: false).reset();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -42,7 +44,9 @@ class _TopicScreenState extends State<TopicScreen> {
         bottom: const AppBarBottomBorder(),
         actions: [
           TextButton(
-            onPressed: () {}, // todo dodaj do obserwowanych
+            onPressed: () {
+
+            }, // todo dodaj do obserwowanych
             child: Icon(
               CupertinoIcons.heart,
               color: Colors.black87,

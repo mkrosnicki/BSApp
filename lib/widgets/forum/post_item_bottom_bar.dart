@@ -1,5 +1,7 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/post_reply_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostItemBottomBar extends StatelessWidget {
   final PostModel post;
@@ -13,12 +15,17 @@ class PostItemBottomBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            'ODPOWIEDZ',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 11, color: Colors.black38),
+          TextButton(
+            child: Text(
+              'ODPOWIEDZ',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontSize: 11, color: Colors.black38),
+            ),
+            onPressed: () {
+              Provider.of<PostReplyState>(context, listen: false).startPostReply(post.id);
+            },
           ),
         ],
       ),
