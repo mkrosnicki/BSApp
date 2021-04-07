@@ -5,12 +5,12 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
-import 'package:BSApp/widgets/deals/age_type_chips.dart';
-import 'package:BSApp/widgets/deals/localisation_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'age_type_chips.dart';
 import 'deal_date.dart';
+import 'localisation_selector.dart';
 
 class OccasionForm extends StatefulWidget {
   final AddDealModel newDeal;
@@ -109,7 +109,7 @@ class _OccasionFormState extends State<OccasionForm> {
                         if (value.isEmpty) {
                           return 'Wprowadź tytuł';
                         } else if (value.length < 5) {
-                          return 'Tytuł musi mieć conajmniej 5 znaków';
+                          return 'Tytuł musi mieć co najmniej 5 znaków';
                         } else {
                           return null;
                         }
