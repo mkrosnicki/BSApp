@@ -1,6 +1,7 @@
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
+import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
@@ -12,16 +13,16 @@ import 'package:provider/provider.dart';
 
 import 'deal_date.dart';
 
-class OccasionForm extends StatefulWidget {
+class CouponForm extends StatefulWidget {
   final AddDealModel newDeal;
 
-  const OccasionForm(this.newDeal);
+  const CouponForm(this.newDeal);
 
   @override
-  _OccasionFormState createState() => _OccasionFormState();
+  _CouponFormState createState() => _CouponFormState();
 }
 
-class _OccasionFormState extends State<OccasionForm> {
+class _CouponFormState extends State<CouponForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
   AddDealModel _newDeal;
@@ -31,6 +32,7 @@ class _OccasionFormState extends State<OccasionForm> {
     super.initState();
     _newDeal = widget.newDeal;
     _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
+    _newDeal.discountType = DiscountType.PERCENTAGE;
   }
 
   bool _showInternetOnly;
@@ -39,11 +41,12 @@ class _OccasionFormState extends State<OccasionForm> {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    _newDeal.dealType = DealType.OCCASION;
+    _newDeal.dealType = DealType.COUPON;
     _formKey.currentState.save();
     setState(() {
       _isLoading = true;
     });
+    print(_newDeal.toString());
     try {
       setState(() {
         _isLoading = true;
@@ -56,18 +59,18 @@ class _OccasionFormState extends State<OccasionForm> {
       await showInformationDialog(
         context,
         Text('Sukces!'),
-        Text('Ogłoszenie zostało dodane'),
+        Text('Kupon zostało dodany'),
         Text('Ok'),
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
       var errorMessage = 'Coś poszło nie tak. Spróbuj później!';
       if (error.toString().contains('Unauthorized')) {
-        errorMessage = 'W celu dodania ogłoszenia zaloguj się!';
+        errorMessage = 'W celu dodania kuponu zaloguj się!';
       }
       await showInformationDialog(
         context,
-        Text('Błąd podczas dodawania ogłoszenia'),
+        Text('Błąd podczas dodawania kuponu'),
         Text(errorMessage),
         Text('Ok'),
       );
@@ -102,7 +105,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Tytuł ogłoszenia'),
+                    Text('Tytuł kuponu'),
                     TextFormField(
                       initialValue: _newDeal.title,
                       validator: (value) {
@@ -140,10 +143,28 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text('Kod kuponu'),
+                    TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Wprowadź kod kuponu';
+                        } else if (value.length < 3) {
+                          return 'Kod powinien mieć conajmniej 3 znaki.';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (value) {
+                        _newDeal.dealCode = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Okazja internetowa'),
+                        Text('Kupon internetowy'),
                         Switch.adaptive(
                             value:
                                 _newDeal.locationType == LocationType.INTERNET,
@@ -155,12 +176,12 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Link do okazji'),
+                    Text('Link do kuponu'),
                     TextFormField(
                       initialValue: _newDeal.urlLocation,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Wprowadź link do okazji';
+                          return 'Wprowadź link do kuponu';
                         } else if (!_isUrl(value)) {
                           return 'Podany ciąg znaków nie jest adresem URL';
                         } else {
@@ -222,7 +243,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Okazja zaczyna się:'),
+                    Text('Kupon ważny od:'),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -247,7 +268,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Okazja kończy się:'),
+                    Text('Kupon ważny do:'),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -272,64 +293,47 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Regularna cena'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.regularPrice = double.parse(value);
-                      },
+                    Text('Wartość kuponu'),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Wprowadź wartość";
+                              } else if (double.parse(value) < 0) {
+                                return "Wartość nie może być ujemna";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                            onSaved: (value) {
+                              _newDeal.discountValue = double.parse(value);
+                            },
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_newDeal.discountType == DiscountType.ABSOLUTE) {
+                                _newDeal.discountType = DiscountType.PERCENTAGE;
+                              } else {
+                                _newDeal.discountType = DiscountType.ABSOLUTE;
+                              }
+                            });
+                          },
+                          child: _newDeal.discountType == DiscountType.ABSOLUTE ? Text('zł') : Text('%'),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 10,
-                    ),
-                    Text('Aktualna cena'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.currentPrice = double.parse(value);
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Koszt dostawy'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.shippingPrice = double.parse(value);
-                      },
                     ),
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(
-                        child: Text('Dodaj ogłoszenie'),
+                        child: Text('Dodaj kupon'),
                         onPressed: _submit,
                       ),
                     ),
