@@ -11,11 +11,11 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsNewComment extends StatefulWidget {
+
   final String dealId;
+  final PublishSubject<CommentModel> commentToReplySubject;
 
   DealDetailsNewComment(this.dealId, this.commentToReplySubject);
-
-  final PublishSubject<CommentModel> commentToReplySubject;
 
   Stream<CommentModel> get _commentToReplyStream => commentToReplySubject.stream;
 
@@ -24,7 +24,6 @@ class DealDetailsNewComment extends StatefulWidget {
 }
 
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
-  var _commentText = '';
 
   TextEditingController textEditingController = TextEditingController();
   FocusNode textFocusNode = FocusNode();
@@ -81,15 +80,9 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                 child: TextField(
                   controller: textEditingController,
                   focusNode: textFocusNode,
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                   autofocus: false,
                   decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
-                  // onChanged: (value) {
-                  //   textEditingController.text = value;
-                  //   // setState(() {
-                  //   //   _commentText = value;
-                  //   // });
-                  // },
                 ),
               ),
               Consumer<Auth>(
@@ -119,8 +112,6 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   }
 
   _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
-    print('reply comment!!!');
-    print(commentToReply);
     if (textEditingController.text.trim().isEmpty) {
       return null;
     }
