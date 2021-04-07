@@ -111,17 +111,17 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   Text(
                     'Znalezione okazje',
                     style:
-                    TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
-                  TextButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
-                    ),
-                    onPressed: () => _showFilterSelectionDialog(context),
-                    child: Text(
-                      'Edytuj filtry',
-                      style: TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.bold),
+                  InkWell(
+                    onTap: () => _showFilterSelectionDialog(context),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'Edytuj filtry',
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold, color: Colors.blue),
+                      ),
                     ),
                   ),
                 ],
@@ -198,7 +198,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         elevation: 0,
         labelPadding: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-
         onDeleted: () => _clearFilterSettings(clearCategories: true),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape:
