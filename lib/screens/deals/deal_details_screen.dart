@@ -70,7 +70,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
   Widget build(BuildContext context) {
     final dealId = ModalRoute.of(context).settings.arguments as String;
     final deal = Provider.of<Deals>(context, listen: false).findById(dealId);
-    Provider.of<DealReplyState>(context, listen: false).resetLazy();
     return Scaffold(
       // appBar: AppBar(),
       body: NotificationListener<ScrollNotification>(

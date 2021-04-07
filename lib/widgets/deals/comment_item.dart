@@ -151,7 +151,5 @@ class _CommentItemState extends State<CommentItem> {
 
   _startCommentReply(CommentModel comment) {
     widget.commentToReplySubject.add(comment);
-    // Provider.of<DealReplyState>(context, listen: false)
-    //     .startCommentReply(comment);
   }
 }

@@ -130,12 +130,10 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(
         widget.dealId, commentToReply.id, _commentText);
-    Provider.of<DealReplyState>(context, listen: false).reset();
   }
 
   _addCommentToDeal() async {
     await Provider.of<Comments>(context, listen: false)
         .addCommentToDeal(widget.dealId, _commentText);
-    Provider.of<DealReplyState>(context, listen: false).reset();
   }
 }

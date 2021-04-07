@@ -40,9 +40,7 @@ class DealDetailsComments extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      commentToReplySubject.add(CommentModel()); // todo
-                      Provider.of<DealReplyState>(context, listen: false)
-                          .startDealReply();
+                      // todo
                     },
                     child: const Text(
                       'Napisz komentarz',
