@@ -74,7 +74,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            titleSpacing: 8,
+            titleSpacing: 6,
             title: _createSearchBox(context),
             leadingWidth: 40.0,
             automaticallyImplyLeading: false,
@@ -100,32 +100,31 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   ),
                 ),
               ),
-            Padding(
+            Container(
+              // color: Colors.white,
               padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-              child: Container(
-                color: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-                child: Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Znalezione okazje',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Znalezione okazje',
+                    style:
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
                     ),
-                    TextButton(
-                      onPressed: () => _showFilterSelectionDialog(context),
-                      child: Text(
-                        'Edytuj filtry',
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold),
-                      ),
+                    onPressed: () => _showFilterSelectionDialog(context),
+                    child: Text(
+                      'Edytuj filtry',
+                      style: TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.bold),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             FutureBuilder(
