@@ -1,6 +1,7 @@
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
+import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
@@ -31,6 +32,7 @@ class _CouponFormState extends State<CouponForm> {
     super.initState();
     _newDeal = widget.newDeal;
     _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
+    _newDeal.discountType = DiscountType.PERCENTAGE;
   }
 
   bool _showInternetOnly;
@@ -57,7 +59,7 @@ class _CouponFormState extends State<CouponForm> {
       await showInformationDialog(
         context,
         Text('Sukces!'),
-        Text('Kupon zostało dodane'),
+        Text('Kupon zostało dodany'),
         Text('Ok'),
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
@@ -136,6 +138,24 @@ class _CouponFormState extends State<CouponForm> {
                       },
                       onChanged: (value) {
                         _newDeal.description = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Kod kuponu'),
+                    TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Wprowadź kod kuponu';
+                        } else if (value.length < 3) {
+                          return 'Kod powinien mieć conajmniej 3 znaki.';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (value) {
+                        _newDeal.dealCode = value;
                       },
                     ),
                     SizedBox(
@@ -273,10 +293,47 @@ class _CouponFormState extends State<CouponForm> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text('Wartość kuponu'),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Wprowadź wartość";
+                              } else if (double.parse(value) < 0) {
+                                return "Wartość nie może być ujemna";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                            onSaved: (value) {
+                              _newDeal.discountValue = double.parse(value);
+                            },
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_newDeal.discountType == DiscountType.ABSOLUTE) {
+                                _newDeal.discountType = DiscountType.PERCENTAGE;
+                              } else {
+                                _newDeal.discountType = DiscountType.ABSOLUTE;
+                              }
+                            });
+                          },
+                          child: _newDeal.discountType == DiscountType.ABSOLUTE ? Text('zł') : Text('%'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
                       width: double.infinity,
                       child: ElevatedButton(
-                        child: Text('Dodaj ogłoszenie'),
+                        child: Text('Dodaj kupon'),
                         onPressed: _submit,
                       ),
                     ),

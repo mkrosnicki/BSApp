@@ -1,5 +1,6 @@
 import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/deal_type.dart';
+import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 
 import 'category_model.dart';
@@ -21,6 +22,7 @@ class AddDealModel {
   DateTime _validFrom = DateTime.now();
   DateTime _validTo = DateTime.now();
   String _dealCode;
+  DiscountType _discountType;
   double _discountValue;
   double _regularPrice;
   double _currentPrice;
@@ -51,6 +53,12 @@ class AddDealModel {
   String get voivodeship => _voivodeship;
 
   String get voivodeshipReadable => _voivodeshipReadable;
+
+  DiscountType get discountType => _discountType;
+
+  set discountType(DiscountType value) {
+    _discountType = value;
+  }
 
   set dealType(DealType value) {
     _dealType = value;
@@ -165,6 +173,8 @@ class AddDealModel {
       'startDate': _validFrom.toIso8601String(),
       'endDate': _validTo.toIso8601String(),
       'code': _dealCode,
+      'discountType': DiscountTypeHelper.asString(_discountType),
+      'discountValue': _discountValue,
       'currentPrice': _currentPrice,
       'regularPrice': _regularPrice,
       'shippingPrice': _shippingPrice,
