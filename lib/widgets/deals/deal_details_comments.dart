@@ -1,31 +1,33 @@
+import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'comment_item.dart';
 
 class DealDetailsComments extends StatelessWidget {
   final DealModel deal;
+  final PublishSubject<CommentModel> commentToReplySubject;
 
-  DealDetailsComments(
-    this.deal,
-  );
+  DealDetailsComments(this.deal, this.commentToReplySubject);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       width: double.infinity,
-      padding: const EdgeInsets.only(top: 5.0,),
+      padding: const EdgeInsets.only(
+        top: 5.0,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 5.0, bottom: 15.0),
+              padding: const EdgeInsets.only(top: 5.0, bottom: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -37,7 +39,11 @@ class DealDetailsComments extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                   GestureDetector(
-                    onTap: () => Provider.of<DealReplyState>(context, listen: false).startDealReply(),
+                    onTap: () {
+                      commentToReplySubject.add(CommentModel()); // todo
+                      Provider.of<DealReplyState>(context, listen: false)
+                          .startDealReply();
+                    },
                     child: const Text(
                       'Napisz komentarz',
                       style: const TextStyle(
@@ -64,7 +70,7 @@ class DealDetailsComments extends StatelessWidget {
                     return Consumer<Comments>(
                       builder: (context, commentsData, child) => Column(
                         children: commentsData.mainDealComments
-                            .map((comment) => CommentItem(deal.id, comment))
+                            .map((comment) => CommentItem(deal.id, comment, commentToReplySubject))
                             .toList(),
                       ),
                     );

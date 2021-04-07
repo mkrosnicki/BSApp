@@ -33,6 +33,24 @@ class MyStylingProvider {
     );
   }
 
+  static const InputDecoration REPLY_TEXT_FIELD_DECORATION = InputDecoration(
+    border: InputBorder.none,
+    filled: true,
+    isDense: true,
+    fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
+    contentPadding: const EdgeInsets.only(
+        left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(style: BorderStyle.none),
+      borderRadius: BorderRadius.all(const Radius.circular(10.0)),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(
+          color: MyColorsProvider.SUPER_LIGHT_GREY),
+      borderRadius: BorderRadius.all(const Radius.circular(10.0)),
+    ),
+  );
+
   static const Border GREY_BORDER = Border(bottom: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5));
   static const Border TOP_GREY_BORDER = const Border(top: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.2));
 

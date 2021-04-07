@@ -9,12 +9,14 @@ import 'package:BSApp/widgets/deals/comment_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CommentItem extends StatefulWidget {
   final CommentModel comment;
   final String dealId;
+  final PublishSubject<CommentModel> commentToReplySubject;
 
-  CommentItem(this.dealId, this.comment);
+  CommentItem(this.dealId, this.comment, this.commentToReplySubject);
 
   @override
   _CommentItemState createState() => _CommentItemState();
@@ -110,7 +112,7 @@ class _CommentItemState extends State<CommentItem> {
                         ),
                         MyBorderIconButton(
                             label: 'Odpowiedz',
-                            function: () => _startCommentReply(comment.id),
+                            function: () => _startCommentReply(comment),
                             color: Colors.blue,
                             isBold: true,
                             fontSize: 12,
@@ -147,8 +149,9 @@ class _CommentItemState extends State<CommentItem> {
     return comment.parentId == comment.replyForId;
   }
 
-  _startCommentReply(String commentId) {
-    Provider.of<DealReplyState>(context, listen: false)
-        .startCommentReply(commentId);
+  _startCommentReply(CommentModel comment) {
+    widget.commentToReplySubject.add(comment);
+    // Provider.of<DealReplyState>(context, listen: false)
+    //     .startCommentReply(comment);
   }
 }

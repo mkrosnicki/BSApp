@@ -1,3 +1,4 @@
+import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -10,6 +11,7 @@ import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class DealDetailsScreen extends StatefulWidget {
   static const routeName = '/deal-details';
@@ -18,39 +20,47 @@ class DealDetailsScreen extends StatefulWidget {
   _DealDetailsScreenState createState() => _DealDetailsScreenState();
 }
 
-class _DealDetailsScreenState extends State<DealDetailsScreen>
-    with TickerProviderStateMixin {
-  AnimationController _ColorAnimationController;
-  AnimationController _TextAnimationController;
+class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProviderStateMixin {
+
+  AnimationController _colorAnimationController;
+  AnimationController _textAnimationController;
   Animation _colorTween, _iconColorTween, _borderColorTween;
   Animation<Offset> _transTween;
 
+  final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
+
+  @override
+  void dispose() {
+    _commentToReplySubject.close();
+    super.dispose();
+  }
+
   @override
   void initState() {
-    _ColorAnimationController =
+    _colorAnimationController =
         AnimationController(vsync: this, duration: Duration(seconds: 0));
     _colorTween = ColorTween(begin: Colors.transparent, end: Colors.white)
-        .animate(_ColorAnimationController);
+        .animate(_colorAnimationController);
     _iconColorTween = ColorTween(begin: Colors.white, end: Colors.black)
-        .animate(_ColorAnimationController);
+        .animate(_colorAnimationController);
     _borderColorTween = ColorTween(
             begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
-        .animate(_ColorAnimationController);
+        .animate(_colorAnimationController);
 
-    _TextAnimationController =
+    _textAnimationController =
         AnimationController(vsync: this, duration: Duration(seconds: 0));
 
     _transTween = Tween(begin: Offset(-10, 40), end: Offset(-10, 0))
-        .animate(_TextAnimationController);
+        .animate(_textAnimationController);
 
     super.initState();
   }
 
   bool _scrollListener(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.axis == Axis.vertical) {
-      _ColorAnimationController.animateTo(scrollInfo.metrics.pixels / 175);
+      _colorAnimationController.animateTo(scrollInfo.metrics.pixels / 175);
 
-      _TextAnimationController.animateTo(
+      _textAnimationController.animateTo(
           (scrollInfo.metrics.pixels - 175) / 50);
       return true;
     }
@@ -83,27 +93,18 @@ class _DealDetailsScreenState extends State<DealDetailsScreen>
                           DealDetailsImage(dealId),
                           DealDetailsDescription(deal),
                           DealDetailsActions(deal),
-                          DealDetailsComments(deal),
+                          DealDetailsComments(deal, _commentToReplySubject),
                         ],
                       ),
                     ),
                   ),
-                  Consumer<DealReplyState>(
-                    builder: (context, replyState, child) {
-                      ReplyState currentReplyState = replyState.replyState;
-                      String commentId = replyState.commentId;
-                      return currentReplyState != ReplyState.NONE
-                          ? DealDetailsNewComment(
-                              dealId, currentReplyState, commentId)
-                          : Container();
-                    },
-                  ),
+                  DealDetailsNewComment(dealId, _commentToReplySubject),
                 ],
               ),
               Container(
                 height: 80,
                 child: AnimatedBuilder(
-                  animation: _ColorAnimationController,
+                  animation: _colorAnimationController,
                   builder: (context, child) => AppBar(
                     leading: const AppBarBackButton(Colors.white),
                     automaticallyImplyLeading: false,

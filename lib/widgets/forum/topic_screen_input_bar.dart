@@ -64,24 +64,7 @@ class TopicScreenInputBar extends StatelessWidget {
                 child: TextField(
                   style: TextStyle(fontSize: 14),
                   autofocus: false,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Napisz...',
-                    filled: true,
-                    isDense: true,
-                    fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
-                    contentPadding: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(style: BorderStyle.none),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: MyColorsProvider.SUPER_LIGHT_GREY),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
+                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
                   onChanged: (value) {
                     // setState(() {
                     //   _commentText = value;
