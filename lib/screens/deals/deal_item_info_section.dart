@@ -63,7 +63,6 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                 widget.deal.title,
                                 style: TextStyle(
                                   fontSize: 13,
-                                  fontWeight: FontWeight.w500,
                                 ),
                                 // overflow: TextOverflow.ellipsis,
                                 overflow: TextOverflow.clip,

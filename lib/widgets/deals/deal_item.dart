@@ -34,7 +34,7 @@ class _DealItemState extends State<DealItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 40,
+                    flex: 35,
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: DealItemImageSection(widget.deal.id),
@@ -42,7 +42,7 @@ class _DealItemState extends State<DealItem> {
                   ),
                   Consumer<Auth>(
                     builder: (context, authData, child) => Flexible(
-                      flex: 60,
+                      flex: 65,
                       child: DealItemInfoSection(widget.deal),
                     ),
                   ),
