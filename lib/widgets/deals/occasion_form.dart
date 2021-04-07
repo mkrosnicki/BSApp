@@ -6,6 +6,7 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
+import 'package:BSApp/widgets/deals/age_type_chips.dart';
 import 'package:BSApp/widgets/deals/localisation_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -219,10 +220,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     ),
                     Container(
                       width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceEvenly,
-                        children: _buildAgeTypeChips(),
-                      ),
+                      child: AgeTypeChips(_newDeal),
                     ),
                     SizedBox(
                       height: 10,
@@ -368,29 +366,6 @@ class _OccasionFormState extends State<OccasionForm> {
         _newDeal.categories = selectedCategories;
       });
     }
-  }
-
-  _buildAgeTypeChips() {
-    List<Widget> list = [];
-    AgeType.values.forEach(
-      (e) => list.add(Container(
-        margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: ChoiceChip(
-          label: Text(AgeTypeHelper.getReadable(e)),
-          selected: _newDeal.ageTypes.contains(e),
-          onSelected: (isSelected) {
-            setState(() {
-              if (isSelected) {
-                _newDeal.ageTypes.add(e);
-              } else {
-                _newDeal.ageTypes.remove(e);
-              }
-            });
-          },
-        ),
-      )),
-    );
-    return list;
   }
 
   void _changeLocation(bool value) {
