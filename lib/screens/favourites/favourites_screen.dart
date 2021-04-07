@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/error_info.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:BSApp/widgets/searches/observed_search_item.dart';
@@ -36,20 +37,32 @@ class _FavouritesScreenState extends State<FavouritesScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.square(0.0),
+        child: AppBar(
+          backgroundColor: Colors.blue.shade300,
+        ),
+      ),
       body: NestedScrollView(
         controller: _scrollViewController,
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Obserwowane'),
+              title: Text('Obserwowane', style: TextStyle(color: Colors.black, fontSize: 18),),
               pinned: true,
               floating: true,
+              centerTitle: true,
+              expandedHeight: 80.0,
+              // collapsedHeight: 15.0,
+              backgroundColor: Colors.white,
               forceElevated: innerBoxIsScrolled,
               bottom: TabBar(
                 controller: _tabController,
                 labelPadding: const EdgeInsets.all(10.0),
-                indicatorColor: Colors.white,
-                labelColor: Colors.white,
+                indicatorColor: MyColorsProvider.BLUE,
+                labelColor: Colors.black,
+                labelStyle: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+                unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 12),
                 tabs: [
                   Text('Okazje'),
                   Text('Wyszukiwania'),
@@ -60,78 +73,84 @@ class _FavouritesScreenState extends State<FavouritesScreen>
         },
         body: Consumer<Auth>(
           builder: (context, auth, child) {
-            return TabBarView(
-              controller: _tabController,
-              children: auth.isAuthenticated
-                  ? [
-                      FutureBuilder(
-                        future: Provider.of<Deals>(context, listen: false)
-                            .fetchObservedDeals(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          } else {
-                            if (snapshot.error != null) {
-                              return Center(
-                                child: Text('An error occurred!'),
-                              );
+            return Container(
+              margin: EdgeInsets.only(top: 10.0),
+              child: TabBarView(
+                controller: _tabController,
+                children: auth.isAuthenticated
+                    ? [
+                        FutureBuilder(
+                          future: Provider.of<Deals>(context, listen: false)
+                              .fetchObservedDeals(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
                             } else {
-                              return Consumer<Deals>(
-                                builder: (context, dealsData, child) {
-                                  return dealsData.observedDeals.isNotEmpty
-                                      ? ListView.builder(
-                                          itemBuilder: (context, index) =>
-                                              Column(
-                                            children: [
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                            ],
-                                          ),
-                                          itemCount:
-                                              dealsData.observedDeals.length,
-                                        )
-                                      : _buildNoObservedDealsSplashView();
-                                },
-                              );
+                              if (snapshot.error != null) {
+                                return Center(
+                                  child: Text('An error occurred!'),
+                                );
+                              } else {
+                                return Consumer<Deals>(
+                                  builder: (context, dealsData, child) {
+                                    return dealsData.observedDeals.isNotEmpty
+                                        ? ListView.builder(
+                                            itemBuilder: (context, index) =>
+                                                Column(
+                                              children: [
+                                                DealItem(dealsData
+                                                    .observedDeals[index]),
+                                                DealItem(dealsData
+                                                    .observedDeals[index]),
+                                                DealItem(dealsData
+                                                    .observedDeals[index]),
+                                              ],
+                                            ),
+                                            itemCount:
+                                                dealsData.observedDeals.length,
+                                          )
+                                        : _buildNoObservedDealsSplashView();
+                                  },
+                                );
+                              }
                             }
-                          }
-                        },
-                      ),
-                FutureBuilder(
-                  future: Provider.of<Searches>(context, listen: false).fetchSavedSearches(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      if (snapshot.error != null) {
-                        return ErrorInfo();
-                      } else {
-                        return Consumer<Searches>(
-                          builder: (context, searchesData, child) {
-                            return searchesData.savedSearches.isNotEmpty
-                                ? ListView.builder(
-                              itemBuilder: (context, index) =>
-                                  ObservedSearchItem(searchesData.savedSearches[index]),
-                              itemCount: searchesData.savedSearches.length,
-                            )
-                                : _buildNoObservedSearchesSplashView();
                           },
-                        );
-                      }
-                    }
-                  },
-                ),
-                    ]
-                  : [
-                      _buildNoObservedDealsSplashView(),
-                      _buildNoObservedSearchesSplashView(),
-                    ],
+                        ),
+                        FutureBuilder(
+                          future: Provider.of<Searches>(context, listen: false)
+                              .fetchSavedSearches(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              if (snapshot.error != null) {
+                                return ErrorInfo();
+                              } else {
+                                return Consumer<Searches>(
+                                  builder: (context, searchesData, child) {
+                                    return searchesData.savedSearches.isNotEmpty
+                                        ? ListView.builder(
+                                            itemBuilder: (context, index) =>
+                                                ObservedSearchItem(searchesData
+                                                    .savedSearches[index]),
+                                            itemCount:
+                                                searchesData.savedSearches.length,
+                                          )
+                                        : _buildNoObservedSearchesSplashView();
+                                  },
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      ]
+                    : [
+                        _buildNoObservedDealsSplashView(),
+                        _buildNoObservedSearchesSplashView(),
+                      ],
+              ),
             );
           },
         ),
