@@ -1,4 +1,4 @@
-import 'package:BSApp/providers/post_reply_state.dart';
+import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -9,6 +9,7 @@ import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class TopicScreen extends StatefulWidget {
   static const routeName = '/topic';
@@ -18,18 +19,18 @@ class TopicScreen extends StatefulWidget {
 }
 
 class _TopicScreenState extends State<TopicScreen> {
-  bool isInReplyState;
+  final _postToReplySubject = PublishSubject<PostModel>();
 
   @override
-  void initState() {
-    isInReplyState = true;
+  void dispose() {
+    _postToReplySubject.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final topicId = ModalRoute.of(context).settings.arguments as String;
     final topic = Provider.of<Topics>(context, listen: false).findById(topicId);
-    Provider.of<PostReplyState>(context, listen: false).reset();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -44,9 +45,7 @@ class _TopicScreenState extends State<TopicScreen> {
         bottom: const AppBarBottomBorder(),
         actions: [
           TextButton(
-            onPressed: () {
-
-            }, // todo dodaj do obserwowanych
+            onPressed: () {}, // todo dodaj do obserwowanych
             child: Icon(
               CupertinoIcons.heart,
               color: Colors.black87,
@@ -54,37 +53,28 @@ class _TopicScreenState extends State<TopicScreen> {
           ),
         ],
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => {
-          setState(() {
-            FocusScope.of(context).unfocus();
-            isInReplyState = false;
-          })
-        },
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          padding: const EdgeInsets.all(0),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          TopicScreenTopicInfo(topic),
-                          TopicScreenPosts(topic),
-                        ],
-                      ),
+      body: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+        padding: const EdgeInsets.all(0),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TopicScreenTopicInfo(topic),
+                        TopicScreenPosts(topic, _postToReplySubject),
+                      ],
                     ),
                   ),
-                  TopicScreenInputBar(),
-                ],
-              ),
-            ],
-          ),
+                ),
+                TopicScreenInputBar(_postToReplySubject),
+              ],
+            ),
+          ],
         ),
       ),
     );

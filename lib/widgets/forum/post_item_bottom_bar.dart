@@ -1,12 +1,12 @@
 import 'package:BSApp/models/post_model.dart';
-import 'package:BSApp/providers/post_reply_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PostItemBottomBar extends StatelessWidget {
   final PostModel post;
+  final PublishSubject<PostModel> postToReplySubject;
 
-  const PostItemBottomBar(this.post);
+  const PostItemBottomBar(this.post, this.postToReplySubject);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class PostItemBottomBar extends StatelessWidget {
                   .copyWith(fontSize: 11, color: Colors.black38),
             ),
             onPressed: () {
-              Provider.of<PostReplyState>(context, listen: false).startPostReply(post.id);
+              postToReplySubject.add(post);
             },
           ),
         ],
