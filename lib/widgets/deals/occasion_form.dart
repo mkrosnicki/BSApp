@@ -6,6 +6,7 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
+import 'package:BSApp/widgets/deals/age_type_chips.dart';
 import 'package:BSApp/widgets/deals/localisation_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,10 @@ class _OccasionFormState extends State<OccasionForm> {
     super.initState();
     _newDeal = widget.newDeal;
     _newDeal.dealType = DealType.OCCASION;
+    _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
   }
-  bool showInternetOnly = true;
+
+  bool _showInternetOnly;
 
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
@@ -137,13 +140,15 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Lokalizacja okazji'),
-                    Container(
-                      width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        children: _buildLocationTypeChips(),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Okazja internetowa'),
+                        Switch.adaptive(
+                            value: _newDeal.locationType == LocationType.INTERNET, onChanged: (value) {
+                              _changeLocation(value);
+                        }),
+                      ],
                     ),
                     SizedBox(
                       height: 10,
@@ -166,7 +171,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    ListTile(
+                    if (!_showInternetOnly) ListTile(
                       title: const Text('Lokalizacja'),
                       subtitle: _newDeal.voivodeship != null
                           ? Text(
@@ -176,18 +181,22 @@ class _OccasionFormState extends State<OccasionForm> {
                           : const Text('Cała Polska'),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () => _openLocationSelector(),
-                      enabled: !showInternetOnly,
+                      enabled: !_showInternetOnly,
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Opis lokalizacji'),
-                    TextFormField(
-                      controller: _locationDescriptionController,
-                      enabled: !showInternetOnly,
-                      onSaved: (value) {
-                        _newDeal.locationDescription = value;
-                      },
+                    if (!_showInternetOnly) Column(
+                      children: [
+                        Text('Opis lokalizacji'),
+                        TextFormField(
+                          controller: _locationDescriptionController,
+                          enabled: !_showInternetOnly,
+                          onSaved: (value) {
+                            _newDeal.locationDescription = value;
+                          },
+                        ),
+                      ],
                     ),
                     ListTile(
                       title: const Text('Kategoria'),
@@ -211,10 +220,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     ),
                     Container(
                       width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceEvenly,
-                        children: _buildAgeTypeChips(),
-                      ),
+                      child: AgeTypeChips(_newDeal),
                     ),
                     SizedBox(
                       height: 10,
@@ -230,8 +236,7 @@ class _OccasionFormState extends State<OccasionForm> {
                           height: 20.0,
                         ),
                         ElevatedButton(
-                          onPressed: () =>
-                              _selectDate(DealDateType.VALID_FROM),
+                          onPressed: () => _selectDate(DealDateType.VALID_FROM),
                           // Refer step 3
                           child: Text(
                             'Wybierz date',
@@ -256,8 +261,7 @@ class _OccasionFormState extends State<OccasionForm> {
                           height: 20.0,
                         ),
                         ElevatedButton(
-                          onPressed: () =>
-                              _selectDate(DealDateType.VALID_TO),
+                          onPressed: () => _selectDate(DealDateType.VALID_TO),
                           // Refer step 3
                           child: Text(
                             'Wybierz date',
@@ -364,54 +368,17 @@ class _OccasionFormState extends State<OccasionForm> {
     }
   }
 
-  _buildAgeTypeChips() {
-    List<Widget> list = [];
-    AgeType.values.forEach(
-      (e) => list.add(Container(
-        margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: ChoiceChip(
-          label: Text(AgeTypeHelper.getReadable(e)),
-          selected: _newDeal.ageTypes.contains(e),
-          onSelected: (isSelected) {
-            setState(() {
-              if (isSelected) {
-                _newDeal.ageTypes.add(e);
-              } else {
-                _newDeal.ageTypes.remove(e);
-              }
-            });
-          },
-        ),
-      )),
-    );
-    return list;
-  }
-
-  _buildLocationTypeChips() {
-    List<Widget> list = LocationType.values
-        .map(
-          (e) => Container(
-            margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-            child: ChoiceChip(
-              label: Text(LocationTypeHelper.getReadable(e)),
-              selected: _newDeal.locationType == e,
-              onSelected: (isSelected) {
-                setState(() {
-                  _newDeal.locationType = e;
-                  if (_newDeal.locationType == LocationType.LOCAL) {
-                    showInternetOnly = false;
-                    _locationDescriptionController.clear();
-                  } else {
-                    showInternetOnly = true;
-                    _newDeal.clearLocation();
-                  }
-                });
-              },
-            ),
-          ),
-        )
-        .toList();
-    return list;
+  void _changeLocation(bool value) {
+    setState(() {
+      _showInternetOnly = value;
+      if (_showInternetOnly) {
+        _newDeal.locationType = LocationType.INTERNET;
+        _locationDescriptionController.clear();
+        _newDeal.clearLocation();
+      } else {
+        _newDeal.locationType = LocationType.LOCAL;
+      }
+    });
   }
 
   _openLocationSelector() async {
