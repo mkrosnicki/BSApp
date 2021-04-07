@@ -18,8 +18,8 @@ class AddDealModel {
   String _voivodeshipReadable;
   String _city;
   String _cityReadable;
-  DateTime _validFrom;
-  DateTime _validTo;
+  DateTime _validFrom = DateTime.now();
+  DateTime _validTo = DateTime.now();
   String _dealCode;
   double _discountValue;
   double _regularPrice;
@@ -27,6 +27,14 @@ class AddDealModel {
   double _shippingPrice;
 
   DateTime get validFrom => _validFrom;
+
+  String get title => _title;
+
+  String get description => _description;
+
+  String get urlLocation => _urlLocation;
+
+  String get locationDescription => _locationDescription;
 
   DateTime get validTo => _validTo;
 
@@ -119,6 +127,27 @@ class AddDealModel {
   void clearLocation() {
     _voivodeship = null;
     _city = null;
+    _locationDescription = null;
+  }
+
+  void reset() {
+    _title = null;
+    _urlLocation = null;
+    _description = null;
+    _locationDescription = null;
+    _categories = [];
+    _ageTypes = [];
+    _voivodeship = null;
+    _voivodeshipReadable = null;
+    _city = null;
+    _cityReadable = null;
+    _validFrom = DateTime.now();
+    _validTo = DateTime.now();
+    _dealCode = null;
+    _discountValue = null;
+    _regularPrice = null;
+    _currentPrice = null;
+    _shippingPrice = null;
   }
 
   Map<String, dynamic> toDto() {
