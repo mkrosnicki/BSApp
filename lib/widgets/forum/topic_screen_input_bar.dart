@@ -1,12 +1,12 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TopicScreenInputBar extends StatelessWidget {
-
   final PublishSubject<PostModel> postToReplySubject;
 
   TopicScreenInputBar(this.postToReplySubject);
@@ -23,18 +23,19 @@ class TopicScreenInputBar extends StatelessWidget {
             if (snapshot.hasData && snapshot.data != null) {
               return Container(
                 color: MyColorsProvider.SUPER_LIGHT_GREY,
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 14.0, right: 10.0),
                 height: 40,
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Odpowiadasz na post...'),
+                    const Text(
+                      'Odpowiadasz na post...',
+                      style:
+                          const TextStyle(color: Colors.black54, fontSize: 13),
+                    ),
                     InkWell(
-                      child: Icon(
-                        CupertinoIcons.clear,
-                        color: Colors.black,
-                      ),
+                      child: MyIconsProvider.CLEAR_BLACK_ICON,
                       onTap: () {
                         postToReplySubject.add(null);
                       },
@@ -52,7 +53,6 @@ class TopicScreenInputBar extends StatelessWidget {
           // height: MediaQuery.of(context).size.height * 0.1,
           height: 50.0,
           padding: const EdgeInsets.only(left: 10.0),
-          // color: Colors.white,
           decoration: const BoxDecoration(
             border: MyStylingProvider.TOP_GREY_BORDER,
             color: Colors.white,
@@ -89,9 +89,15 @@ class TopicScreenInputBar extends StatelessWidget {
                   },
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Icon(CupertinoIcons.chevron_right),
+              InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    CupertinoIcons.chevron_right,
+                    color: Colors.blue,
+                  ),
+                ),
               ),
             ],
           ),
