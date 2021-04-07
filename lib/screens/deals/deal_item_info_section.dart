@@ -62,8 +62,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               child: Text(
                                 widget.deal.title,
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
                                 ),
                                 // overflow: TextOverflow.ellipsis,
                                 overflow: TextOverflow.clip,
@@ -100,15 +99,15 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                       Text(
                         '${widget.deal.currentPrice.toString()} zł ',
                         style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                            color: Colors.blue.shade500,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600),
                       ),
                       Text(
                         '${widget.deal.regularPrice} zł',
                         style: TextStyle(
                             fontSize: 14,
-                            color: Colors.black54,
+                            color: Colors.red.shade200,
                             decoration: TextDecoration.lineThrough),
                       ),
                     ],
@@ -125,14 +124,14 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     Text(
                       'Lokalizacja: Internet',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: Colors.black54,
                       ),
                     ),
                     Text(
                       'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: Colors.black54,
                       ),
                     ),
@@ -184,7 +183,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               'ZOBACZ',
                               style: TextStyle(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.blue,
                               ),
                             )
