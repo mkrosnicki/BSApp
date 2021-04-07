@@ -1,7 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
-import 'package:BSApp/providers/deal_reply_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -68,7 +67,8 @@ class DealDetailsComments extends StatelessWidget {
                     return Consumer<Comments>(
                       builder: (context, commentsData, child) => Column(
                         children: commentsData.mainDealComments
-                            .map((comment) => CommentItem(deal.id, comment, commentToReplySubject))
+                            .map((comment) => CommentItem(
+                                deal.id, comment, commentToReplySubject))
                             .toList(),
                       ),
                     );

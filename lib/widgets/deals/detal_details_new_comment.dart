@@ -27,6 +27,9 @@ class DealDetailsNewComment extends StatefulWidget {
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   var _commentText = '';
 
+  TextEditingController textEditingController = TextEditingController();
+  FocusNode textFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,6 +38,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
           stream: widget._commentToReplyStream,
           builder: (context, AsyncSnapshot<CommentModel> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
+              textFocusNode.requestFocus();
               return Container(
                 color: MyColorsProvider.SUPER_LIGHT_GREY,
                 padding: const EdgeInsets.only(left: 14.0, right: 10.0),
@@ -76,14 +80,17 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             children: [
               Flexible(
                 child: TextField(
+                  controller: textEditingController,
+                  focusNode: textFocusNode,
                   style: TextStyle(fontSize: 14),
                   autofocus: false,
                   decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
-                  onChanged: (value) {
-                    setState(() {
-                      _commentText = value;
-                    });
-                  },
+                  // onChanged: (value) {
+                  //   textEditingController.text = value;
+                  //   // setState(() {
+                  //   //   _commentText = value;
+                  //   // });
+                  // },
                 ),
               ),
               Consumer<Auth>(
@@ -115,25 +122,34 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
     print('reply comment!!!');
     print(commentToReply);
-    if (_commentText.trim().isEmpty) {
+    if (textEditingController.text.trim().isEmpty) {
       return null;
     }
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
-      return commentToReply == null
-          ? _addCommentToDeal()
-          : _addReplyToComment(commentToReply);
+      if (commentToReply == null) {
+        _addCommentToDeal();
+      } else {
+        _addReplyToComment(commentToReply);
+      }
     }
   }
 
   _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(
         widget.dealId, commentToReply.id, _commentText);
+    _clearTextBox();
   }
 
   _addCommentToDeal() async {
     await Provider.of<Comments>(context, listen: false)
         .addCommentToDeal(widget.dealId, _commentText);
+    _clearTextBox();
+  }
+
+  _clearTextBox() {
+    textEditingController.clear();
+    textFocusNode.unfocus();
   }
 }
