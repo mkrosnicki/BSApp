@@ -3,6 +3,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -40,13 +41,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       // color: Colors.white,
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(CupertinoIcons.back, color: Colors.black87),
-            ),
-          ),
           AppBarSearchInput(
             onTapInputFunction: () {},
             onSubmitInputFunction: (_) {},
@@ -77,13 +71,18 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          titleSpacing: 8,
-          title: _createSearchBox(context),
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          bottom: AppBarBottomBorder(),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50.0),
+          child: AppBar(
+            titleSpacing: 8,
+            title: _createSearchBox(context),
+            leadingWidth: 40.0,
+            automaticallyImplyLeading: false,
+            leading: AppBarBackButton(Colors.black87),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            bottom: AppBarBottomBorder(),
+          ),
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
