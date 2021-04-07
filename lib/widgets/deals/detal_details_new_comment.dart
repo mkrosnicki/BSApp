@@ -138,13 +138,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
 
   _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(
-        widget.dealId, commentToReply.id, _commentText);
+        widget.dealId, commentToReply.id, textEditingController.text);
     _clearTextBox();
+    widget.commentToReplySubject.add(null);
   }
 
   _addCommentToDeal() async {
     await Provider.of<Comments>(context, listen: false)
-        .addCommentToDeal(widget.dealId, _commentText);
+        .addCommentToDeal(widget.dealId, textEditingController.text);
     _clearTextBox();
   }
 
