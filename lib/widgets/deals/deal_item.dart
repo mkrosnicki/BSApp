@@ -20,7 +20,7 @@ class _DealItemState extends State<DealItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
       color: Colors.white,
       child: Flex(
         direction: Axis.vertical,
