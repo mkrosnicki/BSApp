@@ -31,6 +31,14 @@ class Topics with ChangeNotifier {
     return [...fetchedCategoryTopics];
   }
 
+  List<TopicModel> get categoryTopicsPinned {
+    return fetchedCategoryTopics.where((element) => element.pinned).toList();
+  }
+
+  List<TopicModel> get categoryTopicsNotPinned {
+    return fetchedCategoryTopics.where((element) => !element.pinned).toList();
+  }
+
   Future<void> fetchTopics({Map<String, dynamic> requestParams}) async {
     final List<TopicModel> loadedTopics = [];
     final responseBody =

@@ -57,7 +57,7 @@ class ForumScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Popularne wątki',
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
               ...widgets
