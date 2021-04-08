@@ -17,6 +17,5 @@ class PostItemContent extends StatelessWidget {
             .bodyText2
             .copyWith(fontSize: 12, color: Colors.black87),
       ),
-    );
-  }
+    );}
 }

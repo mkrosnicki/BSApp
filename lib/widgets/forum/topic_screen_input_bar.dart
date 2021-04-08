@@ -30,6 +30,7 @@ class TopicScreenInputBar extends StatelessWidget {
           stream: _postToReplyStream,
           builder: (context, AsyncSnapshot<PostModel> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
+              textFocusNode.requestFocus();
               return Container(
                 color: MyColorsProvider.SUPER_LIGHT_GREY,
                 padding: const EdgeInsets.only(left: 14.0, right: 10.0),
