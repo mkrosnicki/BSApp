@@ -11,15 +11,7 @@ class PostItemContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
       child: Text(
-        post.content +
-            post.content +
-            post.content +
-            post.content +
-            post.content +
-            post.content +
-            post.content +
-            post.content +
-            post.content,
+        post.content,
         style: Theme.of(context)
             .textTheme
             .bodyText2
