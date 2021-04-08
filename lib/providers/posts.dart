@@ -52,18 +52,24 @@ class Posts with ChangeNotifier {
   }
 
   Future<void> addPostToTopic(String topicId, String content) async {
-    final addPostToTopicDto = {'content': content};
-    await _apiProvider.post('/topics/$topicId/posts', addPostToTopicDto,
-        token: token);
+    final addPostToTopicDto = {
+      'topicId': topicId,
+      'content': content,
+    };
+    await _apiProvider.post('/posts', addPostToTopicDto, token: token);
     return fetchPostsForTopic(topicId);
   }
 
   Future<void> addReplyToPost(
-      String dealId, String postId, String replyContent) async {
-    final addReplyToPostDto = {'replyContent': replyContent};
-    await _apiProvider.post('/posts/$postId/replies', addReplyToPostDto,
-        token: token);
-    return fetchPostsForTopic(dealId);
+      String topicId, String postId, String replyContent, String quote) async {
+    final addReplyToPostDto = {
+      'topicId': topicId,
+      'replyForPostId': postId,
+      'content': replyContent,
+      'quote': quote
+    };
+    await _apiProvider.post('/posts', addReplyToPostDto, token: token);
+    return fetchPostsForTopic(topicId);
   }
 
   PostModel findById(String postId) {

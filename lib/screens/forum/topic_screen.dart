@@ -71,7 +71,7 @@ class _TopicScreenState extends State<TopicScreen> {
                     ),
                   ),
                 ),
-                TopicScreenInputBar(_postToReplySubject),
+                TopicScreenInputBar(topic.id, _postToReplySubject),
               ],
             ),
           ],

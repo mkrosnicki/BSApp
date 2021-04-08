@@ -79,7 +79,6 @@ class Comments with ChangeNotifier {
   }
 
   CommentModel findById(String commentId) {
-    // print(fetchedDealComments);
     return allDealComments.firstWhere((comment) => comment.id == commentId);
   }
 

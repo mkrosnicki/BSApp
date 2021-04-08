@@ -1,17 +1,26 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/posts.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TopicScreenInputBar extends StatelessWidget {
+
+  final String topicId;
   final PublishSubject<PostModel> postToReplySubject;
 
-  TopicScreenInputBar(this.postToReplySubject);
+  TopicScreenInputBar(this.topicId, this.postToReplySubject);
 
   Stream<PostModel> get _postToReplyStream => postToReplySubject.stream;
+
+  TextEditingController textEditingController = TextEditingController();
+  FocusNode textFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -62,24 +71,28 @@ class TopicScreenInputBar extends StatelessWidget {
             children: [
               Flexible(
                 child: TextField(
+                  controller: textEditingController,
+                  focusNode: textFocusNode,
                   style: TextStyle(fontSize: 14),
                   autofocus: false,
                   decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
-                  onChanged: (value) {
-                    // setState(() {
-                    //   _commentText = value;
-                    // });
-                  },
                 ),
               ),
-              InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    CupertinoIcons.chevron_right,
-                    color: Colors.blue,
-                  ),
+              Consumer<Auth>(
+                builder: (context, authData, child) => StreamBuilder(
+                  stream: _postToReplyStream,
+                  builder: (context, AsyncSnapshot<PostModel> snapshot) {
+                    return InkWell(
+                      onTap: () => _addReply(context, authData.isAuthenticated, snapshot.data),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          CupertinoIcons.chevron_right,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    );
+                  }
                 ),
               ),
             ],
@@ -87,5 +100,38 @@ class TopicScreenInputBar extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _addReply(BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
+    if (textEditingController.text.trim().isEmpty) {
+      return null;
+    }
+    if (!isUserLoggedIn) {
+      AuthScreenProvider.showLoginScreen(context);
+    } else {
+      if (postToReply == null) {
+        _addPostToTopic(context);
+      } else {
+        _addReplyToPost(context, postToReply);
+      }
+    }
+  }
+
+  _addReplyToPost(BuildContext context, PostModel postToReply) async {
+    await Provider.of<Posts>(context, listen: false).addReplyToPost(
+        topicId, postToReply.id, textEditingController.text, postToReply.content);
+    _clearTextBox();
+    postToReplySubject.add(null);
+  }
+
+  _addPostToTopic(BuildContext context) async {
+    await Provider.of<Posts>(context, listen: false)
+        .addPostToTopic(topicId, textEditingController.text);
+    _clearTextBox();
+  }
+
+  _clearTextBox() {
+    textEditingController.clear();
+    textFocusNode.unfocus();
   }
 }
