@@ -49,7 +49,6 @@ class Topics with ChangeNotifier {
     // print(responseBody);
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.of(element));
-      print(TopicModel.of(element));
     });
     allTopics = loadedTopics;
     notifyListeners();
@@ -62,10 +61,8 @@ class Topics with ChangeNotifier {
     if (responseBody == null) {
       print('No Topics Found!');
     }
-    // print(responseBody);
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.of(element));
-      print(TopicModel.of(element));
     });
     fetchedCategoryTopics = loadedTopics;
     notifyListeners();

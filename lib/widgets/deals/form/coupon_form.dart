@@ -46,7 +46,6 @@ class _CouponFormState extends State<CouponForm> {
     setState(() {
       _isLoading = true;
     });
-    print(_newDeal.toString());
     try {
       setState(() {
         _isLoading = true;

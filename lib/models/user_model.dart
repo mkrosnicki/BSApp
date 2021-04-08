@@ -17,7 +17,6 @@ class UserModel {
   UserModel({this.id, this.username, this.registeredAt, this.lastLoginAt, this.addedPosts, this.addedComments, this.addedDeals, this.addedTopics});
 
   static UserModel of(dynamic userSnapshot) {
-    print(userSnapshot);
     return UserModel(
       id: userSnapshot['id'],
       username: userSnapshot['username'],

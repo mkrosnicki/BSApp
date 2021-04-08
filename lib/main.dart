@@ -20,6 +20,7 @@ import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/favourites/favourites_screen.dart';
 import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
+import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
@@ -125,6 +126,7 @@ class MyApp extends StatelessWidget {
           UserProfileScreen.routeName: (ctx) => UserProfileScreen(),
           ChangePasswordScreen.routeName: (ctx) => ChangePasswordScreen(),
           AddDealScreen.routeName: (ctx) => AddDealScreen(),
+          NewTopicScreen.routeName: (ctx) => NewTopicScreen(),
         },
       ),
     );

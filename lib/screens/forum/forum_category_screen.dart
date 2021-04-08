@@ -1,8 +1,8 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topics.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,17 +28,12 @@ class ForumCategoryScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Tematy',
-          style: MyStylingProvider.TEXT_BLACK,
-        ),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
+      appBar: BaseAppBar(
+        title: 'Tematy',
         leading: const AppBarBackButton(Colors.black),
+        actions: [
+          const AppBarAddTopicButton(Colors.black),
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder(
