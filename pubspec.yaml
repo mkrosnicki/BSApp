@@ -54,6 +54,14 @@ flutter:
   assets:
     - assets/images/bathtub.png
     - assets/images/car.png
+    - assets/images/cradle.png
+    - assets/images/dress.png
+    - assets/images/feeding.png
+    - assets/images/footprint.png
+    - assets/images/horse.png
+    - assets/images/pacifier.png
+    - assets/images/pijama.png
+    - assets/images/stroller.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

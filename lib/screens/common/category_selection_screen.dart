@@ -105,7 +105,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   height: 40,
                   width: 40,
                   child: Image.asset(
-                    'assets/images/car.png',
+                    'assets/images/${_assetName(categories[index].name)}',
                     fit: BoxFit.fitHeight,
                   ),
                 ),
@@ -162,6 +162,40 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       setState(() {
         _selectedCategories.removeLast();
       });
+    }
+  }
+
+  // todo
+  String _assetName(String categoryName) {
+    if (categoryName.contains('Ubranka')) {
+      return 'pijama.png';
+    }
+    if (categoryName.contains('Buty')) {
+      return 'footprint.png';
+    }
+    if (categoryName.contains('Pielęgnacja')) {
+      return 'bathtub.png';
+    }
+    if (categoryName.contains('Karmienie')) {
+      return 'feeding.png';
+    }
+    if (categoryName.contains('Wózki')) {
+      return 'stroller.png';
+    }
+    if (categoryName.contains('Foteliki')) {
+      return 'car.png';
+    }
+    if (categoryName.contains('Pokój')) {
+      return 'cradle.png';
+    }
+    if (categoryName.contains('Moda')) {
+      return 'dress.png';
+    }
+    if (categoryName.contains('Zabawki')) {
+      return 'horse.png';
+    }
+    if (categoryName.contains('Inne')) {
+      return 'pacifier.png';
     }
   }
 }
