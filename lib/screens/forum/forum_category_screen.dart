@@ -12,6 +12,8 @@ class ForumCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String categoryId = ModalRoute.of(context).settings.arguments as String;
+    print(categoryId);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -27,7 +29,7 @@ class ForumCategoryScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: FutureBuilder(
-          future: Provider.of<Topics>(context, listen: false).fetchTopics(),
+          future: Provider.of<Topics>(context, listen: false).fetchCategoryTopics(categoryId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -39,8 +41,8 @@ class ForumCategoryScreen extends StatelessWidget {
               } else {
                 return Consumer<Topics>(
                   builder: (context, topicsData, child) => ListView.builder(
-                    itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
-                    itemCount: topicsData.topics.length,
+                    itemBuilder: (context, index) => TopicItem(topicsData.categoryTopics[index]),
+                    itemCount: topicsData.categoryTopics.length,
                   ),
                 );
               }

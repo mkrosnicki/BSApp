@@ -8,6 +8,7 @@ class Topics with ChangeNotifier {
   List<TopicModel> allTopics = [];
   List<TopicModel> fetchedObservedTopics = [];
   List<TopicModel> fetchedAddedTopics = [];
+  List<TopicModel> fetchedCategoryTopics = [];
   String token;
 
   Topics.empty();
@@ -26,6 +27,10 @@ class Topics with ChangeNotifier {
     return [...fetchedAddedTopics];
   }
 
+  List<TopicModel> get categoryTopics {
+    return [...fetchedCategoryTopics];
+  }
+
   Future<void> fetchTopics({Map<String, dynamic> requestParams}) async {
     final List<TopicModel> loadedTopics = [];
     final responseBody =
@@ -39,6 +44,22 @@ class Topics with ChangeNotifier {
       print(TopicModel.of(element));
     });
     allTopics = loadedTopics;
+    notifyListeners();
+  }
+
+  Future<void> fetchCategoryTopics(String categoryId) async {
+    final List<TopicModel> loadedTopics = [];
+    final responseBody =
+    await _apiProvider.get('/topics', requestParams: {'categoryId': categoryId}) as List;
+    if (responseBody == null) {
+      print('No Topics Found!');
+    }
+    // print(responseBody);
+    responseBody.forEach((element) {
+      loadedTopics.add(TopicModel.of(element));
+      print(TopicModel.of(element));
+    });
+    fetchedCategoryTopics = loadedTopics;
     notifyListeners();
   }
 
