@@ -6,11 +6,11 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
-import 'package:BSApp/widgets/deals/age_type_chips.dart';
-import 'package:BSApp/widgets/deals/localisation_selector.dart';
+import 'package:BSApp/widgets/deals/form/localisation_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'age_type_chips.dart';
 import 'deal_date.dart';
 
 class CouponForm extends StatefulWidget {
@@ -149,7 +149,7 @@ class _CouponFormState extends State<CouponForm> {
                         if (value.isEmpty) {
                           return 'Wprowadź kod kuponu';
                         } else if (value.length < 3) {
-                          return 'Kod powinien mieć conajmniej 3 znaki.';
+                          return 'Kod powinien mieć co najmniej 3 znaki.';
                         } else {
                           return null;
                         }
