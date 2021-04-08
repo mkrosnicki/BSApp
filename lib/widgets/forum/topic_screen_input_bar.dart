@@ -3,7 +3,6 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TopicScreenInputBar extends StatelessWidget {
-
   final String topicId;
   final PublishSubject<PostModel> postToReplySubject;
 
@@ -39,13 +37,28 @@ class TopicScreenInputBar extends StatelessWidget {
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Odpowiadasz na post...',
-                      style:
-                          const TextStyle(color: Colors.black54, fontSize: 13),
+                    Wrap(
+                      children: [
+                        const Text(
+                          'Odpowiadasz na post ',
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 13),
+                        ),
+                        Text(
+                          '@${snapshot.data.adderInfo.username}',
+                          style: const TextStyle(
+                              color: MyColorsProvider.BLUE,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                     InkWell(
-                      child: MyIconsProvider.CLEAR_BLACK_ICON,
+                      child: const Icon(
+                        CupertinoIcons.clear,
+                        color: Colors.black54,
+                        size: 16,
+                      ),
                       onTap: () {
                         postToReplySubject.add(null);
                       },
@@ -76,25 +89,26 @@ class TopicScreenInputBar extends StatelessWidget {
                   focusNode: textFocusNode,
                   style: TextStyle(fontSize: 14),
                   autofocus: false,
-                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
+                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION
+                      .copyWith(hintText: 'Napisz post...'),
                 ),
               ),
               Consumer<Auth>(
                 builder: (context, authData, child) => StreamBuilder(
-                  stream: _postToReplyStream,
-                  builder: (context, AsyncSnapshot<PostModel> snapshot) {
-                    return InkWell(
-                      onTap: () => _addReply(context, authData.isAuthenticated, snapshot.data),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          CupertinoIcons.chevron_right,
-                          color: Colors.blue,
+                    stream: _postToReplyStream,
+                    builder: (context, AsyncSnapshot<PostModel> snapshot) {
+                      return InkWell(
+                        onTap: () => _addReply(
+                            context, authData.isAuthenticated, snapshot.data),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            CupertinoIcons.chevron_right,
+                            color: Colors.blue,
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                ),
+                      );
+                    }),
               ),
             ],
           ),
@@ -103,7 +117,8 @@ class TopicScreenInputBar extends StatelessWidget {
     );
   }
 
-  _addReply(BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
+  _addReply(
+      BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
     if (textEditingController.text.trim().isEmpty) {
       return null;
     }
@@ -119,8 +134,8 @@ class TopicScreenInputBar extends StatelessWidget {
   }
 
   _addReplyToPost(BuildContext context, PostModel postToReply) async {
-    await Provider.of<Posts>(context, listen: false).addReplyToPost(
-        topicId, postToReply.id, textEditingController.text, postToReply.content);
+    await Provider.of<Posts>(context, listen: false).addReplyToPost(topicId,
+        postToReply.id, textEditingController.text, postToReply.content);
     _clearTextBox();
     postToReplySubject.add(null);
   }

@@ -24,7 +24,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
           PostItemUserInfo(topic.adderInfo, topic.addedAt),
           TopicScreenTopicTitle(topic.title),
           TopicScreenTopicContent(topic.content),
-          TopicScreenTopicBottomBar(topic.id),
+          // TopicScreenTopicBottomBar(topic.id),
         ],
       ),
     );

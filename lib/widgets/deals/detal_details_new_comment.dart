@@ -45,13 +45,28 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Odpowiadasz na komentarz...',
-                      style:
-                      const TextStyle(color: Colors.black54, fontSize: 13),
+                    Wrap(
+                      children: [
+                        const Text(
+                          'Odpowiadasz na komentarz ',
+                          style: const TextStyle(
+                              color: Colors.black54, fontSize: 13),
+                        ),
+                        Text(
+                          '@${snapshot.data.adderInfo.username}',
+                          style: const TextStyle(
+                              color: MyColorsProvider.BLUE,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                     InkWell(
-                      child: MyIconsProvider.CLEAR_BLACK_ICON,
+                      child: const Icon(
+                        CupertinoIcons.clear,
+                        color: Colors.black54,
+                        size: 16,
+                      ),
                       onTap: () {
                         widget.commentToReplySubject.add(null);
                       },
@@ -82,7 +97,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                   focusNode: textFocusNode,
                   style: const TextStyle(fontSize: 14),
                   autofocus: false,
-                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Napisz...'),
+                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
                 ),
               ),
               Consumer<Auth>(

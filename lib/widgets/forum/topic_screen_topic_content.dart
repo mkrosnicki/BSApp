@@ -7,12 +7,15 @@ class TopicScreenTopicContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      content,
-      style: Theme.of(context)
-          .textTheme
-          .bodyText2
-          .copyWith(fontSize: 12, color: Colors.black87),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(
+        content,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2
+            .copyWith(fontSize: 12, color: Colors.black87),
+      ),
     );
   }
 }
