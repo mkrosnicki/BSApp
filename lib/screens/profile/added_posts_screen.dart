@@ -5,15 +5,16 @@ import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddedDealsScreen extends StatelessWidget {
-  static const routeName = '/added-deals';
+class AddedPostsScreen extends StatelessWidget {
+
+  static const routeName = '/added-posts';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
         leading: const AppBarBackButton(Colors.black),
-        title: 'Dodane okazje',
+        title: 'Dodane posty',
       ),
       body: FutureBuilder(
         future: Provider.of<Deals>(context, listen: false).fetchDeals(),
@@ -27,11 +28,12 @@ class AddedDealsScreen extends StatelessWidget {
               );
             } else {
               return Consumer<Deals>(
-                builder: (context, dealsData, child) => ListView.builder(
-                  itemBuilder: (context, index) =>
-                      DealItem(dealsData.addedDeals[index]),
-                  itemCount: dealsData.addedDeals.length,
-                ),
+                builder: (context, dealsData, child) =>
+                    ListView.builder(
+                      itemBuilder: (context, index) =>
+                          DealItem(dealsData.addedDeals[index]),
+                      itemCount: dealsData.addedDeals.length,
+                    ),
               );
             }
           }

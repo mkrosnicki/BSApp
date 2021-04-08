@@ -1,5 +1,7 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,8 +61,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Zmiana hasłą'),
+      appBar: BaseAppBar(
+        leading: const AppBarBackButton(Colors.black),
+        title: 'Zmiana hasła',
       ),
       body: SingleChildScrollView(
         child: Container(

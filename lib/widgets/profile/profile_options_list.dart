@@ -3,6 +3,7 @@ import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
+import 'package:BSApp/screens/profile/added_posts_screen.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:BSApp/widgets/profile/logout_button.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
@@ -20,7 +21,7 @@ class ProfileOptionsList extends StatelessWidget {
       const ProfileOptionsHeader('Twoja aktywność'),
       const ProfileOptionItem(
           title: 'Dodane okazje', route: AddedDealsScreen.routeName),
-      const ProfileOptionItem(title: 'Dodane posty', route: '/favourites'),
+      const ProfileOptionItem(title: 'Dodane posty', route: AddedPostsScreen.routeName),
       const ProfileOptionItem(
           title: 'Dodane komentarze', route: AddedCommentsScreen.routeName),
       const ProfileOptionsHeader('Ustawienia'),

@@ -1,4 +1,6 @@
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,9 +11,9 @@ class AddedCommentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 8,
-        title: Text('Dodane komentarze'),
+      appBar: BaseAppBar(
+        leading: const AppBarBackButton(Colors.black),
+        title: 'Dodane komentarze',
       ),
       body: FutureBuilder(
         future: Provider.of<Comments>(context, listen: false).fetchAddedComments(),
