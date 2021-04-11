@@ -102,7 +102,8 @@ class _DealsScreenState extends State<DealsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Kategorie',
@@ -110,14 +111,7 @@ class _DealsScreenState extends State<DealsScreen> {
                     ),
                   ),
                   CategoriesScrollable(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Okazje',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
+                  Padding(padding: EdgeInsets.all(8.0)),
                   FutureBuilder(
                     future:
                         Provider.of<Deals>(context, listen: false).fetchDeals(),
