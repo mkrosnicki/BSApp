@@ -101,7 +101,23 @@ class _DealsScreenState extends State<DealsScreen> {
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Kategorie',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                   CategoriesScrollable(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Okazje',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
                   FutureBuilder(
                     future:
                         Provider.of<Deals>(context, listen: false).fetchDeals(),
