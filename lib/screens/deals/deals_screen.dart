@@ -1,6 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -67,13 +68,17 @@ class _DealsScreenState extends State<DealsScreen> {
           elevation: 0,
           bottom: AppBarBottomBorder(),
           actions: [
-            if (!_isSearchPanelVisible) InkWell(
-              onTap: () => _showFilterSelectionDialog(context),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
-                child: Icon(CupertinoIcons.slider_horizontal_3, color: Colors.black87,),
+            if (!_isSearchPanelVisible)
+              InkWell(
+                onTap: () => _showFilterSelectionDialog(context),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
+                  child: Icon(
+                    CupertinoIcons.slider_horizontal_3,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
-            ),
             if (_isSearchPanelVisible)
               GestureDetector(
                 onTap: () => _showSearchPanel(false),
@@ -91,36 +96,47 @@ class _DealsScreenState extends State<DealsScreen> {
           ],
         ),
       ),
-      body: !_isSearchPanelVisible
-          ? FutureBuilder(
-              future: Provider.of<Deals>(context, listen: false).fetchDeals(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  if (snapshot.error != null) {
-                    return Center(
-                      child: Text('An error occurred!'),
-                    );
-                  } else {
-                    return RefreshIndicator(
-                      onRefresh: () => _refreshDeals(context),
-                      child: Consumer<Deals>(
-                        builder: (context, dealsData, child) =>
-                            ListView.builder(
-                          itemBuilder: (context, index) =>
-                              DealItem(dealsData.deals[index]),
-                          itemCount: dealsData.deals.length,
-                        ),
-                      ),
-                    );
-                  }
-                }
-              },
-            )
-          : Center(
-              child: Text('Brak ostatnich wyszukiwań'),
-            ),
+      body: SafeArea(
+        child: !_isSearchPanelVisible
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CategoriesScrollable(),
+                  FutureBuilder(
+                    future:
+                        Provider.of<Deals>(context, listen: false).fetchDeals(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        if (snapshot.error != null) {
+                          return Center(
+                            child: Text('An error occurred!'),
+                          );
+                        } else {
+                          return Flexible(
+                            child: RefreshIndicator(
+                              onRefresh: () => _refreshDeals(context),
+                              child: Consumer<Deals>(
+                                builder: (context, dealsData, child) =>
+                                    ListView.builder(
+                                  itemBuilder: (context, index) =>
+                                      DealItem(dealsData.deals[index]),
+                                  itemCount: dealsData.deals.length,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ],
+              )
+            : Center(
+                child: Text('Brak ostatnich wyszukiwań'),
+              ),
+      ),
     );
   }
 
@@ -130,16 +146,15 @@ class _DealsScreenState extends State<DealsScreen> {
 
   Future _showFilterSelectionDialog(BuildContext context) async {
     var newFilterSettings =
-    await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
-        builder: (BuildContext context) {
-          return FilterSelectionScreen();
-        },
-        settings: RouteSettings(arguments: FilterSettings()),
-        fullscreenDialog: true));
+        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+            builder: (BuildContext context) {
+              return FilterSelectionScreen();
+            },
+            settings: RouteSettings(arguments: FilterSettings()),
+            fullscreenDialog: true));
     if (newFilterSettings != null) {
       Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
           arguments: newFilterSettings);
     }
   }
-
 }
