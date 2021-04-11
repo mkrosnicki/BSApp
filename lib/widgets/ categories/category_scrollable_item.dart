@@ -1,6 +1,12 @@
+import 'package:BSApp/models/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScrollableItem extends StatelessWidget {
+
+  final CategoryModel categoryModel;
+
+  CategoryScrollableItem(this.categoryModel);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +20,7 @@ class CategoryScrollableItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'assets/images/car.png',
+                'assets/images/${CategoryModelHelper.assetNameFor(categoryModel)}',
                 fit: BoxFit.fitHeight,
               ),
             ),
@@ -23,7 +29,7 @@ class CategoryScrollableItem extends StatelessWidget {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text('Nazwa kategorii', style: TextStyle(fontSize: 12),),
+              child: Text(categoryModel.name, style: TextStyle(fontSize: 12),),
             ),
           )
         ],
