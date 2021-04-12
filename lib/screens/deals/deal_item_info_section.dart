@@ -3,6 +3,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/widgets/common/green_voting_button.dart';
+import 'package:BSApp/widgets/common/rate_bar.dart';
 import 'package:BSApp/widgets/common/red_voting_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -121,19 +122,31 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Lokalizacja: Internet',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.black54,
-                      ),
+                    Wrap(
+                      children: [
+                        Icon(CupertinoIcons.map_pin_ellipse,
+                            color: Colors.black54, size: 12),
+                        Text(
+                          ' Internet',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Dodana: ${_dateFormat.format(widget.deal.addedAt)}',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.black54,
-                      ),
+                    Wrap(
+                      children: [
+                        Icon(CupertinoIcons.time,
+                            color: Colors.black54, size: 12),
+                        Text(
+                          ' ${_dateFormat.format(widget.deal.addedAt)}',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -155,28 +168,44 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                           children: [
                             Wrap(
                               children: [
-                                RedVotingButton(
-                                  trailing: dealsData
+                                RateBar(
+                                  dealsData
                                       .findById(widget.deal.id)
-                                      .numberOfNegativeVotes
-                                      .toString(),
-                                  function: () =>
-                                      _vote(authData.isAuthenticated, false),
-                                  isActive: Provider.of<Deals>(context)
-                                      .wasVotedNegativelyBy(
-                                      widget.deal.id, authData.userId),
-                                ),
-                                GreenVotingButton(
-                                  trailing: dealsData
+                                      .numberOfPositiveVotes + 3,
+                                  dealsData
                                       .findById(widget.deal.id)
-                                      .numberOfPositiveVotes
-                                      .toString(),
-                                  function: () =>
-                                      _vote(authData.isAuthenticated, true),
-                                  isActive: Provider.of<Deals>(context)
+                                      .numberOfNegativeVotes,
+                                  Provider.of<Deals>(context)
                                       .wasVotedPositivelyBy(
-                                      widget.deal.id, authData.userId),
+                                          widget.deal.id, authData.userId),
+                                  Provider.of<Deals>(context)
+                                      .wasVotedNegativelyBy(
+                                          widget.deal.id, authData.userId),
+                                  () => _vote(authData.isAuthenticated, true),
+                                  () => _vote(authData.isAuthenticated, false),
                                 ),
+                                // RedVotingButton(
+                                //   trailing: dealsData
+                                //       .findById(widget.deal.id)
+                                //       .numberOfNegativeVotes
+                                //       .toString(),
+                                //   function: () =>
+                                //       _vote(authData.isAuthenticated, false),
+                                //   isActive: Provider.of<Deals>(context)
+                                //       .wasVotedNegativelyBy(
+                                //           widget.deal.id, authData.userId),
+                                // ),
+                                // GreenVotingButton(
+                                //   trailing: dealsData
+                                //       .findById(widget.deal.id)
+                                //       .numberOfPositiveVotes
+                                //       .toString(),
+                                //   function: () =>
+                                //       _vote(authData.isAuthenticated, true),
+                                //   isActive: Provider.of<Deals>(context)
+                                //       .wasVotedPositivelyBy(
+                                //           widget.deal.id, authData.userId),
+                                // ),
                               ],
                             ),
                             Text(
