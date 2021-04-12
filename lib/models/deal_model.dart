@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:BSApp/models/deal_type.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +28,7 @@ class DealModel {
   final int numberOfNegativeVotes;
   final List<String> positiveVoters;
   final List<String> negativeVoters;
+  final Image image;
 
   DealModel({
     @required this.id,
@@ -52,6 +55,7 @@ class DealModel {
     @required this.numberOfNegativeVotes,
     @required this.positiveVoters,
     @required this.negativeVoters,
+    @required this.image,
   });
 
   static DealModel of(dynamic dealObject) {
@@ -82,6 +86,8 @@ class DealModel {
       numberOfNegativeVotes: dealObject['numberOfNegativeVotes'],
       positiveVoters: [...dealObject['positiveVoters'] as List],
       negativeVoters: [...dealObject['negativeVoters'] as List],
+      image: _getImage(dealObject),
+      // image: null,
     );
   }
 
@@ -105,4 +111,14 @@ class DealModel {
 
   @override
   int get hashCode => id.hashCode;
+
+  static _getImage(dealObject) {
+    var base64Image = base64Decode(dealObject['base64Image']);
+    if (base64Image.isEmpty) {
+      return null;
+    }
+    // var image = File('test.png');
+    // return image.writeAsBytesSync(base64Image);
+    return Image.memory(base64Image);
+  }
 }

@@ -1,19 +1,20 @@
+import 'package:BSApp/models/deal_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'deal_details_screen.dart';
 
 class DealItemImageSection extends StatelessWidget {
-  final String dealId;
+  final DealModel deal;
 
-  DealItemImageSection(this.dealId);
+  DealItemImageSection(this.deal);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(DealDetailsScreen.routeName, arguments: dealId);
+            .pushNamed(DealDetailsScreen.routeName, arguments: deal);
       },
       child: Stack(
         fit: StackFit.loose,
@@ -30,7 +31,7 @@ class DealItemImageSection extends StatelessWidget {
                 topLeft: Radius.circular(4.0),
                 bottomLeft: Radius.circular(4.0),
               ),
-              child: Image.network(
+              child: deal.image != null ? deal.image : Image.network(
                 'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
                 fit: BoxFit.cover,
               ),

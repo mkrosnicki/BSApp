@@ -1,3 +1,4 @@
+import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DealDetailsImage extends StatelessWidget {
-  final String dealId;
+  final DealModel deal;
 
-  DealDetailsImage(this.dealId);
+  DealDetailsImage(this.deal);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class DealDetailsImage extends StatelessWidget {
         Container(
           height: imageHeight,
           width: double.infinity,
-          child: Image.network(
+          child: deal.image != null ? deal.image : Image.network(
             'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
             fit: BoxFit.cover,
           ),
@@ -44,9 +45,9 @@ class DealDetailsImage extends StatelessWidget {
             child: Consumer<Deals>(
               builder: (context, dealsData, child) =>  Consumer<Auth>(
                 builder: (context, authData, child) => GestureDetector(
-                  onTap: () => _toggleFavourites(context, dealId, dealsData.isObservedDealById(dealId), authData.isAuthenticated),
+                  onTap: () => _toggleFavourites(context, deal.id, dealsData.isObservedDealById(deal.id), authData.isAuthenticated),
                   child: Icon(
-                    dealsData.isObservedDealById(dealId) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                    dealsData.isObservedDealById(deal.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
                     size: 30,
                   ),
                 ),
