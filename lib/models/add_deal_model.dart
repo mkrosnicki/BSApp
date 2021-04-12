@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/discount_type.dart';
@@ -27,6 +30,7 @@ class AddDealModel {
   double _regularPrice;
   double _currentPrice;
   double _shippingPrice;
+  File _image;
 
   DateTime get validFrom => _validFrom;
 
@@ -55,6 +59,12 @@ class AddDealModel {
   String get voivodeshipReadable => _voivodeshipReadable;
 
   DiscountType get discountType => _discountType;
+
+  File get image => _image;
+
+  set image(File value) {
+    _image = value;
+  }
 
   set discountType(DiscountType value) {
     _discountType = value;
@@ -178,6 +188,7 @@ class AddDealModel {
       'currentPrice': _currentPrice,
       'regularPrice': _regularPrice,
       'shippingPrice': _shippingPrice,
+      'image': _image == null ? null : base64Encode(_image.readAsBytesSync()),
     };
   }
 

@@ -42,7 +42,7 @@ class _DealItemState extends State<DealItem> {
                     flex: 35,
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: DealItemImageSection(widget.deal.id),
+                      child: DealItemImageSection(widget.deal),
                     ),
                   ),
                   Consumer<Auth>(

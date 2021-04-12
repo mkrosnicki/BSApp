@@ -1,5 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
@@ -9,7 +9,6 @@ import 'package:BSApp/widgets/deals/deal_details_image.dart';
 import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsScreen extends StatefulWidget {
@@ -67,8 +66,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    final dealId = ModalRoute.of(context).settings.arguments as String;
-    final deal = Provider.of<Deals>(context, listen: false).findById(dealId);
+    final deal = ModalRoute.of(context).settings.arguments as DealModel;
     return Scaffold(
       // appBar: AppBar(),
       body: NotificationListener<ScrollNotification>(
@@ -88,7 +86,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DealDetailsImage(dealId),
+                          DealDetailsImage(deal),
                           DealDetailsDescription(deal),
                           DealDetailsActions(deal),
                           DealDetailsComments(deal, _commentToReplySubject),
@@ -96,7 +94,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                       ),
                     ),
                   ),
-                  DealDetailsNewComment(dealId, _commentToReplySubject),
+                  DealDetailsNewComment(deal.id, _commentToReplySubject),
                 ],
               ),
               Container(

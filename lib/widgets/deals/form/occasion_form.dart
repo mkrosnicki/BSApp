@@ -6,6 +6,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'age_type_chips.dart';
@@ -85,6 +86,19 @@ class _OccasionFormState extends State<OccasionForm> {
     });
   }
 
+  Future<void> _takePicture() async {
+    final imageFile = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    if (imageFile == null) {
+      return;
+    }
+    setState(() {
+      _newDeal.image = imageFile;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -99,6 +113,38 @@ class _OccasionFormState extends State<OccasionForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.grey)),
+                          child: _newDeal.image != null
+                              ? Image.file(
+                                  _newDeal.image,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                )
+                              : Text(
+                                  'No Image Taken',
+                                  textAlign: TextAlign.center,
+                                ),
+                          alignment: Alignment.center,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: FlatButton.icon(
+                            icon: Icon(Icons.camera),
+                            label: Text('Take Picture'),
+                            textColor: Theme.of(context).primaryColor,
+                            onPressed: _takePicture,
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 10,
                     ),
