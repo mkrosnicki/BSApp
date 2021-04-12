@@ -21,6 +21,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
   Widget build(BuildContext context) {
     return Expanded(
       child: TextField(
+        onTap: widget.onTapInputFunction,
         controller: widget.searchInputController,
         onSubmitted: widget.onSubmitInputFunction,
           keyboardType: TextInputType.text,
