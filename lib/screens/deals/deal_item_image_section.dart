@@ -25,9 +25,15 @@ class DealItemImageSection extends StatelessWidget {
           Container(
             height: 130,
             width: double.infinity,
-            child: Image.network(
-              'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
-              fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0),
+                bottomLeft: Radius.circular(4.0),
+              ),
+              child: Image.network(
+                'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           // Positioned(

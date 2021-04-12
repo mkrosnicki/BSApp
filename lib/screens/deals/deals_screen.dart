@@ -99,53 +99,52 @@ class _DealsScreenState extends State<DealsScreen> {
       body: SafeArea(
         child: !_isSearchPanelVisible
             ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Kategorie',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  CategoriesScrollable(),
-                  Padding(padding: EdgeInsets.all(8.0)),
-                  FutureBuilder(
-                    future:
-                        Provider.of<Deals>(context, listen: false).fetchDeals(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        if (snapshot.error != null) {
-                          return Center(
-                            child: Text('An error occurred!'),
-                          );
-                        } else {
-                          return Flexible(
-                            child: RefreshIndicator(
-                              onRefresh: () => _refreshDeals(context),
-                              child: Consumer<Deals>(
-                                builder: (context, dealsData, child) =>
-                                    ListView.builder(
-                                  itemBuilder: (context, index) =>
-                                      DealItem(dealsData.deals[index]),
-                                  itemCount: dealsData.deals.length,
-                                ),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FutureBuilder(
+              future:
+              Provider.of<Deals>(context, listen: false).fetchDeals(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.error != null) {
+                    return Center(
+                      child: Text('An error occurred!'),
+                    );
+                  } else {
+                    return Flexible(
+                      child: RefreshIndicator(
+                        onRefresh: () => _refreshDeals(context),
+                        child: Consumer<Deals>(
+                          builder: (context, dealsData, child) =>
+                              ListView.builder(
+                                itemBuilder: (context, index) {
+                                  if (index == 0) {
+                                    return Column(
+                                      children: [
+                                        CategoriesScrollable(),
+                                        Padding(padding: EdgeInsets.all(4.0)),
+                                      ],
+                                    );
+                                  } else {
+                                    return DealItem(dealsData.deals[index - 1]);
+                                  }
+                                },
+                                itemCount: dealsData.deals.length + 1,
                               ),
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ],
-              )
+                        ),
+                      ),
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        )
             : Center(
-                child: Text('Brak ostatnich wyszukiwań'),
-              ),
+          child: Text('Brak ostatnich wyszukiwań'),
+        ),
       ),
     );
   }
@@ -156,12 +155,12 @@ class _DealsScreenState extends State<DealsScreen> {
 
   Future _showFilterSelectionDialog(BuildContext context) async {
     var newFilterSettings =
-        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
-            builder: (BuildContext context) {
-              return FilterSelectionScreen();
-            },
-            settings: RouteSettings(arguments: FilterSettings()),
-            fullscreenDialog: true));
+    await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+        builder: (BuildContext context) {
+          return FilterSelectionScreen();
+        },
+        settings: RouteSettings(arguments: FilterSettings()),
+        fullscreenDialog: true));
     if (newFilterSettings != null) {
       Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
           arguments: newFilterSettings);

@@ -1,4 +1,3 @@
-import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,25 +5,10 @@ import 'package:provider/provider.dart';
 import 'category_scrollable_item.dart';
 
 class CategoriesScrollable extends StatelessWidget {
-  List<CategoryModel> _allCategories;
-
-  Future<void> _initCategories(BuildContext context) {
-    if (_allCategories == null) {
-      return Provider.of<Categories>(context, listen: false)
-          .fetchCategories()
-          .then((_) {
-        _allCategories =
-            Provider.of<Categories>(context, listen: false).categories;
-      });
-    } else {
-      return Future(() => {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 90,
       width: double.infinity,
       child: FutureBuilder(
         future:
@@ -53,14 +37,4 @@ class CategoriesScrollable extends StatelessWidget {
       ),
     );
   }
-
-// ListView(
-// shrinkWrap: true,
-// scrollDirection: Axis.horizontal,
-// children: List.generate(
-// 10,
-// (index) => CategoryScrollableItem(categoriesData.categories[index]),
-// ),
-// )
-
 }
