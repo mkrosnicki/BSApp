@@ -23,39 +23,6 @@ class _DealsScreenState extends State<DealsScreen> {
 
   bool _isSearchPanelVisible = false;
 
-  _createSearchBox() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.centerLeft,
-      // color: Colors.white,
-      child: Row(
-        children: [
-          AppBarSearchInput(
-            onTapInputFunction: () => _showSearchPanel(true),
-            onSubmitInputFunction: (searchText) {
-              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-                  arguments: FilterSettings.phrase(searchText));
-              _showSearchPanel(false);
-            },
-            searchInputController: _searchTextController,
-          ),
-        ],
-      ),
-    );
-  }
-
-  _showSearchPanel(bool isShowSearch) {
-    if (_isSearchPanelVisible != isShowSearch) {
-      setState(() {
-        _isSearchPanelVisible = isShowSearch;
-        if (!_isSearchPanelVisible) {
-          FocusScope.of(context).requestFocus(new FocusNode());
-          _searchTextController.text = "";
-        }
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +33,7 @@ class _DealsScreenState extends State<DealsScreen> {
           title: _createSearchBox(),
           backgroundColor: Colors.white,
           elevation: 0,
-          bottom: AppBarBottomBorder(),
+          bottom: _isSearchPanelVisible ? AppBarBottomBorder() : null,
           actions: [
             if (!_isSearchPanelVisible)
               InkWell(
@@ -147,6 +114,39 @@ class _DealsScreenState extends State<DealsScreen> {
         ),
       ),
     );
+  }
+
+  _createSearchBox() {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.centerLeft,
+      // color: Colors.white,
+      child: Row(
+        children: [
+          AppBarSearchInput(
+            onTapInputFunction: () => _showSearchPanel(true),
+            onSubmitInputFunction: (searchText) {
+              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
+                  arguments: FilterSettings.phrase(searchText));
+              _showSearchPanel(false);
+            },
+            searchInputController: _searchTextController,
+          ),
+        ],
+      ),
+    );
+  }
+
+  _showSearchPanel(bool isShowSearch) {
+    if (_isSearchPanelVisible != isShowSearch) {
+      setState(() {
+        _isSearchPanelVisible = isShowSearch;
+        if (!_isSearchPanelVisible) {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _searchTextController.text = "";
+        }
+      });
+    }
   }
 
   Future<void> _refreshDeals(BuildContext context) async {

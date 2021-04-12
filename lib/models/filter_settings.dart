@@ -22,6 +22,7 @@ class FilterSettings {
   FilterSettings();
 
   FilterSettings.phrase(this.phrase);
+  FilterSettings.categories(this.categories);
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");
