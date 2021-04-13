@@ -7,7 +7,7 @@ class CategoryScrollableItem extends StatelessWidget {
 
   final CategoryModel categoryModel;
 
-  CategoryScrollableItem(this.categoryModel);
+  const CategoryScrollableItem(this.categoryModel);
 
   @override
   Widget build(BuildContext context) {

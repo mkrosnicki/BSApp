@@ -1,4 +1,6 @@
+import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
@@ -21,10 +23,13 @@ class DealsScreen extends StatefulWidget {
 class _DealsScreenState extends State<DealsScreen> {
   final _searchTextController = TextEditingController();
 
+  List<CategoryModel> _allCategories;
+
   bool _isSearchPanelVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    _initCategories();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -90,7 +95,7 @@ class _DealsScreenState extends State<DealsScreen> {
                                   if (index == 0) {
                                     return Column(
                                       children: [
-                                        CategoriesScrollable(),
+                                        const CategoriesScrollable(_allCategories),
                                         Padding(padding: EdgeInsets.all(4.0)),
                                       ],
                                     );
@@ -145,6 +150,17 @@ class _DealsScreenState extends State<DealsScreen> {
           FocusScope.of(context).requestFocus(new FocusNode());
           _searchTextController.text = "";
         }
+      });
+    }
+  }
+
+  void _initCategories() async {
+    if (_allCategories == null) {
+      await Provider.of<Categories>(context, listen: false)
+          .fetchCategories()
+          .then((_) {
+        _allCategories =
+            Provider.of<Categories>(context, listen: false).categories;
       });
     }
   }
