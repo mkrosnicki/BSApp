@@ -6,6 +6,8 @@ import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
+import 'package:BSApp/widgets/common/last_search_item.dart';
+import 'package:BSApp/widgets/common/last_searches.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,52 +73,51 @@ class _DealsScreenState extends State<DealsScreen> {
       body: SafeArea(
         child: !_isSearchPanelVisible
             ? Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FutureBuilder(
-              future:
-              Provider.of<Deals>(context, listen: false).fetchDeals(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  if (snapshot.error != null) {
-                    return Center(
-                      child: Text('An error occurred!'),
-                    );
-                  } else {
-                    return Flexible(
-                      child: RefreshIndicator(
-                        onRefresh: () => _refreshDeals(context),
-                        child: Consumer<Deals>(
-                          builder: (context, dealsData, child) =>
-                              ListView.builder(
-                                itemBuilder: (context, index) {
-                                  if (index == 0) {
-                                    return Column(
-                                      children: [
-                                        const CategoriesScrollable(_allCategories),
-                                        Padding(padding: EdgeInsets.all(4.0)),
-                                      ],
-                                    );
-                                  } else {
-                                    return DealItem(dealsData.deals[index - 1]);
-                                  }
-                                },
-                                itemCount: dealsData.deals.length + 1,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FutureBuilder(
+                    future:
+                        Provider.of<Deals>(context, listen: false).fetchDeals(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        if (snapshot.error != null) {
+                          return Center(
+                            child: Text('An error occurred!'),
+                          );
+                        } else {
+                          return Flexible(
+                            child: RefreshIndicator(
+                              onRefresh: () => _refreshDeals(context),
+                              child: Consumer<Deals>(
+                                builder: (context, dealsData, child) =>
+                                    ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    if (index == 0) {
+                                      return Column(
+                                        children: [
+                                          CategoriesScrollable(_allCategories),
+                                          Padding(padding: EdgeInsets.all(4.0)),
+                                        ],
+                                      );
+                                    } else {
+                                      return DealItem(
+                                          dealsData.deals[index - 1]);
+                                    }
+                                  },
+                                  itemCount: dealsData.deals.length + 1,
+                                ),
                               ),
-                        ),
-                      ),
-                    );
-                  }
-                }
-              },
-            ),
-          ],
-        )
-            : Center(
-          child: Text('Brak ostatnich wyszukiwań'),
-        ),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ],
+              )
+            : LastSearches(),
       ),
     );
   }
@@ -171,12 +172,12 @@ class _DealsScreenState extends State<DealsScreen> {
 
   Future _showFilterSelectionDialog(BuildContext context) async {
     var newFilterSettings =
-    await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
-        builder: (BuildContext context) {
-          return FilterSelectionScreen();
-        },
-        settings: RouteSettings(arguments: FilterSettings()),
-        fullscreenDialog: true));
+        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+            builder: (BuildContext context) {
+              return FilterSelectionScreen();
+            },
+            settings: RouteSettings(arguments: FilterSettings()),
+            fullscreenDialog: true));
     if (newFilterSettings != null) {
       Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
           arguments: newFilterSettings);
