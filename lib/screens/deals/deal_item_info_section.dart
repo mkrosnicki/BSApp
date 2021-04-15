@@ -108,7 +108,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                         '${widget.deal.regularPrice} zł',
                         style: TextStyle(
                             fontSize: 14,
-                            color: Colors.red.shade200,
+                            color: Colors.grey,
                             decoration: TextDecoration.lineThrough),
                       ),
                     ],
@@ -125,11 +125,11 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     Wrap(
                       children: [
                         Icon(CupertinoIcons.map_pin_ellipse,
-                            color: Colors.black54, size: 12),
+                            color: Colors.black, size: 12),
                         Text(
                           ' Internet',
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 12,
                             color: Colors.black54,
                           ),
                         ),
@@ -138,11 +138,11 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     Wrap(
                       children: [
                         Icon(CupertinoIcons.time,
-                            color: Colors.black54, size: 12),
+                            color: Colors.black, size: 12),
                         Text(
                           ' ${_dateFormat.format(widget.deal.addedAt)}',
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 12,
                             color: Colors.black54,
                           ),
                         ),

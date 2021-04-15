@@ -89,6 +89,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'BSApp',
         theme: ThemeData(
+          fontFamily: 'InterUI',
           // This is the theme of your application.
           //
           // Try running your application with "flutter run". You'll see the
@@ -98,7 +99,8 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          scaffoldBackgroundColor: Color.fromRGBO(248, 250, 251, 1),
+          // scaffoldBackgroundColor: Color.fromRGBO(248, 250, 251, 1),
+          scaffoldBackgroundColor: Color.fromRGBO(245, 245, 245, 1),
           primarySwatch: Colors.blue,
           accentColor: Color.fromRGBO(99, 137, 217, 1),
           // This makes the visual density adapt to the platform that you run

@@ -50,6 +50,7 @@ class Topics with ChangeNotifier {
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.of(element));
     });
+    print('fetched');
     allTopics = loadedTopics;
     notifyListeners();
   }
@@ -115,7 +116,7 @@ class Topics with ChangeNotifier {
   }
 
   TopicModel findById(String topicId) {
-    return allTopics.firstWhere((topic) => topic.id == topicId);
+    return categoryTopics.firstWhere((topic) => topic.id == topicId);
   }
 
   bool wasVotedPositivelyBy(String topicId, String userId) {
