@@ -8,11 +8,11 @@ class City {
   City({this.id, this.name, this.population});
 
   static City of(dynamic citySnapshot) {
-    return City(
+    return citySnapshot != null ? City(
       id: citySnapshot['id'],
       name: citySnapshot['name'],
       population: citySnapshot['population'],
-    );
+    ) : null;
   }
 
   Map<String, dynamic> toJson() {

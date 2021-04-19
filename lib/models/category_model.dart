@@ -16,6 +16,16 @@ class CategoryModel {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'subCategories': subCategories.map((e) => e.toJson()).toList(),
+    };
+  }
+
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

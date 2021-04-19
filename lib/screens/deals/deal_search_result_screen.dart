@@ -127,9 +127,9 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   _saveFilterSettings(FilterSettings filterSettings) {
     if (filterSettings != null) {
       print(filterSettings.toJson());
-      CookiesUtilService.setCookieMapValue('filterSettings', filterSettings.toJson());
+      CookiesUtilService.setCookieListValue('filterSettings', [filterSettings.toJson()]);
       print('CookiesUtilService.getCookie');
-      CookiesUtilService.getCookie('filterSettings').then((value) => print(value));
+      CookiesUtilService.getCookieList('filterSettings').then((value) => print(value));
     }
   }
 

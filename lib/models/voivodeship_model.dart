@@ -9,11 +9,11 @@ class Voivodeship {
   Voivodeship({this.id, this.name, this.cities});
 
   static Voivodeship of(dynamic voivodeshipSnapshot) {
-    return Voivodeship(
+    return voivodeshipSnapshot != null ? Voivodeship(
         id: voivodeshipSnapshot['id'],
         name: voivodeshipSnapshot['name'],
         cities: (voivodeshipSnapshot['cities'] as List).map((e) => City.of(e)).toList()
-    );
+    ) : null;
   }
 
   Map<String, dynamic> toJson() {
