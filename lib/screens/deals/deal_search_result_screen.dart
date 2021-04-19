@@ -58,10 +58,11 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Znalezione okazje',
@@ -70,13 +71,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'Edytuj filtry',
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+                    child: Icon(
+                      CupertinoIcons.slider_horizontal_3,
+                      color: Colors.black87,
                     ),
                   ),
                 ),
