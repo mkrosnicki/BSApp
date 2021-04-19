@@ -166,6 +166,25 @@ class FilterSettings {
         voivodeship == null;
   }
 
+  FilterSettings fromJson(Map<String, dynamic> json) {
+    return null;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> dto = {
+      'phrase': phrase,
+      'categories': [],
+      'ageTypes': [],
+      'showActiveOnly': showActiveOnly.toString(),
+      'showInternetOnly': showInternetOnly.toString(),
+      'voivodeship': voivodeship != null ? voivodeship.toJson() : null,
+      'city': city != null ? city.toJson() : null,
+      'sortBy': [],
+    };
+    print(dto);
+    return dto;
+  }
+
   Map<String, dynamic> toSaveSearchDto() {
     Map<String, dynamic> dto = {
       'phrase': phrase,

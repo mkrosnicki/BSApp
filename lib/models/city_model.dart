@@ -4,17 +4,23 @@ class City {
   final String id;
   final String name;
   final int population;
-  final Voivodeship voivodeship;
 
-  City({this.id, this.name, this.population, this.voivodeship});
+  City({this.id, this.name, this.population});
 
   static City of(dynamic citySnapshot) {
     return City(
       id: citySnapshot['id'],
       name: citySnapshot['name'],
       population: citySnapshot['population'],
-      voivodeship: citySnapshot['voivodeship'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'population': population,
+    };
   }
 
   @override

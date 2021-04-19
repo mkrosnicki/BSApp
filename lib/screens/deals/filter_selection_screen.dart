@@ -5,8 +5,8 @@ import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +34,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     _initFilterSettings(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Filtry i sortowanie', style: MyStylingProvider.TEXT_BLACK,),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
+      appBar: BaseAppBar(
+        title: 'Filtry i sortowanie',
         leading: const AppBarCloseButton(Colors.black),
         actions: [
           TextButton(
@@ -140,7 +135,9 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                 width: double.infinity,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: PrimaryButton('Pokaż wyniki', () => _acceptFilters(context),
+                child: PrimaryButton(
+                  'Pokaż wyniki',
+                  () => _acceptFilters(context),
                 ),
               ),
             ),

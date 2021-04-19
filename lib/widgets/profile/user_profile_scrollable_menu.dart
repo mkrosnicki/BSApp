@@ -1,7 +1,13 @@
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserProfileScrollableMenu extends StatefulWidget {
+
+  final PublishSubject<int> contentIdSubject;
+
+  UserProfileScrollableMenu(this.contentIdSubject);
+
   @override
   _UserProfileScrollableMenuState createState() =>
       _UserProfileScrollableMenuState();
@@ -62,5 +68,6 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
     setState(() {
       this.selectedIndex = i;
     });
+    widget.contentIdSubject.add(i);
   }
 }

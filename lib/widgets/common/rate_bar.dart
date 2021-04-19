@@ -9,7 +9,7 @@ class RateBar extends StatelessWidget {
   static const double totalWidth = 70.0;
   static const double maxHeight = 22.0;
   static const double barHeight = maxHeight * 0.7;
-  static const double safeWidth = 5.0;
+  static const double safeWidth = 3.0;
   static const double maxWidth = totalWidth - safeWidth;
 
   int positiveVotes;
@@ -48,7 +48,7 @@ class RateBar extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   color: wasVotedPositively ? green : lightGray,
                   border: Border.all(
                     color: lightGray,

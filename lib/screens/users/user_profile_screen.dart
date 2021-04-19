@@ -10,11 +10,14 @@ import 'package:BSApp/widgets/profile/user_profile_statistics_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserProfileScreen extends StatelessWidget {
   static const routeName = '/user-profile';
 
   UserModel _user;
+
+  final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +46,8 @@ class UserProfileScreen extends StatelessWidget {
             children: [
               UserProfileMainInfo(_user),
               UserProfileStatisticsInfo(),
-              UserProfileScrollableMenu(),
-              UserProfileContent(),
+              UserProfileScrollableMenu(_contentIdSubject),
+              UserProfileContent(_contentIdSubject)
             ],
           ),
         ),
@@ -55,4 +58,6 @@ class UserProfileScreen extends StatelessWidget {
   _initUser(BuildContext context, String userId) async {
     _user = await Provider.of<Users>(context, listen: false).findUser(userId);
   }
+
+
 }

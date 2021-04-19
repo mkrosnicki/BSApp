@@ -11,7 +11,7 @@ class CookiesUtilService {
 
   static Future<Object> getCookie(String cookie) async {
     final prefs = await SharedPreferences.getInstance();
-    final extractedCookie = json.decode(prefs.getString('cookie')) as Map<String, Object>;
+    final extractedCookie = json.decode(prefs.getString(cookie)) as Map<String, Object>;
     return extractedCookie;
   }
 

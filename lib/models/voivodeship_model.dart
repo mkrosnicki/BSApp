@@ -16,6 +16,14 @@ class Voivodeship {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'cities': cities.map((e) => e.toJson()).toList(),
+    };
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

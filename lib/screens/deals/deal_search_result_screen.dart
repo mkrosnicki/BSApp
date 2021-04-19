@@ -3,6 +3,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/services/cookies_util_service.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
@@ -112,6 +113,60 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     );
   }
 
+  _initFilterSettings() {
+    if (filterSettings == null) {
+      var passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
+      filterSettings = passedFilterSettings != null
+          ? passedFilterSettings
+          : FilterSettings();
+      _searchTextController.text = filterSettings.phrase;
+      _saveFilterSettings(passedFilterSettings);
+    }
+  }
+
+  _saveFilterSettings(FilterSettings filterSettings) {
+    if (filterSettings != null) {
+      print(filterSettings.toJson());
+      CookiesUtilService.setCookieMapValue('filterSettings', filterSettings.toJson());
+      print('CookiesUtilService.getCookie');
+      CookiesUtilService.getCookie('filterSettings').then((value) => print(value));
+    }
+  }
+
+  _createSearchBox(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.centerLeft,
+      // color: Colors.white,
+      child: Row(
+        children: [
+          AppBarSearchInput(
+            onTapInputFunction: () {},
+            onSubmitInputFunction: (_) {},
+            searchInputController: _searchTextController,
+          ),
+          Consumer<Searches>(
+            builder: (context, searchesData, child) => GestureDetector(
+              onTap: () {
+                if (searchesData.token == null) {
+                  AuthScreenProvider.showLoginScreen(context);
+                } else {
+                  _saveSearch();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: searchesData.isSaved(filterSettings)
+                    ? Icon(CupertinoIcons.heart_fill, color: Colors.black87)
+                    : Icon(CupertinoIcons.heart, color: Colors.black87),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future _showFilterSelectionDialog(BuildContext context) async {
     var newFilterSettings =
         await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
@@ -123,6 +178,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
+        _saveFilterSettings(newFilterSettings);
       });
     }
   }
@@ -200,50 +256,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           clearCategories: clearCategories,
           clearAgeTypes: clearAgeTypes);
     });
-  }
-
-  _initFilterSettings() {
-    if (filterSettings == null) {
-      var passedFilterSettings = ModalRoute.of(context).settings.arguments;
-      filterSettings = passedFilterSettings != null
-          ? passedFilterSettings
-          : FilterSettings();
-      _searchTextController.text = filterSettings.phrase;
-    }
-  }
-
-  _createSearchBox(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.centerLeft,
-      // color: Colors.white,
-      child: Row(
-        children: [
-          AppBarSearchInput(
-            onTapInputFunction: () {},
-            onSubmitInputFunction: (_) {},
-            searchInputController: _searchTextController,
-          ),
-          Consumer<Searches>(
-            builder: (context, searchesData, child) => GestureDetector(
-              onTap: () {
-                if (searchesData.token == null) {
-                  AuthScreenProvider.showLoginScreen(context);
-                } else {
-                  _saveSearch();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: searchesData.isSaved(filterSettings)
-                    ? Icon(CupertinoIcons.heart_fill, color: Colors.black87)
-                    : Icon(CupertinoIcons.heart, color: Colors.black87),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   _saveSearch() {
