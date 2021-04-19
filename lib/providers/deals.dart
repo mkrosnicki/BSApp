@@ -11,6 +11,8 @@ class Deals with ChangeNotifier {
   List<DealModel> allDeals = [];
   List<DealModel> fetchedObservedDeals = [];
   List<DealModel> fetchedAddedDeals = [];
+  List<DealModel> fetchedUserAddedDeals = [];
+
   String token;
 
   Deals.empty();
@@ -28,6 +30,10 @@ class Deals with ChangeNotifier {
 
   List<DealModel> get addedDeals {
     return [...fetchedAddedDeals];
+  }
+
+  List<DealModel> get userAddedDeals {
+    return [...fetchedUserAddedDeals];
   }
 
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
@@ -69,6 +75,20 @@ class Deals with ChangeNotifier {
       fetchedDeals.add(DealModel.of(element));
     });
     fetchedAddedDeals = fetchedDeals;
+    notifyListeners();
+  }
+
+  Future<void> fetchDealsAddedBy(String userId) async {
+    final List<DealModel> fetchedDeals = [];
+    final responseBody =
+    await _apiProvider.get('/users/${userId}/addedDeals') as List;
+    if (responseBody == null) {
+      print('No Deals Found!');
+    }
+    responseBody.forEach((element) {
+      fetchedDeals.add(DealModel.of(element));
+    });
+    fetchedUserAddedDeals = fetchedDeals;
     notifyListeners();
   }
 

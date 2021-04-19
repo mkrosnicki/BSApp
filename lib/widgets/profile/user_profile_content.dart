@@ -1,12 +1,14 @@
+import 'package:BSApp/widgets/profile/user_profile_added_deals.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserProfileContent extends StatelessWidget {
 
   final PublishSubject<int> contentIdSubject;
+  final String userId;
   Stream<int> get _contentIdStream => contentIdSubject.stream;
 
-  UserProfileContent(this.contentIdSubject);
+  UserProfileContent(this.userId, this.contentIdSubject);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class UserProfileContent extends StatelessWidget {
           direction: Axis.vertical,
           children: [
             Center(
-              child: Text(contentId.toString()),
+              child: UserProfileAddedDeals(userId),
             )
           ],
         );

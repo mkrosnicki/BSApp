@@ -47,7 +47,7 @@ class UserProfileScreen extends StatelessWidget {
               UserProfileMainInfo(_user),
               UserProfileStatisticsInfo(),
               UserProfileScrollableMenu(_contentIdSubject),
-              UserProfileContent(_contentIdSubject)
+              UserProfileContent(_user.id, _contentIdSubject)
             ],
           ),
         ),
