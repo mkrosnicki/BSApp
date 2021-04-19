@@ -20,13 +20,26 @@ class SortingTypeHelper {
     return null;
   }
 
-  static String getReadable(SortingType sortingType) {
+  static String getReadableM(SortingType sortingType) {
     switch (sortingType) {
       case SortingType.NEWEST:
         return 'Najnowsze';
         break;
       case SortingType.MOST_POPULAR:
         return 'Najpopularniejsze';
+        break;
+      default:
+        return null;
+    }
+  }
+
+  static String getReadableC(SortingType sortingType) {
+    switch (sortingType) {
+      case SortingType.NEWEST:
+        return 'Sortuj po najnowszych';
+        break;
+      case SortingType.MOST_POPULAR:
+        return 'Sortuj po najpopularniejszych';
         break;
       default:
         return null;

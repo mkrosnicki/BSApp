@@ -179,7 +179,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
           (e) => Container(
             margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(SortingTypeHelper.getReadable(e)),
+              label: Text(SortingTypeHelper.getReadableM(e)),
               selected: filtersSettings.sortBy == e,
               onSelected: (isSelected) {
                 setState(() {

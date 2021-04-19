@@ -18,20 +18,36 @@ class FilterSettings {
   List<AgeType> ageTypes = [];
   SortingType sortBy = DEFAULT_SORTING_TYPE;
 
-
   FilterSettings();
 
   FilterSettings.phrase(this.phrase);
+
   FilterSettings.categories(this.categories);
+
+  CategoryModel get lastCategory {
+    return categories.isNotEmpty ? categories[categories.length - 1] : null;
+  }
 
   String get categoriesString {
     return categories.map((e) => e.name).join(" / ");
+  }
+
+  String get lastCategoryString {
+    return lastCategory != null ? lastCategory.name : null;
   }
 
   String get locationString {
     return voivodeship != null
         ? '${voivodeship.name} / ${city != null ? city.name : 'Wszystkie miasta'}'
         : null;
+  }
+
+  String get simpleLocationString {
+    return city != null ? city.name : voivodeship != null ? voivodeship.name : null;
+  }
+
+  String get sortingString {
+    return sortBy != null ? 'Sortowanie: ${SortingTypeHelper.getReadableM(sortBy)}' : null;
   }
 
   String get ageTypesString {
@@ -67,6 +83,38 @@ class FilterSettings {
       paramsMap.putIfAbsent('sortBy', () => SortingTypeHelper.asString(sortBy));
     }
     return paramsMap;
+  }
+
+  clear(
+      {bool clearInternetOnly = false,
+      bool clearActiveOnly = false,
+      bool clearLocation = false,
+      bool clearSorting = false,
+      bool clearPhrase = false,
+      bool clearCategories = false,
+      bool clearAgeTypes = false}) {
+
+    if (clearInternetOnly) {
+      this.clearInternetOnly();
+    }
+    if (clearActiveOnly) {
+      this.clearActiveOnly();
+    }
+    if (clearLocation) {
+      this.clearLocation();
+    }
+    if (clearSorting) {
+      this.clearSorting();
+    }
+    if (clearPhrase) {
+      this.clearPhrase();
+    }
+    if (clearCategories) {
+      this.clearCategories();
+    }
+    if (clearAgeTypes) {
+      this.clearAgeTypes();
+    }
   }
 
   clearPhrase() {
@@ -109,8 +157,7 @@ class FilterSettings {
   }
 
   bool areDefaults() {
-    return
-        showInternetOnly == DEFAULT_SHOW_INTERNET_ONLY &&
+    return showInternetOnly == DEFAULT_SHOW_INTERNET_ONLY &&
         showActiveOnly == DEFAULT_SHOW_ACTIVE_ONLY &&
         categories.isEmpty &&
         ageTypes.isEmpty &&

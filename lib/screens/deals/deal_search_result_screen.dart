@@ -134,7 +134,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
       chips.add(
         SelectedFilterChip(
-          label: 'Internetowe',
+          label: 'Tylko Internetowe',
           onDeleteFunction: () => _clearFilterSettings(clearInternetOnly: true),
         ),
       );
@@ -142,7 +142,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.categories.isNotEmpty) {
       chips.add(
         SelectedFilterChip(
-          label: 'Kategorie',
+          label: 'Kategoria: ${filterSettings.lastCategoryString}',
           onDeleteFunction: () => _clearFilterSettings(clearCategories: true),
         ),
       );
@@ -150,7 +150,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.voivodeship != null) {
       chips.add(
         SelectedFilterChip(
-          label: 'Lokalizacja',
+          label: filterSettings.simpleLocationString,
           onDeleteFunction: () => _clearFilterSettings(clearSorting: true),
         ),
       );
@@ -159,7 +159,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
       chips.add(
         SelectedFilterChip(
-          label: 'Aktywne',
+          label: 'Tylko Aktywne',
           onDeleteFunction: () => _clearFilterSettings(clearActiveOnly: true),
         ),
       );
@@ -167,7 +167,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.ageTypes.isNotEmpty) {
       chips.add(
         SelectedFilterChip(
-          label: 'Wiek dziecka',
+          label: filterSettings.ageTypesString,
           onDeleteFunction: () => _clearFilterSettings(clearCategories: true),
         ),
       );
@@ -175,7 +175,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
       chips.add(
         SelectedFilterChip(
-          label: 'Sortowanie',
+          label: filterSettings.sortingString,
           onDeleteFunction: () => _clearFilterSettings(clearActiveOnly: true),
         ),
       );
@@ -191,28 +191,16 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       bool clearPhrase = false,
       bool clearCategories = false,
       bool clearAgeTypes = false}) {
+
     setState(() {
-      if (clearInternetOnly) {
-        filterSettings.clearInternetOnly();
-      }
-      if (clearActiveOnly) {
-        filterSettings.clearActiveOnly();
-      }
-      if (clearLocation) {
-        filterSettings.clearLocation();
-      }
-      if (clearSorting) {
-        filterSettings.clearSorting();
-      }
-      if (clearPhrase) {
-        filterSettings.clearPhrase();
-      }
-      if (clearCategories) {
-        filterSettings.clearCategories();
-      }
-      if (clearAgeTypes) {
-        filterSettings.clearAgeTypes();
-      }
+      filterSettings.clear(
+          clearInternetOnly: false,
+          clearActiveOnly: clearActiveOnly,
+          clearLocation: clearLocation,
+          clearSorting: clearSorting,
+          clearPhrase: clearPhrase,
+          clearCategories: clearCategories,
+          clearAgeTypes: clearAgeTypes);
     });
   }
 

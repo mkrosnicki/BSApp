@@ -22,7 +22,7 @@ class SelectedFilterChip extends StatelessWidget {
               padding: const EdgeInsets.only(left: 4.0, right: 2.0,),
               child: Text(
                 label,
-                style: TextStyle(fontSize: 11),
+                style: const TextStyle(fontSize: 10),
               ),
             ),
             onTap: onTapFunction != null ? onTapFunction : () {},
