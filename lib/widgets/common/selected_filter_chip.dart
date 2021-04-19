@@ -13,9 +13,9 @@ class SelectedFilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
+      child: Wrap(
+        direction: Axis.horizontal,
         children: [
           InkWell(
             child: Padding(
@@ -40,7 +40,6 @@ class SelectedFilterChip extends StatelessWidget {
           ),
         ],
       ),
-      alignment: Alignment.center,
       padding: EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         color: MyColorsProvider.BACKGROUND_COLOR,

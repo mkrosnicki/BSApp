@@ -41,24 +41,23 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (!filterSettings.areDefaults())
-            SizedBox(
-              height: 40,
+            Container(
+              color: Colors.white,
               width: double.infinity,
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: _buildFilterChips(),
-                ),
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                // direction: Axis.vertical,
+                alignment: WrapAlignment.start,
+                children: _buildFilterChips(),
               ),
             ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
+            padding: const EdgeInsets.only(
+                top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,12 +65,14 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               children: [
                 const Text(
                   'Znalezione okazje',
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                     child: Icon(
                       CupertinoIcons.slider_horizontal_3,
                       color: Colors.black87,
@@ -189,7 +190,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       bool clearPhrase = false,
       bool clearCategories = false,
       bool clearAgeTypes = false}) {
-
     setState(() {
       filterSettings.clear(
           clearInternetOnly: false,
