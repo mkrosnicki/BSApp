@@ -28,6 +28,7 @@ import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/added_posts_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +101,7 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           // scaffoldBackgroundColor: Color.fromRGBO(248, 250, 251, 1),
-          scaffoldBackgroundColor: Color.fromRGBO(245, 245, 245, 1),
+          scaffoldBackgroundColor: MyColorsProvider.BACKGROUND_COLOR,
           primarySwatch: Colors.blue,
           accentColor: Color.fromRGBO(99, 137, 217, 1),
           // This makes the visual density adapt to the platform that you run

@@ -11,6 +11,8 @@ class MyColorsProvider {
 
   static const SUPER_LIGHT_GREY = Color.fromRGBO(245, 245, 245, 1.0);
 
+  static const BACKGROUND_COLOR = Color.fromRGBO(245, 245, 245, 1);
+
   static Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
