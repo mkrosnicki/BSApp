@@ -13,7 +13,7 @@ class LogoutButton extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.all(10.0),
           alignment: Alignment.center,
-          child: Text('Wyloguj się', style: TextStyle(fontWeight: FontWeight.bold),),
+          child: Text('Wyloguj się', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),),
         ),
         focusColor: Colors.grey,
       ),

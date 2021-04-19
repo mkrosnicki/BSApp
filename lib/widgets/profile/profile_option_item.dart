@@ -14,7 +14,7 @@ class ProfileOptionItem extends StatelessWidget {
     return FlatButton(
       padding: EdgeInsets.zero,
       child: ListTile(
-        title: Text(title, style: TextStyle(fontSize: 14),),
+        title: Text(title, style: TextStyle(fontSize: 12),),
         trailing: Icon(Icons.chevron_right),
         focusColor: Colors.grey,
       ),
