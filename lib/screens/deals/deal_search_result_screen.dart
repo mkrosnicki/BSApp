@@ -57,15 +57,15 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               ),
             ),
           Container(
-            // color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Znalezione okazje',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
