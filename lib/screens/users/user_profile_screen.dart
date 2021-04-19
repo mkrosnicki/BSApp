@@ -5,6 +5,8 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/content_or_progress_indicator.dart';
 import 'package:BSApp/widgets/profile/user_profile_content.dart';
 import 'package:BSApp/widgets/profile/user_profile_main_info.dart';
+import 'package:BSApp/widgets/profile/user_profile_scrollable_menu.dart';
+import 'package:BSApp/widgets/profile/user_profile_statistics_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +42,8 @@ class UserProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               UserProfileMainInfo(_user),
+              UserProfileStatisticsInfo(),
+              UserProfileScrollableMenu(),
               UserProfileContent(),
             ],
           ),

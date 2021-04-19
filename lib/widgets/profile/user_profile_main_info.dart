@@ -1,9 +1,9 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileMainInfo extends StatelessWidget {
-
   final UserModel user;
 
   UserProfileMainInfo(this.user);
@@ -11,15 +11,13 @@ class UserProfileMainInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userInfoTextStyle = const TextStyle(
-      fontSize: 13,
+      fontSize: 12,
       color: Colors.grey,
     );
-    var userInfoBoldTextStyle = const TextStyle(
-        fontSize: 13, color: Colors.grey, fontWeight: FontWeight.bold);
     return Container(
       color: Colors.white,
-      height: 100,
-      padding: EdgeInsets.all(8.0),
+      // height: 100,
+      padding: EdgeInsets.all(10.0),
       child: Flex(
         direction: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,52 +28,52 @@ class UserProfileMainInfo extends StatelessWidget {
               padding: const EdgeInsets.all(4.0),
               margin: const EdgeInsets.only(left: 4.0),
               child: Flex(
-                direction: Axis.vertical,
+                direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: UserAvatar(
+                      username: user.username,
+                      radius: 25,
+                    ),
+                  ),
                   Flex(
-                    direction: Axis.horizontal,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    direction: Axis.vertical,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 6.0),
+                        margin: EdgeInsets.only(bottom: 2.0),
                         child: GestureDetector(
                           onTap: () => {},
                           child: Text(
                             '${user.username}',
                             style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Dołączył(a) : ',
-                        style: userInfoBoldTextStyle,
-                      ),
-                      Text(
-                        '${DateUtil.getFormatted(user.registeredAt)}',
-                        style: userInfoTextStyle,
+                      Wrap(
+                        children: [
+                          Text(
+                            'Dołączył(a) ',
+                            style: userInfoTextStyle,
+                          ),
+                          Text(
+                            '${DateUtil.getFormatted(user.registeredAt)}',
+                            style: userInfoTextStyle,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
-          ),
-          CircleAvatar(
-            minRadius: 35,
-            maxRadius: 35,
-            backgroundImage: NetworkImage(
-              'https://img.favpng.com/25/13/19/samsung-galaxy-a8-a8-user-login-telephone-avatar-png-favpng-dqKEPfX7hPbc6SMVUCteANKwj.jpg',
             ),
           ),
         ],

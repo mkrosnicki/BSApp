@@ -7,7 +7,6 @@ class UserProfileContent extends StatelessWidget {
     return Flex(
       direction: Axis.vertical,
       children: [
-        UserProfileScrollableMenu(),
         Center(
           child: Text('content'),
         )

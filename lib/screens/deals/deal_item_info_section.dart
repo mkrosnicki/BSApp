@@ -174,7 +174,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                       .numberOfPositiveVotes + 3,
                                   dealsData
                                       .findById(widget.deal.id)
-                                      .numberOfNegativeVotes,
+                                      .numberOfNegativeVotes + 5,
                                   Provider.of<Deals>(context)
                                       .wasVotedPositivelyBy(
                                           widget.deal.id, authData.userId),
@@ -184,28 +184,6 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                   () => _vote(authData.isAuthenticated, true),
                                   () => _vote(authData.isAuthenticated, false),
                                 ),
-                                // RedVotingButton(
-                                //   trailing: dealsData
-                                //       .findById(widget.deal.id)
-                                //       .numberOfNegativeVotes
-                                //       .toString(),
-                                //   function: () =>
-                                //       _vote(authData.isAuthenticated, false),
-                                //   isActive: Provider.of<Deals>(context)
-                                //       .wasVotedNegativelyBy(
-                                //           widget.deal.id, authData.userId),
-                                // ),
-                                // GreenVotingButton(
-                                //   trailing: dealsData
-                                //       .findById(widget.deal.id)
-                                //       .numberOfPositiveVotes
-                                //       .toString(),
-                                //   function: () =>
-                                //       _vote(authData.isAuthenticated, true),
-                                //   isActive: Provider.of<Deals>(context)
-                                //       .wasVotedPositivelyBy(
-                                //           widget.deal.id, authData.userId),
-                                // ),
                               ],
                             ),
                             Text(

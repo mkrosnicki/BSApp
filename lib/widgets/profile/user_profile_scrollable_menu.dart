@@ -1,43 +1,66 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
-class UserProfileScrollableMenu extends StatelessWidget {
+class UserProfileScrollableMenu extends StatefulWidget {
+  @override
+  _UserProfileScrollableMenuState createState() =>
+      _UserProfileScrollableMenuState();
+}
+
+class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
+  static const menuItemStyle = TextStyle(fontSize: 12);
+  static const activeMenuItemStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  static const BoxDecoration activeItemDecoration = BoxDecoration(
+    border: Border(
+      bottom: BorderSide(
+          color: MyColorsProvider.BLUE, width: 1.0, style: BorderStyle.solid),
+    ),
+  );
+
+  int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
-    return                   Container(
-      height: 40,
+    return Container(
+      // height: 40,
+      // padding: const EdgeInsets.all(9.0),
       color: Colors.white,
       width: double.infinity,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Padding(
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildMenuItem('Okazje', 1),
+          _buildMenuItem('Komentarze', 2),
+          _buildMenuItem('Posty', 3),
+        ],
+      ),
+    );
+  }
+
+  _buildMenuItem(String label, int index) {
+    return Flexible(
+      flex: 1,
+      child: GestureDetector(
+        onTap: () => _setIndex(index),
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),
-          child: Wrap(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Dodane okazje'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Dodane komentarze'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Posty na forum'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Placeholder 1'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Placeholder 2'),
-              ),
-            ],
+          child: Text(
+            label,
+            style: selectedIndex == index ? activeMenuItemStyle : menuItemStyle,
           ),
+          decoration: selectedIndex == index ? activeItemDecoration : null,
         ),
       ),
     );
+  }
+
+  _setIndex(int i) {
+    setState(() {
+      this.selectedIndex = i;
+    });
   }
 }

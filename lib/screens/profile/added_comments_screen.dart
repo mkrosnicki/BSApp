@@ -1,6 +1,8 @@
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/deals/comment_item.dart';
+import 'package:BSApp/widgets/profile/added_comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +32,7 @@ class AddedCommentsScreen extends StatelessWidget {
                 builder: (context, commentsData, child) =>
                     ListView.builder(
                       itemBuilder: (context, index) =>
-                          Text(commentsData.allAddedComments[index].content),
+                          AddedCommentItem(commentsData.allAddedComments[index]),
                       itemCount: commentsData.allAddedComments.length,
                     ),
               );
