@@ -2,7 +2,7 @@ import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/deals/comment_item.dart';
-import 'package:BSApp/widgets/profile/added_comment_item.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/comments/added_comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-import 'package:BSApp/widgets/profile/user_profile_added_deals.dart';
+import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/user/user_profile_added_deals.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 

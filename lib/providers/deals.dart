@@ -53,7 +53,7 @@ class Deals with ChangeNotifier {
   Future<void> fetchObservedDeals() async {
     final List<DealModel> fetchedDeals = [];
     final responseBody =
-        await _apiProvider.get('/users/me/observed', token: token) as List;
+        await _apiProvider.get('/users/me/deals/observed', token: token) as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }
@@ -94,12 +94,12 @@ class Deals with ChangeNotifier {
 
   Future<void> addToObservedDeals(String dealId) async {
     final addDealToFavouritesDto = {'dealId': dealId};
-    await _apiProvider.post('/users/me/observed', addDealToFavouritesDto, token: token);
+    await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: token);
     return fetchObservedDeals();
   }
 
   Future<void> deleteFromObservedDeals(String dealId) async {
-    await _apiProvider.delete('/users/me/observed/$dealId', token: token);
+    await _apiProvider.delete('/users/me/deals/observed/$dealId', token: token);
     return fetchObservedDeals();
   }
 

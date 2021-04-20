@@ -72,7 +72,7 @@ class Topics with ChangeNotifier {
   Future<void> fetchObservedTopics() async {
     final List<TopicModel> fetchedTopics = [];
     final responseBody =
-        await _apiProvider.get('/users/me/observed', token: token) as List;
+        await _apiProvider.get('/users/me/topics/observed', token: token) as List;
     if (responseBody == null) {
       print('No Topics Found!');
     }

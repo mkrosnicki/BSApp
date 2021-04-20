@@ -11,7 +11,8 @@ class MainAuthScreen extends StatelessWidget {
     const ProfileOptionsHeader('Informacje'),
     const ProfileOptionItem(title: 'Kontakt', route: '/favourites'),
     const ProfileOptionItem(title: 'Regulamin', route: '/favourites'),
-    const ProfileOptionItem(title: 'Polityka prywatności', route: '/favourites'),
+    const ProfileOptionItem(
+        title: 'Polityka prywatności', route: '/favourites'),
     const ProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
   ];
 
@@ -22,15 +23,21 @@ class MainAuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            ProfileOptionsUserInfo(),
+            Container(
+              height: 200,
+              child: ProfileOptionsUserInfo(),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
-              child: Text('Zaloguj się aby korzystać ze wszystkich funkcjonalności.'),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
+              child: Text(
+                  'Zaloguj się aby korzystać ze wszystkich funkcjonalności.'),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
+              child: PrimaryButton('Zaloguj się lub załóż konto',
+                  () => AuthScreenProvider.showLoginScreen(context)),
             ),
             Flexible(
               child: ListView.builder(
