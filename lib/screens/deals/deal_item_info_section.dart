@@ -53,7 +53,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                       GestureDetector(
                         onTap: () => Navigator.of(context).pushNamed(
                             DealDetailsScreen.routeName,
-                            arguments: widget.deal.id),
+                            arguments: widget.deal),
                         child: Flex(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           direction: Axis.horizontal,

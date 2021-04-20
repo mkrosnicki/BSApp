@@ -25,7 +25,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         controller: widget.searchInputController,
         onSubmitted: widget.onSubmitInputFunction,
           keyboardType: TextInputType.text,
-        style: const TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 13),
         autofocus: false,
         decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',

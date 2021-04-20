@@ -51,7 +51,7 @@ class TopicItemTopBar extends StatelessWidget {
           Text(
             '${topic.adderInfo.username}',
             style: Theme.of(context).textTheme.bodyText2.copyWith(
-                fontSize: 12, color: Colors.blue, fontWeight: FontWeight.w600),
+                fontSize: 11, color: Colors.blue, fontWeight: FontWeight.w600),
           ),
           Text(
             ' • ',
