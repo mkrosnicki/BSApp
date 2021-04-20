@@ -10,24 +10,16 @@ class ProfileMainInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userInfoTextStyle = const TextStyle(
-      fontSize: 11,
-      color: Colors.grey,
-    );
     return Container(
       color: Colors.white,
-      // height: 100,
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.only(top: 10.0),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: Container(
-              alignment: Alignment.center,
-              // padding: const EdgeInsets.all(4.0),
-              // margin: const EdgeInsets.only(left: 4.0),
               child: Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -37,8 +29,8 @@ class ProfileMainInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: UserAvatar(
-                      username: user != null ? user.username : 'fake',
-                      radius: 30,
+                      username: user != null ? user.username : 'U',
+                      radius: 40,
                     ),
                   ),
                   Flex(
@@ -51,25 +43,13 @@ class ProfileMainInfo extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => {},
                           child: Text(
-                            user != null ? '${user.username}' : '',
+                            user != null ? '${user.username}' : 'Witaj w BSAPP',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                      ),
-                      if (user != null) Wrap(
-                        children: [
-                          Text(
-                            'Dołączył(a) ',
-                            style: userInfoTextStyle,
-                          ),
-                          Text(
-                            '${DateUtil.getFormatted(user.registeredAt)}',
-                            style: userInfoTextStyle,
-                          ),
-                        ],
                       ),
                     ],
                   ),

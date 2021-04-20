@@ -17,24 +17,22 @@ class UserProfileMainInfo extends StatelessWidget {
     return Container(
       color: Colors.white,
       // height: 100,
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.only(bottom: 10.0),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: Container(
-              padding: const EdgeInsets.all(4.0),
-              margin: const EdgeInsets.only(left: 4.0),
               child: Flex(
-                direction: Axis.horizontal,
+                direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(bottom: 8.0),
                     child: UserAvatar(
                       username: user.username,
                       radius: 25,
@@ -43,7 +41,7 @@ class UserProfileMainInfo extends StatelessWidget {
                   Flex(
                     direction: Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         margin: EdgeInsets.only(bottom: 2.0),

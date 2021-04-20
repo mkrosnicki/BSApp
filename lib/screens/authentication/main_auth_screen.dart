@@ -1,4 +1,5 @@
 import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/profile/profile_main_info.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
 import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
@@ -23,15 +24,12 @@ class MainAuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: 200,
-              child: ProfileOptionsUserInfo(),
-            ),
+            ProfileMainInfo(null),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
               child: Text(
-                  'Zaloguj się aby korzystać ze wszystkich funkcjonalności.'),
+                  'Zaloguj się aby korzystać ze wszystkich funkcjonalności.', style: const TextStyle(fontSize: 13),),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
