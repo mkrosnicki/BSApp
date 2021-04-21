@@ -21,10 +21,10 @@ class CategoryScrollableItem extends StatelessWidget {
         child: Flex(
           direction: Axis.vertical,
           children: [
-            Flexible(
-              flex: 3,
+            Container(
+              height: 55,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Image.asset(
                   'assets/images/${CategoryModelHelper.assetNameFor(
                       categoryModel)}',
@@ -35,14 +35,23 @@ class CategoryScrollableItem extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  categoryModel.name, style: TextStyle(fontSize: 12),),
+                padding: const EdgeInsets.only(top: 2.0),
+                child: Text(_getShrinked(categoryModel.name), style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  String _getShrinked(String name) {
+    if (name.contains(' i ')) {
+      return name.replaceFirst(' i ', ' \ni ');
+    }
+    if (name.contains(' ')) {
+      return name.replaceFirst(' ', ' \n ');
+    }
+    return name;
   }
 }

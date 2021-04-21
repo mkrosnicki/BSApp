@@ -41,7 +41,7 @@ class RateBar extends StatelessWidget {
             child: Icon(
               CupertinoIcons.hand_thumbsup,
               size: 16,
-              color: wasVotedPositively ? Colors.black : lightGray,
+              color: wasVotedPositively ? Colors.black : Colors.black38,
             ),
           ),
         ),

@@ -140,7 +140,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     //   ],
                     // ),
                     _buildStatisticTile('Lokalizacja', 'Intetnet', false, true),
-                    _buildStatisticTile('Dodana', '${_dateFormat.format(widget.deal.addedAt)}', false, true),
+                    _buildStatisticTile('Dodana', '${_dateFormat.format(widget.deal.addedAt)}', false, false),
                     // Text(
                     //   '${_dateFormat.format(widget.deal.addedAt)}',
                     //   style: TextStyle(
@@ -176,7 +176,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                   dealsData
                                           .findById(widget.deal.id)
                                           .numberOfNegativeVotes +
-                                      10,
+                                      15,
                                   Provider.of<Deals>(context)
                                       .wasVotedPositivelyBy(
                                           widget.deal.id, authData.userId),
