@@ -30,7 +30,7 @@ class _CommentItemState extends State<CommentItem> {
         children: [
           _buildComment(context, widget.comment),
           Padding(
-            padding: EdgeInsets.only(left: 15.0),
+            padding: EdgeInsets.only(left: 10.0),
             child: Column(
               children: widget.comment.subComments
                   .map((reply) => _buildComment(context, reply))
@@ -44,10 +44,15 @@ class _CommentItemState extends State<CommentItem> {
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
     return Container(
-      color: Colors.white,
+      // color: Colors.white,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      margin: const EdgeInsets.only(bottom: 6.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        color: Colors.white,
+        border: Border.all(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.2,),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,7 +81,6 @@ class _CommentItemState extends State<CommentItem> {
             builder: (context, authData, child) => Consumer<Comments>(
               builder: (context, commentsData, child) => Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

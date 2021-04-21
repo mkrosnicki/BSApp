@@ -17,7 +17,7 @@ class DealDetailsActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      margin: EdgeInsets.only(bottom: 10.0),
+      // margin: EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
