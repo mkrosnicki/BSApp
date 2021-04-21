@@ -25,8 +25,7 @@ class CommentItem extends StatefulWidget {
 class _CommentItemState extends State<CommentItem> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
+    return Container(
       child: Column(
         children: [
           _buildComment(context, widget.comment),
@@ -44,92 +43,85 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   Widget _buildComment(BuildContext context, CommentModel comment) {
-    return Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommentItemUserInfo(comment),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 14.0),
-                  child: Wrap(
-                    children: [
-                      if (_displayRepliedUsername(comment))
-                        Text(
-                          '@${comment.replyForUsername} ',
-                          style: TextStyle(fontSize: 13, color: Colors.blue),
-                        ),
-                      Text(
-                        comment.content,
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+    return Container(
+      color: Colors.white,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      margin: const EdgeInsets.only(bottom: 6.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommentItemUserInfo(comment),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 14.0),
+              child: Wrap(
+                children: [
+                  if (_displayRepliedUsername(comment))
+                    Text(
+                      '@${comment.replyForUsername} ',
+                      style: TextStyle(fontSize: 13, color: Colors.blue),
+                    ),
+                  Text(
+                    comment.content,
+                    style: TextStyle(fontSize: 12),
                   ),
-                ),
+                ],
               ),
-              Consumer<Auth>(
-                builder: (context, authData, child) => Consumer<Comments>(
-                  builder: (context, commentsData, child) => Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(border: MyStylingProvider.BOTTOM_GREY_BORDER),
-                    padding: const EdgeInsets.symmetric(vertical: 2.0),
-                    child: Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+          ),
+          Consumer<Auth>(
+            builder: (context, authData, child) => Consumer<Comments>(
+              builder: (context, commentsData, child) => Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Wrap(
                       children: [
-                        Wrap(
-                          children: [
-                            MyBorderIconButton(
-                              iconData: CupertinoIcons.hand_thumbsdown_fill,
-                              function: () => _voteForComment(widget.dealId,
-                                  comment.id, false, authData.isAuthenticated),
-                              trailing:
-                                  comment.numberOfNegativeVotes.toString(),
-                              color: Colors.red,
-                              isActive: commentsData.wasVotedNegativelyBy(
-                                  comment.id, authData.userId),
-                              showBorder: false,
-                              fontSize: 12,
-                            ),
-                            MyBorderIconButton(
-                              iconData: CupertinoIcons.hand_thumbsup_fill,
-                              function: () => _voteForComment(widget.dealId,
-                                  comment.id, true, authData.isAuthenticated),
-                              trailing:
-                                  comment.numberOfPositiveVotes.toString(),
-                              color: MyColorsProvider.GREEN,
-                              isActive: commentsData.wasVotedPositivelyBy(
-                                  comment.id, authData.userId),
-                              showBorder: false,
-                              fontSize: 12,
-                            ),
-                          ],
+                        MyBorderIconButton(
+                          iconData: CupertinoIcons.hand_thumbsdown_fill,
+                          function: () => _voteForComment(widget.dealId,
+                              comment.id, false, authData.isAuthenticated),
+                          trailing: comment.numberOfNegativeVotes.toString(),
+                          color: Colors.red,
+                          isActive: commentsData.wasVotedNegativelyBy(
+                              comment.id, authData.userId),
+                          showBorder: false,
+                          fontSize: 12,
                         ),
                         MyBorderIconButton(
-                            label: 'Odpowiedz',
-                            function: () => _startCommentReply(comment),
-                            color: Colors.blue,
-                            isBold: true,
-                            fontSize: 12,
-                            showBorder: false,
-                            isActive: true),
+                          iconData: CupertinoIcons.hand_thumbsup_fill,
+                          function: () => _voteForComment(widget.dealId,
+                              comment.id, true, authData.isAuthenticated),
+                          trailing: comment.numberOfPositiveVotes.toString(),
+                          color: MyColorsProvider.GREEN,
+                          isActive: commentsData.wasVotedPositivelyBy(
+                              comment.id, authData.userId),
+                          showBorder: false,
+                          fontSize: 12,
+                        ),
                       ],
                     ),
-                  ),
+                    MyBorderIconButton(
+                        label: 'Odpowiedz',
+                        function: () => _startCommentReply(comment),
+                        color: Colors.blue,
+                        isBold: true,
+                        fontSize: 12,
+                        showBorder: false,
+                        isActive: true),
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-        Divider(),
-      ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
