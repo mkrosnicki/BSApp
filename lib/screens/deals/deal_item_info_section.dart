@@ -2,6 +2,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/rate_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,26 +115,39 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                 ],
               ),
               Container(
-                width: double.infinity,
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // width: double.infinity,
+                child: Row(
+                  // direction: Axis.horizontal,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      ' Internet',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    Text(
-                      ' ${_dateFormat.format(widget.deal.addedAt)}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
-                      ),
-                    ),
+                    // Column(
+                    //   children: [
+                    //     Text(
+                    //       'Internet',
+                    //       style: TextStyle(
+                    //         fontSize: 12,
+                    //         color: Colors.black54,
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       'Internet',
+                    //       style: TextStyle(
+                    //         fontSize: 12,
+                    //         color: Colors.black54,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    _buildStatisticTile('Lokalizacja', 'Intetnet', false, true),
+                    _buildStatisticTile('Dodana', '${_dateFormat.format(widget.deal.addedAt)}', false, true),
+                    // Text(
+                    //   '${_dateFormat.format(widget.deal.addedAt)}',
+                    //   style: TextStyle(
+                    //     fontSize: 12,
+                    //     color: Colors.black54,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -216,4 +230,41 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }
   }
+
+  static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
+  static const activeMenuItemStyle =
+  TextStyle(fontSize: 11, color: Colors.black);
+
+  _buildStatisticTile(String title, String text, bool borderLeft, bool borderRight) {
+    return Container(
+      // width: double.infinity,
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(right: 8.0),
+      margin: const EdgeInsets.only(right: 8.0),
+      child: Wrap(
+        direction: Axis.vertical,
+        crossAxisAlignment: WrapCrossAlignment.start,
+        spacing: 0.5,
+        children: [
+          Text(
+            title,
+            style: statNameStyle,
+          ),
+          Text(
+            text,
+            style: activeMenuItemStyle,
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+            left: borderLeft ? BorderSide(
+                color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none),
+            right: borderRight ? BorderSide(
+                color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none)
+        ),
+      ),
+    );
+  }
+
 }
