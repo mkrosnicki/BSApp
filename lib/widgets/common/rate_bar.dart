@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RateBar extends StatelessWidget {
   Color lightGray = Color.fromRGBO(224, 224, 224, 1.0);
   Color red = Color.fromRGBO(255, 128, 128, 1.0);
   Color green = Colors.green.shade400.withOpacity(0.8);
-  static const double totalWidth = 70.0;
+  static const double totalWidth = 80.0;
   static const double maxHeight = 22.0;
-  static const double barHeight = maxHeight * 0.7;
-  static const double safeWidth = 3.0;
+  static const double barHeight = maxHeight * 0.75;
+  static const double safeWidth = 0.0;
   static const double maxWidth = totalWidth - safeWidth;
 
   int positiveVotes;
@@ -35,7 +36,7 @@ class RateBar extends StatelessWidget {
             child: Icon(
               CupertinoIcons.hand_thumbsup,
               size: 16,
-              color: wasVotedPositively ? Colors.black87 : Colors.grey,
+              color: wasVotedPositively ? Colors.black : lightGray,
             ),
           ),
         ),
@@ -49,7 +50,8 @@ class RateBar extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  color: wasVotedPositively ? green : lightGray,
+                  // color: positiveVotes > negativeVotes ? green : lightGray,
+                  color: positiveVotes > negativeVotes ? green : lightGray,
                   border: Border.all(
                     color: lightGray,
                     width: 0.2,
@@ -64,9 +66,10 @@ class RateBar extends StatelessWidget {
                           positiveVotes.toString(),
                           style: TextStyle(
                             fontSize: 10,
-                            color: wasVotedPositively
-                                ? Colors.black87
-                                : Colors.black54,
+                            color: Colors.black,
+                            // color: wasVotedPositively
+                            //     ? Colors.black87
+                            //     : Colors.black54,
                           ),
                         ),
                       )
@@ -75,7 +78,7 @@ class RateBar extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   // color: lightGray,
-                  color: wasVotedNegatively ? red : lightGray,
+                  color: negativeVotes > positiveVotes ? red : lightGray,
                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   border: Border.all(
                     color: lightGray,
@@ -90,10 +93,8 @@ class RateBar extends StatelessWidget {
                         child: Text(
                           negativeVotes.toString(),
                           style: TextStyle(
-                            fontSize: 10,
-                            color: wasVotedNegatively
-                                ? Colors.black87
-                                : Colors.black54,
+                            fontSize: 11,
+                            color: Colors.black,
                           ),
                           overflow: TextOverflow.fade,
                         ),
@@ -111,9 +112,7 @@ class RateBar extends StatelessWidget {
             child: Icon(
               CupertinoIcons.hand_thumbsdown,
               size: 16,
-              color: wasVotedNegatively
-                  ? Colors.black87
-                  : Colors.black54,
+              color: wasVotedNegatively ? Colors.black : Colors.black38,
             ),
           ),
         ),

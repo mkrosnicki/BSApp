@@ -176,7 +176,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                   dealsData
                                           .findById(widget.deal.id)
                                           .numberOfNegativeVotes +
-                                      5,
+                                      10,
                                   Provider.of<Deals>(context)
                                       .wasVotedPositivelyBy(
                                           widget.deal.id, authData.userId),
