@@ -3,15 +3,26 @@ import 'package:intl/intl.dart';
 class DateUtil {
 
   static final DateFormat _dateFormat = new DateFormat.yMMMMd('pl');
+  static final DateFormat _timeFormat = new DateFormat.Hm('pl');
 
   static String getFormatted(DateTime dateTime) {
     return _dateFormat.format(dateTime);
   }
 
   static String timeAgoString(DateTime dateTime) {
-    var diff = DateTime.now().difference(dateTime);
+    final DateTime now = DateTime.now();
+    var diff = now.difference(dateTime);
+    // if (now.day - dateTime.day == 0) {
+    //   return 'Dzisiaj, ${_timeFormat.format(dateTime)}';
+    // }
+    // if (now.day - dateTime.day == 1) {
+    //   return 'Wczoraj, ${_timeFormat.format(dateTime)}';
+    // }
+    // if (diff.inDays >= 1) {
+    //   return diff.inDays >= 30 ? _dateFormat.format(dateTime) : '${diff.inDays}d temu';
+    // }
     if (diff.inDays >= 1) {
-      return diff.inDays >= 30 ? _dateFormat.format(dateTime) : '${diff.inDays}d temu';
+      return '${diff.inDays}d temu';
     }
     if (diff.inHours >= 1) {
       return '${diff.inHours}g temu';

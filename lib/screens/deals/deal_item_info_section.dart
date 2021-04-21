@@ -2,6 +2,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/rate_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,7 +141,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                     //   ],
                     // ),
                     _buildStatisticTile('Lokalizacja', 'Intetnet', false, true),
-                    _buildStatisticTile('Dodana', '${_dateFormat.format(widget.deal.addedAt)}', false, false),
+                    _buildStatisticTile('Dodana', '${DateUtil.timeAgoString(widget.deal.addedAt)}', false, false),
                     // Text(
                     //   '${_dateFormat.format(widget.deal.addedAt)}',
                     //   style: TextStyle(
