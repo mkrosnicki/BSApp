@@ -189,7 +189,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               ],
                             ),
                             Text(
-                              'ZOBACZ',
+                              'SPRAWDŹ',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

@@ -43,7 +43,7 @@ class ProfileUserInfo extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => {},
                           child: Text(
-                            '',
+                            user.username,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
