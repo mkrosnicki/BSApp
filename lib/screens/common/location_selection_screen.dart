@@ -94,7 +94,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                 );
               }
             },
-            itemCount: cities.length,
+            itemCount: cities.length + 1,
           ),
         ),
       ],

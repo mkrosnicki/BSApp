@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileAddedDeals extends StatelessWidget {
-
   String userId;
 
   UserProfileAddedDeals(this.userId);
@@ -12,8 +11,8 @@ class UserProfileAddedDeals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<Deals>(context, listen: false)
-          .fetchDealsAddedBy(userId),
+      future:
+          Provider.of<Deals>(context, listen: false).fetchDealsAddedBy(userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -24,10 +23,13 @@ class UserProfileAddedDeals extends StatelessWidget {
             );
           } else {
             return Consumer<Deals>(
-              builder: (context, userDealsData, child) => Column(
-                children: userDealsData.fetchedUserAddedDeals
-                    .map((deal) => DealItem(deal))
-                    .toList(),
+              builder: (context, userDealsData, child) => Flexible(
+                child: ListView.builder(
+                  itemCount: userDealsData.fetchedUserAddedDeals.length,
+                  itemBuilder: (context, index) {
+                    return DealItem(userDealsData.fetchedUserAddedDeals[index]);
+                  },
+                ),
               ),
             );
           }

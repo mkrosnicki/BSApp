@@ -53,7 +53,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
         child: Container(
           width: double.infinity,
           alignment: Alignment.center,
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
             label,
             style: selectedIndex == index ? activeMenuItemStyle : menuItemStyle,

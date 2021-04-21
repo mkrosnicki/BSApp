@@ -21,7 +21,7 @@ class _DealItemState extends State<DealItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      margin: const EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,

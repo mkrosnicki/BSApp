@@ -26,15 +26,15 @@ class _ProfileStatisticsInfoState extends State<ProfileStatisticsInfo> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildMenuItem('Okazje', 1, false, true),
-          _buildMenuItem('Komentarze', 2, false, true),
-          _buildMenuItem('Posty', 3, false, false),
+          _buildStatisticTile('Okazje', 1, false, true),
+          _buildStatisticTile('Komentarze', 2, false, true),
+          _buildStatisticTile('Posty', 3, false, false),
         ],
       ),
     );
   }
 
-  _buildMenuItem(String label, int index, bool borderLeft, bool borderRight) {
+  _buildStatisticTile(String label, int index, bool borderLeft, bool borderRight) {
     return Flexible(
       flex: 1,
       child: GestureDetector(

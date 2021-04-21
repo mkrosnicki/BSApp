@@ -95,12 +95,7 @@ class _DealsScreenState extends State<DealsScreen> {
                                     ListView.builder(
                                   itemBuilder: (context, index) {
                                     if (index == 0) {
-                                      return Column(
-                                        children: [
-                                          CategoriesScrollable(_allCategories),
-                                          Padding(padding: EdgeInsets.all(4.0)),
-                                        ],
-                                      );
+                                      return CategoriesScrollable(_allCategories);
                                     } else {
                                       return DealItem(
                                           dealsData.deals[index - 1]);
