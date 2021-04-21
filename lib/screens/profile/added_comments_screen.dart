@@ -1,13 +1,11 @@
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/deals/comment_item.dart';
-import 'file:///D:/Projects/Flutter/BSApp/lib/widgets/comments/added_comment_item.dart';
+import 'package:BSApp/widgets/comments/added_comment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddedCommentsScreen extends StatelessWidget {
-
   static const routeName = '/added-comments';
 
   @override
@@ -18,7 +16,8 @@ class AddedCommentsScreen extends StatelessWidget {
         title: 'Dodane komentarze',
       ),
       body: FutureBuilder(
-        future: Provider.of<Comments>(context, listen: false).fetchAddedComments(),
+        future:
+            Provider.of<Comments>(context, listen: false).fetchAddedComments(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -29,12 +28,11 @@ class AddedCommentsScreen extends StatelessWidget {
               );
             } else {
               return Consumer<Comments>(
-                builder: (context, commentsData, child) =>
-                    ListView.builder(
-                      itemBuilder: (context, index) =>
-                          AddedCommentItem(commentsData.allAddedComments[index]),
-                      itemCount: commentsData.allAddedComments.length,
-                    ),
+                builder: (context, commentsData, child) => ListView.builder(
+                  itemBuilder: (context, index) =>
+                      AddedCommentItem(commentsData.allAddedComments[index]),
+                  itemCount: commentsData.allAddedComments.length,
+                ),
               );
             }
           }
