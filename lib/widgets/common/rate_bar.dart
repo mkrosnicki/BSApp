@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RateBar extends StatelessWidget {
   Color lightGray = Color.fromRGBO(224, 224, 224, 1.0);
   Color red = Color.fromRGBO(255, 128, 128, 1.0);
-  Color green = Colors.green.shade400.withOpacity(0.8);
+  Color lightRed = Color.fromRGBO(255, 128, 128, 1.0).withOpacity(0.7);
+  Color green = Colors.green.shade400.withOpacity(0.6);
   static const double totalWidth = 80.0;
   static const double maxHeight = 22.0;
-  static const double barHeight = maxHeight * 0.75;
-  static const double safeWidth = 0.0;
+  static const double barHeight = maxHeight * 0.7;
+  static const double safeWidth = 3.0;
   static const double maxWidth = totalWidth - safeWidth;
 
   int positiveVotes;
@@ -20,8 +20,13 @@ class RateBar extends StatelessWidget {
   Function negativeVoteFunction;
   Function positiveVoteFunction;
 
-  RateBar(this.positiveVotes, this.negativeVotes, this.wasVotedPositively,
-      this.wasVotedNegatively, this.positiveVoteFunction, this.negativeVoteFunction);
+  RateBar(
+      this.positiveVotes,
+      this.negativeVotes,
+      this.wasVotedPositively,
+      this.wasVotedNegatively,
+      this.positiveVoteFunction,
+      this.negativeVoteFunction);
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +70,9 @@ class RateBar extends StatelessWidget {
                         child: Text(
                           positiveVotes.toString(),
                           style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
+                            fontSize: 11,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
                             // color: wasVotedPositively
                             //     ? Colors.black87
                             //     : Colors.black54,
@@ -94,7 +100,8 @@ class RateBar extends StatelessWidget {
                           negativeVotes.toString(),
                           style: TextStyle(
                             fontSize: 11,
-                            color: Colors.black,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
                           ),
                           overflow: TextOverflow.fade,
                         ),
@@ -121,8 +128,7 @@ class RateBar extends StatelessWidget {
   }
 
   double _getWidth(bool isPositive) {
-    var calculatedWidth = (maxWidth + safeWidth / 2) *
-        _partOfAll(isPositive);
+    var calculatedWidth = (maxWidth + safeWidth / 2) * _partOfAll(isPositive);
     if (calculatedWidth < safeWidth / 2) {
       return safeWidth / 2;
     } else if (calculatedWidth > maxWidth - safeWidth) {
@@ -137,8 +143,6 @@ class RateBar extends StatelessWidget {
     if (positiveVotes == 0 && negativeVotes == 0) {
       return 0.5;
     }
-    return numOfVotes == 0
-        ? 0.0
-        : numOfVotes / (positiveVotes + negativeVotes);
+    return numOfVotes == 0 ? 0.0 : numOfVotes / (positiveVotes + negativeVotes);
   }
 }

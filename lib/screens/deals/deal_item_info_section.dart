@@ -172,7 +172,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                                   dealsData
                                           .findById(widget.deal.id)
                                           .numberOfPositiveVotes +
-                                      3,
+                                      15,
                                   dealsData
                                           .findById(widget.deal.id)
                                           .numberOfNegativeVotes +
