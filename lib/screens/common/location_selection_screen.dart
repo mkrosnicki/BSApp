@@ -2,10 +2,9 @@ import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +23,11 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
 
   Future<void> _initCategories() {
     if (_allVoivodeships == null) {
-      return Provider.of<Locations>(context, listen: false).fetchVoivodeships().then((_) {
-        _allVoivodeships = Provider.of<Locations>(context, listen: false).voivodeships;
+      return Provider.of<Locations>(context, listen: false)
+          .fetchVoivodeships()
+          .then((_) {
+        _allVoivodeships =
+            Provider.of<Locations>(context, listen: false).voivodeships;
       });
     } else {
       return Future(() => {});
@@ -36,13 +38,8 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Lokalizacja', style: MyStylingProvider.TEXT_BLACK,),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
+      appBar: BaseAppBar(
+        title: 'Lokalizacja',
         leading: AppBarButton(
           onPress: () => _goUp(),
           icon: MyIconsProvider.BACK_BLACK_ICON,
@@ -75,29 +72,34 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   _buildCitiesList(List<City> cities) {
     return Column(
       children: [
-        FlatButton(
-          child: ListTile(
-            title: Text('Całe województwo ${_selectedVoivodeship.name}'),
-            focusColor: Colors.grey,
-          ),
-          onPressed: _selectAllCitiesInVoivodeship,
-        ),
         Expanded(
           child: ListView.builder(
-            itemBuilder: (context, index) => FlatButton(
-              child: ListTile(
-                title: Text(cities[index].name),
-                focusColor: Colors.grey,
-              ),
-              onPressed: () => _selectCity(cities[index]),
-            ),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return FlatButton(
+                  child: ListTile(
+                    title:
+                        Text('Całe województwo ${_selectedVoivodeship.name}'),
+                    focusColor: Colors.grey,
+                  ),
+                  onPressed: _selectAllCitiesInVoivodeship,
+                );
+              } else {
+                return FlatButton(
+                  child: ListTile(
+                    title: Text(cities[index].name),
+                    focusColor: Colors.grey,
+                  ),
+                  onPressed: () => _selectCity(cities[index]),
+                );
+              }
+            },
             itemCount: cities.length,
           ),
         ),
       ],
     );
   }
-
 
   _buildVoivodeshipsList(List<Voivodeship> voivodeships) {
     return Column(
@@ -107,8 +109,11 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
                 title: Text(voivodeships[index].name),
-                subtitle: Text('${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}'),
-                trailing: voivodeships[index].cities.isEmpty ? MyIconsProvider.NONE : MyIconsProvider.FORWARD_ICON,
+                subtitle: Text(
+                    '${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}'),
+                trailing: voivodeships[index].cities.isEmpty
+                    ? MyIconsProvider.NONE
+                    : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
               onPressed: () => _selectVoivodeship(voivodeships[index]),

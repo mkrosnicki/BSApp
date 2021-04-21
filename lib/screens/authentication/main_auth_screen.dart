@@ -1,6 +1,5 @@
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
-import 'package:BSApp/widgets/profile/profile_user_info.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
 import 'package:flutter/material.dart';
