@@ -47,7 +47,7 @@ class CategoryScrollableItem extends StatelessWidget {
 
   String _getShrinked(String name) {
     if (name.contains(' i ')) {
-      return name.replaceFirst(' i ', ' \ni ');
+      return name.replaceFirst(' i ', ' i\n ');
     }
     if (name.contains(' ')) {
       return name.replaceFirst(' ', ' \n ');
