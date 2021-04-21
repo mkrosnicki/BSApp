@@ -1,8 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
-import 'package:BSApp/widgets/profile/profile_main_info.dart';
+import 'package:BSApp/widgets/profile/profile_user_info.dart';
 import 'package:BSApp/widgets/profile/profile_options_list.dart';
-import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
 import 'package:BSApp/widgets/profile/profile_statistics_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +27,7 @@ class ProfileOptionsScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ProfileMainInfo(auth.me),
+                  ProfileUserInfo(auth.me),
                   ProfileStatisticsInfo(),
                   ProfileOptionsList(),
                 ],

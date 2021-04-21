@@ -3,10 +3,10 @@ import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
-class ProfileMainInfo extends StatelessWidget {
+class ProfileUserInfo extends StatelessWidget {
   final UserModel user;
 
-  ProfileMainInfo(this.user);
+  ProfileUserInfo(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ProfileMainInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: UserAvatar(
-                      username: user != null ? user.username : 'U',
+                      username: user.username,
                       radius: 40,
                     ),
                   ),
@@ -43,7 +43,7 @@ class ProfileMainInfo extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => {},
                           child: Text(
-                            user != null ? '${user.username}' : 'Witaj w BSAPP',
+                            '',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,

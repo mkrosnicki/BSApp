@@ -1,8 +1,8 @@
+import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
-import 'package:BSApp/widgets/profile/profile_main_info.dart';
+import 'package:BSApp/widgets/profile/profile_user_info.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
-import 'package:BSApp/widgets/profile/profile_options_user_info.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_screen_provider.dart';
@@ -24,7 +24,7 @@ class MainAuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            ProfileMainInfo(null),
+            MainAuthScreenHeader(),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
