@@ -37,18 +37,6 @@ class DealDetailsComments extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w700),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // todo
-                    },
-                    child: const Text(
-                      'Napisz komentarz',
-                      style: const TextStyle(
-                          color: Colors.blue,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
                 ],
               ),
             ),

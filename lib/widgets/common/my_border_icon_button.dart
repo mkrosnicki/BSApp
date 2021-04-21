@@ -11,8 +11,9 @@ class MyBorderIconButton extends StatelessWidget {
   final double fontSize;
   final bool isBold;
   final Color color;
+  final Color backgroundColor;
 
-  MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false});
+  MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false, this.backgroundColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +26,13 @@ class MyBorderIconButton extends StatelessWidget {
       height: 25,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
           side: MaterialStateProperty.all<BorderSide>(
-            showBorder ? BorderSide(color: borderColor, width: 0.8, style: BorderStyle.solid) : BorderSide(style: BorderStyle.none)
+            showBorder ? BorderSide(color: borderColor, width: 1.0, style: BorderStyle.solid) : BorderSide(style: BorderStyle.none)
           ),
           elevation: MaterialStateProperty.all(0.0),
           padding: MaterialStateProperty.all<EdgeInsets>(
-              EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0)),
+              EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0)),
           alignment: Alignment.center,
           minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
         ),
@@ -47,17 +48,17 @@ class MyBorderIconButton extends StatelessWidget {
                 child: Text(
                   label,
                   style: TextStyle(
-                      fontSize: fontSize, color: textColor, letterSpacing: 0.1, fontWeight: isBold ? FontWeight.w700 : FontWeight.w400),
+                      fontSize: fontSize, color: textColor, letterSpacing: 0.1, fontWeight: isBold ? FontWeight.w600 : FontWeight.w500),
                 ),
               ),
             if (iconData != null)
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Icon(iconData, size: fontSize, color: textColor),
               ),
             if (trailing != null)
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(2.0),
                 child: Text(trailing,
                     style: TextStyle(
                       fontSize: fontSize,

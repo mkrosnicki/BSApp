@@ -3,6 +3,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:BSApp/widgets/deals/comment_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +58,7 @@ class _CommentItemState extends State<CommentItem> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 16.0),
+                      horizontal: 12.0, vertical: 14.0),
                   child: Wrap(
                     children: [
                       if (_displayRepliedUsername(comment))
@@ -77,6 +78,8 @@ class _CommentItemState extends State<CommentItem> {
                 builder: (context, authData, child) => Consumer<Comments>(
                   builder: (context, commentsData, child) => Container(
                     width: double.infinity,
+                    decoration: BoxDecoration(border: MyStylingProvider.BOTTOM_GREY_BORDER),
+                    padding: const EdgeInsets.symmetric(vertical: 2.0),
                     child: Flex(
                       direction: Axis.horizontal,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +96,7 @@ class _CommentItemState extends State<CommentItem> {
                               isActive: commentsData.wasVotedNegativelyBy(
                                   comment.id, authData.userId),
                               showBorder: false,
-                              fontSize: 13,
+                              fontSize: 12,
                             ),
                             MyBorderIconButton(
                               iconData: CupertinoIcons.hand_thumbsup_fill,
@@ -105,7 +108,7 @@ class _CommentItemState extends State<CommentItem> {
                               isActive: commentsData.wasVotedPositivelyBy(
                                   comment.id, authData.userId),
                               showBorder: false,
-                              fontSize: 13,
+                              fontSize: 12,
                             ),
                           ],
                         ),

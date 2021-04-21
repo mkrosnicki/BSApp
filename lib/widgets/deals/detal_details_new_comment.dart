@@ -50,12 +50,12 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                         const Text(
                           'Odpowiadasz na komentarz ',
                           style: const TextStyle(
-                              color: Colors.black54, fontSize: 13),
+                              color: Colors.black87, fontSize: 12),
                         ),
                         Text(
                           '@${snapshot.data.adderInfo.username}',
                           style: const TextStyle(
-                              color: MyColorsProvider.BLUE,
+                              color: MyColorsProvider.DEEP_BLUE,
                               fontSize: 12,
                               fontWeight: FontWeight.w500),
                         ),
