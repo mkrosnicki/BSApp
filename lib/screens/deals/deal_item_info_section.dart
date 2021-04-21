@@ -2,9 +2,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
-import 'package:BSApp/widgets/common/green_voting_button.dart';
 import 'package:BSApp/widgets/common/rate_bar.dart';
-import 'package:BSApp/widgets/common/red_voting_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -122,31 +120,19 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Wrap(
-                      children: [
-                        Icon(CupertinoIcons.map_pin_ellipse,
-                            color: Colors.black, size: 12),
-                        Text(
-                          ' Internet',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      ' Internet',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
                     ),
-                    Wrap(
-                      children: [
-                        Icon(CupertinoIcons.time,
-                            color: Colors.black, size: 12),
-                        Text(
-                          ' ${_dateFormat.format(widget.deal.addedAt)}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      ' ${_dateFormat.format(widget.deal.addedAt)}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
                     ),
                   ],
                 ),
@@ -170,11 +156,13 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               children: [
                                 RateBar(
                                   dealsData
-                                      .findById(widget.deal.id)
-                                      .numberOfPositiveVotes + 3,
+                                          .findById(widget.deal.id)
+                                          .numberOfPositiveVotes +
+                                      3,
                                   dealsData
-                                      .findById(widget.deal.id)
-                                      .numberOfNegativeVotes + 5,
+                                          .findById(widget.deal.id)
+                                          .numberOfNegativeVotes +
+                                      5,
                                   Provider.of<Deals>(context)
                                       .wasVotedPositivelyBy(
                                           widget.deal.id, authData.userId),
