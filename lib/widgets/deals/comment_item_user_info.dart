@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class CommentItemUserInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      // margin: EdgeInsets.only(bottom: 6.0),
+                      margin: EdgeInsets.only(bottom: 2.0),
                       child: GestureDetector(
                         onTap: () => _navigateToUserProfileScreen(
                             context, comment.adderInfo.id),
@@ -52,7 +53,7 @@ class CommentItemUserInfo extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: Colors.blue,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -63,7 +64,7 @@ class CommentItemUserInfo extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2
-                          .copyWith(fontSize: 11, color: Colors.black38),
+                          .copyWith(fontSize: 11, color: Colors.grey),
                     ),
                   ],
                 ),

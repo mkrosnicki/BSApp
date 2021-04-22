@@ -116,7 +116,7 @@ class _CommentItemState extends State<CommentItem> {
                         function: () => _startCommentReply(comment),
                         color: Colors.blue,
                         isBold: true,
-                        fontSize: 12,
+                        fontSize: 11,
                         showBorder: false,
                         isActive: true),
                   ],

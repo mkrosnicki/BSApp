@@ -25,7 +25,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         controller: widget.searchInputController,
         onSubmitted: widget.onSubmitInputFunction,
           keyboardType: TextInputType.text,
-        style: const TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 12),
         autofocus: false,
         decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
@@ -34,7 +34,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
             child: Icon(
               CupertinoIcons.search,
               color: Colors.black54,
-              size: 18,
+              size: 15,
             ),
           ),
           prefixIconConstraints: BoxConstraints.tight(
