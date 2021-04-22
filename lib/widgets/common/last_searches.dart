@@ -19,7 +19,6 @@ class LastSearches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _initCookies();
-    print('afterinit');
     return FutureBuilder(
       future: _initCookies(),
       builder: (context, snapshot) {
@@ -32,11 +31,22 @@ class LastSearches extends StatelessWidget {
             );
           } else {
             return _cachedFilterSettings.isNotEmpty
-                ? ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => LastSearchItem(_cachedFilterSettings[index]),
-                    itemCount: _cachedFilterSettings.length,
+                ? Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        alignment: Alignment.centerLeft,
+                        child: Text('Ostatnie wyszukiwania', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),),
+                      ),
+                      ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return LastSearchItem(_cachedFilterSettings[index]);
+                        },
+                        itemCount: _cachedFilterSettings.length,
+                      ),
+                    ],
                   )
                 : Center(
                     child: Text('Brak ostatnich wyszukiwań'),
