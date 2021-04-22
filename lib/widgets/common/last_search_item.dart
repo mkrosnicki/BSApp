@@ -52,6 +52,7 @@ class LastSearchItem extends StatelessWidget {
             child: const Icon(
               CupertinoIcons.clear,
               size: 16,
+              color: Colors.blue,
             ),
           ),
         ],

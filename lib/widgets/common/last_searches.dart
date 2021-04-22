@@ -1,5 +1,4 @@
 import 'package:BSApp/models/filter_settings.dart';
-import 'package:BSApp/services/cookies_util_service.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,8 @@ class _LastSearchesState extends State<LastSearches> {
   List<FilterSettings> _cachedFilterSettings = [];
 
   _initCookies() async {
-    _cachedFilterSettings = await LastSearchesUtilService.getCachedFilterSettings();
+    _cachedFilterSettings =
+        await LastSearchesUtilService.getCachedFilterSettings();
   }
 
   @override
@@ -31,27 +31,33 @@ class _LastSearchesState extends State<LastSearches> {
               child: Text('An error occurred!'),
             );
           } else {
-            return _cachedFilterSettings.isNotEmpty
-                ? Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        alignment: Alignment.centerLeft,
-                        child: Text('Ostatnie wyszukiwania', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),),
+            if (_cachedFilterSettings.isNotEmpty) {
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Ostatnie wyszukiwania',
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w600),
                       ),
-                      ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return LastSearchItem(_cachedFilterSettings[index], () => _removeFilterSettingsAt(index));
-                        },
-                        itemCount: _cachedFilterSettings.length,
-                      ),
-                    ],
-                  )
-                : Center(
-                    child: Text('Brak ostatnich wyszukiwań'),
-                  );
+                    );
+                  } else {
+                    return LastSearchItem(_cachedFilterSettings[index - 1],
+                        () => _removeFilterSettingsAt(index - 1));
+                  }
+                },
+                itemCount: _cachedFilterSettings.length,
+              );
+            } else {
+              return Center(
+                child: Text('Brak ostatnich wyszukiwań'),
+              );
+            }
           }
         }
       },
