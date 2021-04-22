@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 class AppBarAddTopicButton extends StatelessWidget {
 
   final Color color;
+  final String categoryId;
 
-  const AppBarAddTopicButton(this.color);
+  const AppBarAddTopicButton(this.color, this.categoryId);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName),
+      onTap: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName, arguments: categoryId),
       child: TextButton(
         child: Icon(CupertinoIcons.plus, color: color,),
       ),

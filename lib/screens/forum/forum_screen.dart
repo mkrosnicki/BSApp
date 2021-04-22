@@ -2,11 +2,8 @@ import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
-import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
-import 'package:BSApp/widgets/bars/app_bar_button.dart';
-import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/forum/forum_category_item.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +64,8 @@ class ForumScreen extends StatelessWidget {
                             id: '1',
                             addedAt: DateTime.now(),
                             title: 'Jakiś fajny temat do dyskusji',
-                            content: 'Blablabla jakaś tam treść blabla dupa dupa',
+                            content:
+                                'Blablabla jakaś tam treść blabla dupa dupa',
                             adderInfo: AdderInfoModel(
                               id: '1',
                               username: 'FakeUser',

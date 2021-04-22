@@ -32,7 +32,7 @@ class ForumCategoryScreen extends StatelessWidget {
         title: 'Tematy',
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          const AppBarAddTopicButton(Colors.black),
+          AppBarAddTopicButton(Colors.black, categoryId),
         ],
       ),
       body: SafeArea(

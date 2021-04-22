@@ -96,14 +96,19 @@ class Topics with ChangeNotifier {
   }
 
 
-  Future<void> addNewTopic(String title, String content, String categoryId) async {
+  Future<TopicModel> addNewTopic(String title, String content, String categoryId) async {
     final addNewTopicDto = {
       'title': title,
       'content': content,
       'categoriesIds': [categoryId]
     };
-    _apiProvider.post('/topics', addNewTopicDto, token: token);
-    return fetchCategoryTopics(categoryId);
+    print(addNewTopicDto);
+    var topicSnapshot = await _apiProvider.post('/topics', addNewTopicDto, token: token);
+    print(topicSnapshot);
+    print('fetching');
+    await fetchCategoryTopics(categoryId);
+    print('fetched');
+    return TopicModel.of(topicSnapshot);
   }
 
   Future<void> addToObservedTopics(String topicId) async {
@@ -125,6 +130,8 @@ class Topics with ChangeNotifier {
   }
 
   TopicModel findById(String topicId) {
+    print('find by id');
+    print(categoryTopics.length);
     return categoryTopics.firstWhere((topic) => topic.id == topicId);
   }
 
