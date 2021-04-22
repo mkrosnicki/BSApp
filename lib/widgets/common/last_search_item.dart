@@ -12,7 +12,7 @@ class LastSearchItem extends StatelessWidget {
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -21,15 +21,26 @@ class LastSearchItem extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
-                child: Text(
-                  'Wyszukiwanie numer ${filterSettings}'.substring(0, 20),
-                  style:
-                      const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                child: Wrap(
+                  children: [
+                    Text(
+                      'Wyszukiwana fraza ',
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      '${filterSettings.phrase}',
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
               ),
               Text(
-                'Wyszukiwanie numer ${filterSettings}'.substring(0, 20),
-                style: const TextStyle(fontSize: 12, color: Colors.black54,),
+                _getFiltersString(),
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),
@@ -41,4 +52,43 @@ class LastSearchItem extends StatelessWidget {
       ),
     );
   }
+
+  _getFiltersString() {
+    List<String> filtersSet = _getFiltersSet();
+    var numberOfFilters = filtersSet.length;
+    if (numberOfFilters == 0) {
+      return '';
+    } else if (numberOfFilters < 2) {
+      return filtersSet.join(", ");
+    } else {
+      return '${filtersSet.join(", ")} oraz ${numberOfFilters - 2} inne filtry';
+    }
+  }
+
+  List<String> _getFiltersSet() {
+    List<String> filtersSet = [];
+    if (filterSettings.categories.isNotEmpty) {
+      filtersSet.add(filterSettings.lastCategoryString);
+    }
+    if (filterSettings.voivodeship != null) {
+      filtersSet.add(filterSettings.simpleLocationString);
+    }
+    if (filterSettings.ageTypes.isNotEmpty) {
+      filtersSet.add(filterSettings.ageTypesShortString);
+    }
+    if (filterSettings.showInternetOnly !=
+        FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
+      filtersSet.add('Tylko Internetowe');
+    }
+    if (filterSettings.showActiveOnly !=
+        FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
+      filtersSet.add('Tylko Aktywne');
+    }
+    if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
+      filtersSet.add(filterSettings.sortingString);
+    }
+    return filtersSet;
+  }
+
+
 }
