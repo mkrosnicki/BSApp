@@ -46,11 +46,9 @@ class Topics with ChangeNotifier {
     if (responseBody == null) {
       print('No Topics Found!');
     }
-    // print(responseBody);
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.of(element));
     });
-    print('fetched');
     allTopics = loadedTopics;
     notifyListeners();
   }
@@ -95,6 +93,17 @@ class Topics with ChangeNotifier {
     });
     fetchedAddedTopics = fetchedTopics;
     notifyListeners();
+  }
+
+
+  Future<void> addNewTopic(String title, String content, String categoryId) async {
+    final addNewTopicDto = {
+      'title': title,
+      'content': content,
+      'categoriesIds': [categoryId]
+    };
+    _apiProvider.post('/topics', addNewTopicDto, token: token);
+    return fetchCategoryTopics(categoryId);
   }
 
   Future<void> addToObservedTopics(String topicId) async {

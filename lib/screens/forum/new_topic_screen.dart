@@ -1,3 +1,4 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -28,24 +29,25 @@ class NewTopicScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Tytuł',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-            ),
             TextFormField(
-              decoration:
-                  MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
-                      // hintText: 'Tytuł',
-                      hintStyle: TextStyle(
-                        fontSize: 13,
-                      )),
               obscureText: false,
               cursorColor: Colors.black,
+              decoration: InputDecoration(
+                hintText: 'Tytuł',
+                hintStyle: TextStyle(fontSize: 14),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: MyColorsProvider.BLUE),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: MyColorsProvider.GREY_BORDER_COLOR),
+                ),
+              ),
               // controller: _newPasswordController,
               validator: (value) {
                 if (value.isEmpty || value.length < 3) {
@@ -58,24 +60,28 @@ class NewTopicScreen extends StatelessWidget {
                 // _newPassword = value;
               },
             ),
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Treść',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
+            Padding(padding: const EdgeInsets.all(8.0),),
             TextFormField(
-              minLines: 10,
-              maxLines: 10,
-              decoration:
-                  MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
-                hintText: 'Treść',
-              ),
+              minLines: 7,
+              maxLines: 7,
               obscureText: false,
               cursorColor: Colors.black,
+              decoration: InputDecoration(
+                hintText: 'Napisz coś...',
+                hintStyle: TextStyle(fontSize: 14),
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: const EdgeInsets.only(
+                    left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: MyColorsProvider.BLUE),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: const BorderSide(
+                      color: MyColorsProvider.GREY_BORDER_COLOR),
+                ),
+              ),
               // controller: _newPasswordController,
               validator: (value) {
                 if (value.isEmpty || value.length < 3) {
