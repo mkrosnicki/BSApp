@@ -3,6 +3,7 @@ import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
+import 'package:collection/collection.dart';
 
 class FilterSettings {
   static const SortingType DEFAULT_SORTING_TYPE = SortingType.NEWEST;
@@ -212,6 +213,32 @@ class FilterSettings {
     };
     return dto;
   }
+
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FilterSettings &&
+          runtimeType == other.runtimeType &&
+          phrase == other.phrase &&
+          DeepCollectionEquality.unordered().equals(categories, other.categories) &&
+          showActiveOnly == other.showActiveOnly &&
+          showInternetOnly == other.showInternetOnly &&
+          voivodeship == other.voivodeship &&
+          city == other.city &&
+          DeepCollectionEquality.unordered().equals(ageTypes, other.ageTypes) &&
+          sortBy == other.sortBy;
+
+  @override
+  int get hashCode =>
+      phrase.hashCode ^
+      categories.hashCode ^
+      showActiveOnly.hashCode ^
+      showInternetOnly.hashCode ^
+      voivodeship.hashCode ^
+      city.hashCode ^
+      ageTypes.hashCode ^
+      sortBy.hashCode;
 
   @override
   String toString() {

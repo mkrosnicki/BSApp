@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 
 class LastSearchItem extends StatelessWidget {
   final FilterSettings filterSettings;
+  final Function removeFunction;
 
-  LastSearchItem(this.filterSettings);
+  LastSearchItem(this.filterSettings, this.removeFunction);
 
   @override
   Widget build(BuildContext context) {
+    var filtersString = _getFiltersString();
     return Container(
       color: Colors.white,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(12.0),
+      margin: const EdgeInsets.only(bottom: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -23,7 +26,7 @@ class LastSearchItem extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 2.0),
                 child: Wrap(
                   children: [
-                    Text(
+                    const Text(
                       'Wyszukiwana fraza ',
                       style: const TextStyle(fontSize: 12),
                     ),
@@ -35,8 +38,8 @@ class LastSearchItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                _getFiltersString(),
+              if (filtersString != null) Text(
+                filtersString,
                 style: const TextStyle(
                   fontSize: 11,
                   color: Colors.black54,
@@ -44,9 +47,12 @@ class LastSearchItem extends StatelessWidget {
               ),
             ],
           ),
-          Icon(
-            CupertinoIcons.clear,
-            size: 16,
+          InkWell(
+            onTap: removeFunction,
+            child: const Icon(
+              CupertinoIcons.clear,
+              size: 16,
+            ),
           ),
         ],
       ),
@@ -57,11 +63,11 @@ class LastSearchItem extends StatelessWidget {
     List<String> filtersSet = _getFiltersSet();
     var numberOfFilters = filtersSet.length;
     if (numberOfFilters == 0) {
-      return '';
-    } else if (numberOfFilters < 2) {
+      return 'Brak innych filtrów';
+    } else if (numberOfFilters <= 2) {
       return filtersSet.join(", ");
     } else {
-      return '${filtersSet.join(", ")} oraz ${numberOfFilters - 2} inne filtry';
+      return '${filtersSet.sublist(0, 2).join(", ")} oraz inne filtry (${numberOfFilters - 2})';
     }
   }
 

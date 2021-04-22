@@ -1,19 +1,20 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/services/cookies_util_service.dart';
+import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:flutter/material.dart';
 
 import 'last_search_item.dart';
 
-class LastSearches extends StatelessWidget {
+class LastSearches extends StatefulWidget {
+  @override
+  _LastSearchesState createState() => _LastSearchesState();
+}
+
+class _LastSearchesState extends State<LastSearches> {
   List<FilterSettings> _cachedFilterSettings = [];
 
   _initCookies() async {
-    List<Map<String, dynamic>> cookieValues;
-    await CookiesUtilService.getCookieList('filterSettings')
-        .then((value) => cookieValues = value);
-    _cachedFilterSettings =
-        cookieValues.map((e) => FilterSettings.fromJson(e)).toList();
-    print(_cachedFilterSettings);
+    _cachedFilterSettings = await LastSearchesUtilService.getCachedFilterSettings();
   }
 
   @override
@@ -42,7 +43,7 @@ class LastSearches extends StatelessWidget {
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return LastSearchItem(_cachedFilterSettings[index]);
+                          return LastSearchItem(_cachedFilterSettings[index], () => _removeFilterSettingsAt(index));
                         },
                         itemCount: _cachedFilterSettings.length,
                       ),
@@ -65,5 +66,11 @@ class LastSearches extends StatelessWidget {
     //     : Center(
     //         child: Text('Brak ostatnich wyszukiwań'),
     //       );
+  }
+
+  _removeFilterSettingsAt(int index) {
+    setState(() {
+      LastSearchesUtilService.removeFilterSettingsAt(index);
+    });
   }
 }

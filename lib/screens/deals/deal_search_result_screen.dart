@@ -4,6 +4,7 @@ import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/services/cookies_util_service.dart';
+import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
@@ -115,21 +116,13 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
 
   _initFilterSettings() {
     if (filterSettings == null) {
-      var passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
+      var passedFilterSettings =
+          ModalRoute.of(context).settings.arguments as FilterSettings;
       filterSettings = passedFilterSettings != null
           ? passedFilterSettings
           : FilterSettings();
       _searchTextController.text = filterSettings.phrase;
-      _saveFilterSettings(passedFilterSettings);
-    }
-  }
-
-  _saveFilterSettings(FilterSettings filterSettings) {
-    if (filterSettings != null) {
-      print(filterSettings.toJson());
-      CookiesUtilService.setCookieListValue('filterSettings', [filterSettings.toJson()]);
-      print('CookiesUtilService.getCookie');
-      CookiesUtilService.getCookieList('filterSettings').then((value) => print(value));
+      LastSearchesUtilService.saveFilterSettings(passedFilterSettings);
     }
   }
 
@@ -178,7 +171,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
-        _saveFilterSettings(newFilterSettings);
+        LastSearchesUtilService.saveFilterSettings(newFilterSettings);
       });
     }
   }
