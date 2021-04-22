@@ -47,11 +47,17 @@ class FilterSettings {
   }
 
   String get sortingString {
-    return sortBy != null ? 'Sortowanie: ${SortingTypeHelper.getReadableM(sortBy)}' : null;
+    return sortBy != null ? '${SortingTypeHelper.getReadableM(sortBy)}' : null;
   }
 
   String get ageTypesString {
     return ageTypes.map((e) => AgeTypeHelper.getReadable(e)).join(", ");
+  }
+
+  String get ageTypesShortString {
+    return ageTypes.length >  1 ?
+      '${AgeTypeHelper.getReadable(ageTypes[0])}, ...' :
+      ageTypesString;
   }
 
   Map<String, dynamic> toParamsMap() {

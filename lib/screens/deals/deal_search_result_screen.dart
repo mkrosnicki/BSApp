@@ -197,7 +197,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.categories.isNotEmpty) {
       chips.add(
         SelectedFilterChip(
-          label: 'Kategoria: ${filterSettings.lastCategoryString}',
+          label: filterSettings.lastCategoryString,
           onDeleteFunction: () => _clearFilterSettings(clearCategories: true),
         ),
       );
@@ -222,8 +222,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (filterSettings.ageTypes.isNotEmpty) {
       chips.add(
         SelectedFilterChip(
-          label: filterSettings.ageTypesString,
-          onDeleteFunction: () => _clearFilterSettings(clearCategories: true),
+          label: filterSettings.ageTypesShortString,
+          onDeleteFunction: () => _clearFilterSettings(clearAgeTypes: true),
         ),
       );
     }

@@ -24,7 +24,7 @@ class TopicItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TopicItemTopBar(topic),
-              TopicItemBottomBar(),
+              TopicItemBottomBar(topic.numberOfPosts),
             ],
           ),
         ),

@@ -14,12 +14,13 @@ class SelectedFilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
+      padding: EdgeInsets.all(4.0),
       child: Wrap(
         direction: Axis.horizontal,
         children: [
           InkWell(
             child: Padding(
-              padding: const EdgeInsets.only(left: 4.0, right: 2.0,),
+              padding: const EdgeInsets.only(left: 4.0, right: 2.0, top: 1.0, bottom: 2.0),
               child: Text(
                 label,
                 style: const TextStyle(fontSize: 10),
@@ -40,7 +41,6 @@ class SelectedFilterChip extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         color: MyColorsProvider.BACKGROUND_COLOR,
         borderRadius: BorderRadius.all(
