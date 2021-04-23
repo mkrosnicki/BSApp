@@ -1,17 +1,12 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class RateBar extends StatelessWidget {
-  Color lightGray = Color.fromRGBO(224, 224, 224, 1.0);
-  Color red = Color.fromRGBO(255, 128, 128, 1.0);
-  Color lightRed = Color.fromRGBO(255, 128, 128, 1.0).withOpacity(0.7);
-  Color green = Colors.green.shade400.withOpacity(0.6);
-  static const double totalWidth = 80.0;
-  static const double maxHeight = 22.0;
-  static const double barHeight = maxHeight * 0.7;
-  static const double safeWidth = 3.0;
-  static const double maxWidth = totalWidth - safeWidth;
+
+  double maxHeight;
+  double barHeight;
 
   int positiveVotes;
   int negativeVotes;
@@ -28,114 +23,122 @@ class RateBar extends StatelessWidget {
       this.positiveVoteFunction,
       this.negativeVoteFunction);
 
+  _initDimensions() {
+    maxHeight = 22.0;
+    barHeight = maxHeight * 0.7;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: positiveVoteFunction,
-          child: Container(
-            margin: EdgeInsets.only(right: 2.0),
-            alignment: Alignment.centerLeft,
-            child: Icon(
-              CupertinoIcons.hand_thumbsup,
-              size: 16,
-              color: wasVotedPositively ? Colors.black : Colors.black38,
+    _initDimensions();
+    return Container(
+      width: double.infinity,
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: positiveVoteFunction,
+            child: Container(
+              margin: EdgeInsets.only(right: 2.0),
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                CupertinoIcons.hand_thumbsup,
+                size: 16,
+                color: wasVotedPositively ? Colors.black : Colors.black38,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: maxHeight,
-          width: totalWidth,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  // color: positiveVotes > negativeVotes ? green : lightGray,
-                  color: positiveVotes > negativeVotes ? green : lightGray,
-                  border: Border.all(
-                    color: lightGray,
-                    width: 0.2,
+          Expanded(
+            child: Flex(
+              mainAxisSize: MainAxisSize.min,
+              direction: Axis.horizontal,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: flexRateForBar(true),
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 1.0),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(minWidth: 3.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                          color: positiveVotes > negativeVotes
+                              ? MyColorsProvider.GREEN_SHADY
+                              : MyColorsProvider.LIGHT_GRAY,
+                        ),
+                        alignment: Alignment.centerLeft,
+                        height: barHeight,
+                        child: _partOfAll(true) > 0.3
+                            ? Center(
+                                child: Text(
+                                  positiveVotes.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
                   ),
                 ),
-                alignment: Alignment.centerLeft,
-                height: barHeight,
-                width: _getWidth(true),
-                child: _partOfAll(true) > 0.3
-                    ? Center(
-                        child: Text(
-                          positiveVotes.toString(),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            // color: wasVotedPositively
-                            //     ? Colors.black87
-                            //     : Colors.black54,
-                          ),
+                Flexible(
+                  flex: flexRateForBar(false),
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 1.5),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(minWidth: 3.0),
+                      child: Container(
+                        height: barHeight,
+                        decoration: BoxDecoration(
+                          // color: lightGray,
+                          color: negativeVotes > positiveVotes
+                              ? MyColorsProvider.RED_SHADY
+                              : MyColorsProvider.LIGHT_GRAY,
+                          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                         ),
-                      )
-                    : null,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  // color: lightGray,
-                  color: negativeVotes > positiveVotes ? red : lightGray,
-                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                  border: Border.all(
-                    color: lightGray,
-                    width: 0.2,
+                        child: _partOfAll(false) > 0.3
+                            ? Center(
+                                child: Text(
+                                  negativeVotes.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.fade,
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
                   ),
                 ),
-                // alignment: Alignment.centerRight,
-                height: barHeight,
-                width: _getWidth(false),
-                child: _partOfAll(false) > 0.3
-                    ? Center(
-                        child: Text(
-                          negativeVotes.toString(),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          overflow: TextOverflow.fade,
-                        ),
-                      )
-                    : null,
-              ),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: negativeVoteFunction,
-          child: Container(
-            margin: EdgeInsets.only(left: 2.0),
-            alignment: Alignment.centerLeft,
-            child: Icon(
-              CupertinoIcons.hand_thumbsdown,
-              size: 16,
-              color: wasVotedNegatively ? Colors.black : Colors.black38,
+              ],
             ),
           ),
-        ),
-      ],
+          GestureDetector(
+            onTap: negativeVoteFunction,
+            child: Container(
+              margin: EdgeInsets.only(left: 2.0),
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                CupertinoIcons.hand_thumbsdown,
+                size: 16,
+                color: wasVotedNegatively ? Colors.black : Colors.black38,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  double _getWidth(bool isPositive) {
-    var calculatedWidth = (maxWidth + safeWidth / 2) * _partOfAll(isPositive);
-    if (calculatedWidth < safeWidth / 2) {
-      return safeWidth / 2;
-    } else if (calculatedWidth > maxWidth - safeWidth) {
-      return maxWidth - safeWidth / 4;
-    } else {
-      return calculatedWidth;
-    }
+  int flexRateForBar(bool isPositive) {
+    return (_partOfAll(isPositive) * 10000).round();
   }
 
   double _partOfAll(bool isPositive) {

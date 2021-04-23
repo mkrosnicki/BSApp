@@ -13,6 +13,11 @@ class MyColorsProvider {
 
   static const BACKGROUND_COLOR = Color.fromRGBO(245, 245, 245, 1);
 
+  static const Color LIGHT_GRAY = Color.fromRGBO(224, 224, 224, 1.0);
+  static const Color RED_SHADY = Color.fromRGBO(255, 128, 128, 1.0);
+  static const Color LIGHT_RED_SHADY = Color.fromRGBO(255, 128, 128, 0.7);
+  static final Color GREEN_SHADY = Colors.green.shade400.withOpacity(0.6);
+
   static Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }

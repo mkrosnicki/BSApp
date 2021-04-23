@@ -7,8 +7,6 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/rate_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'deal_details_screen.dart';
@@ -23,13 +21,9 @@ class DealItemInfoSection extends StatefulWidget {
 }
 
 class _DealItemInfoSectionState extends State<DealItemInfoSection> {
-  DateFormat _dateFormat;
-
   @override
   void initState() {
     super.initState();
-    initializeDateFormatting();
-    _dateFormat = new DateFormat.yMMMMd('pl');
   }
 
   @override
@@ -116,94 +110,65 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                 ],
               ),
               Container(
-                // width: double.infinity,
                 child: Row(
-                  // direction: Axis.horizontal,
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Column(
-                    //   children: [
-                    //     Text(
-                    //       'Internet',
-                    //       style: TextStyle(
-                    //         fontSize: 12,
-                    //         color: Colors.black54,
-                    //       ),
-                    //     ),
-                    //     Text(
-                    //       'Internet',
-                    //       style: TextStyle(
-                    //         fontSize: 12,
-                    //         color: Colors.black54,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     _buildStatisticTile('Lokalizacja', 'Intetnet', false, true),
-                    _buildStatisticTile('Dodana', '${DateUtil.timeAgoString(widget.deal.addedAt)}', false, false),
-                    // Text(
-                    //   '${_dateFormat.format(widget.deal.addedAt)}',
-                    //   style: TextStyle(
-                    //     fontSize: 12,
-                    //     color: Colors.black54,
-                    //   ),
-                    // ),
+                    _buildStatisticTile(
+                        'Dodana',
+                        '${DateUtil.timeAgoString(widget.deal.addedAt)}',
+                        false,
+                        false),
                   ],
                 ),
               ),
               Container(
                 width: double.infinity,
                 alignment: Alignment.bottomLeft,
-                child: Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Consumer<Deals>(
-                      builder: (context, dealsData, child) => Expanded(
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Wrap(
-                              children: [
-                                RateBar(
-                                  dealsData
-                                          .findById(widget.deal.id)
-                                          .numberOfPositiveVotes +
-                                      15,
-                                  dealsData
-                                          .findById(widget.deal.id)
-                                          .numberOfNegativeVotes +
-                                      15,
-                                  Provider.of<Deals>(context)
-                                      .wasVotedPositivelyBy(
-                                          widget.deal.id, authData.userId),
-                                  Provider.of<Deals>(context)
-                                      .wasVotedNegativelyBy(
-                                          widget.deal.id, authData.userId),
-                                  () => _vote(authData.isAuthenticated, true),
-                                  () => _vote(authData.isAuthenticated, false),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              'ZOBACZ',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blue,
-                              ),
-                            )
-                          ],
+                child: Consumer<Deals>(
+                  builder: (context, dealsData, child) => Flex(
+                    direction: Axis.horizontal,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: RateBar(
+                          dealsData
+                                  .findById(widget.deal.id)
+                                  .numberOfPositiveVotes +
+                              30,
+                          dealsData
+                                  .findById(widget.deal.id)
+                                  .numberOfNegativeVotes +
+                              7,
+                          Provider.of<Deals>(context).wasVotedPositivelyBy(
+                              widget.deal.id, authData.userId),
+                          Provider.of<Deals>(context).wasVotedNegativelyBy(
+                              widget.deal.id, authData.userId),
+                          () => _vote(authData.isAuthenticated, true),
+                          () => _vote(authData.isAuthenticated, false),
                         ),
                       ),
-                    ),
-                  ],
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: const Text(
+                            'ZOBACZ',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -234,9 +199,10 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
 
   static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
   static const activeMenuItemStyle =
-  TextStyle(fontSize: 11, color: Colors.black);
+      TextStyle(fontSize: 11, color: Colors.black);
 
-  _buildStatisticTile(String title, String text, bool borderLeft, bool borderRight) {
+  _buildStatisticTile(
+      String title, String text, bool borderLeft, bool borderRight) {
     return Container(
       // width: double.infinity,
       alignment: Alignment.centerLeft,
@@ -259,13 +225,15 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
       ),
       decoration: BoxDecoration(
         border: Border(
-            left: borderLeft ? BorderSide(
-                color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none),
-            right: borderRight ? BorderSide(
-                color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none)
-        ),
+            left: borderLeft
+                ? BorderSide(
+                    color: MyColorsProvider.GREY_BORDER_COLOR, width: 1)
+                : BorderSide(style: BorderStyle.none),
+            right: borderRight
+                ? BorderSide(
+                    color: MyColorsProvider.GREY_BORDER_COLOR, width: 1)
+                : BorderSide(style: BorderStyle.none)),
       ),
     );
   }
-
 }

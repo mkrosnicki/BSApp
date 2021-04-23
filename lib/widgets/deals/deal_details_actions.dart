@@ -3,6 +3,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
+import 'package:BSApp/widgets/common/rate_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class DealDetailsActions extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
+          RateBar(10, 0, false, false, _vote(context, true, true), _vote(context, true, false)),
           Divider(),
           Consumer<Deals>(
               builder: (context, dealsData, child) => Consumer<Auth>(

@@ -17,7 +17,6 @@ class DealItem extends StatefulWidget {
 }
 
 class _DealItemState extends State<DealItem> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,35 +24,28 @@ class _DealItemState extends State<DealItem> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,
-        border: Border.all(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.2,),
+        border: Border.all(
+          color: MyColorsProvider.GREY_BORDER_COLOR,
+          width: 0.2,
+        ),
       ),
-      child: Flex(
-        direction: Axis.vertical,
+      child: Wrap(
+        direction: Axis.horizontal,
+        // mainAxisAlignment: MainAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    flex: 35,
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: DealItemImageSection(widget.deal),
-                    ),
-                  ),
-                  Consumer<Auth>(
-                    builder: (context, authData, child) => Flexible(
-                      flex: 65,
-                      child: DealItemInfoSection(widget.deal),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          FractionallySizedBox(
+            widthFactor: 0.35,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: DealItemImageSection(widget.deal),
+            ),
+          ),
+          Consumer<Auth>(
+            builder: (context, authData, child) => FractionallySizedBox(
+              widthFactor: 0.65,
+              child: DealItemInfoSection(widget.deal),
+            ),
           ),
         ],
       ),
