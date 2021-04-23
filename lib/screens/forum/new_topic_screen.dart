@@ -26,7 +26,6 @@ class NewTopicScreen extends StatelessWidget {
               Provider.of<Topics>(context, listen: false)
                   .addNewTopic('aaaa', 'bbbbb', categoryId)
                   .then((topic) {
-                    print(topic);
                     Navigator.of(context).popAndPushNamed(TopicScreen.routeName, arguments: topic.id);
               });
             },

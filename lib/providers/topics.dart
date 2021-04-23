@@ -102,12 +102,8 @@ class Topics with ChangeNotifier {
       'content': content,
       'categoriesIds': [categoryId]
     };
-    print(addNewTopicDto);
     var topicSnapshot = await _apiProvider.post('/topics', addNewTopicDto, token: token);
-    print(topicSnapshot);
-    print('fetching');
     await fetchCategoryTopics(categoryId);
-    print('fetched');
     return TopicModel.of(topicSnapshot);
   }
 
@@ -130,8 +126,6 @@ class Topics with ChangeNotifier {
   }
 
   TopicModel findById(String topicId) {
-    print('find by id');
-    print(categoryTopics.length);
     return categoryTopics.firstWhere((topic) => topic.id == topicId);
   }
 
