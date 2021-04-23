@@ -1,14 +1,10 @@
 import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/comments.dart';
-import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/my_border_icon_button.dart';
 import 'package:BSApp/widgets/deals/comment_item_user_info.dart';
+import 'package:BSApp/widgets/deals/comment_item_voting_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentItem extends StatefulWidget {
@@ -51,7 +47,10 @@ class _CommentItemState extends State<CommentItem> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,
-        border: Border.all(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.2,),
+        border: Border.all(
+          color: MyColorsProvider.GREY_BORDER_COLOR,
+          width: 0.2,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,76 +66,39 @@ class _CommentItemState extends State<CommentItem> {
                   if (_displayRepliedUsername(comment))
                     Text(
                       '@${comment.replyForUsername} ',
-                      style: TextStyle(fontSize: 13, color: Colors.blue),
+                      style: const TextStyle(fontSize: 13, color: Colors.blue),
                     ),
                   Text(
                     comment.content,
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ],
               ),
             ),
           ),
-          Consumer<Auth>(
-            builder: (context, authData, child) => Consumer<Comments>(
-              builder: (context, commentsData, child) => Container(
-                width: double.infinity,
-                child: Flex(
-                  direction: Axis.horizontal,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Wrap(
-                      children: [
-                        MyBorderIconButton(
-                          iconData: CupertinoIcons.hand_thumbsdown_fill,
-                          function: () => _voteForComment(widget.dealId,
-                              comment.id, false, authData.isAuthenticated),
-                          trailing: comment.numberOfNegativeVotes.toString(),
-                          color: Colors.red,
-                          isActive: commentsData.wasVotedNegativelyBy(
-                              comment.id, authData.userId),
-                          showBorder: false,
-                          fontSize: 12,
-                        ),
-                        MyBorderIconButton(
-                          iconData: CupertinoIcons.hand_thumbsup_fill,
-                          function: () => _voteForComment(widget.dealId,
-                              comment.id, true, authData.isAuthenticated),
-                          trailing: comment.numberOfPositiveVotes.toString(),
-                          color: MyColorsProvider.GREEN,
-                          isActive: commentsData.wasVotedPositivelyBy(
-                              comment.id, authData.userId),
-                          showBorder: false,
-                          fontSize: 12,
-                        ),
-                      ],
+          Container(
+            width: double.infinity,
+            child: Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommentItemVotingButtons(comment, widget.dealId),
+                InkWell(
+                  onTap: () => _startCommentReply(comment),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'Odpowiedz',
+                      style: const TextStyle(fontSize: 12, color: Colors.blue),
                     ),
-                    MyBorderIconButton(
-                        label: 'Odpowiedz',
-                        function: () => _startCommentReply(comment),
-                        color: Colors.blue,
-                        isBold: true,
-                        fontSize: 11,
-                        showBorder: false,
-                        isActive: true),
-                  ],
-                ),
-              ),
+                  ),
+                )
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-
-  _voteForComment(
-      String dealId, String commentId, bool isPositive, isAuthenticated) {
-    if (!isAuthenticated) {
-      AuthScreenProvider.showLoginScreen(context);
-    } else {
-      Provider.of<Comments>(context, listen: false)
-          .voteForComment(dealId, commentId, isPositive);
-    }
   }
 
   bool _displayRepliedUsername(CommentModel comment) {

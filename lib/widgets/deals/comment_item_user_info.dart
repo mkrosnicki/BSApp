@@ -12,12 +12,6 @@ class CommentItemUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle = const TextStyle(
-      fontSize: 12,
-      color: Colors.grey,
-    );
-    const userInfoBoldTextStyle = const TextStyle(
-        fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
     var textStyle = Theme.of(context)
         .textTheme
         .bodyText2
@@ -27,7 +21,7 @@ class CommentItemUserInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        UserAvatar(username: comment.adderInfo.username, radius: 18,),
+        UserAvatar(username: comment.adderInfo.username, radius: 16,),
         Flexible(
           child: Container(
             padding: const EdgeInsets.all(4.0),

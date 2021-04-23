@@ -1,4 +1,3 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class MyBorderIconButton extends StatelessWidget {
@@ -17,11 +16,8 @@ class MyBorderIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var borderColor = isActive ? Colors.blue : Color.fromRGBO(212, 227, 235, 1);
     var borderColor = color != null && isActive ? color : Color.fromRGBO(212, 227, 235, 1);
     var textColor = color != null && isActive ? color : Colors.grey;
-    // var textColor = Colors.blue;
-    // Color.fromRGBO(40, 167, 69, 1)
     return SizedBox(
       height: 25,
       child: ElevatedButton(
@@ -54,7 +50,7 @@ class MyBorderIconButton extends StatelessWidget {
             if (iconData != null)
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Icon(iconData, size: fontSize, color: textColor),
+                child: Icon(iconData, size: 15, color: textColor),
               ),
             if (trailing != null)
               Padding(
