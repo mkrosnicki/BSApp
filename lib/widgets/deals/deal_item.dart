@@ -29,23 +29,19 @@ class _DealItemState extends State<DealItem> {
           width: 0.2,
         ),
       ),
-      child: Wrap(
+      child: Flex(
         direction: Axis.horizontal,
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FractionallySizedBox(
-            widthFactor: 0.35,
+          Flexible(
+            flex: 35,
             child: Align(
               alignment: Alignment.topLeft,
               child: DealItemImageSection(widget.deal),
             ),
           ),
-          Consumer<Auth>(
-            builder: (context, authData, child) => FractionallySizedBox(
-              widthFactor: 0.65,
-              child: DealItemInfoSection(widget.deal),
-            ),
+          Flexible(
+            flex: 65,
+            child: DealItemInfoSection(widget.deal),
           ),
         ],
       ),
