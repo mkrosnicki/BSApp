@@ -56,10 +56,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                               flex: 8,
                               child: Text(
                                 widget.deal.title,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                ),
-                                // overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 13),
                                 overflow: TextOverflow.clip,
                               ),
                             ),
@@ -100,7 +97,7 @@ class _DealItemInfoSectionState extends State<DealItemInfoSection> {
                       ),
                       Text(
                         '${widget.deal.regularPrice} zł',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
                             decoration: TextDecoration.lineThrough),
