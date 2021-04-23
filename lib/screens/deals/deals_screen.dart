@@ -1,19 +1,9 @@
-import 'package:BSApp/models/category_model.dart';
-import 'package:BSApp/models/filter_settings.dart';
-import 'package:BSApp/providers/categories.dart';
-import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/deals/filter_selection_screen.dart';
-import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
-import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
-import 'package:BSApp/widgets/common/last_search_item.dart';
 import 'package:BSApp/widgets/common/last_searches.dart';
-import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:BSApp/widgets/deals/deals_screen_app_bar.dart';
+import 'package:BSApp/widgets/deals/deals_screen_main_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'deal_search_result_screen.dart';
+import 'package:rxdart/subjects.dart';
 
 class DealsScreen extends StatefulWidget {
   static const routeName = '/deals';
@@ -23,159 +13,34 @@ class DealsScreen extends StatefulWidget {
 }
 
 class _DealsScreenState extends State<DealsScreen> {
-  final _searchTextController = TextEditingController();
 
-  List<CategoryModel> _allCategories;
+  final PublishSubject<bool> _showLastSearchesSubject =
+      new PublishSubject<bool>();
 
-  bool _isSearchPanelVisible = false;
+  Stream<bool> get _showLLastSearchesStream => _showLastSearchesSubject.stream;
 
   @override
   Widget build(BuildContext context) {
-    _initCategories();
+    _showLastSearchesSubject.add(false);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-          titleSpacing: 8,
-          title: _createSearchBox(),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          bottom: _isSearchPanelVisible ? AppBarBottomBorder() : null,
-          actions: [
-            if (!_isSearchPanelVisible)
-              InkWell(
-                onTap: () => _showFilterSelectionDialog(context),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
-                  child: Icon(
-                    CupertinoIcons.slider_horizontal_3,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-            if (_isSearchPanelVisible)
-              GestureDetector(
-                onTap: () => _showSearchPanel(false),
-                child: TextButton(
-                  child: Text(
-                    'Anuluj',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 12,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ),
-              )
-          ],
-        ),
+        child: DealsScreenAppBar(_showLastSearchesSubject),
       ),
       body: SafeArea(
-        child: !_isSearchPanelVisible
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FutureBuilder(
-                    future:
-                        Provider.of<Deals>(context, listen: false).fetchDeals(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        if (snapshot.error != null) {
-                          return Center(
-                            child: Text('An error occurred!'),
-                          );
-                        } else {
-                          return Flexible(
-                            child: RefreshIndicator(
-                              onRefresh: () => _refreshDeals(context),
-                              child: Consumer<Deals>(
-                                builder: (context, dealsData, child) =>
-                                    ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    if (index == 0) {
-                                      return CategoriesScrollable(_allCategories);
-                                    } else {
-                                      return DealItem(
-                                          dealsData.deals[index - 1]);
-                                    }
-                                  },
-                                  itemCount: dealsData.deals.length + 1,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
-                ],
-              )
-            : LastSearches(),
+        child: StreamBuilder<bool>(
+          stream: _showLLastSearchesStream,
+          builder: (context, AsyncSnapshot<bool> showSearchPanelSnapshot) {
+            bool showSearches = showSearchPanelSnapshot.hasData && showSearchPanelSnapshot.data;
+            if (!showSearches) {
+              return DealsScreenMainContent();
+            } else {
+              return LastSearches();
+            }
+          },
+        ),
       ),
     );
   }
 
-  _createSearchBox() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.centerLeft,
-      // color: Colors.white,
-      child: Row(
-        children: [
-          AppBarSearchInput(
-            onTapInputFunction: () => _showSearchPanel(true),
-            onSubmitInputFunction: (searchText) {
-              Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-                  arguments: FilterSettings.phrase(searchText));
-              _showSearchPanel(false);
-            },
-            searchInputController: _searchTextController,
-          ),
-        ],
-      ),
-    );
-  }
-
-  _showSearchPanel(bool isShowSearch) {
-    if (_isSearchPanelVisible != isShowSearch) {
-      setState(() {
-        _isSearchPanelVisible = isShowSearch;
-        if (!_isSearchPanelVisible) {
-          FocusScope.of(context).requestFocus(new FocusNode());
-          _searchTextController.text = "";
-        }
-      });
-    }
-  }
-
-  void _initCategories() async {
-    if (_allCategories == null) {
-      await Provider.of<Categories>(context, listen: false)
-          .fetchCategories()
-          .then((_) {
-        _allCategories =
-            Provider.of<Categories>(context, listen: false).categories;
-      });
-    }
-  }
-
-  Future<void> _refreshDeals(BuildContext context) async {
-    await Provider.of<Deals>(context, listen: false).fetchDeals();
-  }
-
-  Future _showFilterSelectionDialog(BuildContext context) async {
-    var newFilterSettings =
-        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
-            builder: (BuildContext context) {
-              return FilterSelectionScreen();
-            },
-            settings: RouteSettings(arguments: FilterSettings()),
-            fullscreenDialog: true));
-    if (newFilterSettings != null) {
-      Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-          arguments: newFilterSettings);
-    }
-  }
 }

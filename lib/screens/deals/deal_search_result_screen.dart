@@ -3,10 +3,9 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
-import 'package:BSApp/services/cookies_util_service.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
-import 'package:BSApp/widgets/bars/app_bar_search_input.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -133,10 +132,28 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       // color: Colors.white,
       child: Row(
         children: [
-          AppBarSearchInput(
-            onTapInputFunction: () {},
-            onSubmitInputFunction: (_) {},
-            searchInputController: _searchTextController,
+          Expanded(
+            child: TextField(
+              controller: _searchTextController,
+              onSubmitted: (phrase) {}, // todo
+              keyboardType: TextInputType.text,
+              style: const TextStyle(fontSize: 12),
+              decoration:
+              MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
+                hintText: 'Czego szukasz?',
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: Icon(
+                    CupertinoIcons.search,
+                    color: Colors.black54,
+                    size: 15,
+                  ),
+                ),
+                prefixIconConstraints: BoxConstraints.tight(
+                  const Size.square(30),
+                ),
+              ),
+            ),
           ),
           Consumer<Searches>(
             builder: (context, searchesData, child) => GestureDetector(

@@ -19,14 +19,15 @@ class AppBarSearchInput extends StatefulWidget {
 class _AppBarSearchInputState extends State<AppBarSearchInput> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      width: double.infinity,
       child: TextField(
         onTap: widget.onTapInputFunction,
         controller: widget.searchInputController,
         onSubmitted: widget.onSubmitInputFunction,
-          keyboardType: TextInputType.text,
+        keyboardType: TextInputType.text,
         style: const TextStyle(fontSize: 12),
-        autofocus: false,
+        autofocus: true,
         decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
           prefixIcon: Padding(
@@ -38,7 +39,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
             ),
           ),
           prefixIconConstraints: BoxConstraints.tight(
-            Size.square(30),
+            const Size.square(30),
           ),
         ),
       ),
