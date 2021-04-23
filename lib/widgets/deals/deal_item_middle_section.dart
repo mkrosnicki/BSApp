@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class DealItemMiddleSection extends StatelessWidget {
   static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
-  static const activeMenuItemStyle =
-      TextStyle(fontSize: 11, color: Colors.black);
+  static const activeMenuItemStyle = TextStyle(fontSize: 11, color: Colors.black);
 
   final DealModel deal;
 
@@ -18,18 +17,15 @@ class DealItemMiddleSection extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildStatisticTile('Lokalizacja', 'Intetnet', false, true),
-          _buildStatisticTile('Dodana',
-              '${DateUtil.timeAgoString(deal.addedAt)}', false, false),
+          _infoTile('Lokalizacja', 'Intetnet', false, true),
+          _infoTile('Dodana', '${DateUtil.timeAgoString(deal.addedAt)}', false, false),
         ],
       ),
     );
   }
 
-  _buildStatisticTile(
-      String title, String text, bool borderLeft, bool borderRight) {
+  _infoTile(String title, String text, bool borderLeft, bool borderRight) {
     return Container(
-      // width: double.infinity,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(right: 8.0),
       margin: const EdgeInsets.only(right: 8.0),
