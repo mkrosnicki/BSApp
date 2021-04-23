@@ -1,4 +1,5 @@
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,51 +12,57 @@ class LastSearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var filtersString = _getFiltersString();
-    return Container(
-      color: Colors.white,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.only(bottom: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                child: Wrap(
-                  children: [
-                    const Text(
-                      'Wyszukiwana fraza ',
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    Text(
-                      '${filterSettings.phrase}',
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(
+          DealSearchResultScreen.routeName,
+          arguments: this.filterSettings),
+      child: Container(
+        color: Colors.white,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(12.0),
+        margin: const EdgeInsets.only(bottom: 4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 2.0),
+                  child: Wrap(
+                    children: [
+                      const Text(
+                        'Wyszukiwana fraza ',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        '${filterSettings.phrase}',
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              if (filtersString != null) Text(
-                filtersString,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-          InkWell(
-            onTap: removeFunction,
-            child: const Icon(
-              CupertinoIcons.clear,
-              size: 16,
-              color: Colors.blue,
+                if (filtersString != null)
+                  Text(
+                    filtersString,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.black54,
+                    ),
+                  ),
+              ],
             ),
-          ),
-        ],
+            InkWell(
+              onTap: removeFunction,
+              child: const Icon(
+                CupertinoIcons.clear,
+                size: 16,
+                color: Colors.blue,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -96,6 +103,4 @@ class LastSearchItem extends StatelessWidget {
     }
     return filtersSet;
   }
-
-
 }

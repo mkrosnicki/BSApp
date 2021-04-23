@@ -15,6 +15,7 @@ class _LastSearchesState extends State<LastSearches> {
   _initCookies() async {
     _cachedFilterSettings =
         await LastSearchesUtilService.getCachedFilterSettings();
+    print(_cachedFilterSettings);
   }
 
   @override
@@ -40,7 +41,7 @@ class _LastSearchesState extends State<LastSearches> {
                     return Container(
                       padding: const EdgeInsets.all(8.0),
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: const Text(
                         'Ostatnie wyszukiwania',
                         style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w600),
@@ -51,11 +52,11 @@ class _LastSearchesState extends State<LastSearches> {
                         () => _removeFilterSettingsAt(index - 1));
                   }
                 },
-                itemCount: _cachedFilterSettings.length,
+                itemCount: _cachedFilterSettings.length + 1,
               );
             } else {
               return Center(
-                child: Text('Brak ostatnich wyszukiwań'),
+                child: const Text('Brak ostatnich wyszukiwań', style: const TextStyle(fontSize: 14),),
               );
             }
           }

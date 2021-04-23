@@ -171,8 +171,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
-        LastSearchesUtilService.saveFilterSettings(newFilterSettings);
       });
+      if (filterSettings.phrase != null) {
+        LastSearchesUtilService.saveFilterSettings(newFilterSettings);
+      }
     }
   }
 
