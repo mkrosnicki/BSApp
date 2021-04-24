@@ -46,6 +46,7 @@ class DealDetailsComments extends StatelessWidget {
                 } else {
                   return Consumer<Comments>(
                     builder: (context, commentsData, child) => Column(
+                      // todo nullpointer after some time?!
                       children: commentsData.mainDealComments
                           .map((comment) => CommentItem(
                               deal.id, comment, commentToReplySubject))
