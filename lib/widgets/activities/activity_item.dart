@@ -1,6 +1,8 @@
 import 'package:BSApp/models/activity_model.dart';
+import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -30,56 +32,15 @@ class ActivityItem extends StatelessWidget {
             ),
           ),
           Flexible(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Flex(
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    text: TextSpan(
-                      text:
-                          '${activity.issuedByUsername} dodał komentarz pod okazją: ',
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            fontSize: 11,
-                            color: Colors.black,
-                            height: 1.3,
-                          ),
-                      children: [
-                        TextSpan(
-                          text: 'jakaś tam okazja',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      activity.relatedTopic.content,
-                      style: TextStyle(
-                          fontSize: 11, color: Colors.black54, height: 1.3),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: _buildActivityContent(),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             alignment: Alignment.topRight,
             child: Text(
               '${DateUtil.timeAgoString(activity.issuedAt)}',
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .bodyText2
                   .copyWith(fontSize: 11, color: Colors.black38),
@@ -88,5 +49,18 @@ class ActivityItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _buildActivityContent() {
+    Widget content;
+    switch (activity.activityType) {
+      case ActivityType.TOPIC_CREATED:
+        content = TopicCreatedActivityContent(
+            activity.issuedByUsername, activity.relatedTopic);
+        break;
+      default:
+        content = null;
+    }
+    return content;
   }
 }
