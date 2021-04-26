@@ -1,3 +1,4 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
@@ -20,7 +21,7 @@ class UserAvatar extends StatelessWidget {
       minRadius: radius,
       maxRadius: radius,
       foregroundColor: Colors.white,
-      backgroundColor: backgroundColor != null ? backgroundColor : Colors.green,
+      backgroundColor: backgroundColor != null ? backgroundColor : MyColorsProvider.DEEP_BLUE,
       child: Text(username.substring(0, 1)),
     );
   }
