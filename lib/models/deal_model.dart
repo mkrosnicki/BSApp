@@ -58,7 +58,7 @@ class DealModel {
     @required this.image,
   });
 
-  static DealModel of(dynamic dealObject) {
+  static DealModel fromJson(dynamic dealObject) {
     return DealModel(
       id: dealObject['id'],
       addedAt: DateTime.parse(dealObject['addedAt']),

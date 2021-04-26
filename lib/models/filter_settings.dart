@@ -176,10 +176,10 @@ class FilterSettings {
   static FilterSettings fromJson(Map<String, dynamic> json) {
     FilterSettings newFilterSettings = FilterSettings();
     newFilterSettings.phrase = json['phrase'];
-    newFilterSettings.categories = (json['categories'] as List).map((e) => CategoryModel.of(e)).toList();
+    newFilterSettings.categories = (json['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList();
     newFilterSettings.ageTypes = (json['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList();
-    newFilterSettings.voivodeship = Voivodeship.of(json['voivodeship']);
-    newFilterSettings.city = City.of(json['city']);
+    newFilterSettings.voivodeship = Voivodeship.fromJson(json['voivodeship']);
+    newFilterSettings.city = City.fromJson(json['city']);
     newFilterSettings.showActiveOnly = bool.fromEnvironment(json['showActiveOnly']);
     newFilterSettings.showInternetOnly = bool.fromEnvironment(json['showInternetOnly']);
     newFilterSettings.sortBy = SortingTypeHelper.fromString(json['sortBy']);

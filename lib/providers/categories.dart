@@ -19,7 +19,7 @@ class Categories with ChangeNotifier {
       print('No Categories Found!');
     }
     responseBody.forEach((element) {
-      loadedCategories.add(CategoryModel.of(element));
+      loadedCategories.add(CategoryModel.fromJson(element));
     });
     _categories = loadedCategories;
     notifyListeners();

@@ -47,7 +47,7 @@ class Topics with ChangeNotifier {
       print('No Topics Found!');
     }
     responseBody.forEach((element) {
-      loadedTopics.add(TopicModel.of(element));
+      loadedTopics.add(TopicModel.fromJson(element));
     });
     allTopics = loadedTopics;
     notifyListeners();
@@ -61,7 +61,7 @@ class Topics with ChangeNotifier {
       print('No Topics Found!');
     }
     responseBody.forEach((element) {
-      loadedTopics.add(TopicModel.of(element));
+      loadedTopics.add(TopicModel.fromJson(element));
     });
     fetchedCategoryTopics = loadedTopics;
     notifyListeners();
@@ -75,7 +75,7 @@ class Topics with ChangeNotifier {
       print('No Topics Found!');
     }
     responseBody.forEach((element) {
-      fetchedTopics.add(TopicModel.of(element));
+      fetchedTopics.add(TopicModel.fromJson(element));
     });
     fetchedObservedTopics = fetchedTopics;
     notifyListeners();
@@ -89,7 +89,7 @@ class Topics with ChangeNotifier {
       print('No Topics Found!');
     }
     responseBody.forEach((element) {
-      fetchedTopics.add(TopicModel.of(element));
+      fetchedTopics.add(TopicModel.fromJson(element));
     });
     fetchedAddedTopics = fetchedTopics;
     notifyListeners();
@@ -104,7 +104,7 @@ class Topics with ChangeNotifier {
     };
     var topicSnapshot = await _apiProvider.post('/topics', addNewTopicDto, token: token);
     await fetchCategoryTopics(categoryId);
-    return TopicModel.of(topicSnapshot);
+    return TopicModel.fromJson(topicSnapshot);
   }
 
   Future<void> addToObservedTopics(String topicId) async {

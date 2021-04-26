@@ -1,4 +1,5 @@
 import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
@@ -18,7 +19,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  UserModel _user;
+  UsersProfileModel _usersProfile;
 
   final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 
@@ -54,10 +55,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       direction: Axis.vertical,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        UserProfileMainInfo(_user),
+                        UserProfileMainInfo(_usersProfile.user),
                         UserProfileStatisticsInfo(),
                         UserProfileScrollableMenu(_contentIdSubject),
-                        UserProfileContent(_user.id, _contentIdSubject),
+                        UserProfileContent(_usersProfile.user.id, _contentIdSubject),
                       ],
                     ),
                     Container(
@@ -82,6 +83,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   _initUser(BuildContext context, String userId) async {
-    _user = await Provider.of<Users>(context, listen: false).findUser(userId);
+    _usersProfile = await Provider.of<Users>(context, listen: false).findUsersProfile(userId);
   }
 }

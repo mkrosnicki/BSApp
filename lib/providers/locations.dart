@@ -19,7 +19,7 @@ class Locations with ChangeNotifier {
         print('No Voivodeships Found!');
       }
       responseBody.forEach((element) {
-        loadedVoivodeships.add(Voivodeship.of(element));
+        loadedVoivodeships.add(Voivodeship.fromJson(element));
       });
       _voivodeships = loadedVoivodeships;
       notifyListeners();

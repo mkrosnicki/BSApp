@@ -37,7 +37,7 @@ class Comments with ChangeNotifier {
       print('No Comments Found!');
     }
     responseBody.forEach((element) {
-      var comment = CommentModel.of(element);
+      var comment = CommentModel.fromJson(element);
       loadedComments.add(comment);
       loadedComments.addAll(comment.subComments);
     });
@@ -53,7 +53,7 @@ class Comments with ChangeNotifier {
       print('No Comments Found!');
     }
     responseBody.forEach((element) {
-      var comment = CommentModel.of(element);
+      var comment = CommentModel.fromJson(element);
       loadedComments.add(comment);
       loadedComments.addAll(comment.subComments);
     });

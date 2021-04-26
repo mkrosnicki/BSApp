@@ -44,7 +44,7 @@ class Deals with ChangeNotifier {
     }
     // print(responseBody);
     responseBody.forEach((element) {
-      loadedDeals.add(DealModel.of(element));
+      loadedDeals.add(DealModel.fromJson(element));
     });
     allDeals = loadedDeals;
     notifyListeners();
@@ -58,7 +58,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.of(element));
+      fetchedDeals.add(DealModel.fromJson(element));
     });
     fetchedObservedDeals = fetchedDeals;
     notifyListeners();
@@ -72,7 +72,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.of(element));
+      fetchedDeals.add(DealModel.fromJson(element));
     });
     fetchedAddedDeals = fetchedDeals;
     notifyListeners();
@@ -86,7 +86,7 @@ class Deals with ChangeNotifier {
       print('No Deals Found!');
     }
     responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.of(element));
+      fetchedDeals.add(DealModel.fromJson(element));
     });
     fetchedUserAddedDeals = fetchedDeals;
     notifyListeners();

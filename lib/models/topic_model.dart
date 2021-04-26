@@ -30,11 +30,11 @@ class TopicModel {
     @required this.negativeVoters,
   });
 
-  static TopicModel of(dynamic topicSnapshot) {
+  static TopicModel fromJson(dynamic topicSnapshot) {
     return TopicModel(
       id: topicSnapshot['id'],
       addedAt: DateTime.parse(topicSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.of(topicSnapshot['adderInfo']),
+      adderInfo: AdderInfoModel.fromJson(topicSnapshot['adderInfo']),
       title: topicSnapshot['title'],
       content: topicSnapshot['content'],
       pinned: topicSnapshot['pinned'],

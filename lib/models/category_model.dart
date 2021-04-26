@@ -7,12 +7,12 @@ class CategoryModel {
 
   CategoryModel({this.id, this.name, this.description, this.subCategories});
 
-  static CategoryModel of(dynamic categorySnapshot) {
+  static CategoryModel fromJson(dynamic categorySnapshot) {
     return CategoryModel(
       id: categorySnapshot['id'],
       name: categorySnapshot['name'],
       description: categorySnapshot['description'],
-      subCategories: (categorySnapshot['subCategories'] as List).map((e) => CategoryModel.of(e)).toList()
+      subCategories: (categorySnapshot['subCategories'] as List).map((e) => CategoryModel.fromJson(e)).toList()
     );
   }
 

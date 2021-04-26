@@ -37,7 +37,7 @@ class Auth with ChangeNotifier {
 
   Future<void> fetchMe() async {
     var responseBody = await _apiProvider.get('/users/me', token: _token);
-    _me = UserModel.of(responseBody);
+    _me = UserModel.fromJson(responseBody);
   }
 
   Future<void> login(String email, String password) async {

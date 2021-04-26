@@ -19,7 +19,7 @@ class TopicCategories with ChangeNotifier {
         print('No Topic Categories Found!');
       }
       responseBody.forEach((element) {
-        loadedCategories.add(TopicCategoryModel.of(element));
+        loadedCategories.add(TopicCategoryModel.fromJson(element));
       });
       _topicCategories = loadedCategories;
     }

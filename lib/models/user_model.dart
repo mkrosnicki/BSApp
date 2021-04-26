@@ -16,7 +16,7 @@ class UserModel {
 
   UserModel({this.id, this.username, this.registeredAt, this.lastLoginAt, this.addedPosts, this.addedComments, this.addedDeals, this.addedTopics});
 
-  static UserModel of(dynamic userSnapshot) {
+  static UserModel fromJson(dynamic userSnapshot) {
     return UserModel(
       id: userSnapshot['id'],
       username: userSnapshot['username'],
@@ -24,9 +24,9 @@ class UserModel {
       // lastLoginAt: DateTime.parse(userSnapshot['lastLoginAt']),
       lastLoginAt: null, // todo
       addedPosts: (userSnapshot['addedPosts'] as List).map((e) => PostModel.of(e)).toList(),
-      addedTopics: (userSnapshot['addedTopics'] as List).map((e) => TopicModel.of(e)).toList(),
-      addedDeals: (userSnapshot['addedDeals'] as List).map((e) => DealModel.of(e)).toList(),
-      addedComments: (userSnapshot['addedComments'] as List).map((e) => CommentModel.of(e)).toList(),
+      addedTopics: (userSnapshot['addedTopics'] as List).map((e) => TopicModel.fromJson(e)).toList(),
+      addedDeals: (userSnapshot['addedDeals'] as List).map((e) => DealModel.fromJson(e)).toList(),
+      addedComments: (userSnapshot['addedComments'] as List).map((e) => CommentModel.fromJson(e)).toList(),
     );
   }
 

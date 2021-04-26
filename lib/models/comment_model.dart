@@ -34,7 +34,7 @@ class CommentModel {
       this.positiveVoters,
       this.negativeVoters});
 
-  static CommentModel of(dynamic commentSnapshot) {
+  static CommentModel fromJson(dynamic commentSnapshot) {
     return CommentModel(
       id: commentSnapshot['id'],
       content: commentSnapshot['content'],
@@ -45,10 +45,10 @@ class CommentModel {
       replyForUsername: commentSnapshot['replyForUsername'],
       points: commentSnapshot['points'],
       subComments: (commentSnapshot['subComments'] as List)
-          .map((e) => CommentModel.of(e))
+          .map((e) => CommentModel.fromJson(e))
           .toList(),
       addedAt: DateTime.parse(commentSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.of(commentSnapshot['adderInfo']),
+      adderInfo: AdderInfoModel.fromJson(commentSnapshot['adderInfo']),
       numberOfPositiveVotes: commentSnapshot['numberOfPositiveVotes'],
       numberOfNegativeVotes: commentSnapshot['numberOfNegativeVotes'],
       positiveVoters: [...commentSnapshot['positiveVoters'] as List],

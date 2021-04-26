@@ -14,7 +14,7 @@ class TopicDetailsModel {
 
   static TopicDetailsModel of(dynamic topicDetailsSnapshot) {
     return TopicDetailsModel(
-      topic: TopicModel.of(topicDetailsSnapshot['topic']),
+      topic: TopicModel.fromJson(topicDetailsSnapshot['topic']),
       posts: (topicDetailsSnapshot['posts'] as List).map((e) => PostModel.of(e)).toList(),
     );
   }

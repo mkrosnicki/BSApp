@@ -27,7 +27,7 @@ class PostModel {
     return PostModel(
       id: topicSnapshot['id'],
       addedAt: DateTime.parse(topicSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.of(topicSnapshot['adderInfo']),
+      adderInfo: AdderInfoModel.fromJson(topicSnapshot['adderInfo']),
       content: topicSnapshot['content'],
       quote: topicSnapshot['quote'],
       replyForId: topicSnapshot['replyForId'],

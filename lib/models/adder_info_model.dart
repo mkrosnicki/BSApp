@@ -15,7 +15,7 @@ class AdderInfoModel {
       this.addedComments,
       this.addedPosts});
 
-  static AdderInfoModel of(dynamic adderInfoSnapshot) {
+  static AdderInfoModel fromJson(dynamic adderInfoSnapshot) {
     return AdderInfoModel(
         id: adderInfoSnapshot['id'],
         username: adderInfoSnapshot['username'],

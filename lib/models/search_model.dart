@@ -36,11 +36,11 @@ class SearchModel {
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
-      categories: (searchSnapshot['categories'] as List).map((e) => CategoryModel.of(e)).toList(),
+      categories: (searchSnapshot['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList(),
       showActiveOnly: searchSnapshot['showActiveOnly'],
       showInternetOnly: searchSnapshot['showInternetOnly'],
-      voivodeship: voivodeship != null ? Voivodeship.of(searchSnapshot['voivodeship']) : null,
-      city: city != null ? City.of(searchSnapshot['city']) : null,
+      voivodeship: voivodeship != null ? Voivodeship.fromJson(searchSnapshot['voivodeship']) : null,
+      city: city != null ? City.fromJson(searchSnapshot['city']) : null,
       ageTypes: (searchSnapshot['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList(),
       sortBy: SortingTypeHelper.fromString(searchSnapshot['sortBy']),
     );

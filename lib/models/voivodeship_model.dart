@@ -8,11 +8,11 @@ class Voivodeship {
 
   Voivodeship({this.id, this.name, this.cities});
 
-  static Voivodeship of(dynamic voivodeshipSnapshot) {
+  static Voivodeship fromJson(dynamic voivodeshipSnapshot) {
     return voivodeshipSnapshot != null ? Voivodeship(
         id: voivodeshipSnapshot['id'],
         name: voivodeshipSnapshot['name'],
-        cities: (voivodeshipSnapshot['cities'] as List).map((e) => City.of(e)).toList()
+        cities: (voivodeshipSnapshot['cities'] as List).map((e) => City.fromJson(e)).toList()
     ) : null;
   }
 
