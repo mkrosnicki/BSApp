@@ -58,7 +58,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         UserProfileMainInfo(_usersProfile.user),
                         UserProfileStatisticsInfo(),
                         UserProfileScrollableMenu(_contentIdSubject),
-                        UserProfileContent(_usersProfile.user.id, _contentIdSubject),
+                        UserProfileContent(_usersProfile, _contentIdSubject),
                       ],
                     ),
                     Container(

@@ -23,7 +23,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
     ),
   );
 
-  int selectedIndex = 1;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          _buildMenuItem('Aktywność', 0),
           _buildMenuItem('Okazje', 1),
           _buildMenuItem('Komentarze', 2),
           _buildMenuItem('Posty', 3),
