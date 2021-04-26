@@ -3,7 +3,7 @@ import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileAddedDeals extends StatelessWidget {
-  List<DealModel> addedDeals;
+  final List<DealModel> addedDeals;
 
   UserProfileAddedDeals(this.addedDeals);
 

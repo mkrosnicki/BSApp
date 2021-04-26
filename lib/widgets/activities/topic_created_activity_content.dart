@@ -25,7 +25,7 @@ class TopicCreatedActivityContent extends StatelessWidget {
               text:
               '${username} rozpoczął na forum nowy temat: ',
               style: Theme.of(context).textTheme.subtitle1.copyWith(
-                fontSize: 11,
+                fontSize: 12,
                 color: Colors.black,
                 height: 1.3,
               ),
@@ -33,7 +33,7 @@ class TopicCreatedActivityContent extends StatelessWidget {
                 TextSpan(
                   text: '${topic.title}',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),

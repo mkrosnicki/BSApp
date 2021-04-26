@@ -23,23 +23,23 @@ class CommentItemVotingButtons extends StatelessWidget {
         builder: (context, commentsData, child) => Wrap(
           children: [
             VotingButton(
-              iconData: CupertinoIcons.hand_thumbsdown,
-              function: () => _voteForComment(context,
-                  dealId, comment.id, false, authData.isAuthenticated),
-              trailing: comment.numberOfNegativeVotes.toString(),
-              color: Colors.red,
-              isActive: commentsData.wasVotedNegativelyBy(
-                  comment.id, authData.userId),
-              showBorder: false,
-              fontSize: 12,
-            ),
-            VotingButton(
               iconData: CupertinoIcons.hand_thumbsup,
               function: () => _voteForComment(context,
                   dealId, comment.id, true, authData.isAuthenticated),
               trailing: comment.numberOfPositiveVotes.toString(),
               color: MyColorsProvider.GREEN,
               isActive: commentsData.wasVotedPositivelyBy(
+                  comment.id, authData.userId),
+              showBorder: false,
+              fontSize: 12,
+            ),
+            VotingButton(
+              iconData: CupertinoIcons.hand_thumbsdown,
+              function: () => _voteForComment(context,
+                  dealId, comment.id, false, authData.isAuthenticated),
+              trailing: comment.numberOfNegativeVotes.toString(),
+              color: Colors.red,
+              isActive: commentsData.wasVotedNegativelyBy(
                   comment.id, authData.userId),
               showBorder: false,
               fontSize: 12,

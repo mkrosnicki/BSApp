@@ -20,12 +20,12 @@ class DealDetailsComments extends StatelessWidget {
         Container(
           // color: Colors.white,
           width: double.infinity,
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 6.0, right: 6.0),
           alignment: Alignment.centerLeft,
           child: const Text(
             'Komentarze',
             style: const TextStyle(
-                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w700),
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ),
         Container(

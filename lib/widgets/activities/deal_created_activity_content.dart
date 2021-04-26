@@ -23,7 +23,7 @@ class DealCreatedActivityContent extends StatelessWidget {
             text: TextSpan(
               text: '${username} opublikował okazję: ',
               style: Theme.of(context).textTheme.subtitle1.copyWith(
-                    fontSize: 11,
+                    fontSize: 12,
                     color: Colors.black,
                     height: 1.3,
                   ),
@@ -31,7 +31,7 @@ class DealCreatedActivityContent extends StatelessWidget {
                 TextSpan(
                   text: '${deal.title}',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
