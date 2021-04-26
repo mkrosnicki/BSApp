@@ -58,35 +58,38 @@ class DealModel {
     @required this.image,
   });
 
-  static DealModel fromJson(dynamic dealObject) {
+  static DealModel fromJson(dynamic dealSnapshot) {
+    if (dealSnapshot == null) {
+      return null;
+    }
     return DealModel(
-      id: dealObject['id'],
-      addedAt: DateTime.parse(dealObject['addedAt']),
-      addedById: dealObject['addedById'],
-      addedByUsername: dealObject['addedByUsername'],
-      addedByAvatarPath: dealObject['addedByAvatarPath'],
-      title: dealObject['title'],
-      description: dealObject['description'],
-      link: dealObject['link'],
-      dealType: DealTypeHelper.of(dealObject['dealType']),
+      id: dealSnapshot['id'],
+      addedAt: DateTime.parse(dealSnapshot['addedAt']),
+      addedById: dealSnapshot['addedById'],
+      addedByUsername: dealSnapshot['addedByUsername'],
+      addedByAvatarPath: dealSnapshot['addedByAvatarPath'],
+      title: dealSnapshot['title'],
+      description: dealSnapshot['description'],
+      link: dealSnapshot['link'],
+      dealType: DealTypeHelper.of(dealSnapshot['dealType']),
       categories: [
-        ...(dealObject['categories'] as List).map((e) => e['name']).toList()
+        ...(dealSnapshot['categories'] as List).map((e) => e['name']).toList()
       ],
-      locationType: dealObject['locationType'],
-      voivodeship: dealObject['voivodeship'],
-      city: dealObject['city'],
-      locationDescription: dealObject['locationDescription'],
-      currentPrice: dealObject['currentPrice'],
-      regularPrice: dealObject['regularPrice'],
-      shippingPrice: dealObject['shippingPrice'],
-      startDate: DateTime.parse(dealObject['startDate']),
-      endDate: DateTime.parse(dealObject['endDate']),
-      numberOfComments: dealObject['numberOfComments'],
-      numberOfPositiveVotes: dealObject['numberOfPositiveVotes'],
-      numberOfNegativeVotes: dealObject['numberOfNegativeVotes'],
-      positiveVoters: [...dealObject['positiveVoters'] as List],
-      negativeVoters: [...dealObject['negativeVoters'] as List],
-      image: _getImage(dealObject),
+      locationType: dealSnapshot['locationType'],
+      voivodeship: dealSnapshot['voivodeship'],
+      city: dealSnapshot['city'],
+      locationDescription: dealSnapshot['locationDescription'],
+      currentPrice: dealSnapshot['currentPrice'],
+      regularPrice: dealSnapshot['regularPrice'],
+      shippingPrice: dealSnapshot['shippingPrice'],
+      startDate: DateTime.parse(dealSnapshot['startDate']),
+      endDate: DateTime.parse(dealSnapshot['endDate']),
+      numberOfComments: dealSnapshot['numberOfComments'],
+      numberOfPositiveVotes: dealSnapshot['numberOfPositiveVotes'],
+      numberOfNegativeVotes: dealSnapshot['numberOfNegativeVotes'],
+      positiveVoters: [...dealSnapshot['positiveVoters'] as List],
+      negativeVoters: [...dealSnapshot['negativeVoters'] as List],
+      image: _getImage(dealSnapshot),
       // image: null,
     );
   }

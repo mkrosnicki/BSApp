@@ -1,5 +1,6 @@
 enum ActivityType {
   TOPIC_CREATED,
+  DEAL_CREATED,
 }
 
 class ActivityTypeHelper {

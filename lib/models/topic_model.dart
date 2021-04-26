@@ -31,6 +31,9 @@ class TopicModel {
   });
 
   static TopicModel fromJson(dynamic topicSnapshot) {
+    if (topicSnapshot == null) {
+      return null;
+    }
     return TopicModel(
       id: topicSnapshot['id'],
       addedAt: DateTime.parse(topicSnapshot['addedAt']),

@@ -2,6 +2,7 @@ import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/activities/deal_created_activity_content.dart';
 import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,9 @@ class ActivityItem extends StatelessWidget {
       case ActivityType.TOPIC_CREATED:
         content = TopicCreatedActivityContent(
             activity.issuedByUsername, activity.relatedTopic);
+        break;
+      case ActivityType.DEAL_CREATED:
+        content = DealCreatedActivityContent(activity.issuedByUsername, activity.relatedDeal);
         break;
       default:
         content = null;

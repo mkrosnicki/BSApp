@@ -1,3 +1,4 @@
+import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 
 import 'activity_type.dart';
@@ -9,6 +10,7 @@ class ActivityModel {
   final DateTime issuedAt;
   final ActivityType activityType;
   final TopicModel relatedTopic;
+  final DealModel relatedDeal;
 
   ActivityModel(
       {this.id,
@@ -16,9 +18,11 @@ class ActivityModel {
       this.issuedByUsername,
       this.issuedAt,
       this.activityType,
-      this.relatedTopic});
+      this.relatedTopic,
+      this.relatedDeal});
 
   static ActivityModel fromJson(dynamic activitySnapshot) {
+    print(activitySnapshot);
     return ActivityModel(
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],
@@ -27,6 +31,7 @@ class ActivityModel {
       activityType:
           ActivityTypeHelper.fromString(activitySnapshot['activityType']),
       relatedTopic: TopicModel.fromJson(activitySnapshot['relatedTopic']),
+      relatedDeal: DealModel.fromJson(activitySnapshot['relatedDeal']),
     );
   }
 
