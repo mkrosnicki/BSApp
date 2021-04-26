@@ -17,7 +17,7 @@ class TopicItem extends StatelessWidget {
         color: Colors.white,
         width: double.infinity,
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Padding(
           padding: const EdgeInsets.only(top: 4.0),
           child: Column(

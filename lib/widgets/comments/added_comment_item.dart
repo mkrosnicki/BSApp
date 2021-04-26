@@ -13,7 +13,7 @@ class AddedCommentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2.0),
-      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
       width: double.infinity,
       color: Colors.white,
       child: Flex(
