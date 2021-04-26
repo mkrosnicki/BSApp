@@ -29,10 +29,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Profil',
-          style: MyStylingProvider.TEXT_BLACK,
-        ),
         backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,

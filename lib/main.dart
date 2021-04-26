@@ -31,6 +31,7 @@ import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('pl', null);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
