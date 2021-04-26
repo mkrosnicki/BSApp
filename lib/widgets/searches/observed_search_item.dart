@@ -48,26 +48,30 @@ class ObservedSearchItem extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SecondaryButton(
-                'Przestań obserwować',
-                () {
-                  Provider.of<Searches>(context, listen: false)
-                      .deleteSearch(searchModel.id);
-                },
-                fontSize: 12,
-              ),
-              PrimaryButton(
-                'Zobacz wyniki',
-                () => Navigator.of(context).pushNamed(
-                  DealSearchResultScreen.routeName,
-                  arguments: searchModel.toFilterSettings(),
+          Container(
+            height: 24.0,
+            margin: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SecondaryButton(
+                  'Przestań obserwować',
+                  () {
+                    Provider.of<Searches>(context, listen: false)
+                        .deleteSearch(searchModel.id);
+                  },
+                  fontSize: 11,
                 ),
-                fontSize: 12,
-              )
-            ],
+                PrimaryButton(
+                  'Zobacz wyniki',
+                  () => Navigator.of(context).pushNamed(
+                    DealSearchResultScreen.routeName,
+                    arguments: searchModel.toFilterSettings(),
+                  ),
+                  fontSize: 11,
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -86,11 +90,11 @@ class ObservedSearchItem extends StatelessWidget {
                 children: [
                   Text(label,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12, color: Colors.black54)),
+                      style: TextStyle(fontSize: 11, color: Colors.black54)),
                   Text(
                     value,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.black87, fontSize: 13),
+                    style: TextStyle(color: Colors.black87, fontSize: 12),
                   ),
                 ],
               ),
