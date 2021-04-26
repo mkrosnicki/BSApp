@@ -1,6 +1,5 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/providers/users.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
@@ -23,18 +22,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 
-
   @override
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        leading: const AppBarBackButton(Colors.black),
-        // bottom: AppBarBottomBorder(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(10.0),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          // leading: const AppBarBackButton(Colors.black),
+          // bottom: AppBarBottomBorder(),
+        ),
       ),
       body: FutureBuilder(
           future: _initUser(context, userId),
@@ -47,14 +48,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: Text('An error occurred!'),
                 );
               } else {
-                return Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                return Stack(
                   children: [
-                    UserProfileMainInfo(_user),
-                    UserProfileStatisticsInfo(),
-                    UserProfileScrollableMenu(_contentIdSubject),
-                    UserProfileContent(_user.id, _contentIdSubject),
+                    Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        UserProfileMainInfo(_user),
+                        UserProfileStatisticsInfo(),
+                        UserProfileScrollableMenu(_contentIdSubject),
+                        UserProfileContent(_user.id, _contentIdSubject),
+                      ],
+                    ),
+                    Container(
+                      // color: Colors.green,
+                      width: 70,
+                      height: 35,
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: const AppBarBackButton(Colors.black),
+                    )
                   ],
                 );
               }
