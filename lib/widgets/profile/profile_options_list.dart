@@ -20,10 +20,10 @@ class ProfileOptionsList extends StatelessWidget {
     final menuOptions = [
       const ProfileOptionsHeader('Twoja aktywność'),
       const ProfileOptionItem(
-          title: 'Dodane okazje', route: AddedDealsScreen.routeName),
-      const ProfileOptionItem(title: 'Dodane posty', route: AddedPostsScreen.routeName),
+          title: 'Twoje okazje', route: AddedDealsScreen.routeName),
       const ProfileOptionItem(
-          title: 'Dodane komentarze', route: AddedCommentsScreen.routeName),
+          title: 'Skomentowane okazje', route: AddedCommentsScreen.routeName),
+      const ProfileOptionItem(title: 'Forum', route: AddedPostsScreen.routeName),
       const ProfileOptionsHeader('Ustawienia'),
       const ProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
       const ProfileOptionItem(
