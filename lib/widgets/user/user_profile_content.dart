@@ -22,9 +22,9 @@ class UserProfileContent extends StatelessWidget {
         if (contentId == 0) {
           return UserProfileActivitiesList(usersProfile);
         } else if (contentId == 1) {
-          return UserProfileAddedDeals(usersProfile.user.id);
+          return UserProfileAddedDeals(usersProfile.addedDeals);
         } else {
-          return UserProfileAddedDeals(usersProfile.user.id);
+          return UserProfileAddedDeals(usersProfile.addedDeals);
         }
       },
     );

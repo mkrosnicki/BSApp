@@ -39,8 +39,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
         children: [
           _buildMenuItem('Aktywność', 0),
           _buildMenuItem('Okazje', 1),
-          _buildMenuItem('Komentarze', 2),
-          _buildMenuItem('Posty', 3),
+          _buildMenuItem('Forum', 2),
         ],
       ),
     );

@@ -1,40 +1,21 @@
-import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class UserProfileAddedDeals extends StatelessWidget {
-  String userId;
+  List<DealModel> addedDeals;
 
-  UserProfileAddedDeals(this.userId);
+  UserProfileAddedDeals(this.addedDeals);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future:
-          Provider.of<Deals>(context, listen: false).fetchDealsAddedBy(userId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          if (snapshot.error != null) {
-            return Center(
-              child: Text('An error occurred!'),
-            );
-          } else {
-            return Consumer<Deals>(
-              builder: (context, userDealsData, child) => Flexible(
-                child: ListView.builder(
-                  itemCount: userDealsData.fetchedUserAddedDeals.length,
-                  itemBuilder: (context, index) {
-                    return DealItem(userDealsData.fetchedUserAddedDeals[index]);
-                  },
-                ),
-              ),
-            );
-          }
-        }
-      },
+    return Flexible(
+      child: ListView.builder(
+        itemCount: addedDeals.length,
+        itemBuilder: (context, index) {
+          return DealItem(addedDeals[index]);
+        },
+      ),
     );
   }
 }
