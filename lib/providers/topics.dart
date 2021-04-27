@@ -125,6 +125,14 @@ class Topics with ChangeNotifier {
     return fetchTopics();
   }
 
+  // Future<TopicModel> fetchById(String topicId) async {
+  //   final responseBody = await _apiProvider.get('/topics/$topicId');
+  //   if (responseBody == null) {
+  //     print('No Topic Found!');
+  //   }
+  //   return TopicModel.fromJson(responseBody);
+  // }
+
   TopicModel findById(String topicId) {
     return categoryTopics.firstWhere((topic) => topic.id == topicId);
   }

@@ -13,11 +13,10 @@ class PostItemUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoBoldTextStyle = const TextStyle(
-        fontSize: 11, color: Colors.grey, fontWeight: FontWeight.bold);
     const userInfoTextStyle = const TextStyle(
-      fontSize: 13,
-      color: Colors.grey,
+      fontSize: 11,
+      color: Colors.black54,
+      height: 1.4
     );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
@@ -60,17 +59,9 @@ class PostItemUserInfo extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                '${adderInfo.addedPosts}',
-                                style: userInfoBoldTextStyle,
-                              ),
-                              const Text(
-                                ' posty',
-                                style: userInfoTextStyle,
-                              ),
-                            ],
+                          Text(
+                            '${adderInfo.addedPosts} posty',
+                            style: userInfoTextStyle,
                           ),
                         ],
                       ),
