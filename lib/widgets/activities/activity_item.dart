@@ -2,9 +2,13 @@ import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/activities/comment_reply_icon.dart';
+import 'package:BSApp/widgets/activities/deal_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_created_activity_content.dart';
+import 'package:BSApp/widgets/activities/topic_added_icon.dart';
 import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActivityItem extends StatelessWidget {
@@ -26,11 +30,7 @@ class ActivityItem extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            child: UserAvatar(
-              username: activity.issuedByUsername,
-              radius: 20,
-              backgroundColor: MyColorsProvider.BLUE,
-            ),
+            child: _buildActivityIcon(),
           ),
           Flexible(
             child: _buildActivityContent(),
@@ -67,4 +67,20 @@ class ActivityItem extends StatelessWidget {
     }
     return content;
   }
+
+  _buildActivityIcon() {
+    Widget icon;
+    switch (activity.activityType) {
+      case ActivityType.TOPIC_CREATED:
+        icon = const TopicAddedIcon();
+        break;
+      case ActivityType.DEAL_CREATED:
+        icon = const DealAddedIcon();
+        break;
+      default:
+        icon = null;
+    }
+    return icon;
+  }
+
 }
