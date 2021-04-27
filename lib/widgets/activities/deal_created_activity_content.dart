@@ -17,43 +17,22 @@ class DealCreatedActivityContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          RichText(
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            text: TextSpan(
-              text: '${username} opublikował okazję: ',
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                    fontSize: 12,
-                    color: Colors.black,
-                    height: 1.3,
-                  ),
-              children: [
-                TextSpan(
-                  text: '${deal.title}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
+          Text(
+            '$username opublikował okazję',
+            style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
           ),
-          // Text(
-          //   '${deal.title}',
-          //   style: TextStyle(
-          //     fontSize: 12,
-          //     fontWeight: FontWeight.w600,
-          //     color: Colors.black,
-          //   ),
-          // ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            // padding: const EdgeInsets.only(bottom: 6.0),
             alignment: Alignment.topLeft,
             child: Text(
-              deal.description,
+              deal.title,
               style:
-                  TextStyle(fontSize: 11, color: Colors.black54, height: 1.3),
+              TextStyle(
+                fontSize: 12,
+                // fontWeight: FontWeight.w600,
+                height: 1.5,
+                color: Colors.black,
+              ),
             ),
           ),
         ],

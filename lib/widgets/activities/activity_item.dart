@@ -33,19 +33,24 @@ class ActivityItem extends StatelessWidget {
             child: _buildActivityIcon(),
           ),
           Flexible(
-            child: _buildActivityContent(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildActivityContent(),
+                Container(
+                  padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
+                  child: Text(
+                    '${DateUtil.timeAgoString(activity.issuedAt)}',
+                    style: TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
+                  ),
+                )
+              ],
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            alignment: Alignment.topRight,
-            child: Text(
-              '${DateUtil.timeAgoString(activity.issuedAt)}',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(fontSize: 11, color: Colors.black38),
-            ),
+            alignment: Alignment.centerRight,
+            child: Icon(CupertinoIcons.chevron_right, color: MyColorsProvider.DEEP_BLUE, size: 16,),
           ),
         ],
       ),
