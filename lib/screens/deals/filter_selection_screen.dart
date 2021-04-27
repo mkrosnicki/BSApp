@@ -3,6 +3,7 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
@@ -17,6 +18,8 @@ class FilterSelectionScreen extends StatefulWidget {
 }
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
+  static const TextStyle headerTextStyle = const TextStyle(fontSize: 14);
+
   FilterSettings filtersSettings;
 
   _initFilterSettings(BuildContext context) {
@@ -56,7 +59,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SwitchListTile(
-                      title: const Text('Pokaż tylko aktywne'),
+                      title: const Text('Pokaż tylko aktywne',
+                          style: headerTextStyle),
                       value: filtersSettings.showActiveOnly,
                       onChanged: (value) {
                         setState(() {
@@ -65,7 +69,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       },
                     ),
                     ListTile(
-                      title: const Text('Kategoria'),
+                      title: const Text('Kategoria', style: headerTextStyle),
                       subtitle: filtersSettings.categories.isNotEmpty
                           ? Text(
                               filtersSettings.categoriesString,
@@ -76,7 +80,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       onTap: () => _openCategorySelector(context),
                     ),
                     SwitchListTile(
-                      title: const Text('Tylko internetowe okazje'),
+                      title: const Text('Tylko internetowe okazje',
+                          style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
                       onChanged: (value) {
                         setState(() {
@@ -87,7 +92,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       },
                     ),
                     ListTile(
-                      title: const Text('Lokalizacja'),
+                      title: const Text('Lokalizacja', style: headerTextStyle),
                       subtitle: filtersSettings.voivodeship != null
                           ? Text(
                               filtersSettings.locationString,
@@ -99,7 +104,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       enabled: !filtersSettings.showInternetOnly,
                     ),
                     ListTile(
-                      title: const Text('Wiek dziecka'),
+                      title: const Text('Wiek dziecka', style: headerTextStyle),
                       subtitle: filtersSettings.ageTypes.isEmpty
                           ? const Text('Dowolny')
                           : Text(
@@ -115,7 +120,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       ),
                     ),
                     ListTile(
-                      title: const Text('Sortuj po'),
+                      title: const Text('Sortuj po', style: headerTextStyle),
                     ),
                     Container(
                       width: double.infinity,
@@ -153,8 +158,18 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
       (e) => list.add(Container(
         margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
         child: ChoiceChip(
-          label: Text(AgeTypeHelper.getReadable(e)),
+          label: Text(
+            AgeTypeHelper.getReadable(e),
+            style: TextStyle(
+              fontSize: 12,
+              color: filtersSettings.ageTypes.contains(e) ? Colors.white : Colors.black,
+            ),
+          ),
           selected: filtersSettings.ageTypes.contains(e),
+          selectedColor: MyColorsProvider.BLUE,
+          selectedShadowColor: Colors.white,
+          shadowColor: Colors.white,
+          backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
           onSelected: (isSelected) {
             setState(() {
               if (isSelected) {
@@ -176,7 +191,18 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
           (e) => Container(
             margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(SortingTypeHelper.getReadableM(e)),
+              label: Text(
+                SortingTypeHelper.getReadableM(e),
+                style: TextStyle(
+                  fontSize: 12,
+                  color:
+                      filtersSettings.sortBy == e ? Colors.white : Colors.black,
+                ),
+              ),
+              selectedColor: MyColorsProvider.BLUE,
+              selectedShadowColor: Colors.white,
+              shadowColor: Colors.white,
+              backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
               selected: filtersSettings.sortBy == e,
               onSelected: (isSelected) {
                 setState(() {
