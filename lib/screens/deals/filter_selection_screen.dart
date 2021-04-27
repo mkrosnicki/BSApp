@@ -21,6 +21,8 @@ class FilterSelectionScreen extends StatefulWidget {
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   static const TextStyle headerTextStyle = const TextStyle(fontSize: 14);
+  static const TextStyle noValueTextStyle = const TextStyle(fontSize: 13);
+  static const TextStyle valueTextStyle = const TextStyle(fontSize: 13, color: MyColorsProvider.DEEP_BLUE);
 
   FilterSettings filtersSettings;
 
@@ -75,9 +77,9 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       subtitle: filtersSettings.categories.isNotEmpty
                           ? Text(
                               filtersSettings.categoriesString,
-                              style: MyStylingProvider.TEXT_BLUE,
+                              style: valueTextStyle,
                             )
-                          : const Text('Wszystkie kategorie'),
+                          : const Text('Wszystkie kategorie', style: noValueTextStyle,),
                       trailing: MyIconsProvider.FORWARD_ICON,
                       onTap: () => _openCategorySelector(context),
                     ),
@@ -98,9 +100,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       subtitle: filtersSettings.voivodeship != null
                           ? Text(
                               filtersSettings.locationString,
-                              style: MyStylingProvider.TEXT_BLUE,
+                              style: valueTextStyle,
                             )
-                          : const Text('Cała Polska'),
+                          : const Text(
+                              'Cała Polska',
+                              style: noValueTextStyle,
+                            ),
                       trailing: MyIconsProvider.FORWARD_ICON,
                       onTap: () => _openLocationSelector(context),
                       enabled: !filtersSettings.showInternetOnly,
@@ -108,10 +113,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     ListTile(
                       title: const Text('Wiek dziecka', style: headerTextStyle),
                       subtitle: filtersSettings.ageTypes.isEmpty
-                          ? const Text('Dowolny')
+                          ? const Text('Dowolny', style: noValueTextStyle)
                           : Text(
                               filtersSettings.ageTypesString,
                               overflow: TextOverflow.ellipsis,
+                              style: valueTextStyle,
                             ),
                     ),
                     Container(
@@ -123,13 +129,14 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 4.0),
+                          horizontal: 16.0, vertical: 8.0),
                       child: const Text('Sortuj po', style: headerTextStyle),
                     ),
                     Container(
                       width: double.infinity,
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        mainAxisSize: MainAxisSize.max,
                         children: _buildSortingTypeChips(),
                       ),
                     ),
@@ -160,34 +167,6 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     List<Widget> list = [];
     AgeType.values.forEach(
       (e) => list.add(
-        // Container(
-        //   margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        //   child: ChoiceChip(
-        //     label: Text(
-        //       AgeTypeHelper.getReadable(e),
-        //       style: TextStyle(
-        //         fontSize: 12,
-        //         color: filtersSettings.ageTypes.contains(e)
-        //             ? Colors.white
-        //             : Colors.black,
-        //       ),
-        //     ),
-        //     selected: filtersSettings.ageTypes.contains(e),
-        //     selectedColor: MyColorsProvider.BLUE,
-        //     selectedShadowColor: Colors.white,
-        //     shadowColor: Colors.white,
-        //     backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
-        //     onSelected: (isSelected) {
-        //       setState(() {
-        //         if (isSelected) {
-        //           filtersSettings.ageTypes.add(e);
-        //         } else {
-        //           filtersSettings.ageTypes.remove(e);
-        //         }
-        //       });
-        //     },
-        //   ),
-        // ),
         AgeTypeChip(
           e,
           filtersSettings.ageTypes.contains(e),

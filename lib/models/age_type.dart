@@ -79,12 +79,14 @@ class AgeTypeHelper {
     static String getAgeUnit(AgeType ageType) {
       switch (ageType) {
         case AgeType.ONE_THREE_MONTHS:
-          return 'miesięce';
+          // return 'miesiące';
+          return 'msc';
           break;
         case AgeType.THREE_SIX_MONTHS:
         case AgeType.SIX_NINE_MONTHS:
         case AgeType.NINE_TWELVE_MONTHS:
-          return 'miesięcy';
+          // return 'miesięcy';
+          return 'msc';
           break;
         case AgeType.ONE_TWO_YEARS:
           return 'lata';

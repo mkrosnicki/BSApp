@@ -14,34 +14,42 @@ class AgeTypeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onClick,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
-        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        child: Column(
-          children: [
-            Text(
-              AgeTypeHelper.getAgeValue(ageType),
-              style: TextStyle(
-                fontSize: 14,
-                height: 1.6,
-                fontWeight: FontWeight.w600,
-                color: isSelected ? Colors.white : MyColorsProvider.BLUE,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 45.0),
+        child: Container(
+          width: 50.0,
+          margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+          padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
+          child: Column(
+            children: [
+              Text(
+                AgeTypeHelper.getAgeValue(ageType),
+                style: TextStyle(
+                  fontSize: 14,
+                  height: 1.6,
+                  // fontWeight: FontWeight.w600,
+                  // color: isSelected ? Colors.white : MyColorsProvider.BLUE,
+                  color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black38,
+                ),
               ),
-            ),
-            Text(
-              AgeTypeHelper.getAgeUnit(ageType),
-              style: TextStyle(
-                fontSize: 12,
-                height: 1.6,
-                color: isSelected ? Colors.white : MyColorsProvider.BLUE,
+              Text(
+                AgeTypeHelper.getAgeUnit(ageType),
+                style: TextStyle(
+                  fontSize: 12,
+                  height: 1.6,
+                  color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black38,
+                ),
               ),
+            ],
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black38,
+              width: 0.8,
             ),
-          ],
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? MyColorsProvider.BLUE : Colors.white,
-          border: Border.all(color: MyColorsProvider.BLUE, width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
         ),
       ),
     );
