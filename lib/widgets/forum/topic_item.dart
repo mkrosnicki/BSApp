@@ -1,6 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
-import 'package:BSApp/widgets/forum/topic_item_bottom_bar.dart';
 import 'package:BSApp/widgets/forum/topic_item_top_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -20,13 +19,7 @@ class TopicItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Padding(
           padding: const EdgeInsets.only(top: 4.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TopicItemTopBar(topic),
-              TopicItemBottomBar(topic.numberOfPosts),
-            ],
-          ),
+          child: TopicItemTopBar(topic),
         ),
       ),
       onTap: () => _navigateTo(context),

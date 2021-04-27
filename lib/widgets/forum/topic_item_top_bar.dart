@@ -10,26 +10,33 @@ class TopicItemTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
-          child: UserAvatar(
-            username: topic.adderInfo.username,
-            radius: 18,
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
+            child: UserAvatar(
+              username: topic.adderInfo.username,
+              radius: 20,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTitleLine(context),
-              _buildUserInfoLine(context),
-            ],
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTitleLine(context),
+                  _buildUserInfoLine(context),
+                  _buildBottomLine(context),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -37,7 +44,7 @@ class TopicItemTopBar extends StatelessWidget {
     return Text(
       topic.title,
       style: Theme.of(context).textTheme.subtitle1.copyWith(
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.w400,
           ),
     );
@@ -45,7 +52,7 @@ class TopicItemTopBar extends StatelessWidget {
 
   _buildUserInfoLine(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
+      padding: const EdgeInsets.only(top: 2.0),
       child: Row(
         children: [
           Text(
@@ -53,19 +60,25 @@ class TopicItemTopBar extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText2.copyWith(
                 fontSize: 11, color: Colors.blue, fontWeight: FontWeight.w600),
           ),
+        ],
+      ),
+    );
+  }
+
+  _buildBottomLine(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
           Text(
-            ' • ',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 12, color: Colors.black38),
+            '${topic.numberOfPosts} postów',
+            style: const TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
           ),
           Text(
             '${DateUtil.timeAgoString(topic.addedAt)}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 12, color: Colors.black38),
+            style: const TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
           ),
         ],
       ),
