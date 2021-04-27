@@ -13,7 +13,7 @@ class DealAddedIcon extends StatelessWidget {
       maxRadius: 20,
       foregroundColor: Colors.white,
       backgroundColor: MyColorsProvider.GREEN_LIGHT_SHADY,
-      child: Icon(CupertinoIcons.add),
+      child: Icon(CupertinoIcons.money_dollar),
     );
   }
 }

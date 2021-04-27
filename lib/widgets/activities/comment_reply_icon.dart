@@ -13,7 +13,7 @@ class CommentReplyIcon extends StatelessWidget {
       maxRadius: 20,
       foregroundColor: Colors.white,
       backgroundColor: MyColorsProvider.DEEP_BLUE,
-      child: Icon(CupertinoIcons.reply),
+      child: Icon(CupertinoIcons.bubble_left_bubble_right),
     );
   }
 }

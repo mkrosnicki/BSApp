@@ -39,6 +39,14 @@ class DealCreatedActivityContent extends StatelessWidget {
               ],
             ),
           ),
+          // Text(
+          //   '${deal.title}',
+          //   style: TextStyle(
+          //     fontSize: 12,
+          //     fontWeight: FontWeight.w600,
+          //     color: Colors.black,
+          //   ),
+          // ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             alignment: Alignment.topLeft,
