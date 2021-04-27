@@ -9,6 +9,8 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/filters/age_type_chip.dart';
+import 'package:BSApp/widgets/filters/sorting_type_chip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -119,8 +121,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         children: _buildAgeTypeChips(),
                       ),
                     ),
-                    ListTile(
-                      title: const Text('Sortuj po', style: headerTextStyle),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 4.0),
+                      child: const Text('Sortuj po', style: headerTextStyle),
                     ),
                     Container(
                       width: double.infinity,
@@ -155,24 +159,41 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   _buildAgeTypeChips() {
     List<Widget> list = [];
     AgeType.values.forEach(
-      (e) => list.add(Container(
-        margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: ChoiceChip(
-          label: Text(
-            AgeTypeHelper.getReadable(e),
-            style: TextStyle(
-              fontSize: 12,
-              color: filtersSettings.ageTypes.contains(e) ? Colors.white : Colors.black,
-            ),
-          ),
-          selected: filtersSettings.ageTypes.contains(e),
-          selectedColor: MyColorsProvider.BLUE,
-          selectedShadowColor: Colors.white,
-          shadowColor: Colors.white,
-          backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
-          onSelected: (isSelected) {
+      (e) => list.add(
+        // Container(
+        //   margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
+        //   child: ChoiceChip(
+        //     label: Text(
+        //       AgeTypeHelper.getReadable(e),
+        //       style: TextStyle(
+        //         fontSize: 12,
+        //         color: filtersSettings.ageTypes.contains(e)
+        //             ? Colors.white
+        //             : Colors.black,
+        //       ),
+        //     ),
+        //     selected: filtersSettings.ageTypes.contains(e),
+        //     selectedColor: MyColorsProvider.BLUE,
+        //     selectedShadowColor: Colors.white,
+        //     shadowColor: Colors.white,
+        //     backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
+        //     onSelected: (isSelected) {
+        //       setState(() {
+        //         if (isSelected) {
+        //           filtersSettings.ageTypes.add(e);
+        //         } else {
+        //           filtersSettings.ageTypes.remove(e);
+        //         }
+        //       });
+        //     },
+        //   ),
+        // ),
+        AgeTypeChip(
+          e,
+          filtersSettings.ageTypes.contains(e),
+          () {
             setState(() {
-              if (isSelected) {
+              if (!filtersSettings.ageTypes.contains(e)) {
                 filtersSettings.ageTypes.add(e);
               } else {
                 filtersSettings.ageTypes.remove(e);
@@ -180,39 +201,32 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
             });
           },
         ),
-      )),
+      ),
     );
     return list;
   }
 
   _buildSortingTypeChips() {
-    List<Widget> list = SortingType.values
-        .map(
-          (e) => Container(
-            margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-            child: ChoiceChip(
-              label: Text(
-                SortingTypeHelper.getReadableM(e),
-                style: TextStyle(
-                  fontSize: 12,
-                  color:
-                      filtersSettings.sortBy == e ? Colors.white : Colors.black,
-                ),
-              ),
-              selectedColor: MyColorsProvider.BLUE,
-              selectedShadowColor: Colors.white,
-              shadowColor: Colors.white,
-              backgroundColor: MyColorsProvider.SUPER_LIGHT_GREY,
-              selected: filtersSettings.sortBy == e,
-              onSelected: (isSelected) {
-                setState(() {
-                  filtersSettings.sortBy = e;
-                });
-              },
-            ),
-          ),
-        )
-        .toList();
+    List<Widget> list = [
+      SortingTypeChip(
+        SortingType.NEWEST,
+        filtersSettings.sortBy == SortingType.NEWEST,
+        () {
+          setState(() {
+            filtersSettings.sortBy = SortingType.NEWEST;
+          });
+        },
+      ),
+      SortingTypeChip(
+        SortingType.MOST_POPULAR,
+        filtersSettings.sortBy == SortingType.MOST_POPULAR,
+        () {
+          setState(() {
+            filtersSettings.sortBy = SortingType.MOST_POPULAR;
+          });
+        },
+      ),
+    ];
     return list;
   }
 

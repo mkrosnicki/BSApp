@@ -51,4 +51,50 @@ class AgeTypeHelper {
     }
   }
 
+  static String getAgeValue(AgeType ageType) {
+    switch (ageType) {
+      case AgeType.ONE_THREE_MONTHS:
+        return '0 - 3';
+        break;
+      case AgeType.THREE_SIX_MONTHS:
+        return '3 - 6';
+        break;
+      case AgeType.SIX_NINE_MONTHS:
+        return '6 - 9';
+        break;
+      case AgeType.NINE_TWELVE_MONTHS:
+        return '9 - 12';
+        break;
+      case AgeType.ONE_TWO_YEARS:
+        return '1 - 2';
+        break;
+      case AgeType.TWO_YEARS_AND_OLDER:
+        return '2+';
+        break;
+      default:
+        return null;
+    }
+  }
+
+    static String getAgeUnit(AgeType ageType) {
+      switch (ageType) {
+        case AgeType.ONE_THREE_MONTHS:
+          return 'miesięce';
+          break;
+        case AgeType.THREE_SIX_MONTHS:
+        case AgeType.SIX_NINE_MONTHS:
+        case AgeType.NINE_TWELVE_MONTHS:
+          return 'miesięcy';
+          break;
+        case AgeType.ONE_TWO_YEARS:
+          return 'lata';
+          break;
+        case AgeType.TWO_YEARS_AND_OLDER:
+          return 'lat';
+          break;
+        default:
+          return null;
+      }
+  }
+
 }
