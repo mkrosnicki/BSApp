@@ -18,36 +18,22 @@ class TopicCreatedActivityContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          RichText(
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            text: TextSpan(
-              text:
-              '${username} rozpoczął na forum nowy temat: ',
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                fontSize: 12,
-                color: Colors.black,
-                height: 1.3,
-              ),
-              children: [
-                TextSpan(
-                  text: '${topic.title}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
+          Text(
+            '$username rozpoczął nowy temat',
+            style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            // padding: const EdgeInsets.only(bottom: 6.0),
             alignment: Alignment.topLeft,
             child: Text(
-              topic.content,
-              style: TextStyle(
-                  fontSize: 11, color: Colors.black54, height: 1.3),
+              topic.title,
+              style:
+              TextStyle(
+                fontSize: 12,
+                // fontWeight: FontWeight.w600,
+                height: 1.5,
+                color: Colors.black,
+              ),
             ),
           ),
         ],

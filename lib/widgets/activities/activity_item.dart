@@ -2,12 +2,10 @@ import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/widgets/activities/comment_reply_icon.dart';
 import 'package:BSApp/widgets/activities/deal_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_created_activity_content.dart';
 import 'package:BSApp/widgets/activities/topic_added_icon.dart';
 import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
-import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +23,7 @@ class ActivityItem extends StatelessWidget {
       color: Colors.white,
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
@@ -38,19 +36,24 @@ class ActivityItem extends StatelessWidget {
               children: [
                 _buildActivityContent(),
                 Container(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
+                  padding:
+                      const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
                   child: Text(
                     '${DateUtil.timeAgoString(activity.issuedAt)}',
-                    style: TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
+                    style: TextStyle(
+                        fontSize: 11, color: Colors.black54, height: 1.1),
                   ),
                 )
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            alignment: Alignment.centerRight,
-            child: Icon(CupertinoIcons.chevron_right, color: MyColorsProvider.DEEP_BLUE, size: 16,),
+            padding: const EdgeInsets.only(left: 4.0),
+            child: Icon(
+              CupertinoIcons.chevron_right,
+              color: MyColorsProvider.DEEP_BLUE,
+              size: 18,
+            ),
           ),
         ],
       ),
@@ -65,7 +68,8 @@ class ActivityItem extends StatelessWidget {
             activity.issuedByUsername, activity.relatedTopic);
         break;
       case ActivityType.DEAL_CREATED:
-        content = DealCreatedActivityContent(activity.issuedByUsername, activity.relatedDeal);
+        content = DealCreatedActivityContent(
+            activity.issuedByUsername, activity.relatedDeal);
         break;
       default:
         content = null;
@@ -87,5 +91,4 @@ class ActivityItem extends StatelessWidget {
     }
     return icon;
   }
-
 }
