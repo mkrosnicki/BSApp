@@ -128,15 +128,18 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       ),
                     ),
                     Container(
+                      margin: const EdgeInsets.only(top: 10.0),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 8.0),
                       child: const Text('Sortuj po', style: headerTextStyle),
                     ),
                     Container(
                       width: double.infinity,
+                      alignment: Alignment.center,
                       child: Flex(
                         direction: Axis.horizontal,
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: _buildSortingTypeChips(),
                       ),
                     ),
