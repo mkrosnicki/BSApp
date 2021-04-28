@@ -12,7 +12,7 @@ class DiscountTypeHelper {
   static String getReadable(DiscountType type) {
     switch (type) {
       case DiscountType.ABSOLUTE:
-        return 'zł';
+        return ' zł';
       case DiscountType.PERCENTAGE:
         return '%';
     }

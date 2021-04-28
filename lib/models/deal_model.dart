@@ -104,9 +104,9 @@ class DealModel {
 
   String get priceString {
     if (dealType == DealType.OCCASION) {
-     return currentPrice.toString();
+     return '${currentPrice.toString()} zł';
     } else {
-      return '-$discountValue ${DiscountTypeHelper.getReadable(discountType)}';
+      return '-$discountValue${DiscountTypeHelper.getReadable(discountType)}';
     }
   }
 

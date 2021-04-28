@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/widgets/deals/deal_item_heart_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,13 +48,13 @@ class DealItemTopSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             Text(
-              '${deal.priceString} zł ',
+              '${deal.priceString} ',
               style: TextStyle(
                   color: Colors.blue.shade500,
                   fontSize: 15,
                   fontWeight: FontWeight.w600),
             ),
-            Text(
+            if (deal.dealType == DealType.OCCASION && deal.regularPrice != null) Text(
               '${deal.regularPrice} zł',
               style: const TextStyle(
                   fontSize: 14,
