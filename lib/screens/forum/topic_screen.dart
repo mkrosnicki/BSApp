@@ -1,4 +1,5 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -29,8 +30,7 @@ class _TopicScreenState extends State<TopicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final topicId = ModalRoute.of(context).settings.arguments as String;
-    final topic = Provider.of<Topics>(context, listen: false).findById(topicId);
+    final topic = ModalRoute.of(context).settings.arguments as TopicModel;
     return Scaffold(
       appBar: AppBar(
         title: const Text(

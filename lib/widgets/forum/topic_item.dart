@@ -31,7 +31,7 @@ class TopicItem extends StatelessWidget {
   }
 
   _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic.id);
+    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic);
   }
 
   String shortenTo(String input, int length) {
