@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:BSApp/models/deal_type.dart';
+import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,8 @@ class DealModel {
   final double currentPrice;
   final double regularPrice;
   final double shippingPrice;
+  final DiscountType discountType;
+  final double discountValue;
   final DateTime startDate;
   final DateTime endDate;
   final int numberOfComments;
@@ -49,6 +52,8 @@ class DealModel {
     @required this.currentPrice,
     @required this.regularPrice,
     @required this.shippingPrice,
+    @required this.discountType,
+    @required this.discountValue,
     @required this.startDate,
     @required this.endDate,
     @required this.numberOfComments,
@@ -83,6 +88,8 @@ class DealModel {
       currentPrice: dealSnapshot['currentPrice'],
       regularPrice: dealSnapshot['regularPrice'],
       shippingPrice: dealSnapshot['shippingPrice'],
+      discountType: DiscountTypeHelper.fromString(dealSnapshot['discountType']),
+      discountValue: dealSnapshot['discountValue'],
       startDate: DateTime.parse(dealSnapshot['startDate']),
       endDate: DateTime.parse(dealSnapshot['endDate']),
       numberOfComments: dealSnapshot['numberOfComments'],
@@ -95,11 +102,19 @@ class DealModel {
     );
   }
 
+  String get priceString {
+    if (dealType == DealType.OCCASION) {
+     return currentPrice.toString();
+    } else {
+      return '-$discountValue ${DiscountTypeHelper.getReadable(discountType)}';
+    }
+  }
+
   String get discountString {
     if (dealType == DealType.OCCASION) {
       return '${((regularPrice - currentPrice) / regularPrice * 100).toStringAsFixed(0)}% taniej';
     } else {
-      return 'kupon';
+      return '$discountValue ${DiscountTypeHelper.getReadable(discountType)} taniej';
     }
   }
 

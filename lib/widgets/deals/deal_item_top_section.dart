@@ -47,7 +47,7 @@ class DealItemTopSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             Text(
-              '${deal.currentPrice.toString()} zł ',
+              '${deal.priceString} zł ',
               style: TextStyle(
                   color: Colors.blue.shade500,
                   fontSize: 15,
