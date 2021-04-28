@@ -35,6 +35,9 @@ class CommentModel {
       this.negativeVoters});
 
   static CommentModel fromJson(dynamic commentSnapshot) {
+    if (commentSnapshot == null) {
+      return null;
+    }
     return CommentModel(
       id: commentSnapshot['id'],
       content: commentSnapshot['content'],

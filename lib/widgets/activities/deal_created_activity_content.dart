@@ -18,7 +18,7 @@ class DealCreatedActivityContent extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            '$username dodał okazję',
+            '$username dodał(a) okazję',
             style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
           ),
           Container(

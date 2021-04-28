@@ -1,6 +1,9 @@
 enum ActivityType {
   TOPIC_CREATED,
   DEAL_CREATED,
+  COMMENT_ADDED,
+  COMMENT_REPLIED,
+  POST_ADDED
 }
 
 class ActivityTypeHelper {

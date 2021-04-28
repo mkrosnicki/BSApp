@@ -43,7 +43,7 @@ class AddedCommentItem extends StatelessWidget {
                     maxLines: 3,
                     text: TextSpan(
                       text:
-                          '${comment.adderInfo.username} dodał komentarz pod okazją: ',
+                          '${comment.adderInfo.username} dodał(a) komentarz pod okazją: ',
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
                             fontSize: 11,
                             color: Colors.black,

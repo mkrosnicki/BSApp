@@ -4,6 +4,8 @@ import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/activities/deal_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_created_activity_content.dart';
+import 'package:BSApp/widgets/activities/post_added_activity_content.dart';
+import 'package:BSApp/widgets/activities/post_added_icon.dart';
 import 'package:BSApp/widgets/activities/topic_added_icon.dart';
 import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,6 +73,10 @@ class ActivityItem extends StatelessWidget {
         content = DealCreatedActivityContent(
             activity.issuedByUsername, activity.relatedDeal);
         break;
+      case ActivityType.POST_ADDED:
+        content = PostAddedActivityContent(
+            activity.issuedByUsername, activity.relatedPost);
+        break;
       default:
         content = null;
     }
@@ -85,6 +91,9 @@ class ActivityItem extends StatelessWidget {
         break;
       case ActivityType.DEAL_CREATED:
         icon = const DealAddedIcon();
+        break;
+      case ActivityType.POST_ADDED:
+        icon = const PostAddedIcon();
         break;
       default:
         icon = null;

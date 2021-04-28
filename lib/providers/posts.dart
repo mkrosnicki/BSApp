@@ -29,7 +29,7 @@ class Posts with ChangeNotifier {
       print('No Posts Found!');
     }
     responseBody.forEach((element) {
-      var post = PostModel.of(element);
+      var post = PostModel.fromJson(element);
       loadedPosts.add(post);
     });
     fetchedTopicPosts = loadedPosts;
@@ -44,7 +44,7 @@ class Posts with ChangeNotifier {
       print('No Posts Found!');
     }
     responseBody.forEach((element) {
-      var post = PostModel.of(element);
+      var post = PostModel.fromJson(element);
       loadedPosts.add(post);
     });
     fetchedAddedPosts = loadedPosts;

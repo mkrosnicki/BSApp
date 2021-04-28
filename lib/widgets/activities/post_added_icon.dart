@@ -12,8 +12,8 @@ class PostAddedIcon extends StatelessWidget {
       minRadius: 20,
       maxRadius: 20,
       foregroundColor: Colors.white,
-      backgroundColor: MyColorsProvider.DEEP_BLUE,
-      child: Icon(CupertinoIcons.bubble_left_bubble_right),
+      backgroundColor: Colors.deepPurpleAccent,
+      child: Icon(CupertinoIcons.bubble_left),
     );
   }
 }

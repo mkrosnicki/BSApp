@@ -23,16 +23,19 @@ class PostModel {
     @required this.replyForUsername,
   });
 
-  static PostModel of(dynamic topicSnapshot) {
+  static PostModel fromJson(dynamic postSnapshot) {
+    if (postSnapshot == null) {
+      return null;
+    }
     return PostModel(
-      id: topicSnapshot['id'],
-      addedAt: DateTime.parse(topicSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.fromJson(topicSnapshot['adderInfo']),
-      content: topicSnapshot['content'],
-      quote: topicSnapshot['quote'],
-      replyForId: topicSnapshot['replyForId'],
-      replyForUserId: topicSnapshot['replyForUserId'],
-      replyForUsername: topicSnapshot['replyForUsername'],
+      id: postSnapshot['id'],
+      addedAt: DateTime.parse(postSnapshot['addedAt']),
+      adderInfo: AdderInfoModel.fromJson(postSnapshot['adderInfo']),
+      content: postSnapshot['content'],
+      quote: postSnapshot['quote'],
+      replyForId: postSnapshot['replyForId'],
+      replyForUserId: postSnapshot['replyForUserId'],
+      replyForUsername: postSnapshot['replyForUsername'],
     );
   }
 

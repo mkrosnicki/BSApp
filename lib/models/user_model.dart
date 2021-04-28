@@ -23,7 +23,7 @@ class UserModel {
       registeredAt: DateTime.parse(userSnapshot['registeredAt']),
       // lastLoginAt: DateTime.parse(userSnapshot['lastLoginAt']),
       lastLoginAt: null, // todo
-      addedPosts: (userSnapshot['addedPosts'] as List).map((e) => PostModel.of(e)).toList(),
+      addedPosts: (userSnapshot['addedPosts'] as List).map((e) => PostModel.fromJson(e)).toList(),
       addedTopics: (userSnapshot['addedTopics'] as List).map((e) => TopicModel.fromJson(e)).toList(),
       addedDeals: (userSnapshot['addedDeals'] as List).map((e) => DealModel.fromJson(e)).toList(),
       addedComments: (userSnapshot['addedComments'] as List).map((e) => CommentModel.fromJson(e)).toList(),

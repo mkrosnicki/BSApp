@@ -1,4 +1,6 @@
+import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 
 import 'activity_type.dart';
@@ -11,6 +13,8 @@ class ActivityModel {
   final ActivityType activityType;
   final TopicModel relatedTopic;
   final DealModel relatedDeal;
+  final PostModel relatedPost;
+  final CommentModel relatedComment;
 
   ActivityModel(
       {this.id,
@@ -19,10 +23,15 @@ class ActivityModel {
       this.issuedAt,
       this.activityType,
       this.relatedTopic,
-      this.relatedDeal});
+      this.relatedDeal,
+      this.relatedPost,
+      this.relatedComment});
 
   static ActivityModel fromJson(dynamic activitySnapshot) {
-    print(activitySnapshot);
+    print(activitySnapshot['relatedPost']);
+    print(activitySnapshot['relatedDeal']);
+    print(activitySnapshot['relatedTopic']);
+    print(activitySnapshot['relatedComment']);
     return ActivityModel(
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],
@@ -32,6 +41,8 @@ class ActivityModel {
           ActivityTypeHelper.fromString(activitySnapshot['activityType']),
       relatedTopic: TopicModel.fromJson(activitySnapshot['relatedTopic']),
       relatedDeal: DealModel.fromJson(activitySnapshot['relatedDeal']),
+      relatedPost: PostModel.fromJson(activitySnapshot['relatedPost']),
+      relatedComment: CommentModel.fromJson(activitySnapshot['relatedComment']),
     );
   }
 
