@@ -13,7 +13,7 @@ class PostAddedIcon extends StatelessWidget {
       maxRadius: 20,
       foregroundColor: Colors.white,
       backgroundColor: Colors.deepPurpleAccent,
-      child: Icon(CupertinoIcons.bubble_left),
+      child: Icon(CupertinoIcons.reply),
     );
   }
 }

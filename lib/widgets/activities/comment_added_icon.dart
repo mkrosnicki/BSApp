@@ -1,9 +1,7 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommentAddedIcon extends StatelessWidget {
-
   const CommentAddedIcon();
 
   @override
@@ -12,8 +10,8 @@ class CommentAddedIcon extends StatelessWidget {
       minRadius: 20,
       maxRadius: 20,
       foregroundColor: Colors.white,
-      backgroundColor: MyColorsProvider.DEEP_BLUE,
-      child: Icon(CupertinoIcons.reply),
+      backgroundColor: Colors.deepOrangeAccent,
+      child: Icon(CupertinoIcons.bubble_left),
     );
   }
 }
