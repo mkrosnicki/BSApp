@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class RateBar extends StatelessWidget {
-
   double maxHeight;
   double barHeight;
 
@@ -37,8 +36,9 @@ class RateBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: positiveVoteFunction,
+            behavior: HitTestBehavior.translucent,
             child: Container(
-              margin: EdgeInsets.only(right: 2.0),
+              margin: EdgeInsets.only(right: 4.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
@@ -62,7 +62,8 @@ class RateBar extends StatelessWidget {
                       constraints: const BoxConstraints(minWidth: 3.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
                           color: positiveVotes > negativeVotes
                               ? MyColorsProvider.GREEN_SHADY
                               : MyColorsProvider.LIGHT_GRAY,
@@ -98,7 +99,8 @@ class RateBar extends StatelessWidget {
                           color: negativeVotes > positiveVotes
                               ? MyColorsProvider.RED_SHADY
                               : MyColorsProvider.LIGHT_GRAY,
-                          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4.0)),
                         ),
                         child: _partOfAll(false) > 0.3
                             ? Center(
@@ -122,8 +124,9 @@ class RateBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: negativeVoteFunction,
+            behavior: HitTestBehavior.translucent,
             child: Container(
-              margin: EdgeInsets.only(left: 2.0),
+              padding: EdgeInsets.only(left: 4.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsdown,
