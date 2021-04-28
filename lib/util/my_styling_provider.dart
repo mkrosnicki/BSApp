@@ -13,25 +13,9 @@ class MyStylingProvider {
       borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0),
+      borderSide: const BorderSide(width: 0, style: BorderStyle.none),
     ),
   );
-
-  static InputDecoration textFormFieldDecoration() {
-    return InputDecoration(
-      enabledBorder: InputBorder.none,
-      focusedErrorBorder: InputBorder.none,
-      filled: true,
-      fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
-      focusColor: MyColorsProvider.SUPER_LIGHT_GREY,
-      border: UnderlineInputBorder(
-        borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: const BorderSide(width: 0),
-      ),
-    );
-  }
 
   static const InputDecoration REPLY_TEXT_FIELD_DECORATION = InputDecoration(
     border: InputBorder.none,
