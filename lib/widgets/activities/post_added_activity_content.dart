@@ -1,12 +1,13 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/models/topic_model.dart';
 import 'package:flutter/material.dart';
 
 class PostAddedActivityContent extends StatelessWidget {
   final String username;
-  final PostModel post;
+  final TopicModel topic;
 
-  PostAddedActivityContent(this.username, this.post);
+  PostAddedActivityContent(this.username, this.topic);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class PostAddedActivityContent extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: Text(
-              post.content,
+              topic.title,
               style:
               TextStyle(
                 fontSize: 12,

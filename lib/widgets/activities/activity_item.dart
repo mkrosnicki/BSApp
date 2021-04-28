@@ -75,7 +75,7 @@ class ActivityItem extends StatelessWidget {
         break;
       case ActivityType.POST_ADDED:
         content = PostAddedActivityContent(
-            activity.issuedByUsername, activity.relatedPost);
+            activity.issuedByUsername, activity.relatedTopic);
         break;
       default:
         content = null;
