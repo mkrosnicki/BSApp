@@ -8,28 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DealItemHeartButton extends StatelessWidget {
-
   final DealModel deal;
+  final double iconSize;
 
-  DealItemHeartButton(this.deal);
+  DealItemHeartButton(this.deal, this.iconSize);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
-        builder: (context, authData, child) => Consumer<Deals>(
-      builder: (context, dealsData, child) {
-        return GestureDetector(
-          onTap: () => _toggleFavourites(
-              context,
-              deal,
-              dealsData.isObservedDeal(deal),
-              authData.isAuthenticated),
-          child: dealsData.isObservedDeal(deal)
-              ? Icon(CupertinoIcons.heart_fill, size: 20, color: MyColorsProvider.LIGHT_RED_SHADY)
-              : Icon(CupertinoIcons.heart_fill, size: 20, color: MyColorsProvider.LIGHT_GRAY),
-        );
-      },
-    ),);
+      builder: (context, authData, child) => Consumer<Deals>(
+        builder: (context, dealsData, child) {
+          return GestureDetector(
+            onTap: () => _toggleFavourites(context, deal,
+                dealsData.isObservedDeal(deal), authData.isAuthenticated),
+            child: dealsData.isObservedDeal(deal)
+                ? Icon(CupertinoIcons.heart_fill,
+                    size: iconSize, color: MyColorsProvider.LIGHT_RED_SHADY)
+                : Icon(CupertinoIcons.heart_fill,
+                    size: iconSize, color: MyColorsProvider.LIGHT_GRAY),
+          );
+        },
+      ),
+    );
   }
 
   _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,

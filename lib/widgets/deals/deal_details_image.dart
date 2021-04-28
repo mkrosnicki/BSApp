@@ -3,6 +3,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/deals/deal_item_heart_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,17 +43,7 @@ class DealDetailsImage extends StatelessWidget {
               border: Border.all(
                   color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
             ),
-            child: Consumer<Deals>(
-              builder: (context, dealsData, child) =>  Consumer<Auth>(
-                builder: (context, authData, child) => GestureDetector(
-                  onTap: () => _toggleFavourites(context, deal.id, dealsData.isObservedDealById(deal.id), authData.isAuthenticated),
-                  child: Icon(
-                    dealsData.isObservedDealById(deal.id) ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-                    size: 30,
-                  ),
-                ),
-              ),
-            ),
+            child: DealItemHeartButton(deal, 30),
           ),
         ),
       ],

@@ -34,7 +34,7 @@ class DealItemTopSection extends StatelessWidget {
                   ),
                   Flexible(
                     flex: 2,
-                    child: DealItemHeartButton(deal),
+                    child: DealItemHeartButton(deal, 20),
                   ),
                 ],
               ),
