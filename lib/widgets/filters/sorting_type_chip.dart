@@ -15,6 +15,7 @@ class SortingTypeChip extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
+        width: 120.0,
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),
         child: Column(
@@ -24,7 +25,7 @@ class SortingTypeChip extends StatelessWidget {
                   ? CupertinoIcons.graph_circle
                   : CupertinoIcons.star,
               color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12,
-              size: 26,
+              size: 22,
             ),
             Text(
               sortingType == SortingType.MOST_POPULAR
