@@ -19,7 +19,7 @@ class GreyTextButton extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-            color: Colors.grey,
+            color: Colors.black54,
             fontWeight: FontWeight.w400,
             fontSize: 13),
         textAlign: TextAlign.center,
