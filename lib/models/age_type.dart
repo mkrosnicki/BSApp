@@ -29,7 +29,7 @@ class AgeTypeHelper {
   static String getReadable(AgeType ageType) {
     switch (ageType) {
       case AgeType.ONE_THREE_MONTHS:
-        return '1 - 3 miesięce';
+        return '0 - 3 miesiące';
         break;
       case AgeType.THREE_SIX_MONTHS:
         return '3 - 6 miesięcy';

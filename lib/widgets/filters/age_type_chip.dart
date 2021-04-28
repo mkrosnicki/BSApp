@@ -15,9 +15,9 @@ class AgeTypeChip extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: 45.0),
+        constraints: BoxConstraints(minWidth: 35.0),
         child: Container(
-          width: 50.0,
+          width: 48.0,
           margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
           padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
           child: Column(
@@ -25,7 +25,7 @@ class AgeTypeChip extends StatelessWidget {
               Text(
                 AgeTypeHelper.getAgeValue(ageType),
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   height: 1.6,
                   // fontWeight: FontWeight.w600,
                   // color: isSelected ? Colors.white : MyColorsProvider.BLUE,

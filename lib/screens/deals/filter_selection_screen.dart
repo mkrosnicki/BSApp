@@ -122,8 +122,9 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     ),
                     Container(
                       width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Wrap(
-                        alignment: WrapAlignment.spaceEvenly,
+                        alignment: WrapAlignment.spaceBetween,
                         children: _buildAgeTypeChips(),
                       ),
                     ),
