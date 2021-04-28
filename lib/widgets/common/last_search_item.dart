@@ -31,15 +31,22 @@ class LastSearchItem extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 2.0),
                   child: Wrap(
                     children: [
-                      const Text(
-                        'Wyszukiwana fraza ',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      Text(
-                        '${filterSettings.phrase}',
-                        style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w600),
-                      ),
+                      if (filterSettings.phrase != null)
+                        const Text(
+                          'Wyszukiwana fraza ',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      if (filterSettings.phrase != null)
+                        Text(
+                          '${filterSettings.phrase}',
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                      if (filterSettings.phrase == null)
+                        const Text(
+                          'Brak wyszukiwanej frazy',
+                          style: const TextStyle(fontSize: 12),
+                        ),
                     ],
                   ),
                 ),
