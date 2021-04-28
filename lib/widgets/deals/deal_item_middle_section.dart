@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class DealItemMiddleSection extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _infoTile('Lokalizacja', 'Intetnet', false, true),
+          _infoTile('Lokalizacja', deal.locationString, false, true),
           _infoTile('Dodana', '${DateUtil.timeAgoString(deal.addedAt)}', false, false),
         ],
       ),

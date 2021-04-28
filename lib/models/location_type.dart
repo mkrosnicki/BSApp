@@ -4,6 +4,7 @@ enum LocationType {
 }
 
 class LocationTypeHelper {
+
   static String getReadable(LocationType type) {
     switch (type) {
       case LocationType.INTERNET:
@@ -11,5 +12,18 @@ class LocationTypeHelper {
       case LocationType.LOCAL:
         return 'Okazja stacjonarna';
     }
+  }
+
+  static LocationType fromString(String activityTypeString) {
+    for (var activityType in LocationType.values) {
+      if (asString(activityType) == activityTypeString) {
+        return activityType;
+      }
+    }
+    return null;
+  }
+
+  static String asString(LocationType activityType) {
+    return activityType.toString().replaceFirst('LocationType.', '');
   }
 }

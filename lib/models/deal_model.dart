@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:BSApp/models/deal_type.dart';
+import 'package:BSApp/models/location_type.dart';
 import 'package:flutter/material.dart';
 
 class DealModel {
@@ -14,7 +15,7 @@ class DealModel {
   final String link;
   final DealType dealType;
   final List<String> categories;
-  final String locationType;
+  final LocationType locationType;
   final String voivodeship;
   final String city;
   final String locationDescription;
@@ -75,7 +76,7 @@ class DealModel {
       categories: [
         ...(dealSnapshot['categories'] as List).map((e) => e['name']).toList()
       ],
-      locationType: dealSnapshot['locationType'],
+      locationType: LocationTypeHelper.fromString(dealSnapshot['locationType']),
       voivodeship: dealSnapshot['voivodeship'],
       city: dealSnapshot['city'],
       locationDescription: dealSnapshot['locationDescription'],
@@ -99,6 +100,20 @@ class DealModel {
       return '${((regularPrice - currentPrice) / regularPrice * 100).toStringAsFixed(0)}% taniej';
     } else {
       return 'kupon';
+    }
+  }
+
+  String get locationString {
+    if (locationType == LocationType.INTERNET) {
+      return 'Internet';
+    } else {
+      if (city != null) {
+        return city;
+      } else if (voivodeship != null) {
+        return voivodeship;
+      } else {
+        return 'brak';
+      }
     }
   }
 
