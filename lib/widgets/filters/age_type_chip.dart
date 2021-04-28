@@ -45,7 +45,7 @@ class AgeTypeChip extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black38,
+              color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12,
               width: 0.8,
             ),
             borderRadius: BorderRadius.all(Radius.circular(5.0)),

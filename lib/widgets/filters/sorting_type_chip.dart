@@ -23,7 +23,7 @@ class SortingTypeChip extends StatelessWidget {
               sortingType == SortingType.MOST_POPULAR
                   ? CupertinoIcons.graph_circle
                   : CupertinoIcons.star,
-              color: isSelected ? Colors.white : MyColorsProvider.BLUE,
+              color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12,
               size: 26,
             ),
             Text(
@@ -33,14 +33,14 @@ class SortingTypeChip extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 height: 1.6,
-                color: isSelected ? Colors.white : MyColorsProvider.BLUE,
+                color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12,
               ),
             ),
           ],
         ),
         decoration: BoxDecoration(
-          color: isSelected ? MyColorsProvider.BLUE : Colors.white,
-          border: Border.all(color: MyColorsProvider.BLUE, width: 0.5),
+          color: Colors.white,
+          border: Border.all(color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12, width: 0.8),
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
       ),
