@@ -42,7 +42,7 @@ class RateBar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
-                size: 16,
+                size: 18,
                 color: wasVotedPositively ? Colors.black : Colors.black38,
               ),
             ),
@@ -130,7 +130,7 @@ class RateBar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsdown,
-                size: 16,
+                size: 18,
                 color: wasVotedNegatively ? Colors.black : Colors.black38,
               ),
             ),
