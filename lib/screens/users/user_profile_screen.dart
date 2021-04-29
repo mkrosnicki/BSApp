@@ -1,6 +1,7 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
@@ -28,9 +29,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(10.0),
+        preferredSize: Size.fromHeight(0.0),
         child: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: MyColorsProvider.BLUE,
           elevation: 0,
           automaticallyImplyLeading: false,
           centerTitle: true,

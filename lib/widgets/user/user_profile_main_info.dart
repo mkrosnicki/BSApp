@@ -17,7 +17,7 @@ class UserProfileMainInfo extends StatelessWidget {
     return Container(
       color: Colors.white,
       // height: 100,
-      padding: EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
       child: Flex(
         direction: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.center,
