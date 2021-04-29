@@ -3,6 +3,7 @@ import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/providers/topic_categories.dart';
@@ -76,6 +77,12 @@ class MyApp extends StatelessWidget {
           lazy: true,
           update: (context, auth, previousPosts) =>
               previousPosts..update(auth.token),
+        ),
+        ChangeNotifierProxyProvider<Auth, Notifications>(
+          create: (context) => Notifications.empty(),
+          lazy: true,
+          update: (context, auth, previousNotifications) =>
+          previousNotifications..update(auth.token, auth.userId),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),

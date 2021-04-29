@@ -1,26 +1,26 @@
-import 'package:BSApp/screens/notifications/custom_stomp' as customStomp;
+import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:stomp/stomp.dart';
+import 'package:provider/provider.dart';
 
 class NotificationsScreen extends StatelessWidget {
   static const routeName = '/nofifications';
 
   @override
   Widget build(BuildContext context) {
-    Future<StompClient> client = customStomp
-        .connect('ws://192.168.162.241:8080/ws',
-            onConnect: (StompClient client, Map<String, String> headers) {
-      print(client.heartbeat);
-      client.subscribeJson('1', '/topics/notifications/1', (headers, message) {
-        print(message);
-      });
-    }, onFault: (StompClient client, error, stackTrace) {
-      print('error');
-      print(error);
-      print('stackTrace');
-      print(stackTrace);
-    });
+    // Future<StompClient> client = customStomp
+    //     .connect('ws://192.168.162.241:8080/ws',
+    //         onConnect: (StompClient client, Map<String, String> headers) {
+    //   print(client.heartbeat);
+    //   client.subscribeJson('1', '/topics/notifications/1', (headers, message) {
+    //     print(message);
+    //   });
+    // }, onFault: (StompClient client, error, stackTrace) {
+    //   print('error');
+    //   print(error);
+    //   print('stackTrace');
+    //   print(stackTrace);
+    // });
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Powiadomienia',
@@ -39,6 +39,14 @@ class NotificationsScreen extends StatelessWidget {
                   'Powiadomienia',
                   style: TextStyle(fontSize: 16),
                 ),
+              ),
+              Consumer<Notifications>(
+                builder: (context, notificationsData, child) {
+                  return Text(
+                    notificationsData.unreadNotifications.toString(),
+                    style: TextStyle(fontSize: 16),
+                  );
+                },
               ),
               // StreamBuilder(
               //   stream: channel.stream,
