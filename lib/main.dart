@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Notifications>(
           create: (context) => Notifications.empty(),
+          lazy: false,
           update: (context, auth, previousNotifications) =>
           previousNotifications..update(auth.token, auth.userId),
         ),
