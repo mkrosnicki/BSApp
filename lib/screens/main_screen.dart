@@ -2,6 +2,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/initialization/init.dart';
+import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
     DealsScreen(),
     ForumScreen(),
     AddDealScreen(),
+    NotificationsScreen(),
     FavouritesScreen(),
     ProfileOptionsScreen(),
   ];
@@ -91,6 +93,10 @@ class _MainScreenState extends State<MainScreen> {
                   const BottomNavigationBarItem(
                     label: '',
                     icon: Icon(CupertinoIcons.add, size: 20),
+                  ),
+                  const BottomNavigationBarItem(
+                    label: '',
+                    icon: Icon(CupertinoIcons.bell, size: 20),
                   ),
                   BottomNavigationBarItem(
                     label: '',

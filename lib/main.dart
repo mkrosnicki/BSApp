@@ -23,6 +23,7 @@ import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
+import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
 import 'package:BSApp/screens/profile/added_posts_screen.dart';
@@ -120,6 +121,7 @@ class MyApp extends StatelessWidget {
           AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
+          NotificationsScreen.routeName: (ctx) => NotificationsScreen(),
           ForumCategoryScreen.routeName: (ctx) => ForumCategoryScreen(),
           TopicScreen.routeName: (ctx) => TopicScreen(),
           DealsScreen.routeName: (ctx) => DealsScreen(),
