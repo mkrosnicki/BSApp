@@ -74,7 +74,6 @@ class _FavouritesScreenState extends State<FavouritesScreen>
         body: Consumer<Auth>(
           builder: (context, auth, child) {
             return Container(
-              margin: EdgeInsets.only(top: 10.0),
               child: TabBarView(
                 controller: _tabController,
                 children: auth.isAuthenticated
@@ -159,14 +158,36 @@ class _FavouritesScreenState extends State<FavouritesScreen>
   }
 
   _buildNoObservedDealsSplashView() {
-    return const Center(
-      child: Text('Nie obserwujesz żadnych okazji!'),
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: const Text(
+          'Nie obserwujesz żadnych okazji',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontSize: 18,
+              height: 1.5,
+              fontWeight: FontWeight.w600,
+              color: MyColorsProvider.LIGHT_GRAY),
+        ),
+      ),
     );
   }
 
   _buildNoObservedSearchesSplashView() {
-    return const Center(
-      child: Text('Nie obserwujesz żadnych wyszukiwań!'),
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: const Text(
+          'Nie obserwujesz \nżadnych wyszukiwań',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontSize: 18,
+              height: 1.5,
+              fontWeight: FontWeight.w600,
+              color: MyColorsProvider.LIGHT_GRAY),
+        ),
+      ),
     );
   }
 }

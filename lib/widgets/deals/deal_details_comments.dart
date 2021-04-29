@@ -58,7 +58,7 @@ class DealDetailsComments extends StatelessWidget {
                           height: 200,
                           color: Colors.white,
                           child: Center(
-                            child: Text(
+                            child: const Text(
                               'Nikt jeszcze nie dodał komentarza',
                               style: const TextStyle(
                                   fontSize: 16,
