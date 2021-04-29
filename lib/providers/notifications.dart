@@ -24,7 +24,7 @@ class Notifications with ChangeNotifier {
         this.client = client;
         this.client.subscribeString(
           userId,
-          '/topics/notifications/1',
+          '/topics/notifications/$userId',
           _acceptNotification,
         );
       },
