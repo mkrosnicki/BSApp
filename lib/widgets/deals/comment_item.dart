@@ -43,7 +43,7 @@ class _CommentItemState extends State<CommentItem> {
       // color: Colors.white,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-      margin: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 0.0),
+      margin: const EdgeInsets.only(bottom: 4.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,

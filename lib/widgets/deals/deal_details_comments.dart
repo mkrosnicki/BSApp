@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -18,9 +19,11 @@ class DealDetailsComments extends StatelessWidget {
     return Column(
       children: [
         Container(
-          // color: Colors.white,
+          color: Colors.white,
           width: double.infinity,
-          padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 6.0, right: 6.0),
+          padding: const EdgeInsets.only(
+              top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
+          margin: const EdgeInsets.only(top: 8.0),
           alignment: Alignment.centerLeft,
           child: const Text(
             'Komentarze',
@@ -37,7 +40,11 @@ class DealDetailsComments extends StatelessWidget {
                 .fetchCommentsForDeal(deal.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Container(
+                  height: 200,
+                  color: Colors.white,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               } else {
                 if (snapshot.error != null) {
                   return Center(
@@ -45,13 +52,31 @@ class DealDetailsComments extends StatelessWidget {
                   );
                 } else {
                   return Consumer<Comments>(
-                    builder: (context, commentsData, child) => Column(
-                      // todo nullpointer after some time?!
-                      children: commentsData.mainDealComments
-                          .map((comment) => CommentItem(
-                              deal.id, comment, commentToReplySubject))
-                          .toList(),
-                    ),
+                    builder: (context, commentsData, child) {
+                      if (commentsData.mainDealComments.isEmpty) {
+                        return Container(
+                          height: 200,
+                          color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              'Nikt jeszcze nie dodał komentarza',
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: MyColorsProvider.LIGHT_GRAY),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Column(
+                          // todo nullpointer after some time?!
+                          children: commentsData.mainDealComments
+                              .map((comment) => CommentItem(
+                                  deal.id, comment, commentToReplySubject))
+                              .toList(),
+                        );
+                      }
+                    },
                   );
                 }
               }

@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
+import 'package:BSApp/widgets/common/no_old_searches_info.dart';
 import 'package:flutter/material.dart';
 
 import 'last_search_item.dart';
@@ -55,8 +56,10 @@ class _LastSearchesState extends State<LastSearches> {
                 itemCount: _cachedFilterSettings.length + 1,
               );
             } else {
-              return Center(
-                child: const Text('Brak ostatnich wyszukiwań', style: const TextStyle(fontSize: 14),),
+              return Container(
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 10),
+                alignment: Alignment.topCenter,
+                child: NoOldSearchesInfo(),
               );
             }
           }

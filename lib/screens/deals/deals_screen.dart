@@ -13,7 +13,6 @@ class DealsScreen extends StatefulWidget {
 }
 
 class _DealsScreenState extends State<DealsScreen> {
-
   final PublishSubject<bool> _showLastSearchesSubject =
       new PublishSubject<bool>();
 
@@ -23,24 +22,25 @@ class _DealsScreenState extends State<DealsScreen> {
   Widget build(BuildContext context) {
     _showLastSearchesSubject.add(false);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: DealsScreenAppBar(_showLastSearchesSubject),
       ),
-      body: SafeArea(
-        child: StreamBuilder<bool>(
-          stream: _showLLastSearchesStream,
-          builder: (context, AsyncSnapshot<bool> showSearchPanelSnapshot) {
-            bool showSearches = showSearchPanelSnapshot.hasData && showSearchPanelSnapshot.data;
-            if (!showSearches) {
-              return DealsScreenMainContent();
-            } else {
-              return LastSearches();
-            }
-          },
-        ),
+      body: StreamBuilder<bool>(
+        stream: _showLLastSearchesStream,
+        builder: (context, AsyncSnapshot<bool> showSearchPanelSnapshot) {
+          bool showSearches =
+              showSearchPanelSnapshot.hasData && showSearchPanelSnapshot.data;
+          if (!showSearches) {
+            return SafeArea(
+              child: DealsScreenMainContent(),
+            );
+          } else {
+            return LastSearches();
+          }
+        },
       ),
     );
   }
-
 }
