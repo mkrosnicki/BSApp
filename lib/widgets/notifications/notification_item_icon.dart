@@ -21,22 +21,46 @@ class NotificationItemIcon extends StatelessWidget {
 
   IconData get iconData {
     switch (notificationType) {
-      case NotificationType.YOUR_TOPIC_REPLIED:
-        return CupertinoIcons.bubble_left;
-        break;
       case NotificationType.YOUR_DEAL_RATED:
         return CupertinoIcons.plus_slash_minus;
+        break;
+      case NotificationType.YOUR_DEAL_COMMENTED:
+        return CupertinoIcons.bubble_left_bubble_right;
+        break;
+      case NotificationType.YOUR_COMMENT_RATED:
+        return CupertinoIcons.bubble_left_bubble_right;
+        break;
+      case NotificationType.YOUR_COMMENT_REPLIED:
+        return CupertinoIcons.reply;
+        break;
+      case NotificationType.YOUR_POST_REPLIED:
+        return CupertinoIcons.reply;
+        break;
+      case NotificationType.YOUR_TOPIC_REPLIED:
+        return CupertinoIcons.bubble_left;
         break;
     }
   }
 
   Color get iconColor {
     switch (notificationType) {
-      case NotificationType.YOUR_TOPIC_REPLIED:
+      case NotificationType.YOUR_DEAL_RATED:
+        return MyColorsProvider.GREEN;
+        break;
+      case NotificationType.YOUR_DEAL_COMMENTED:
+        return MyColorsProvider.GREEN;
+        break;
+      case NotificationType.YOUR_COMMENT_RATED:
+        return Colors.deepOrangeAccent;
+        break;
+      case NotificationType.YOUR_COMMENT_REPLIED:
         return Colors.deepOrangeAccent;
         break;
       case NotificationType.YOUR_TOPIC_REPLIED:
         return MyColorsProvider.BLUE;
+        break;
+      case NotificationType.YOUR_POST_REPLIED:
+        return Colors.deepPurple;
         break;
     }
   }
