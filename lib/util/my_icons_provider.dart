@@ -1,3 +1,4 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,7 @@ class MyIconsProvider {
 
   static const Icon NONE = Icon(null);
 
-  static const Icon FORWARD_ICON = Icon(CupertinoIcons.chevron_right,);
+  static const Icon FORWARD_ICON = Icon(CupertinoIcons.chevron_right, color: MyColorsProvider.BLUE,);
   static const Icon FORWARD_BLACK_ICON = Icon(CupertinoIcons.chevron_right, color: Colors.black);
   static const Icon FORWARD_WHITE_ICON = Icon(CupertinoIcons.chevron_right, color: Colors.white);
 

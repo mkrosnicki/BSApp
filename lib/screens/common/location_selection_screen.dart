@@ -78,8 +78,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               if (index == 0) {
                 return FlatButton(
                   child: ListTile(
-                    title:
-                        Text('Całe województwo ${_selectedVoivodeship.name}'),
+                    title: Text(
+                      'Całe województwo ${_selectedVoivodeship.name}',
+                      style: const TextStyle(fontSize: 14),
+                    ),
                     focusColor: Colors.grey,
                   ),
                   onPressed: _selectAllCitiesInVoivodeship,
@@ -87,7 +89,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               } else {
                 return FlatButton(
                   child: ListTile(
-                    title: Text(cities[index].name),
+                    title: Text(
+                      cities[index].name,
+                      style: const TextStyle(fontSize: 14),
+                    ),
                     focusColor: Colors.grey,
                   ),
                   onPressed: () => _selectCity(cities[index]),
@@ -108,9 +113,18 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               child: ListTile(
-                title: Text(voivodeships[index].name),
+                title: Text(
+                  voivodeships[index].name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
                 subtitle: Text(
-                    '${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}'),
+                  '${voivodeships[index].cities.length} ${_getCitiesSuffix(voivodeships[index].cities.length)}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                  ),
+                ),
                 trailing: voivodeships[index].cities.isEmpty
                     ? MyIconsProvider.NONE
                     : MyIconsProvider.FORWARD_ICON,

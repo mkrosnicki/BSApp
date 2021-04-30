@@ -1,10 +1,9 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,13 +36,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wybierz kategorię', style: MyStylingProvider.TEXT_BLACK,),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
+      appBar: BaseAppBar(
+        title: 'Wybierz kategorię',
         leading: AppBarButton(
           icon: MyIconsProvider.BACK_BLACK_ICON,
           onPress: () => _goUp(),
@@ -81,7 +75,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
         if (_selectedCategories.isNotEmpty)
           ListTile(
             title: Text(
-                '${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+              '${_selectedCategories.elementAt(_selectedCategories.length - 1).name}',
+              style: const TextStyle(fontSize: 14),
+            ),
             focusColor: Colors.grey,
           ),
         if (_selectedCategories.isNotEmpty)
@@ -89,7 +85,9 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
             onPressed: () => _finishSelection(),
             child: ListTile(
               title: Text(
-                  'Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}'),
+                'Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}',
+                style: const TextStyle(fontSize: 14),
+              ),
               subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
               focusColor: Colors.grey,
             ),
@@ -100,7 +98,10 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
               padding: EdgeInsets.zero,
               child: ListTile(
                 tileColor: Colors.white,
-                title: Text(categories[index].name),
+                title: Text(
+                  categories[index].name,
+                  style: const TextStyle(fontSize: 14),
+                ),
                 leading: SizedBox(
                   height: 40,
                   width: 40,
@@ -111,8 +112,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 ),
                 // subtitle: Text(
                 //     '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                subtitle: Text(
-                    '${categories[index].description}'),
+                subtitle: Text('${categories[index].description}',
+                    style: const TextStyle(fontSize: 13)),
                 trailing: categories[index].subCategories.isEmpty
                     ? MyIconsProvider.NONE
                     : MyIconsProvider.FORWARD_ICON,
