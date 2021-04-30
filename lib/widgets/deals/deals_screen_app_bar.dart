@@ -77,7 +77,7 @@ class DealsScreenAppBar extends StatelessWidget {
         onSubmitted: (text) => _navigateToResultsScreen(context, text),
         keyboardType: TextInputType.text,
         style: const TextStyle(fontSize: 12),
-        decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
+        decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
           prefixIcon: Padding(
             padding: const EdgeInsets.all(0.0),

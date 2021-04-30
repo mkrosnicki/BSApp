@@ -17,7 +17,7 @@ class MyStylingProvider {
     ),
   );
 
-  static const InputDecoration REPLY_TEXT_FIELD_DECORATION = InputDecoration(
+  static const InputDecoration TEXT_FIELD_DECORATION = InputDecoration(
     border: InputBorder.none,
     filled: true,
     isDense: true,

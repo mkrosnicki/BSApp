@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
@@ -5,9 +7,11 @@ import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/deals/form/localisation_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'age_type_chips.dart';
@@ -87,6 +91,19 @@ class _CouponFormState extends State<CouponForm> {
     });
   }
 
+  Future<void> _takePicture() async {
+    final imageFile = await ImagePicker().getImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    if (imageFile == null) {
+      return;
+    }
+    setState(() {
+      _newDeal.image = File(imageFile.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return _isLoading
@@ -101,10 +118,29 @@ class _CouponFormState extends State<CouponForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    GestureDetector(
+                      onTap: _takePicture,
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.grey)),
+                        child: _newDeal.image != null
+                            ? Image.file(
+                          _newDeal.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                            : Text(
+                          'Dodaj obrazek',
+                          textAlign: TextAlign.center,
+                        ),
+                        alignment: Alignment.center,
+                      ),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Tytuł kuponu'),
                     TextFormField(
                       initialValue: _newDeal.title,
                       validator: (value) {
@@ -119,11 +155,11 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.title = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Tytuł kuponu'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Opis'),
                     TextFormField(
                       initialValue: _newDeal.description,
                       validator: (value) {
@@ -138,11 +174,11 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.description = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Kod kuponu'),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -156,26 +192,12 @@ class _CouponFormState extends State<CouponForm> {
                       onSaved: (value) {
                         _newDeal.dealCode = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Kod kuponu'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Kupon internetowy'),
-                        Switch.adaptive(
-                            value:
-                                _newDeal.locationType == LocationType.INTERNET,
-                            onChanged: (value) {
-                              _changeLocation(value);
-                            }),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Link do kuponu'),
+
                     TextFormField(
                       initialValue: _newDeal.urlLocation,
                       validator: (value) {
@@ -190,6 +212,22 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.urlLocation = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Link do kuponu'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Kupon internetowy'),
+                        Switch.adaptive(
+                            value:
+                            _newDeal.locationType == LocationType.INTERNET,
+                            onChanged: (value) {
+                              _changeLocation(value);
+                            }),
+                      ],
                     ),
                     SizedBox(
                       height: 10,
@@ -213,13 +251,13 @@ class _CouponFormState extends State<CouponForm> {
                     if (!_showInternetOnly)
                       Column(
                         children: [
-                          Text('Opis lokalizacji'),
                           TextFormField(
                             initialValue: _newDeal.locationDescription,
                             enabled: !_showInternetOnly,
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
+                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis lokalizacji'),
                           ),
                         ],
                       ),
@@ -292,8 +330,8 @@ class _CouponFormState extends State<CouponForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Wartość kuponu'),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Flexible(
                           child: TextFormField(
@@ -310,6 +348,7 @@ class _CouponFormState extends State<CouponForm> {
                             onSaved: (value) {
                               _newDeal.discountValue = double.parse(value);
                             },
+                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Wartość kuponu'),
                           ),
                         ),
                         TextButton(

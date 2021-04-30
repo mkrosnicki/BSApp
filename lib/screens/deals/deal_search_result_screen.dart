@@ -139,7 +139,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               keyboardType: TextInputType.text,
               style: const TextStyle(fontSize: 12),
               decoration:
-              MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
+              MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
                 hintText: 'Czego szukasz?',
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(0.0),

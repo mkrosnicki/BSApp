@@ -89,7 +89,7 @@ class TopicScreenInputBar extends StatelessWidget {
                   focusNode: textFocusNode,
                   style: TextStyle(fontSize: 14),
                   autofocus: false,
-                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION
+                  decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                       .copyWith(hintText: 'Napisz post...'),
                 ),
               ),
