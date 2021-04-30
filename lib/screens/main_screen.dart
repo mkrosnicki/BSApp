@@ -102,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Consumer<Notifications>(
                       builder: (context, notificationsData, child) => Stack(
                         children: [
-                          Icon(CupertinoIcons.bell, size: 20),
+                          Icon(CupertinoIcons.bell, size: 21),
                           if (notificationsData.areNewNotifications) Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(left: 12.0),
@@ -124,8 +124,8 @@ class _MainScreenState extends State<MainScreen> {
                   const BottomNavigationBarItem(
                     label: '',
                     icon: const Icon(
-                      CupertinoIcons.line_horizontal_3,
-                      size: 20,
+                      CupertinoIcons.person,
+                      size: 22,
                     ),
                   ),
                 ],
