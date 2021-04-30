@@ -1,9 +1,8 @@
 import 'package:BSApp/models/notification_model.dart';
-import 'package:BSApp/models/notification_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/widgets/notifications/your_topic_replied_icon.dart';
-import 'package:BSApp/widgets/notifications/your_topic_replied_notification_content.dart';
+import 'package:BSApp/widgets/notifications/notification_item_content.dart';
+import 'package:BSApp/widgets/notifications/notification_item_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,13 +25,13 @@ class NotificationItem extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            child: _buildActivityIcon(),
+            child: NotificationItemIcon(notification.notificationType),
           ),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildActivityContent(),
+                NotificationItemContent(notification),
                 Container(
                   padding:
                       const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
@@ -56,32 +55,5 @@ class NotificationItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  _buildActivityContent() {
-    Widget content;
-    switch (notification.notificationType) {
-      case NotificationType.YOUR_TOPIC_REPLIED:
-        content = YourTopicRepliedNotificationContent(
-            notification.mainIssuerUsername,
-            notification.relatedTopicTitle,
-            notification.totalNumberOfIssuers);
-        break;
-      default:
-        content = null;
-    }
-    return content;
-  }
-
-  _buildActivityIcon() {
-    Widget icon;
-    switch (notification.notificationType) {
-      case NotificationType.YOUR_TOPIC_REPLIED:
-        icon = const YourTopicRepliedIcon();
-        break;
-      default:
-        icon = null;
-    }
-    return icon;
   }
 }

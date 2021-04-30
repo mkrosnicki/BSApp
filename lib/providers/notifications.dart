@@ -1,5 +1,5 @@
 import 'package:BSApp/models/notification_model.dart';
-import 'package:BSApp/screens/notifications/custom_stomp' as customStomp;
+import 'package:BSApp/services/custom_stomp' as customStomp;
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:stomp/stomp.dart';
