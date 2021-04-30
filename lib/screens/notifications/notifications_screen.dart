@@ -43,7 +43,7 @@ class NotificationsScreen extends StatelessWidget {
               Consumer<Notifications>(
                 builder: (context, notificationsData, child) {
                   return Text(
-                    notificationsData.unreadNotifications.toString(),
+                    notificationsData.numberOfUnreadNotifications.toString(),
                     style: TextStyle(fontSize: 16),
                   );
                 },

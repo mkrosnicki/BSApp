@@ -28,10 +28,6 @@ class ActivityModel {
       this.relatedComment});
 
   static ActivityModel fromJson(dynamic activitySnapshot) {
-    print(activitySnapshot['relatedPost']);
-    print(activitySnapshot['relatedDeal']);
-    print(activitySnapshot['relatedTopic']);
-    print(activitySnapshot['relatedComment']);
     return ActivityModel(
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],

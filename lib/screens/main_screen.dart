@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/initialization/init.dart';
@@ -77,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                 unselectedItemColor: Colors.black,
                 type: BottomNavigationBarType.fixed,
                 elevation: 0,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   const BottomNavigationBarItem(
                     label: '',
                     icon: const Icon(
@@ -94,9 +95,25 @@ class _MainScreenState extends State<MainScreen> {
                     label: '',
                     icon: Icon(CupertinoIcons.add, size: 20),
                   ),
-                  const BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                     label: '',
-                    icon: Icon(CupertinoIcons.bell, size: 20),
+                    icon: Consumer<Notifications>(
+                      builder: (context, notificationsData, child) => Stack(
+                        children: [
+                          Icon(CupertinoIcons.bell, size: 20),
+                          if (notificationsData.areNewNotifications) Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(left: 12.0),
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                   BottomNavigationBarItem(
                     label: '',

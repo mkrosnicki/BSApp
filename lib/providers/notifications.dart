@@ -1,3 +1,4 @@
+import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/screens/notifications/custom_stomp' as customStomp;
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,37 @@ import 'package:stomp/stomp.dart';
 class Notifications with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
   int _unreadNotifications = 0;
+  List<NotificationModel> notifications = [];
   StompClient client;
   String userId;
   String token;
 
   Notifications.empty();
 
-  int get unreadNotifications {
+  int get numberOfUnreadNotifications {
     return _unreadNotifications;
+  }
+
+  bool get areNewNotifications {
+    return numberOfUnreadNotifications > 0;
+  }
+
+  List<NotificationModel> get myNotifications {
+    return [...notifications];
+  }
+
+  Future<void> fetchMyNotifications() async {
+    final List<NotificationModel> fetchedNotifications = [];
+    final responseBody =
+    await _apiProvider.get('/users/me/notifications', token: token) as List;
+    if (responseBody == null) {
+      print('No Deals Found!');
+    }
+    responseBody.forEach((element) {
+      fetchedNotifications.add(NotificationModel.fromJson(element));
+    });
+    notifications = fetchedNotifications;
+    notifyListeners();
   }
 
   _startSubscribing(String userId) {
