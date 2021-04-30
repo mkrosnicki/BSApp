@@ -29,16 +29,14 @@ class NotificationsScreen extends StatelessWidget {
                   child: Text('An error occurred!'),
                 );
               } else {
-                return Flexible(
-                  child: RefreshIndicator(
-                    onRefresh: () => _refreshNotifications(context),
-                    child: Consumer<Notifications>(
-                      builder: (context, notificationsData, child) =>
-                          ListView.builder(
-                        itemBuilder: (context, index) => NotificationItem(notificationsData.myNotifications[index]),
-                        itemCount: notificationsData.myNotifications.length,
-                      ),
-                    ),
+                return RefreshIndicator(
+                  onRefresh: () => _refreshNotifications(context),
+                  child: Consumer<Notifications>(
+                    builder: (context, notificationsData, child) =>
+                        ListView.builder(
+                          itemBuilder: (context, index) => NotificationItem(notificationsData.myNotifications[index]),
+                          itemCount: notificationsData.myNotifications.length,
+                        ),
                   ),
                 );
               }
