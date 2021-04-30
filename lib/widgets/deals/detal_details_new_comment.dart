@@ -97,7 +97,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                   focusNode: textFocusNode,
                   style: const TextStyle(fontSize: 14),
                   autofocus: false,
-                  decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
+                  decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
                 ),
               ),
               Consumer<Auth>(

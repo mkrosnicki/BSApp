@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,7 +90,7 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   Future<void> _takePicture() async {
-    final imageFile = await ImagePicker.pickImage(
+    final imageFile = await ImagePicker().getImage(
       source: ImageSource.camera,
       maxWidth: 600,
     );
@@ -95,7 +98,7 @@ class _OccasionFormState extends State<OccasionForm> {
       return;
     }
     setState(() {
-      _newDeal.image = imageFile;
+      _newDeal.image = File(imageFile.path);
     });
   }
 
@@ -113,42 +116,29 @@ class _OccasionFormState extends State<OccasionForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: Colors.grey)),
-                          child: _newDeal.image != null
-                              ? Image.file(
-                                  _newDeal.image,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                )
-                              : Text(
-                                  'No Image Taken',
-                                  textAlign: TextAlign.center,
-                                ),
-                          alignment: Alignment.center,
+                    GestureDetector(
+                      onTap: _takePicture,
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.grey)),
+                        child: _newDeal.image != null
+                            ? Image.file(
+                          _newDeal.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                            : Text(
+                          'Dodaj obrazek',
+                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: FlatButton.icon(
-                            icon: Icon(Icons.camera),
-                            label: Text('Take Picture'),
-                            textColor: Theme.of(context).primaryColor,
-                            onPressed: _takePicture,
-                          ),
-                        ),
-                      ],
+                        alignment: Alignment.center,
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Tytuł ogłoszenia'),
                     TextFormField(
                       initialValue: _newDeal.title,
                       validator: (value) {
@@ -163,11 +153,11 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.title = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Tytuł ogłoszenia'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Opis'),
                     TextFormField(
                       initialValue: _newDeal.description,
                       validator: (value) {
@@ -182,6 +172,26 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.description = value;
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      initialValue: _newDeal.urlLocation,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Wprowadź link do okazji';
+                        } else if (!_isUrl(value)) {
+                          return 'Podany ciąg znaków nie jest adresem URL';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        _newDeal.urlLocation = value;
+                      },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Link do okazji'),
                     ),
                     SizedBox(
                       height: 10,
@@ -197,25 +207,6 @@ class _OccasionFormState extends State<OccasionForm> {
                               _changeLocation(value);
                             }),
                       ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Link do okazji'),
-                    TextFormField(
-                      initialValue: _newDeal.urlLocation,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź link do okazji';
-                        } else if (!_isUrl(value)) {
-                          return 'Podany ciąg znaków nie jest adresem URL';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.urlLocation = value;
-                      },
                     ),
                     SizedBox(
                       height: 10,
@@ -239,13 +230,13 @@ class _OccasionFormState extends State<OccasionForm> {
                     if (!_showInternetOnly)
                       Column(
                         children: [
-                          Text('Opis lokalizacji'),
                           TextFormField(
                             initialValue: _newDeal.locationDescription,
                             enabled: !_showInternetOnly,
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
+                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis lokalizacji'),
                           ),
                         ],
                       ),
@@ -318,7 +309,6 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Regularna cena'),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -333,11 +323,11 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.regularPrice = double.parse(value);
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Regularna cena'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Aktualna cena'),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -352,11 +342,11 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.currentPrice = double.parse(value);
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Aktualna cena'),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Koszt dostawy'),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -371,6 +361,7 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.shippingPrice = double.parse(value);
                       },
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Koszt dostawy'),
                     ),
                     Container(
                       width: double.infinity,

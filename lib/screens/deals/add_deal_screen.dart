@@ -26,6 +26,7 @@ class _AddDealScreenState extends State<AddDealScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBarAddDeal(),
         body: TabBarView(
           children: [OccasionForm(_newDeal), CouponForm(_newDeal)],

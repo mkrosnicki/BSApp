@@ -28,7 +28,7 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         keyboardType: TextInputType.text,
         style: const TextStyle(fontSize: 12),
         autofocus: true,
-        decoration: MyStylingProvider.REPLY_TEXT_FIELD_DECORATION.copyWith(
+        decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
           prefixIcon: Padding(
             padding: const EdgeInsets.all(0.0),
