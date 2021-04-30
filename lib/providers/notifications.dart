@@ -33,8 +33,10 @@ class Notifications with ChangeNotifier {
   }
 
   _stopSubscribing(String userId) {
-    this.client.unsubscribe(userId);
-    this.client = null;
+    if (this.client != null) {
+      this.client.unsubscribe(userId);
+      this.client = null;
+    }
   }
 
   _acceptNotification(Map<String, String> headers, String message) {
