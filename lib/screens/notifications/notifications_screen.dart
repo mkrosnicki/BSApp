@@ -1,5 +1,6 @@
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/notifications/notifications_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,19 +9,6 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future<StompClient> client = customStomp
-    //     .connect('ws://192.168.162.241:8080/ws',
-    //         onConnect: (StompClient client, Map<String, String> headers) {
-    //   print(client.heartbeat);
-    //   client.subscribeJson('1', '/topics/notifications/1', (headers, message) {
-    //     print(message);
-    //   });
-    // }, onFault: (StompClient client, error, stackTrace) {
-    //   print('error');
-    //   print(error);
-    //   print('stackTrace');
-    //   print(stackTrace);
-    // });
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Powiadomienia',
@@ -29,38 +17,37 @@ class NotificationsScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Powiadomienia',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              Consumer<Notifications>(
-                builder: (context, notificationsData, child) {
-                  return Text(
-                    notificationsData.numberOfUnreadNotifications.toString(),
-                    style: TextStyle(fontSize: 16),
-                  );
-                },
-              ),
-              // StreamBuilder(
-              //   stream: channel.stream,
-              //   builder: (context, snapshot) {
-              //     return Padding(
-              //       padding: const EdgeInsets.symmetric(vertical: 24.0),
-              //       child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
-              //     );
-              //   },
-              // )
-            ],
-          ),
+        child: FutureBuilder(
+          future: Provider.of<Notifications>(context, listen: false)
+              .fetchMyNotifications(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              if (snapshot.error != null) {
+                return Center(
+                  child: Text('An error occurred!'),
+                );
+              } else {
+                return Flexible(
+                  child: RefreshIndicator(
+                    onRefresh: () => _refreshNotifications(context),
+                    child: Consumer<Notifications>(
+                      builder: (context, notificationsData, child) =>
+                          ListView.builder(
+                        itemBuilder: (context, index) => NotificationItem(notificationsData.myNotifications[index]),
+                        itemCount: notificationsData.myNotifications.length,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }
+          },
         ),
       ),
     );
   }
+
+  _refreshNotifications(BuildContext context) {}
 }

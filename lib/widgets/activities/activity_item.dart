@@ -2,6 +2,7 @@ import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/activities/comment_added_activity_content.dart';
 import 'package:BSApp/widgets/activities/comment_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_created_activity_content.dart';
@@ -12,8 +13,6 @@ import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'comment_added_activity_content.dart';
-
 class ActivityItem extends StatelessWidget {
   final ActivityModel activity;
 
@@ -21,7 +20,6 @@ class ActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(activity.relatedDeal);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
