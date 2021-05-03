@@ -3,6 +3,7 @@ import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/common/zero_app_bar.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
 import 'package:BSApp/widgets/user/user_profile_scrollable_menu.dart';
@@ -28,17 +29,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0),
-        child: AppBar(
-          backgroundColor: MyColorsProvider.BLUE,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          // leading: const AppBarBackButton(Colors.black),
-          // bottom: AppBarBottomBorder(),
-        ),
-      ),
+      appBar: ZeroAppBar(),
       body: FutureBuilder(
           future: _initUser(context, userId),
           builder: (context, snapshot) {
