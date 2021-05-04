@@ -63,6 +63,7 @@ class ForumScreen extends StatelessWidget {
                   .map((e) => TopicItem(
                         TopicModel(
                             id: '1',
+                            numberOfPosts: 10,
                             addedAt: DateTime.now(),
                             title: 'Jakiś fajny temat do dyskusji',
                             content:
