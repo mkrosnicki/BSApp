@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'comment_item.dart';
+import '../comments/comment_with_replies_item.dart';
 
 class DealDetailsComments extends StatelessWidget {
   final DealModel deal;
@@ -72,7 +72,7 @@ class DealDetailsComments extends StatelessWidget {
                         return Column(
                           // todo nullpointer after some time?!
                           children: commentsData.mainDealComments
-                              .map((comment) => CommentItem(
+                              .map((comment) => CommentWithRepliesItem(
                                   deal.id, comment, commentToReplySubject))
                               .toList(),
                         );
