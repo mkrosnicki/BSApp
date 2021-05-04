@@ -1,8 +1,7 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/topic_screen_input_bar.dart';
 import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
@@ -30,17 +29,9 @@ class _TopicScreenState extends State<TopicScreen> {
   Widget build(BuildContext context) {
     final topic = ModalRoute.of(context).settings.arguments as TopicModel;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Temat',
-          style: MyStylingProvider.TEXT_BLACK,
-        ),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
+      appBar: BaseAppBar(
+        title: 'Temat',
         leading: const AppBarBackButton(Colors.black),
-        bottom: const AppBarBottomBorder(),
         actions: [
           TextButton(
             onPressed: () {}, // todo dodaj do obserwowanych
