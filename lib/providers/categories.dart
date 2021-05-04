@@ -13,15 +13,17 @@ class Categories with ChangeNotifier {
   }
 
   Future<void> fetchCategories() async {
-    final List<CategoryModel> loadedCategories = [];
-    final responseBody = await _apiProvider.get('/categories') as List;
-    if (responseBody == null) {
-      print('No Categories Found!');
+    if (_categories.isEmpty) {
+      final List<CategoryModel> loadedCategories = [];
+      final responseBody = await _apiProvider.get('/categories') as List;
+      if (responseBody == null) {
+        print('No Categories Found!');
+      }
+      responseBody.forEach((element) {
+        loadedCategories.add(CategoryModel.fromJson(element));
+      });
+      _categories = loadedCategories;
     }
-    responseBody.forEach((element) {
-      loadedCategories.add(CategoryModel.fromJson(element));
-    });
-    _categories = loadedCategories;
     notifyListeners();
   }
 
