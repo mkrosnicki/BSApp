@@ -1,10 +1,10 @@
+import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
-import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
-import 'package:BSApp/screens/profile/added_posts_screen.dart';
-import 'package:BSApp/services/api_provider.dart';
+import 'package:BSApp/screens/profile/added_topics_screen.dart';
+import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/widgets/profile/logout_button.dart';
 import 'package:BSApp/widgets/profile/profile_option_item.dart';
 import 'package:BSApp/widgets/profile/profile_options_header.dart';
@@ -13,16 +13,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileOptionsList extends StatelessWidget {
+  final UsersProfileModel usersProfile;
+
+  ProfileOptionsList(this.usersProfile);
 
   @override
   Widget build(BuildContext context) {
     final menuOptions = [
       const ProfileOptionsHeader('Twoja aktywność'),
-      const ProfileOptionItem(
-          title: 'Lista aktywności', route: AddedDealsScreen.routeName),
-      const ProfileOptionItem(
-          title: 'Twoje okazje', route: AddedCommentsScreen.routeName),
-      const ProfileOptionItem(title: 'Twoje wątki', route: AddedPostsScreen.routeName),
+      ProfileOptionItem(
+          title: 'Lista aktywności',
+          route: YourActivityScreen.routeName,
+          arguments: usersProfile.activities),
+      ProfileOptionItem(
+          title: 'Twoje okazje',
+          route: AddedDealsScreen.routeName,
+          arguments: usersProfile.addedDeals),
+      ProfileOptionItem(
+          title: 'Twoje wątki',
+          route: AddedTopicsScreen.routeName,
+          arguments: usersProfile.addedTopics),
       const ProfileOptionsHeader('Ustawienia'),
       const ProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
       const ProfileOptionItem(
@@ -36,7 +46,8 @@ class ProfileOptionsList extends StatelessWidget {
       const ProfileOptionsHeader('Informacje'),
       const ProfileOptionItem(title: 'Kontakt', route: '/favourites'),
       const ProfileOptionItem(title: 'Regulamin', route: '/favourites'),
-      const ProfileOptionItem(title: 'Polityka prywatności', route: '/favourites'),
+      const ProfileOptionItem(
+          title: 'Polityka prywatności', route: '/favourites'),
       const ProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
       LogoutButton(),
     ];

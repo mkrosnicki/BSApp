@@ -27,8 +27,9 @@ import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/added_comments_screen.dart';
 import 'package:BSApp/screens/profile/added_deals_screen.dart';
-import 'package:BSApp/screens/profile/added_posts_screen.dart';
+import 'package:BSApp/screens/profile/added_topics_screen.dart';
 import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
@@ -124,8 +125,9 @@ class MyApp extends StatelessWidget {
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
           ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
           AddedDealsScreen.routeName: (ctx) => AddedDealsScreen(),
-          AddedPostsScreen.routeName: (ctx) => AddedPostsScreen(),
+          AddedTopicsScreen.routeName: (ctx) => AddedTopicsScreen(),
           AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
+          YourActivityScreen.routeName: (ctx) => YourActivityScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),
           NotificationsScreen.routeName: (ctx) => NotificationsScreen(),

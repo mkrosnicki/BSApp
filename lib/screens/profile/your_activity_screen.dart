@@ -1,24 +1,24 @@
-import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/activity_model.dart';
+import 'package:BSApp/widgets/activities/activity_item.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/material.dart';
 
-class AddedDealsScreen extends StatelessWidget {
-  static const routeName = '/added-deals';
+class YourActivityScreen extends StatelessWidget {
+  static const routeName = '/your-activity';
 
   @override
   Widget build(BuildContext context) {
-    final List<DealModel> addedDeals =
+    final List<ActivityModel> activities =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: BaseAppBar(
         leading: const AppBarBackButton(Colors.black),
-        title: 'Dodane okazje',
+        title: 'Twoja aktywność',
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => DealItem(addedDeals[index]),
-        itemCount: addedDeals.length,
+        itemBuilder: (context, index) => ActivityItem(activities[index]),
+        itemCount: activities.length,
       ),
     );
   }
