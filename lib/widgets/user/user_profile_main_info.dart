@@ -1,5 +1,6 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,7 @@ class UserProfileMainInfo extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: UserAvatar(
                       username: user.username,
+                      imagePath: FakeDataProvider.USER_AVATAR_PATH,
                       radius: 35,
                     ),
                   ),

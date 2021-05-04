@@ -2,6 +2,7 @@ import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class PostItemUserInfo extends StatelessWidget {
         children: [
           UserAvatar(
             username: adderInfo.username,
+            imagePath: FakeDataProvider.USER_AVATAR_PATH,
             radius: 15,
           ),
           Flexible(

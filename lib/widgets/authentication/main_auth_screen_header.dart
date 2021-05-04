@@ -1,5 +1,6 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,7 @@ class MainAuthScreenHeader extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: UserAvatar(
                       username: 'U',
+                      imagePath: FakeDataProvider.USER_AVATAR_PATH,
                       radius: 40,
                     ),
                   ),

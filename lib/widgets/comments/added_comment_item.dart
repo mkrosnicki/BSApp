@@ -1,5 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class AddedCommentItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: UserAvatar(
               username: comment.adderInfo.username,
+              imagePath: FakeDataProvider.USER_AVATAR_PATH,
               radius: 20,
               backgroundColor: MyColorsProvider.BLUE,
             ),
