@@ -30,7 +30,7 @@ class ProfileOptionsList extends StatelessWidget {
           route: AddedDealsScreen.routeName,
           arguments: usersProfile.addedDeals),
       ProfileOptionItem(
-          title: 'Twoje wątki',
+          title: 'Twoje tematy',
           route: AddedTopicsScreen.routeName,
           arguments: usersProfile.addedTopics),
       const ProfileOptionsHeader('Ustawienia'),

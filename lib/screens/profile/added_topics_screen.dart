@@ -14,7 +14,7 @@ class AddedTopicsScreen extends StatelessWidget {
     return Scaffold(
       appBar: BaseAppBar(
         leading: const AppBarBackButton(Colors.black),
-        title: 'Twoje wątki',
+        title: 'Twoje tematy',
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => TopicItem(addedTopics[index]),
