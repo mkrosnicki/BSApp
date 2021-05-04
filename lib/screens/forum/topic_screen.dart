@@ -32,7 +32,7 @@ class _TopicScreenState extends State<TopicScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Wątek',
+          'Temat',
           style: MyStylingProvider.TEXT_BLACK,
         ),
         automaticallyImplyLeading: false,

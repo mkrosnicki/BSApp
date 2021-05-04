@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -10,12 +8,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class NewTopicScreen extends StatelessWidget {
+class NewTopicScreen extends StatefulWidget {
   static const routeName = '/new-topic';
+
+  @override
+  _NewTopicScreenState createState() => _NewTopicScreenState();
+}
+
+class _NewTopicScreenState extends State<NewTopicScreen> {
+  final _formKey = GlobalKey<FormState>();
+  var _topicTitleController = TextEditingController();
+  var _topicContentController = TextEditingController();
+
+  static const textFieldDecoration = InputDecoration(
+    hintStyle: const TextStyle(fontSize: 13),
+    border: InputBorder.none,
+    isDense: true,
+    contentPadding:
+        const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(color: MyColorsProvider.BLUE),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
+    ),
+    errorBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(color: MyColorsProvider.RED_SHADY),
+    ),
+    focusedErrorBorder: UnderlineInputBorder(
+      borderSide: const BorderSide(color: MyColorsProvider.RED_SHADY),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     String categoryId = ModalRoute.of(context).settings.arguments as String;
+    final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Nowy temat',
@@ -23,11 +51,9 @@ class NewTopicScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Provider.of<Topics>(context, listen: false)
-                  .addNewTopic('aaaa', 'bbbbb', categoryId)
-                  .then((topic) {
-                    Navigator.of(context).popAndPushNamed(TopicScreen.routeName, arguments: topic);
-              });
+              if (_formKey.currentState.validate()) {
+                _postNewTopic(categoryId);
+              }
             },
             child: const Text(
               'Wyślij',
@@ -39,76 +65,67 @@ class NewTopicScreen extends StatelessWidget {
       body: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextFormField(
-              obscureText: false,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: 'Tytuł',
-                hintStyle: TextStyle(fontSize: 14),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: MyColorsProvider.BLUE),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: MyColorsProvider.GREY_BORDER_COLOR),
-                ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                obscureText: false,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.next,
+                style: const TextStyle(fontSize: 12),
+                decoration: textFieldDecoration.copyWith(hintText: 'Tytuł'),
+                controller: _topicTitleController,
+                validator: (value) {
+                  if (value.isEmpty || value.length < 5) {
+                    return 'Tytuł musi mieć przynajmniej 5 znaków!';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  // _newPassword = value;
+                },
               ),
-              // controller: _newPasswordController,
-              validator: (value) {
-                if (value.isEmpty || value.length < 3) {
-                  return 'Zbyt krótkie hasło';
-                } else {
-                  return null;
-                }
-              },
-              onSaved: (value) {
-                // _newPassword = value;
-              },
-            ),
-            Padding(padding: const EdgeInsets.all(8.0),),
-            TextFormField(
-              minLines: 7,
-              maxLines: 7,
-              obscureText: false,
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                hintText: 'Napisz coś...',
-                hintStyle: TextStyle(fontSize: 14),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: MyColorsProvider.BLUE),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: MyColorsProvider.GREY_BORDER_COLOR),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
               ),
-              // controller: _newPasswordController,
-              validator: (value) {
-                if (value.isEmpty || value.length < 3) {
-                  return 'Zbyt krótkie hasło';
-                } else {
-                  return null;
-                }
-              },
-              onSaved: (value) {
-                // _newPassword = value;
-              },
-            )
-          ],
+              TextFormField(
+                minLines: 10,
+                maxLines: 10,
+                obscureText: false,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.next,
+                style: const TextStyle(fontSize: 12),
+                onFieldSubmitted: (_) => node.unfocus(),
+                decoration:
+                    textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
+                controller: _topicContentController,
+                validator: (value) {
+                  if (value.isEmpty || value.length < 20) {
+                    return 'Treść musi składać się przynajmniej z 20 znaków!';
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  // _newPassword = value;
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  _postNewTopic(String categoryId) {
+    Provider.of<Topics>(context, listen: false)
+        .addNewTopic(_topicTitleController.text, _topicContentController.text,
+            categoryId)
+        .then((topic) {
+      Navigator.of(context)
+          .popAndPushNamed(TopicScreen.routeName, arguments: topic);
+    });
   }
 }

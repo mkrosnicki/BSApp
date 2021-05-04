@@ -1,5 +1,6 @@
 import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
+import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,7 @@ class PostItemUserInfo extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${adderInfo.addedPosts} posty',
+                            '${adderInfo.addedPosts} ${ConjugationHelper.postsConjugation(adderInfo.addedPosts)}',
                             style: userInfoTextStyle,
                           ),
                         ],
