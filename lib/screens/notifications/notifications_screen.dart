@@ -1,5 +1,6 @@
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/notifications/notifications_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class NotificationsScreen extends StatelessWidget {
             } else {
               if (snapshot.error != null) {
                 return Center(
-                  child: Text('An error occurred!'),
+                  child: const ServerErrorSplash(),
                 );
               } else {
                 return RefreshIndicator(
