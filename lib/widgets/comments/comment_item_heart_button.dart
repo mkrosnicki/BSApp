@@ -17,33 +17,41 @@ class CommentItemHeartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Comments>(
-        builder: (context, commentsData, child) => InkWell(
-          onTap: () => _voteForComment(
-              context, dealId, commentId, true, authData.isAuthenticated),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            alignment: Alignment.centerRight,
-            child: Icon(
-              CupertinoIcons.heart_fill,
-              size: 14,
-              color:
-                  commentsData.wasVotedPositivelyBy(commentId, authData.userId)
-                      ? MyColorsProvider.RED_SHADY
-                      : MyColorsProvider.LIGHT_GRAY,
+        builder: (context, commentsData, child) {
+          final bool wasVotedByLoggedUser = commentsData.wasVotedPositivelyBy(commentId, authData.userId);
+          return InkWell(
+            onTap: () => _voteForComment(
+                context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              alignment: Alignment.centerRight,
+              child: Icon(
+                CupertinoIcons.heart_fill,
+                size: 14,
+                color:
+                wasVotedByLoggedUser
+                    ? MyColorsProvider.RED_SHADY
+                    : MyColorsProvider.LIGHT_GRAY,
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 
-  _voteForComment(BuildContext context, String dealId, String commentId,
-      bool isPositive, isAuthenticated) {
+  _voteForComment(
+      BuildContext context,
+      String dealId,
+      String commentId,
+      bool wasVotedByLoggedUser,
+      bool isAuthenticated) {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
+      final bool isPositiveVote = !wasVotedByLoggedUser;
       Provider.of<Comments>(context, listen: false)
-          .voteForComment(dealId, commentId, isPositive);
+          .voteForComment(dealId, commentId, isPositiveVote);
     }
   }
 }
