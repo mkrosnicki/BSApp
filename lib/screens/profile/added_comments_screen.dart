@@ -2,6 +2,7 @@ import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/comments/added_comment_item.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class AddedCommentsScreen extends StatelessWidget {
           } else {
             if (snapshot.error != null) {
               return Center(
-                child: Text('An error occurred!'),
+                child: const ServerErrorSplash(),
               );
             } else {
               return Consumer<Comments>(

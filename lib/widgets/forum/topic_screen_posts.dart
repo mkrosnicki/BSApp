@@ -1,6 +1,7 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/posts.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/post_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class TopicScreenPosts extends StatelessWidget {
               } else {
                 if (snapshot.error != null) {
                   return Center(
-                    child: Text('An error occurred!'),
+                    child: const ServerErrorSplash(),
                   );
                 } else {
                   return Consumer<Posts>(

@@ -4,6 +4,7 @@ import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 } else {
                   if (snapshot.error != null) {
                     return Center(
-                      child: Text('An error occurred!'),
+                      child: const ServerErrorSplash(),
                     );
                   } else {
                     return _buildCategoriesList(_allCategories);

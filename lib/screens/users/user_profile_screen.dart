@@ -3,6 +3,7 @@ import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/common/zero_app_bar.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
@@ -38,7 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             } else {
               if (snapshot.error != null) {
                 return Center(
-                  child: Text('An error occurred!'),
+                  child: const ServerErrorSplash(),
                 );
               } else {
                 return Stack(

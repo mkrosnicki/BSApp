@@ -4,6 +4,7 @@ import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/forum_category_item.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class ForumScreen extends StatelessWidget {
                   } else {
                     if (snapshot.error != null) {
                       return Center(
-                        child: Text('An error occurred!'),
+                        child: const ServerErrorSplash(),
                       );
                     } else {
                       return Column(

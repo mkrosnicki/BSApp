@@ -1,6 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/widgets/common/no_old_searches_info.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 
 import 'last_search_item.dart';
@@ -30,7 +31,7 @@ class _LastSearchesState extends State<LastSearches> {
         } else {
           if (snapshot.error != null) {
             return Center(
-              child: Text('An error occurred!'),
+              child: const ServerErrorSplash(),
             );
           } else {
             if (_cachedFilterSettings.isNotEmpty) {

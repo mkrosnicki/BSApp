@@ -2,6 +2,7 @@ import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class DealsScreenMainContent extends StatelessWidget {
             } else {
               if (snapshot.error != null) {
                 return Center(
-                  child: Text('An error occurred!'),
+                  child: const ServerErrorSplash(),
                 );
               } else {
                 return Flexible(

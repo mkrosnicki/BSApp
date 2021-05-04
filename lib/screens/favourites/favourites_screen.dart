@@ -3,6 +3,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/error_info.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:BSApp/widgets/searches/observed_search_item.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                             } else {
                               if (snapshot.error != null) {
                                 return Center(
-                                  child: Text('An error occurred!'),
+                                  child: const ServerErrorSplash(),
                                 );
                               } else {
                                 return Consumer<Deals>(

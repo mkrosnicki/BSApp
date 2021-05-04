@@ -1,3 +1,4 @@
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 
 class ContentOrProgressIndicator extends StatelessWidget {
@@ -14,7 +15,7 @@ class ContentOrProgressIndicator extends StatelessWidget {
     } else {
       if (snapshot.error != null) {
         return Center(
-          child: Text('An error occurred!'),
+          child: const ServerErrorSplash(),
         );
       } else {
         return content;

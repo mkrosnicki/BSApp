@@ -7,6 +7,7 @@ import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               } else {
                 if (snapshot.error != null) {
                   return Center(
-                    child: Text('An error occurred!'),
+                    child: const ServerErrorSplash(),
                   );
                 } else {
                   return Flexible(
