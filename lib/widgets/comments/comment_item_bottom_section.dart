@@ -13,18 +13,38 @@ class CommentItemBottomSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 44.0, top: 4.0),
+      padding: const EdgeInsets.only(left: 42.0, top: 4.0),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // CommentItemVotingButtons(comment, widget.dealId),
-          Text(
-            '${DateUtil.timeAgoString(comment.addedAt)}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 11, color: Colors.grey),
+          Wrap(
+            children: [
+              Text(
+                '${DateUtil.timeAgoString(comment.addedAt)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontSize: 11, color: Colors.grey),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  '',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 11, color: Colors.grey),
+                ),
+              ),
+              Text(
+                '${comment.numberOfPositiveVotes} polubień',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontSize: 11, color: Colors.grey),
+              ),
+            ],
           ),
           InkWell(
             onTap: () => _startCommentReply(comment),
