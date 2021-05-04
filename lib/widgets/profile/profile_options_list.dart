@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileOptionsList extends StatelessWidget {
-  ApiProvider apiProvider = ApiProvider();
 
   @override
   Widget build(BuildContext context) {
