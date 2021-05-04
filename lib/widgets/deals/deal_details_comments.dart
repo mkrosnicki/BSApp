@@ -34,6 +34,7 @@ class DealDetailsComments extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
+          color: Colors.white,
           // margin: const EdgeInsets.only(top: 5.0),
           // padding: const EdgeInsets.only(top: 5.0),
           child: FutureBuilder(

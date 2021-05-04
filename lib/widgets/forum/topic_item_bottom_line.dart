@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class TopicItemBottomLine extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '${topic.numberOfPosts} postów',
+            '${topic.numberOfPosts} ${ConjugationHelper.postsConjugation(topic.numberOfPosts)}',
             style: const TextStyle(
                 fontSize: 11, color: Colors.black54, height: 1.1),
           ),

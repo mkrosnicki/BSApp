@@ -1,4 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
@@ -38,7 +39,7 @@ class CommentItemBottomSection extends StatelessWidget {
                 ),
               ),
               Text(
-                '${comment.numberOfPositiveVotes} polubień',
+                '${comment.numberOfPositiveVotes} ${ConjugationHelper.likesConjugation(comment.numberOfPositiveVotes)}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2
