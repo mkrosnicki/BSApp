@@ -15,7 +15,7 @@ class TopicScreenTopicTitle extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .subtitle1
-            .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+            .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
       ),
     );
   }

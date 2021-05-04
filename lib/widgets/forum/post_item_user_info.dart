@@ -14,11 +14,8 @@ class PostItemUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle = const TextStyle(
-      fontSize: 11,
-      color: Colors.black54,
-      height: 1.4
-    );
+    const userInfoTextStyle =
+        const TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
       child: Flex(
@@ -26,7 +23,10 @@ class PostItemUserInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          UserAvatar(username: adderInfo.username, radius: 15,),
+          UserAvatar(
+            username: adderInfo.username,
+            radius: 15,
+          ),
           Flexible(
             child: Container(
               padding: const EdgeInsets.all(4.0),
@@ -61,7 +61,7 @@ class PostItemUserInfo extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${adderInfo.addedPosts} ${ConjugationHelper.postsConjugation(adderInfo.addedPosts)}',
+                            '${adderInfo.addedPosts + adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(adderInfo.addedPosts + adderInfo.addedTopics)}',
                             style: userInfoTextStyle,
                           ),
                         ],
