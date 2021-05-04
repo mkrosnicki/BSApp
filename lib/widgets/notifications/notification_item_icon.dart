@@ -28,7 +28,7 @@ class NotificationItemIcon extends StatelessWidget {
         return CupertinoIcons.bubble_left_bubble_right;
         break;
       case NotificationType.YOUR_COMMENT_RATED:
-        return CupertinoIcons.bubble_left_bubble_right;
+        return CupertinoIcons.plus_slash_minus;
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return CupertinoIcons.reply;

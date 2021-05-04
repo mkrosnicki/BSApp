@@ -51,14 +51,16 @@ class NotificationItemContent extends StatelessWidget {
             : '${notification.mainIssuerUsername} ocenił(a) Twoją okazję';
         break;
       case NotificationType.YOUR_COMMENT_RATED:
-        return notification.relatedCommentContent;
+        return notification.totalNumberOfIssuers > 1
+            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} ocenili Twój komentarz'
+            : '${notification.mainIssuerUsername} ocenił(a) Twój komentarz';
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return notification.relatedCommentContent;
         break;
       case NotificationType.YOUR_POST_REPLIED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} odpowiedzieli na Twój postw temacie'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} odpowiedzieli na Twój post w temacie'
             : '${notification.mainIssuerUsername} odpowiedział(a) na Twój post w temacie';
         break;
       case NotificationType.YOUR_TOPIC_REPLIED:
