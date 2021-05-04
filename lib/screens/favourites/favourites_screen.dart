@@ -3,6 +3,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/error_info.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:BSApp/widgets/searches/observed_search_item.dart';
@@ -85,7 +86,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
+                              return Center(child: const LoadingIndicator());
                             } else {
                               if (snapshot.error != null) {
                                 return Center(

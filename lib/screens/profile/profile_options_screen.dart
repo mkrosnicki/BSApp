@@ -2,6 +2,8 @@ import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/profile/profile_options_list.dart';
 import 'package:BSApp/widgets/profile/profile_statistics_info.dart';
@@ -37,9 +39,7 @@ class _ProfileOptionsScreenState extends State<ProfileOptionsScreen> {
                           .getUsersProfile(auth.userId);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: JumpingDotsProgressIndicator(
-                        fontSize: 40.0,
-                      ),
+                      child: const LoadingIndicator(),
                     );
                   } else {
                     if (snapshot.error != null) {
