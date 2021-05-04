@@ -4,12 +4,12 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import 'deal_item.dart';
 
 class DealsScreenMainContent extends StatelessWidget {
-
   List<CategoryModel> _allCategories;
 
   @override
@@ -19,11 +19,14 @@ class DealsScreenMainContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         FutureBuilder(
-          future:
-          Provider.of<Deals>(context, listen: false).fetchDeals(),
+          future: Provider.of<Deals>(context, listen: false).fetchDeals(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                child: JumpingDotsProgressIndicator(
+                  fontSize: 40.0,
+                ),
+              );
             } else {
               if (snapshot.error != null) {
                 return Center(
@@ -34,18 +37,16 @@ class DealsScreenMainContent extends StatelessWidget {
                   child: RefreshIndicator(
                     onRefresh: () => _refreshDeals(context),
                     child: Consumer<Deals>(
-                      builder: (context, dealsData, child) =>
-                          ListView.builder(
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                return CategoriesScrollable(_allCategories);
-                              } else {
-                                return DealItem(
-                                    dealsData.deals[index - 1]);
-                              }
-                            },
-                            itemCount: dealsData.deals.length + 1,
-                          ),
+                      builder: (context, dealsData, child) => ListView.builder(
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return CategoriesScrollable(_allCategories);
+                          } else {
+                            return DealItem(dealsData.deals[index - 1]);
+                          }
+                        },
+                        itemCount: dealsData.deals.length + 1,
+                      ),
                     ),
                   ),
                 );
