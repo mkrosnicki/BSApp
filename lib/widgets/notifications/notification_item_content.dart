@@ -52,8 +52,8 @@ class NotificationItemContent extends StatelessWidget {
         break;
       case NotificationType.YOUR_COMMENT_RATED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} ocenili Twój komentarz'
-            : '${notification.mainIssuerUsername} ocenił(a) Twój komentarz';
+            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} polubili Twój komentarz'
+            : '${notification.mainIssuerUsername} polubił(a) Twój komentarz';
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return notification.totalNumberOfIssuers > 1

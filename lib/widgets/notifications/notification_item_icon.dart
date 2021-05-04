@@ -28,7 +28,7 @@ class NotificationItemIcon extends StatelessWidget {
         return CupertinoIcons.bubble_left_bubble_right;
         break;
       case NotificationType.YOUR_COMMENT_RATED:
-        return CupertinoIcons.plus_slash_minus;
+        return CupertinoIcons.hand_thumbsup;
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return CupertinoIcons.reply;
@@ -51,7 +51,7 @@ class NotificationItemIcon extends StatelessWidget {
         return MyColorsProvider.GREEN;
         break;
       case NotificationType.YOUR_COMMENT_RATED:
-        return Colors.deepOrangeAccent;
+        return MyColorsProvider.BLUE;
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return Colors.deepOrangeAccent;
