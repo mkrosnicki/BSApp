@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class ZeroAppBar extends StatelessWidget implements PreferredSizeWidget {
 
+  const ZeroAppBar();
+
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(0.0),
       child: AppBar(
-        backgroundColor: MyColorsProvider.BLUE,
+        backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
         centerTitle: true,

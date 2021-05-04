@@ -30,6 +30,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
+      appBar: const ZeroAppBar(),
       body: FutureBuilder(
           future: _initUser(context, userId),
           builder: (context, snapshot) {
