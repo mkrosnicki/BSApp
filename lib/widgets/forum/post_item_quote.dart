@@ -10,8 +10,7 @@ class PostItemQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
       child: Container(
         width: double.infinity,
         color: Colors.yellow.shade50,
@@ -21,7 +20,7 @@ class PostItemQuote extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                  vertical: 8.0, horizontal: 0.0),
+                  vertical: 4.0, horizontal: 0.0),
               child: Wrap(
                 children: [
                   Text(
@@ -31,7 +30,7 @@ class PostItemQuote extends StatelessWidget {
                         .textTheme
                         .bodyText2
                         .copyWith(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: Colors.black87,
                         fontWeight: FontWeight.w600),
                   ),
@@ -41,7 +40,7 @@ class PostItemQuote extends StatelessWidget {
                         .of(context)
                         .textTheme
                         .bodyText2
-                        .copyWith(fontSize: 12, color: Colors.black87),
+                        .copyWith(fontSize: 11, color: Colors.black87),
                   ),
                 ],
               ),
@@ -52,7 +51,7 @@ class PostItemQuote extends StatelessWidget {
                   .of(context)
                   .textTheme
                   .bodyText2
-                  .copyWith(fontSize: 12, color: Colors.black87),
+                  .copyWith(fontSize: 11, color: Colors.black87),
             ),
           ],
         ),
