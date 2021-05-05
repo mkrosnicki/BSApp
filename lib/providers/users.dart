@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/services/api_provider.dart';
@@ -6,8 +9,12 @@ import 'package:flutter/material.dart';
 class Users with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
+  String token;
+
   Map<String, UserModel> _idToUserMap = {};
   Map<String, UsersProfileModel> _idToUsersProfileMap = {};
+
+  Users.empty();
 
   Future<void> fetchUser(String userId) async {
     final responseBody = await _apiProvider.get('/users/$userId') as Map;
@@ -23,7 +30,6 @@ class Users with ChangeNotifier {
       print('No Users Profile Found!');
     }
     _idToUsersProfileMap.update(userId, (value) => UsersProfileModel.fromJson(responseBody), ifAbsent: () => UsersProfileModel.fromJson(responseBody));
-    print(UsersProfileModel.fromJson(responseBody).activities);
   }
 
   Future<UserModel> findUser(String userId) async {
@@ -42,5 +48,15 @@ class Users with ChangeNotifier {
 
   UsersProfileModel getUsersProfile(String userId) {
     return _idToUsersProfileMap[userId];
+  }
+
+  Future<void> updateMyAvatar(File newAvatar) async {
+    var updateAvatarDto = {'avatar': base64Encode(newAvatar.readAsBytesSync()),};
+    await _apiProvider.patch('/users/me/', updateAvatarDto, token: token);
+    // return fetchSavedSearches();
+  }
+
+  void update(String token) async {
+    this.token = token;
   }
 }

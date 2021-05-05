@@ -23,6 +23,11 @@ class ApiProvider {
     return _sendRequest(_RequestType.POST, endpoint, body: body, token: token);
   }
 
+  Future<dynamic> patch(String endpoint, Map<String, dynamic> body,
+      {String token}) async {
+    return _sendRequest(_RequestType.PATCH, endpoint, body: body, token: token);
+  }
+
   Future<dynamic> delete(String endpoint, {String token}) async {
     return _sendRequest(_RequestType.DELETE, endpoint, token: token);
   }
@@ -34,7 +39,7 @@ class ApiProvider {
       if (token != null) {
         headers.putIfAbsent("Authorization", () => 'Bearer $token');
       }
-      if (requestType == _RequestType.POST) {
+      if (requestType == _RequestType.POST || requestType == _RequestType.PATCH) {
         headers.putIfAbsent('Content-Type', () => 'application/json;charset=UTF-8');
       }
       var uri = _buildUri(endpoint, requestParams);
@@ -46,6 +51,13 @@ class ApiProvider {
           break;
         case _RequestType.POST:
           response = await http.post(
+            uri,
+            body: json.encode(body),
+            headers: headers,
+          );
+          break;
+        case _RequestType.PATCH:
+          response = await http.patch(
             uri,
             body: json.encode(body),
             headers: headers,
@@ -94,5 +106,5 @@ class ApiProvider {
   }
 }
 
-enum _RequestType { GET, POST, DELETE }
+enum _RequestType { GET, POST, PATCH, DELETE }
 enum _ProtocolType { HTTP, HTTPS }

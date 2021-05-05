@@ -15,7 +15,7 @@ class ProfileUserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Flex(
         direction: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,12 +36,12 @@ class ProfileUserInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 2.0),
+                        margin: const EdgeInsets.only(bottom: 2.0),
                         child: GestureDetector(
                           onTap: () => {},
                           child: Text(
                             user.username,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -57,16 +57,5 @@ class ProfileUserInfo extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _takePicture() async {
-    final imageFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 600,
-    );
-    if (imageFile == null) {
-      return;
-    }
-    File fileToSend = File(imageFile.path);
   }
 }

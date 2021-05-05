@@ -84,6 +84,12 @@ class MyApp extends StatelessWidget {
           update: (context, auth, previousNotifications) =>
           previousNotifications..update(auth.token, auth.userId),
         ),
+        ChangeNotifierProxyProvider<Auth, Users>(
+          create: (context) => Users.empty(),
+          lazy: false,
+          update: (context, auth, previousUsers) =>
+          previousUsers..update(auth.token),
+        ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
         ),
@@ -92,9 +98,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => Locations(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Users(),
         ),
       ],
       child: MaterialApp(
