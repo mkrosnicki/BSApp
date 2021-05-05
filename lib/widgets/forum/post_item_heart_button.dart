@@ -23,7 +23,7 @@ class PostItemHeartButton extends StatelessWidget {
           return InkWell(
             onTap: () {},
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 2.0),
               alignment: Alignment.centerRight,
               child: Icon(
                 CupertinoIcons.heart_fill,
