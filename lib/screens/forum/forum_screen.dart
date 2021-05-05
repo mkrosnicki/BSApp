@@ -4,6 +4,7 @@ import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/forum_category_item.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
@@ -32,16 +33,8 @@ class ForumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> widgets = List.generate(10, (index) => 'Option number $index');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Forum',
-          style: MyStylingProvider.TEXT_BLACK,
-        ),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        bottom: const AppBarBottomBorder(),
+      appBar: BaseAppBar(
+        title: 'Forum',
         actions: [
           // const AppBarCloseButton(Colors.black),
         ],

@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,8 +45,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resetowanie hasła'),
+      appBar: BaseAppBar(
+        title: 'Resetowanie hasła',
       ),
       body: SingleChildScrollView(
         child: Container(
