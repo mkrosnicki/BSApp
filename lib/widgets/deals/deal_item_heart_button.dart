@@ -38,7 +38,7 @@ class DealItemHeartButton extends StatelessWidget {
       AuthScreenProvider.showLoginScreen(context);
     } else if (isFavourite) {
       Provider.of<Deals>(context, listen: false)
-          .deleteFromObservedDeals(deal.id);
+          .removeFromObservedDeals(deal.id);
     } else {
       Provider.of<Deals>(context, listen: false).addToObservedDeals(deal.id);
     }

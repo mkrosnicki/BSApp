@@ -27,7 +27,7 @@ class PostItemHeartButton extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Icon(
                 CupertinoIcons.heart_fill,
-                size: 16,
+                size: 18,
                 color:
                 wasVotedByLoggedUser
                     ? MyColorsProvider.RED_SHADY

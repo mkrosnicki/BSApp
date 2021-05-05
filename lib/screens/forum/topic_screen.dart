@@ -1,5 +1,8 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/topics.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/topic_screen_input_bar.dart';
@@ -7,6 +10,7 @@ import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -33,13 +37,7 @@ class _TopicScreenState extends State<TopicScreen> {
         title: 'Temat',
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          TextButton(
-            onPressed: () {}, // todo dodaj do obserwowanych
-            child: Icon(
-              CupertinoIcons.heart,
-              color: Colors.black87,
-            ),
-          ),
+          _buildToggleButton(topic),
         ],
       ),
       body: Container(
@@ -67,5 +65,41 @@ class _TopicScreenState extends State<TopicScreen> {
         ),
       ),
     );
+  }
+
+  _buildToggleButton(TopicModel topic) {
+    return Consumer<Auth>(
+      builder: (context, authData, child) => Consumer<Topics>(
+        builder: (context, topicsData, child) {
+          final bool isObservedTopic = topicsData.isObservedTopic(topic);
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => _toggleFavourites(
+                context, topic, isObservedTopic, authData.isAuthenticated),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                  isObservedTopic
+                      ? CupertinoIcons.heart_fill
+                      : CupertinoIcons.heart,
+                  size: 22,
+                  color: Colors.black),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  _toggleFavourites(BuildContext context, TopicModel topic, bool isFavourite,
+      bool isUserLoggedIn) {
+    if (!isUserLoggedIn) {
+      AuthScreenProvider.showLoginScreen(context);
+    } else if (isFavourite) {
+      Provider.of<Topics>(context, listen: false)
+          .removeFromObservedTopics(topic.id);
+    } else {
+      Provider.of<Topics>(context, listen: false).addToObservedTopics(topic.id);
+    }
   }
 }

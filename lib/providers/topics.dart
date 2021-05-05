@@ -113,8 +113,8 @@ class Topics with ChangeNotifier {
     return fetchObservedTopics();
   }
 
-  Future<void> deleteFromObservedTopics(String topicId) async {
-    await _apiProvider.delete('TODO$topicId', token: token);
+  Future<void> removeFromObservedTopics(String topicId) async {
+    await _apiProvider.delete('/users/me/topics/observed/$topicId', token: token);
     return fetchObservedTopics();
   }
 
@@ -159,9 +159,8 @@ class Topics with ChangeNotifier {
       fetchedObservedTopics = [];
       fetchedAddedTopics = [];
     } else {
-      // todo
-      // await fetchAddedTopics();
-      // await fetchObservedTopics();
+      await fetchAddedTopics();
+      await fetchObservedTopics();
     }
   }
 }

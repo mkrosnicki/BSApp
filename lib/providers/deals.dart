@@ -98,7 +98,7 @@ class Deals with ChangeNotifier {
     return fetchObservedDeals();
   }
 
-  Future<void> deleteFromObservedDeals(String dealId) async {
+  Future<void> removeFromObservedDeals(String dealId) async {
     await _apiProvider.delete('/users/me/deals/observed/$dealId', token: token);
     return fetchObservedDeals();
   }
