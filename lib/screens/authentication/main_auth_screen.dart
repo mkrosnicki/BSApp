@@ -1,19 +1,19 @@
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary-button.dart';
-import 'package:BSApp/widgets/profile/profile_option_item.dart';
-import 'package:BSApp/widgets/profile/profile_options_header.dart';
+import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
+import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_screen_provider.dart';
 
 class MainAuthScreen extends StatelessWidget {
   final menuOptions = [
-    const ProfileOptionsHeader('Informacje'),
-    const ProfileOptionItem(title: 'Kontakt', route: '/favourites'),
-    const ProfileOptionItem(title: 'Regulamin', route: '/favourites'),
-    const ProfileOptionItem(
+    const MyProfileOptionsHeader('Informacje'),
+    const MyProfileOptionItem(title: 'Kontakt', route: '/favourites'),
+    const MyProfileOptionItem(title: 'Regulamin', route: '/favourites'),
+    const MyProfileOptionItem(
         title: 'Polityka prywatności', route: '/favourites'),
-    const ProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
+    const MyProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
   ];
 
   @override

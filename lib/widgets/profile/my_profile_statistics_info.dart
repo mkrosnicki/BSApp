@@ -1,13 +1,13 @@
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
-class ProfileStatisticsInfo extends StatefulWidget {
+class MyProfileStatisticsInfo extends StatefulWidget {
   @override
-  _ProfileStatisticsInfoState createState() =>
-      _ProfileStatisticsInfoState();
+  _MyProfileStatisticsInfoState createState() =>
+      _MyProfileStatisticsInfoState();
 }
 
-class _ProfileStatisticsInfoState extends State<ProfileStatisticsInfo> {
+class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
   static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
   static const activeMenuItemStyle =
       TextStyle(fontSize: 12, fontWeight: FontWeight.w600);

@@ -4,7 +4,7 @@ import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/initialization/init.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
-import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/screens/profile/your_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
     AddDealScreen(),
     NotificationsScreen(),
     FavouritesScreen(),
-    ProfileOptionsScreen(),
+    YourProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

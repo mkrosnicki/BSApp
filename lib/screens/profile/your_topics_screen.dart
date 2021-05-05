@@ -4,7 +4,7 @@ import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
 
-class AddedTopicsScreen extends StatelessWidget {
+class YourTopicsScreen extends StatelessWidget {
   static const routeName = '/added-topics';
 
   @override

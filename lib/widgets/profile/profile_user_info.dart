@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:BSApp/models/user_model.dart';
-import 'package:BSApp/util/fake_data_provider.dart';
-import 'package:BSApp/widgets/common/user_avatar.dart';
+import 'package:BSApp/widgets/profile/my_profile_avatar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,14 +29,7 @@ class ProfileUserInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: UserAvatar(
-                      username: user.username,
-                      imagePath: FakeDataProvider.USER_AVATAR_PATH,
-                      radius: 40,
-                    ),
-                  ),
+                  MyProfileAvatar(user),
                   Flex(
                     direction: Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.center,

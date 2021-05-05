@@ -25,10 +25,9 @@ import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
-import 'package:BSApp/screens/profile/added_comments_screen.dart';
-import 'package:BSApp/screens/profile/added_deals_screen.dart';
-import 'package:BSApp/screens/profile/added_topics_screen.dart';
-import 'package:BSApp/screens/profile/profile_options_screen.dart';
+import 'package:BSApp/screens/profile/your_deals_screen.dart';
+import 'package:BSApp/screens/profile/your_topics_screen.dart';
+import 'package:BSApp/screens/profile/your_profile_screen.dart';
 import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -123,10 +122,9 @@ class MyApp extends StatelessWidget {
         home: MainScreen(),
         routes: {
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
-          ProfileOptionsScreen.routeName: (ctx) => ProfileOptionsScreen(),
-          AddedDealsScreen.routeName: (ctx) => AddedDealsScreen(),
-          AddedTopicsScreen.routeName: (ctx) => AddedTopicsScreen(),
-          AddedCommentsScreen.routeName: (ctx) => AddedCommentsScreen(),
+          YourProfileScreen.routeName: (ctx) => YourProfileScreen(),
+          YourDealsScreen.routeName: (ctx) => YourDealsScreen(),
+          YourTopicsScreen.routeName: (ctx) => YourTopicsScreen(),
           YourActivityScreen.routeName: (ctx) => YourActivityScreen(),
           FavouritesScreen.routeName: (ctx) => FavouritesScreen(),
           ForumScreen.routeName: (ctx) => ForumScreen(),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ProfileOptionsHeader extends StatelessWidget {
+class MyProfileOptionsHeader extends StatelessWidget {
 
   final String title;
 
-  const ProfileOptionsHeader(this.title);
+  const MyProfileOptionsHeader(this.title);
 
   @override
   Widget build(BuildContext context) {

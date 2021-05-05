@@ -2,14 +2,14 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileOptionItem extends StatelessWidget {
+class MyProfileOptionItem extends StatelessWidget {
   final String title;
   final int number;
   final String route;
   final Function function;
   final dynamic arguments;
 
-  const ProfileOptionItem({this.title, this.number, this.route, this.function, this.arguments});
+  const MyProfileOptionItem({this.title, this.number, this.route, this.function, this.arguments});
 
   @override
   Widget build(BuildContext context) {

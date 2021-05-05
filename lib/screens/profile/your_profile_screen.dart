@@ -2,24 +2,22 @@ import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
-import 'package:BSApp/widgets/profile/profile_options_list.dart';
-import 'package:BSApp/widgets/profile/profile_statistics_info.dart';
+import 'package:BSApp/widgets/profile/my_profile_options_list.dart';
+import 'package:BSApp/widgets/profile/my_profile_statistics_info.dart';
 import 'package:BSApp/widgets/profile/profile_user_info.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
-class ProfileOptionsScreen extends StatefulWidget {
-  static const routeName = '/profile-options';
+class YourProfileScreen extends StatefulWidget {
+  static const routeName = '/your-profile';
 
   @override
-  _ProfileOptionsScreenState createState() => _ProfileOptionsScreenState();
+  _YourProfileScreenState createState() => _YourProfileScreenState();
 }
 
-class _ProfileOptionsScreenState extends State<ProfileOptionsScreen> {
+class _YourProfileScreenState extends State<YourProfileScreen> {
   UsersProfileModel _usersProfile;
 
   @override
@@ -55,8 +53,8 @@ class _ProfileOptionsScreenState extends State<ProfileOptionsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ProfileUserInfo(auth.me),
-                            ProfileStatisticsInfo(),
-                            ProfileOptionsList(usersProfile),
+                            MyProfileStatisticsInfo(),
+                            MyProfileOptionsList(usersProfile),
                           ],
                         ),
                       );
