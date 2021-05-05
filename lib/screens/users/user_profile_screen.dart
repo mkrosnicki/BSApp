@@ -3,6 +3,7 @@ import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/common/zero_app_bar.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
@@ -35,7 +36,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           future: _initUser(context, userId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: const CircularProgressIndicator());
+              return const Center(child: const LoadingIndicator());
             } else {
               if (snapshot.error != null) {
                 return Center(

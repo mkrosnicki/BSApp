@@ -6,6 +6,7 @@ import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
@@ -89,7 +90,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                 .fetchDeals(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: const LoadingIndicator());
               } else {
                 if (snapshot.error != null) {
                   return Center(

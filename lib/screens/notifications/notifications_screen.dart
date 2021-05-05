@@ -1,6 +1,7 @@
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/notifications/notifications_item.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
               .fetchMyNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: const LoadingIndicator());
             } else {
               if (snapshot.error != null) {
                 return Center(

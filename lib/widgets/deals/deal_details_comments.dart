@@ -2,6 +2,7 @@ import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,7 @@ class DealDetailsComments extends StatelessWidget {
                 return Container(
                   height: 200,
                   color: Colors.white,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(child: const LoadingIndicator()),
                 );
               } else {
                 if (snapshot.error != null) {

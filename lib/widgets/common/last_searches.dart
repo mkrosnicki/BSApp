@@ -5,6 +5,7 @@ import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 
 import 'last_search_item.dart';
+import 'loading_indicator.dart';
 
 class LastSearches extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _LastSearchesState extends State<LastSearches> {
       future: _initCookies(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: const LoadingIndicator());
         } else {
           if (snapshot.error != null) {
             return Center(

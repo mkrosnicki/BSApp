@@ -8,6 +8,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +107,7 @@ class _OccasionFormState extends State<OccasionForm> {
   Widget build(BuildContext context) {
     return _isLoading
         ? Center(
-            child: CircularProgressIndicator(),
+            child: const LoadingIndicator(),
           )
         : SingleChildScrollView(
             child: Padding(

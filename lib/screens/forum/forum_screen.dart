@@ -2,9 +2,8 @@ import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topic_categories.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/forum_category_item.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
@@ -83,7 +82,7 @@ class ForumScreen extends StatelessWidget {
                 future: _initCategories(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: const LoadingIndicator());
                   } else {
                     if (snapshot.error != null) {
                       return Center(

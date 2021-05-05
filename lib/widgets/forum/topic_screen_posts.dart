@@ -1,6 +1,7 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/posts.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/post_item.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class TopicScreenPosts extends StatelessWidget {
             future: Provider.of<Posts>(context, listen: false).fetchPostsForTopic(topic.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: const LoadingIndicator());
               } else {
                 if (snapshot.error != null) {
                   return Center(

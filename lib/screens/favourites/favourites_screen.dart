@@ -124,7 +124,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
+                              return Center(child: const LoadingIndicator());
                             } else {
                               if (snapshot.error != null) {
                                 return ErrorInfo();

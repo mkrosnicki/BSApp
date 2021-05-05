@@ -3,6 +3,7 @@ import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class ForumCategoryScreen extends StatelessWidget {
               .fetchCategoryTopics(categoryId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: const LoadingIndicator());
             } else {
               if (snapshot.error != null) {
                 return Center(
