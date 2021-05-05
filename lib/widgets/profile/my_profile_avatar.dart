@@ -47,8 +47,8 @@ class MyProfileAvatar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: Icon(
-                CupertinoIcons.plus,
-                size: 14,
+                Icons.edit,
+                size: 13,
                 color: Colors.white,
               ),
             ),
@@ -68,6 +68,6 @@ class MyProfileAvatar extends StatelessWidget {
       return;
     }
     final File newAvatar = File(imageFile.path);
-    Provider.of<Users>(context, listen: false).updateMyAvatar(newAvatar);
+    await Provider.of<Users>(context, listen: false).updateMyAvatar(newAvatar);
   }
 }
