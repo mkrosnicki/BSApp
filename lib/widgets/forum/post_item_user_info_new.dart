@@ -67,7 +67,7 @@ class PostItemUserInfoNew extends StatelessWidget {
                           ),
                         ],
                       ),
-                      PostItemHeartButton(post.topicId, post.id),
+                      PostItemHeartButton(post),
                     ],
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/posts.dart';
@@ -9,20 +10,19 @@ import 'package:provider/provider.dart';
 
 class PostItemHeartButton extends StatelessWidget {
 
-  final String topicId;
-  final String postId;
+  final PostModel post;
 
-  PostItemHeartButton(this.topicId, this.postId);
+  PostItemHeartButton(this.post);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Posts>(
         builder: (context, postsData, child) {
-          final bool wasLikedByLoggedUser = postsData.wasLikedBy(postId, authData.userId);
+          final bool wasLikedByLoggedUser = postsData.wasLikedBy(post.id, authData.userId);
           return InkWell(
             onTap: () {
-              _likeTePost(context, topicId, postId, wasLikedByLoggedUser, authData.isAuthenticated);
+              _likeTePost(context, post, wasLikedByLoggedUser, authData.isAuthenticated);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -44,16 +44,15 @@ class PostItemHeartButton extends StatelessWidget {
 
   _likeTePost(
       BuildContext context,
-      String topicId,
-      String postId,
+      PostModel post,
       bool wasLikedByLoggedUser,
       bool isAuthenticated) {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
-      final bool isPositiveVote = !wasLikedByLoggedUser;
+      final bool isLike = !wasLikedByLoggedUser;
       Provider.of<Posts>(context, listen: false)
-          .likeThePost(topicId, postId, isPositiveVote);
+          .likeThePost(post, isLike);
     }
   }
 
