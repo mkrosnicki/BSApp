@@ -23,7 +23,7 @@ class TopicItemTopicInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TopicItemTitleLines(topic),
-                TopicItemHeartButton(),
+                TopicItemHeartButton(topic),
               ],
             ),
             TopicItemBottomLine(topic),
