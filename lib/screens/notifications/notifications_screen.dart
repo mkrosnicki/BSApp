@@ -7,6 +7,8 @@ import 'package:BSApp/widgets/notifications/notifications_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'clear_notifications_button.dart';
+
 class NotificationsScreen extends StatelessWidget {
   static const routeName = '/nofifications';
 
@@ -16,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
       appBar: BaseAppBar(
         title: 'Powiadomienia',
         actions: [
-          // const AppBarCloseButton(Colors.black),
+          ClearNotificationsButton()
         ],
       ),
       body: SafeArea(
