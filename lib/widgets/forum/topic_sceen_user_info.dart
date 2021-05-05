@@ -7,11 +7,11 @@ import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PostItemUserInfo extends StatelessWidget {
+class TopicScreenUserInfo extends StatelessWidget {
   final AdderInfoModel adderInfo;
   final DateTime addedAt;
 
-  const PostItemUserInfo(this.adderInfo, this.addedAt);
+  const TopicScreenUserInfo(this.adderInfo, this.addedAt);
 
   @override
   Widget build(BuildContext context) {

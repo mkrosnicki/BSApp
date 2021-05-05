@@ -1,6 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/widgets/forum/post_item_user_info.dart';
-import 'package:BSApp/widgets/forum/topic_screen_topic_bottom_bar.dart';
+import 'package:BSApp/widgets/forum/topic_sceen_user_info.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_content.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +20,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PostItemUserInfo(topic.adderInfo, topic.addedAt),
+          TopicScreenUserInfo(topic.adderInfo, topic.addedAt),
           TopicScreenTopicTitle(topic.title),
           TopicScreenTopicContent(topic.content),
           // TopicScreenTopicBottomBar(topic.id),
