@@ -1,5 +1,13 @@
 class ConjugationHelper {
 
+  static String repliesConjugation(int numberOfReplies) {
+    if (numberOfReplies == 1) {
+      return 'odpowiedź';
+    } else {
+      return 'odpowiedzi';
+    }
+  }
+
   static String postsConjugation(int numberOfPosts) {
     if (numberOfPosts == 0) {
       return 'postów';
