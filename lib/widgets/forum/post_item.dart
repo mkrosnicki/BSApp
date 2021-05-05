@@ -25,7 +25,7 @@ class PostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PostItemUserInfoNew(post.adderInfo, post.addedAt),
+          PostItemUserInfoNew(post),
           if (post.quote != null) PostItemQuote(post),
           PostItemContent(post),
           PostItemBottomBar(post, postToReplySubject),

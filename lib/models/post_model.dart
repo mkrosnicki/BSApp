@@ -4,6 +4,7 @@ import 'adder_info_model.dart';
 
 class PostModel {
   final String id;
+  final String topicId;
   final DateTime addedAt;
   final AdderInfoModel adderInfo;
   final String content;
@@ -11,9 +12,12 @@ class PostModel {
   final String replyForId;
   final String replyForUserId;
   final String replyForUsername;
+  final List<String> likers;
+
 
   const PostModel({
     @required this.id,
+    @required this.topicId,
     @required this.addedAt,
     @required this.adderInfo,
     @required this.content,
@@ -21,6 +25,7 @@ class PostModel {
     @required this.replyForId,
     @required this.replyForUserId,
     @required this.replyForUsername,
+    @required this.likers,
   });
 
   static PostModel fromJson(dynamic postSnapshot) {
@@ -29,6 +34,7 @@ class PostModel {
     }
     return PostModel(
       id: postSnapshot['id'],
+      topicId: postSnapshot['topicId'],
       addedAt: DateTime.parse(postSnapshot['addedAt']),
       adderInfo: AdderInfoModel.fromJson(postSnapshot['adderInfo']),
       content: postSnapshot['content'],
@@ -36,6 +42,7 @@ class PostModel {
       replyForId: postSnapshot['replyForId'],
       replyForUserId: postSnapshot['replyForUserId'],
       replyForUsername: postSnapshot['replyForUsername'],
+      likers: [...postSnapshot['likers'] as List],
     );
   }
 

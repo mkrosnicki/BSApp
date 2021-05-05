@@ -1,5 +1,4 @@
-
-import 'package:BSApp/models/adder_info_model.dart';
+import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/fake_data_provider.dart';
@@ -9,10 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PostItemUserInfoNew extends StatelessWidget {
-  final AdderInfoModel adderInfo;
-  final DateTime addedAt;
+  final PostModel post;
 
-  const PostItemUserInfoNew(this.adderInfo, this.addedAt);
+  const PostItemUserInfoNew(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class PostItemUserInfoNew extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserAvatar(
-            username: adderInfo.username,
+            username: post.adderInfo.username,
             imagePath: FakeDataProvider.USER_AVATAR_PATH,
             radius: 15,
           ),
@@ -52,9 +50,9 @@ class PostItemUserInfoNew extends StatelessWidget {
                             margin: EdgeInsets.zero,
                             child: GestureDetector(
                               onTap: () => _navigateToUserProfileScreen(
-                                  context, adderInfo.id),
+                                  context, post.adderInfo.id),
                               child: Text(
-                                adderInfo.username,
+                                post.adderInfo.username,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -64,12 +62,12 @@ class PostItemUserInfoNew extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${adderInfo.addedPosts + adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(adderInfo.addedPosts + adderInfo.addedTopics)}',
+                            '${post.adderInfo.addedPosts + post.adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(post.adderInfo.addedPosts + post.adderInfo.addedTopics)}',
                             style: userInfoTextStyle,
                           ),
                         ],
                       ),
-                      PostItemHeartButton(null, null),
+                      PostItemHeartButton(post.topicId, post.id),
                     ],
                   ),
                 ],

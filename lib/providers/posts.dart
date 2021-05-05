@@ -76,6 +76,15 @@ class Posts with ChangeNotifier {
     return allTopicPosts.firstWhere((post) => post.id == postId);
   }
 
+  Future<void> likeThePost(String topicId, String postId, bool isLike) async {
+    await _apiProvider.post('/posts/$postId/likes', {'isLike': isLike}, token: token);
+    return fetchPostsForTopic(topicId);
+  }
+
+  bool wasLikedBy(String postId, String userId) {
+    return findById(postId).likers.any((element) => element == userId);
+  }
+
   void update(String token) async {
     this.token = token;
     if (token == null) {

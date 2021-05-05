@@ -1,4 +1,5 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +17,37 @@ class PostItemBottomBar extends StatelessWidget {
       height: 30,
       padding: const EdgeInsets.only(top: 0.0),
       alignment: Alignment.centerRight,
-      child: Row(
+      child: Flex(
+        direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            // '${_dateFormat.format(comment.addedAt)}',
-            '${DateUtil.timeAgoString(post.addedAt)}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(fontSize: 11, color: Colors.black38),
+          Wrap(
+            children: [
+              Text(
+                '${DateUtil.timeAgoString(post.addedAt)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontSize: 11, color: Colors.black38),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  '',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 11, color: Colors.black38),
+                ),
+              ),
+              Text(
+                '${post.likers.length} ${ConjugationHelper.likesConjugation(post.likers.length)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontSize: 11, color: Colors.black38),
+              ),
+            ],
           ),
           TextButton(
             child: Text(

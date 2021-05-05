@@ -1,5 +1,6 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,12 +17,13 @@ class PostItemHeartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
-      builder: (context, authData, child) => Consumer<Comments>(
-        builder: (context, commentsData, child) {
-          // final bool wasVotedByLoggedUser = commentsData.wasVotedPositivelyBy(commentId, authData.userId);
-          final bool wasVotedByLoggedUser = false;
+      builder: (context, authData, child) => Consumer<Posts>(
+        builder: (context, postsData, child) {
+          final bool wasLikedByLoggedUser = postsData.wasLikedBy(postId, authData.userId);
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              _likeTePost(context, topicId, postId, wasLikedByLoggedUser, authData.isAuthenticated);
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 2.0),
               alignment: Alignment.centerRight,
@@ -29,7 +31,7 @@ class PostItemHeartButton extends StatelessWidget {
                 CupertinoIcons.heart_fill,
                 size: 18,
                 color:
-                wasVotedByLoggedUser
+                wasLikedByLoggedUser
                     ? MyColorsProvider.RED_SHADY
                     : MyColorsProvider.LIGHT_GRAY,
               ),
@@ -40,18 +42,19 @@ class PostItemHeartButton extends StatelessWidget {
     );
   }
 
-  _voteForComment(
+  _likeTePost(
       BuildContext context,
-      String dealId,
-      String commentId,
-      bool wasVotedByLoggedUser,
+      String topicId,
+      String postId,
+      bool wasLikedByLoggedUser,
       bool isAuthenticated) {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
-      final bool isPositiveVote = !wasVotedByLoggedUser;
-      Provider.of<Comments>(context, listen: false)
-          .voteForComment(dealId, commentId, isPositiveVote);
+      final bool isPositiveVote = !wasLikedByLoggedUser;
+      Provider.of<Posts>(context, listen: false)
+          .likeThePost(topicId, postId, isPositiveVote);
     }
   }
+
 }

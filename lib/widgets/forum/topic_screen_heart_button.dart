@@ -29,7 +29,9 @@ class TopicScreenHeartButton extends StatelessWidget {
                       ? CupertinoIcons.heart_fill
                       : CupertinoIcons.heart,
                   size: 22,
-                  color: isObservedTopic? MyColorsProvider.RED_SHADY : Colors.black),
+                  color: isObservedTopic
+                      ? MyColorsProvider.RED_SHADY
+                      : Colors.black),
             ),
           );
         },
