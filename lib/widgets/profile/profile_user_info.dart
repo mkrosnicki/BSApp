@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:BSApp/models/user_model.dart';
-import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileUserInfo extends StatelessWidget {
   final UserModel user;
@@ -62,5 +64,16 @@ class ProfileUserInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _takePicture() async {
+    final imageFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    if (imageFile == null) {
+      return;
+    }
+    File fileToSend = File(imageFile.path);
   }
 }
