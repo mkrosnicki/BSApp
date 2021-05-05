@@ -2,6 +2,7 @@ import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class TopicScreenHeartButton extends StatelessWidget {
                       ? CupertinoIcons.heart_fill
                       : CupertinoIcons.heart,
                   size: 22,
-                  color: Colors.black),
+                  color: isObservedTopic? MyColorsProvider.RED_SHADY : Colors.black),
             ),
           );
         },
