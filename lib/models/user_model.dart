@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/post_model.dart';
@@ -16,7 +17,7 @@ class UserModel {
   final List<TopicModel> addedTopics;
   final List<DealModel> addedDeals;
   final List<CommentModel> addedComments;
-  final Image avatar;
+  final Uint8List avatar;
 
   UserModel(
       {this.id,
@@ -49,16 +50,23 @@ class UserModel {
         addedComments: (userSnapshot['addedComments'] as List)
             .map((e) => CommentModel.fromJson(e))
             .toList(),
-        avatar: _getImage(userSnapshot));
+        avatar: _getAvatar(userSnapshot));
   }
 
-  static _getImage(userSnapshot) {
+  static _getAvatar(userSnapshot) {
     var encodedAvatar = userSnapshot['avatar'];
     if (encodedAvatar == null) {
       return null;
     }
-    var base64Avatar = base64Decode(encodedAvatar);
-    return Image.memory(base64Avatar);
+    return base64Decode(encodedAvatar);
+  }
+
+  Uint8List get avatarBytes {
+    return avatar;
+  }
+
+  Image get getAvatar {
+    return avatar != null ? Image.memory(avatar) : null;
   }
 
   @override

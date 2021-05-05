@@ -25,6 +25,7 @@ class MyProfileAvatar extends StatelessWidget {
           child: UserAvatar(
             username: user.username,
             imagePath: FakeDataProvider.USER_AVATAR_PATH,
+            image: user.avatar,
             radius: 40,
           ),
         ),
