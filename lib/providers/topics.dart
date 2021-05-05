@@ -109,7 +109,7 @@ class Topics with ChangeNotifier {
 
   Future<void> addToObservedTopics(String topicId) async {
     final addTopicToFavouritesDto = {'topicId': topicId};
-    await _apiProvider.post('TODO', addTopicToFavouritesDto, token: token);
+    await _apiProvider.post('/users/me/topics/observed', addTopicToFavouritesDto, token: token);
     return fetchObservedTopics();
   }
 

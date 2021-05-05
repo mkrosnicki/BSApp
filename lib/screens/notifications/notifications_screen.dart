@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/notifications.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/notifications/notifications_item.dart';
@@ -33,16 +34,39 @@ class NotificationsScreen extends StatelessWidget {
                 return RefreshIndicator(
                   onRefresh: () => _refreshNotifications(context),
                   child: Consumer<Notifications>(
-                    builder: (context, notificationsData, child) =>
-                        ListView.builder(
-                          itemBuilder: (context, index) => NotificationItem(notificationsData.myNotifications[index]),
+                    builder: (context, notificationsData, child) {
+                      if (notificationsData.myNotifications.isEmpty) {
+                        return _buildNoNotificationsSplashView();
+                      } else {
+                        return ListView.builder(
+                          itemBuilder: (context, index) => NotificationItem(
+                              notificationsData.myNotifications[index]),
                           itemCount: notificationsData.myNotifications.length,
-                        ),
+                        );
+                      }
+                    },
                   ),
                 );
               }
             }
           },
+        ),
+      ),
+    );
+  }
+
+  _buildNoNotificationsSplashView() {
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: const Text(
+          'Nie masz żadnych powiadomień',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontSize: 18,
+              height: 1.5,
+              fontWeight: FontWeight.w600,
+              color: MyColorsProvider.LIGHT_GRAY),
         ),
       ),
     );
