@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/current_user_info.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
@@ -34,10 +35,14 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   void _onItemTapped(int index) {
-    final addDealScreen = 2;
-    if (!_isAuthenticated() && index == addDealScreen) {
+    final addDealScreenIndex = 2;
+    final int notificationsScreenIndex = 3;
+    if (!_isAuthenticated() && index == addDealScreenIndex) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
+      if (index == notificationsScreenIndex) {
+        Provider.of<CurrentUserInfo>(context, listen: false).updateNotificationsSeenAt();
+      }
       setState(() {
         _selectedIndex = index;
       });

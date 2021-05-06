@@ -13,6 +13,7 @@ class UserModel {
   final String username;
   final DateTime registeredAt;
   final DateTime lastLoginAt;
+  final DateTime notificationsSeenAt;
   final List<PostModel> addedPosts;
   final List<TopicModel> addedTopics;
   final List<DealModel> addedDeals;
@@ -24,6 +25,7 @@ class UserModel {
       this.username,
       this.registeredAt,
       this.lastLoginAt,
+      this.notificationsSeenAt,
       this.addedPosts,
       this.addedComments,
       this.addedDeals,
@@ -31,12 +33,15 @@ class UserModel {
       this.avatar});
 
   static UserModel fromJson(dynamic userSnapshot) {
+    var registeredAt = userSnapshot['registeredAt'];
+    var lastLoginAt = userSnapshot['lastLoginAt'];
+    var notificationsSeenAt = userSnapshot['notificationsSeenAt'];
     return UserModel(
         id: userSnapshot['id'],
         username: userSnapshot['username'],
-        registeredAt: DateTime.parse(userSnapshot['registeredAt']),
-        // lastLoginAt: DateTime.parse(userSnapshot['lastLoginAt']),
-        lastLoginAt: null,
+        registeredAt: registeredAt != null ? DateTime.parse(registeredAt) : null,
+        lastLoginAt: lastLoginAt != null ? DateTime.parse(lastLoginAt) : null,
+        notificationsSeenAt: notificationsSeenAt != null ? DateTime.parse(notificationsSeenAt) : null,
         // todo
         addedPosts: (userSnapshot['addedPosts'] as List)
             .map((e) => PostModel.fromJson(e))

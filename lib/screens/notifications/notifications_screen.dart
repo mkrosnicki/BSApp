@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/current_user_info.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -23,7 +24,7 @@ class NotificationsScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: FutureBuilder(
-          future: Provider.of<Notifications>(context, listen: false)
+          future: Provider.of<CurrentUserInfo>(context, listen: false)
               .fetchMyNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -36,15 +37,15 @@ class NotificationsScreen extends StatelessWidget {
               } else {
                 return RefreshIndicator(
                   onRefresh: () => _refreshNotifications(context),
-                  child: Consumer<Notifications>(
-                    builder: (context, notificationsData, child) {
-                      if (notificationsData.myNotifications.isEmpty) {
+                  child: Consumer<CurrentUserInfo>(
+                    builder: (context, myInfo, child) {
+                      if (myInfo.myNotifications.isEmpty) {
                         return _buildNoNotificationsSplashView();
                       } else {
                         return ListView.builder(
                           itemBuilder: (context, index) => NotificationItem(
-                              notificationsData.myNotifications[index]),
-                          itemCount: notificationsData.myNotifications.length,
+                              myInfo.myNotifications[index]),
+                          itemCount: myInfo.myNotifications.length,
                         );
                       }
                     },
