@@ -6,6 +6,7 @@ import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -126,14 +127,14 @@ class _OccasionFormState extends State<OccasionForm> {
                             border: Border.all(width: 1, color: Colors.grey)),
                         child: _newDeal.image != null
                             ? Image.file(
-                          _newDeal.image,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        )
+                                _newDeal.image,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              )
                             : Text(
-                          'Dodaj obrazek',
-                          textAlign: TextAlign.center,
-                        ),
+                                'Dodaj obrazek',
+                                textAlign: TextAlign.center,
+                              ),
                         alignment: Alignment.center,
                       ),
                     ),
@@ -154,7 +155,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.title = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Tytuł ogłoszenia'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Tytuł ogłoszenia'),
                     ),
                     SizedBox(
                       height: 10,
@@ -173,7 +175,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.description = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Opis'),
                     ),
                     SizedBox(
                       height: 10,
@@ -192,7 +195,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.urlLocation = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Link do okazji'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Link do okazji'),
                     ),
                     SizedBox(
                       height: 10,
@@ -202,6 +206,7 @@ class _OccasionFormState extends State<OccasionForm> {
                       children: [
                         Text('Okazja internetowa'),
                         Switch.adaptive(
+                            activeColor: MyColorsProvider.BLUE,
                             value:
                                 _newDeal.locationType == LocationType.INTERNET,
                             onChanged: (value) {
@@ -237,7 +242,8 @@ class _OccasionFormState extends State<OccasionForm> {
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
-                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Opis lokalizacji'),
+                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                                .copyWith(helperText: 'Opis lokalizacji'),
                           ),
                         ],
                       ),
@@ -260,50 +266,34 @@ class _OccasionFormState extends State<OccasionForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Okazja zaczyna się:'),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () => _selectDate(DealDateType.VALID_FROM),
+                          color: MyColorsProvider.BLUE,
+                        ),
+                        const Text('Okazja zaczyna się: '),
                         Text(
                           "${_newDeal.validFrom.toLocal()}".split(' ')[0],
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        ElevatedButton(
-                          onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                          // Refer step 3
-                          child: Text(
-                            'Wybierz date',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Okazja kończy się:'),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () => _selectDate(DealDateType.VALID_TO),
+                          color: MyColorsProvider.BLUE,
+                        ),
+                        const Text('Okazja kończy się: '),
                         Text(
                           "${_newDeal.validTo.toLocal()}".split(' ')[0],
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        ElevatedButton(
-                          onPressed: () => _selectDate(DealDateType.VALID_TO),
-                          // Refer step 3
-                          child: Text(
-                            'Wybierz date',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
                         ),
                       ],
                     ),
@@ -324,7 +314,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.regularPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Regularna cena'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Regularna cena'),
                     ),
                     SizedBox(
                       height: 10,
@@ -343,7 +334,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.currentPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Aktualna cena'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Aktualna cena'),
                     ),
                     SizedBox(
                       height: 10,
@@ -362,7 +354,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.shippingPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(helperText: 'Koszt dostawy'),
+                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
+                          .copyWith(helperText: 'Koszt dostawy'),
                     ),
                     Container(
                       width: double.infinity,
