@@ -1,5 +1,6 @@
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/age_type.dart';
+import 'package:BSApp/widgets/filters/age_type_chip.dart';
 import 'package:flutter/material.dart';
 
 class AgeTypeChips extends StatefulWidget {
@@ -17,22 +18,15 @@ class _AgeTypeChipsState extends State<AgeTypeChips> {
     var deal = widget.dealModel;
     List<Widget> list = [];
     AgeType.values.forEach(
-      (e) => list.add(Container(
-        margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 4.0),
-        child: ChoiceChip(
-          label: Text(AgeTypeHelper.getReadable(e)),
-          selected: deal.ageTypes.contains(e),
-          onSelected: (isSelected) {
-            setState(() {
-              if (isSelected) {
-                deal.ageTypes.add(e);
-              } else {
-                deal.ageTypes.remove(e);
-              }
-            });
-          },
-        ),
-      )),
+      (e) => list.add(AgeTypeChip(e, deal.ageTypes.contains(e), () {
+        setState(() {
+          if (!deal.ageTypes.contains(e)) {
+            deal.ageTypes.add(e);
+          } else {
+            deal.ageTypes.remove(e);
+          }
+        });
+      })),
     );
     return Wrap(
       alignment: WrapAlignment.spaceEvenly,
