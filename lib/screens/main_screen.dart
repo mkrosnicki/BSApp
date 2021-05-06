@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   bool _isInitialized = false;
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     DealsScreen(),
     ForumScreen(),
     AddDealScreen(),
@@ -35,9 +35,9 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   void _onItemTapped(int index) {
-    final addDealScreenIndex = 2;
-    final int notificationsScreenIndex = 3;
-    if (!_isAuthenticated() && index == addDealScreenIndex) {
+    const addDealScreen = 2;
+    const notificationsScreenIndex = 3;
+    if (!_isAuthenticated() && index == addDealScreen) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
       if (index == notificationsScreenIndex) {
@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
     return Provider.of<Auth>(context, listen: false).isAuthenticated;
   }
 
-  void init(BuildContext context) async {
+  Future<void> init(BuildContext context) async {
     if (!_isInitialized) {
       await Init.initialize(context);
       setState(() {
@@ -72,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
             ),
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(
-                border: const Border(
-                  top: const BorderSide(
+                border: Border(
+                  top: BorderSide(
                       color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
                 ),
               ),
@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                 items: <BottomNavigationBarItem>[
                   const BottomNavigationBarItem(
                     label: '',
-                    icon: const Icon(
+                    icon: Icon(
                       CupertinoIcons.rectangle_stack,
                       size: 20,
                     ),
@@ -96,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   const BottomNavigationBarItem(
                     label: '',
-                    icon: const Icon(CupertinoIcons.bubble_left, size: 20),
+                    icon: Icon(CupertinoIcons.bubble_left, size: 20),
                   ),
                   const BottomNavigationBarItem(
                     label: '',
@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Consumer<Notifications>(
                       builder: (context, notificationsData, child) => Stack(
                         children: [
-                          Icon(CupertinoIcons.bell, size: 21),
+                          const Icon(CupertinoIcons.bell, size: 21),
                           if (notificationsData.areNewNotifications) Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(left: 12.0),
@@ -122,13 +122,13 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
-                  BottomNavigationBarItem(
+                  const BottomNavigationBarItem(
                     label: '',
-                    icon: const Icon(CupertinoIcons.suit_heart, size: 20),
+                    icon: Icon(CupertinoIcons.suit_heart, size: 20),
                   ),
                   const BottomNavigationBarItem(
                     label: '',
-                    icon: const Icon(
+                    icon: Icon(
                       CupertinoIcons.person,
                       size: 22,
                     ),

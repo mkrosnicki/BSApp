@@ -14,7 +14,7 @@ class DealDetailsComments extends StatelessWidget {
   final DealModel deal;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  DealDetailsComments(this.deal, this.commentToReplySubject);
+  const DealDetailsComments(this.deal, this.commentToReplySubject);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class DealDetailsComments extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: const Text(
             'Komentarze',
-            style: const TextStyle(
+            style: TextStyle(
                 color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ),
@@ -46,12 +46,12 @@ class DealDetailsComments extends StatelessWidget {
                 return Container(
                   height: 200,
                   color: Colors.white,
-                  child: Center(child: const LoadingIndicator()),
+                  child: const Center(child: LoadingIndicator()),
                 );
               } else {
                 if (snapshot.error != null) {
-                  return Center(
-                    child: const ServerErrorSplash(),
+                  return const Center(
+                    child: ServerErrorSplash(),
                   );
                 } else {
                   return Consumer<Comments>(
@@ -60,10 +60,10 @@ class DealDetailsComments extends StatelessWidget {
                         return Container(
                           height: 200,
                           color: Colors.white,
-                          child: Center(
-                            child: const Text(
+                          child: const Center(
+                            child: Text(
                               'Nikt jeszcze nie dodał komentarza',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: MyColorsProvider.LIGHT_GRAY),

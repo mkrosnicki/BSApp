@@ -12,19 +12,19 @@ class Init {
     await _justWait();
   }
 
-  static _tryLogin(BuildContext context) async {
+  static Future<void> _tryLogin(BuildContext context) async {
     await Provider.of<Auth>(context).tryAutoLogin();
   }
 
-  static _fetchDeals(BuildContext context) async {
+  static Future<void> _fetchDeals(BuildContext context) async {
     await Provider.of<Deals>(context, listen: false).fetchDeals();
   }
 
-  static _fetchCategories(BuildContext context) async {
+  static Future<void> _fetchCategories(BuildContext context) async {
     await Provider.of<Categories>(context, listen: false).fetchCategories();
   }
 
-  static _justWait() async {
-    await Future.delayed(Duration(seconds: 1));
+  static Future<void> _justWait() async {
+    await Future.delayed(const Duration(seconds: 1));
   }
 }

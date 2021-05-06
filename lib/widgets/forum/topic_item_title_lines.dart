@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TopicItemTitleLines extends StatelessWidget {
   final TopicModel topic;
 
-  TopicItemTitleLines(this.topic);
+  const TopicItemTitleLines(this.topic);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class TopicItemTitleLines extends StatelessWidget {
     );
   }
 
-  _buildTitleLine(BuildContext context) {
+  Widget _buildTitleLine(BuildContext context) {
     return Text(
       topic.title,
       style: Theme.of(context).textTheme.subtitle1.copyWith(
@@ -27,13 +27,13 @@ class TopicItemTitleLines extends StatelessWidget {
     );
   }
 
-  _buildUserInfoLine(BuildContext context) {
+  Widget _buildUserInfoLine(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 2.0),
       child: Row(
         children: [
           Text(
-            '${topic.adderInfo.username}',
+            topic.adderInfo.username,
             style: Theme.of(context).textTheme.bodyText2.copyWith(
                 fontSize: 11, color: Colors.blue, fontWeight: FontWeight.w600),
           ),

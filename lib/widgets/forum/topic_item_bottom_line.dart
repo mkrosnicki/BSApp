@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class TopicItemBottomLine extends StatelessWidget {
   final TopicModel topic;
 
-  TopicItemBottomLine(this.topic);
+  const TopicItemBottomLine(this.topic);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TopicItemBottomLine extends StatelessWidget {
                 fontSize: 11, color: Colors.black54, height: 1.1),
           ),
           Text(
-            '${DateUtil.timeAgoString(topic.addedAt)}',
+            DateUtil.timeAgoString(topic.addedAt),
             style: const TextStyle(
                 fontSize: 11, color: Colors.black54, height: 1.1),
           ),

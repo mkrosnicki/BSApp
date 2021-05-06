@@ -1,6 +1,7 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Categories with ChangeNotifier {
 
@@ -17,7 +18,8 @@ class Categories with ChangeNotifier {
       final List<CategoryModel> loadedCategories = [];
       final responseBody = await _apiProvider.get('/categories') as List;
       if (responseBody == null) {
-        print('No Categories Found!');
+        final logger = Logger();
+        logger.e("No Categories Found!");
       }
       responseBody.forEach((element) {
         loadedCategories.add(CategoryModel.fromJson(element));

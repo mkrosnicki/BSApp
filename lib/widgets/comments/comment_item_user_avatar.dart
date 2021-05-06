@@ -6,7 +6,7 @@ class CommentItemUserAvatar extends StatelessWidget {
 
   final AdderInfoModel adderInfo;
 
-  CommentItemUserAvatar(this.adderInfo);
+  const CommentItemUserAvatar(this.adderInfo);
 
   @override
   Widget build(BuildContext context) {

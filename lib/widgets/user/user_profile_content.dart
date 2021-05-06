@@ -12,14 +12,14 @@ class UserProfileContent extends StatelessWidget {
 
   Stream<int> get _contentIdStream => contentIdSubject.stream;
 
-  UserProfileContent(this.usersProfile, this.contentIdSubject);
+  const UserProfileContent(this.usersProfile, this.contentIdSubject);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
       stream: _contentIdStream,
       builder: (context, AsyncSnapshot<int> snapshot) {
-        final int contentId = snapshot.data != null ? snapshot.data : 0;
+        final int contentId = snapshot.data ?? 0;
         if (contentId == 0) {
           return UserProfileActivitiesList(usersProfile);
         } else if (contentId == 1) {
@@ -27,7 +27,7 @@ class UserProfileContent extends StatelessWidget {
         } else if (contentId == 2) {
           return UserProfileAddedTopics(usersProfile.addedTopics);
         } else {
-          return Text('Error');
+          return const Text('Error');
         }
       },
     );

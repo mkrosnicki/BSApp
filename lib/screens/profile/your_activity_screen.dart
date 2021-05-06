@@ -12,8 +12,8 @@ class YourActivityScreen extends StatelessWidget {
     final List<ActivityModel> activities =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: BaseAppBar(
-        leading: const AppBarBackButton(Colors.black),
+      appBar: const BaseAppBar(
+        leading: AppBarBackButton(Colors.black),
         title: 'Twoja aktywność',
       ),
       body: ListView.builder(

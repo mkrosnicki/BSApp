@@ -11,7 +11,7 @@ class CommentItemHeartButton extends StatelessWidget {
   final String dealId;
   final String commentId;
 
-  CommentItemHeartButton(this.dealId, this.commentId);
+  const CommentItemHeartButton(this.dealId, this.commentId);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class CommentItemHeartButton extends StatelessWidget {
     );
   }
 
-  _voteForComment(
+  void _voteForComment(
       BuildContext context,
       String dealId,
       String commentId,

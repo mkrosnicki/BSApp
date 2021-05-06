@@ -14,7 +14,7 @@ class MyProfileAvatar extends StatelessWidget {
 
   final UserModel user;
 
-  MyProfileAvatar(this.user);
+  const MyProfileAvatar(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class MyProfileAvatar extends StatelessWidget {
                 border: Border.all(color: Colors.white, width: 2.0),
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.edit,
                 size: 13,
                 color: Colors.white,

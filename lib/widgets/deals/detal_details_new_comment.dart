@@ -3,7 +3,6 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class DealDetailsNewComment extends StatefulWidget {
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  DealDetailsNewComment(this.dealId, this.commentToReplySubject);
+  const DealDetailsNewComment(this.dealId, this.commentToReplySubject);
 
   Stream<CommentModel> get _commentToReplyStream => commentToReplySubject.stream;
 
@@ -49,7 +48,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       children: [
                         const Text(
                           'Odpowiadasz na komentarz ',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.black87, fontSize: 12),
                         ),
                         Text(
@@ -62,14 +61,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       ],
                     ),
                     InkWell(
+                      onTap: () {
+                        widget.commentToReplySubject.add(null);
+                      },
                       child: const Icon(
                         CupertinoIcons.clear,
                         color: Colors.black54,
                         size: 16,
                       ),
-                      onTap: () {
-                        widget.commentToReplySubject.add(null);
-                      },
                     ),
                   ],
                 ),
@@ -96,7 +95,6 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                   controller: textEditingController,
                   focusNode: textFocusNode,
                   style: const TextStyle(fontSize: 14),
-                  autofocus: false,
                   decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
                 ),
               ),
@@ -107,8 +105,8 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                     builder: (context, AsyncSnapshot<CommentModel> snapshot) {
                       return InkWell(
                         onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             CupertinoIcons.chevron_right,
                             color: Colors.blue,
@@ -126,9 +124,9 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     );
   }
 
-  _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
+  Future<void> _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
     if (textEditingController.text.trim().isEmpty) {
-      return null;
+      return;
     }
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
@@ -141,20 +139,20 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     }
   }
 
-  _addReplyToComment(CommentModel commentToReply) async {
+  Future<void> _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false).addReplyToComment(
         widget.dealId, commentToReply.id, textEditingController.text);
     _clearTextBox();
     widget.commentToReplySubject.add(null);
   }
 
-  _addCommentToDeal() async {
+  Future<void> _addCommentToDeal() async {
     await Provider.of<Comments>(context, listen: false)
         .addCommentToDeal(widget.dealId, textEditingController.text);
     _clearTextBox();
   }
 
-  _clearTextBox() {
+  void _clearTextBox() {
     textEditingController.clear();
     textFocusNode.unfocus();
   }

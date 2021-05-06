@@ -10,7 +10,7 @@ enum NotificationType {
 class NotificationTypeHelper {
 
   static NotificationType fromString(String notificationTypeString) {
-    for (var notificationType in NotificationType.values) {
+    for (final notificationType in NotificationType.values) {
       if (asString(notificationType) == notificationTypeString) {
         return notificationType;
       }

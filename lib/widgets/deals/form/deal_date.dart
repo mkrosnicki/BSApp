@@ -10,7 +10,7 @@ class DealDateSelector {
     BuildContext context,
     DealDateType dateType,
   ) async {
-    var initialDate = _getInitialDate(deal, dateType);
+    final initialDate = _getInitialDate(deal, dateType);
 
     final DateTime picked = await showDatePicker(
       context: context,
@@ -29,7 +29,7 @@ class DealDateSelector {
   }
 
   static DateTime _getInitialDate(AddDealModel deal, DealDateType dateType) {
-    var initialDate;
+    DateTime initialDate;
     if (dateType == DealDateType.VALID_TO) {
       initialDate = deal.validTo;
     } else if (dateType == DealDateType.VALID_FROM) {

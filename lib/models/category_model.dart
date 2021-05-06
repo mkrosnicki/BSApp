@@ -75,8 +75,6 @@ class CategoryModelHelper {
     if (category.name.contains('Inne')) {
       return 'pacifier.png';
     }
+    return '';
   }
-
-
-
 }

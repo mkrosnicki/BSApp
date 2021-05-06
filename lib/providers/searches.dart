@@ -2,9 +2,10 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Searches with ChangeNotifier {
-  ApiProvider _apiProvider = new ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
 
   List<SearchModel> fetchedSavedSearches = [];
   String token;
@@ -22,7 +23,8 @@ class Searches with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/users/me/subscriptions', token: token) as List;
     if (responseBody == null) {
-      print('No Searches Found!');
+      final logger = Logger();
+      logger.i('No Subscriptions Found!');
     }
     responseBody.forEach((element) {
       loadedSearches.add(SearchModel.of(element));

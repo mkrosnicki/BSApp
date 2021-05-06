@@ -39,7 +39,7 @@ class _TopicScreenState extends State<TopicScreen> {
       ),
       body: Container(
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+        margin: const EdgeInsets.symmetric(),
         padding: const EdgeInsets.all(0),
         child: Stack(
           children: [

@@ -31,13 +31,13 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     _initFilterSettings();
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           titleSpacing: 6,
           title: _createSearchBox(context),
           leadingWidth: 40.0,
           automaticallyImplyLeading: false,
-          leading: AppBarBackButton(Colors.black87),
+          leading: const AppBarBackButton(Colors.black87),
           backgroundColor: Colors.white,
           elevation: 0,
         ),
@@ -53,7 +53,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Wrap(
                 // direction: Axis.vertical,
-                alignment: WrapAlignment.start,
                 children: _buildFilterChips(),
               ),
             ),
@@ -64,16 +63,15 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Znalezione okazje',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
-                  child: Padding(
+                  child: const Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                     child: Icon(
@@ -90,11 +88,11 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                 .fetchDeals(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: const LoadingIndicator());
+                return const Center(child: LoadingIndicator());
               } else {
                 if (snapshot.error != null) {
-                  return Center(
-                    child: const ServerErrorSplash(),
+                  return const Center(
+                    child: ServerErrorSplash(),
                   );
                 } else {
                   return Flexible(
@@ -115,19 +113,17 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     );
   }
 
-  _initFilterSettings() {
+  void _initFilterSettings() {
     if (filterSettings == null) {
-      var passedFilterSettings =
+      final passedFilterSettings =
           ModalRoute.of(context).settings.arguments as FilterSettings;
-      filterSettings = passedFilterSettings != null
-          ? passedFilterSettings
-          : FilterSettings();
+      filterSettings = passedFilterSettings ?? FilterSettings();
       _searchTextController.text = filterSettings.phrase;
       LastSearchesUtilService.saveFilterSettings(passedFilterSettings);
     }
   }
 
-  _createSearchBox(BuildContext context) {
+  Widget _createSearchBox(BuildContext context) {
     return Container(
       width: double.infinity,
       alignment: Alignment.centerLeft,
@@ -143,8 +139,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               decoration:
               MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
                 hintText: 'Czego szukasz?',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(0.0),
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.all(0.0),
                   child: Icon(
                     CupertinoIcons.search,
                     color: Colors.black54,
@@ -169,8 +165,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: searchesData.isSaved(filterSettings)
-                    ? Icon(CupertinoIcons.heart_fill, color: Colors.black87)
-                    : Icon(CupertinoIcons.heart, color: Colors.black87),
+                    ? const Icon(CupertinoIcons.heart_fill, color: Colors.black87)
+                    : const Icon(CupertinoIcons.heart, color: Colors.black87),
               ),
             ),
           ),
@@ -180,8 +176,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    var newFilterSettings =
-        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+    final newFilterSettings =
+        await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
             builder: (BuildContext context) {
               return FilterSelectionScreen();
             },
@@ -197,8 +193,8 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     }
   }
 
-  _buildFilterChips() {
-    List<Widget> chips = [];
+  List<Widget> _buildFilterChips() {
+    final List<Widget> chips = [];
     if (filterSettings.showInternetOnly !=
         FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
       chips.add(
@@ -252,7 +248,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     return chips;
   }
 
-  _clearFilterSettings(
+  void _clearFilterSettings(
       {bool clearInternetOnly = false,
       bool clearActiveOnly = false,
       bool clearLocation = false,
@@ -272,7 +268,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     });
   }
 
-  _saveSearch() {
+  void _saveSearch() {
     Provider.of<Searches>(context, listen: false)
         .saveSearch(filterSettings.toSaveSearchDto());
   }

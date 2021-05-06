@@ -43,11 +43,11 @@ class ForumScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   'Popularne wątki',
-                  style: const TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
               ...widgets

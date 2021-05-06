@@ -11,7 +11,7 @@ class DealItemHeartButton extends StatelessWidget {
   final DealModel deal;
   final double iconSize;
 
-  DealItemHeartButton(this.deal, this.iconSize);
+  const DealItemHeartButton(this.deal, this.iconSize);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class DealItemHeartButton extends StatelessWidget {
     );
   }
 
-  _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
+  void _toggleFavourites(BuildContext context, DealModel deal, bool isFavourite,
       bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);

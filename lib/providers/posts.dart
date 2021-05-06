@@ -1,17 +1,18 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Posts with ChangeNotifier {
-  ApiProvider _apiProvider = new ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
 
   List<PostModel> fetchedTopicPosts = [];
   List<PostModel> fetchedAddedPosts = [];
   String token;
 
-  Posts.empty();
-
   Posts({this.fetchedTopicPosts, this.fetchedAddedPosts, this.token});
+
+  Posts.empty();
 
   List<PostModel> get allTopicPosts {
     return [...fetchedTopicPosts];
@@ -26,10 +27,11 @@ class Posts with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/topics/$topicId/posts') as List;
     if (responseBody == null) {
-      print('No Posts Found!');
+      final logger = Logger();
+      logger.i('No Posts Found!');
     }
     responseBody.forEach((element) {
-      var post = PostModel.fromJson(element);
+      final post = PostModel.fromJson(element);
       loadedPosts.add(post);
     });
     fetchedTopicPosts = loadedPosts;
@@ -41,10 +43,11 @@ class Posts with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/users/me/posts', token: token) as List;
     if (responseBody == null) {
-      print('No Posts Found!');
+      final logger = Logger();
+      logger.i('No Posts Found!');
     }
     responseBody.forEach((element) {
-      var post = PostModel.fromJson(element);
+      final post = PostModel.fromJson(element);
       loadedPosts.add(post);
     });
     fetchedAddedPosts = loadedPosts;

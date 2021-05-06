@@ -2,8 +2,8 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
-import 'package:BSApp/widgets/common/primary-button.dart';
-import 'package:BSApp/widgets/common/secondary-button.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
+import 'package:BSApp/widgets/common/secondary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,25 +11,24 @@ import 'package:provider/provider.dart';
 class ObservedSearchItem extends StatelessWidget {
   final SearchModel searchModel;
 
-  ObservedSearchItem(this.searchModel);
+  const ObservedSearchItem(this.searchModel);
 
   @override
   Widget build(BuildContext context) {
-    var filterSettings = searchModel.toFilterSettings();
+    final filterSettings = searchModel.toFilterSettings();
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
+      margin: const EdgeInsets.only(bottom: 10.0),
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       width: double.infinity,
       child: Column(
         children: [
+          // ignore: sized_box_for_whitespace
           Container(
             width: double.infinity,
             child: Wrap(
-              direction: Axis.horizontal,
               runAlignment: WrapAlignment.spaceBetween,
               runSpacing: 4.0,
-              spacing: 0.0,
               children: [
                 if (searchModel.phrase != null)
                   _buildItem('Szukana fraza', searchModel.phrase),
@@ -78,23 +77,22 @@ class ObservedSearchItem extends StatelessWidget {
     );
   }
 
-  _buildItem(String label, String value) {
+  Widget _buildItem(String label, String value) {
     return value != null
         ? FractionallySizedBox(
             widthFactor: 0.5,
             child: Container(
-              padding: EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(4.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 11, color: Colors.black54)),
+                      style: const TextStyle(fontSize: 11, color: Colors.black54)),
                   Text(
                     value,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.black87, fontSize: 12),
+                    style: const TextStyle(color: Colors.black87, fontSize: 12),
                   ),
                 ],
               ),

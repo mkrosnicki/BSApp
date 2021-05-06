@@ -1,7 +1,7 @@
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/widgets/forum/topic_sceen_user_info.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_content.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_title.dart';
+import 'package:BSApp/widgets/forum/topic_screen_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

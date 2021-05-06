@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AgeTypeChips extends StatefulWidget {
   final AddDealModel dealModel;
 
-  AgeTypeChips(this.dealModel);
+  const AgeTypeChips(this.dealModel);
 
   @override
   _AgeTypeChipsState createState() => _AgeTypeChipsState();
@@ -15,8 +15,8 @@ class AgeTypeChips extends StatefulWidget {
 class _AgeTypeChipsState extends State<AgeTypeChips> {
   @override
   Widget build(BuildContext context) {
-    var deal = widget.dealModel;
-    List<Widget> list = [];
+    final deal = widget.dealModel;
+    final List<Widget> list = [];
     AgeType.values.forEach(
       (e) => list.add(AgeTypeChip(e, deal.ageTypes.contains(e), () {
         setState(() {

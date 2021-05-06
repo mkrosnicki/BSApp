@@ -1,7 +1,8 @@
 import 'package:BSApp/models/notification_model.dart';
-import 'package:BSApp/services/custom_stomp' as customStomp;
 import 'package:BSApp/services/api_provider.dart';
+import 'package:BSApp/services/custom_stomp' as customStomp;
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:stomp/stomp.dart';
 
 class Notifications with ChangeNotifier {
@@ -31,7 +32,8 @@ class Notifications with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/users/me/notifications', token: token) as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      final logger = Logger();
+      logger.i('No Notifications Found!');
     }
     responseBody.forEach((element) {
       fetchedNotifications.add(NotificationModel.fromJson(element));
@@ -40,8 +42,7 @@ class Notifications with ChangeNotifier {
     notifyListeners();
   }
 
-  _startSubscribing(String userId) {
-    print(userId);
+  Future<void> _startSubscribing(String userId) {
     customStomp.connect(
       'ws://192.168.162.241:8080/ws',
       onConnect: (StompClient client, Map<String, String> headers) {
@@ -56,31 +57,30 @@ class Notifications with ChangeNotifier {
     );
   }
 
-  _stopSubscribing(String userId) {
-    if (this.client != null) {
-      this.client.unsubscribe(userId);
-      this.client = null;
+  void _stopSubscribing(String userId) {
+    if (client != null) {
+      client.unsubscribe(userId);
+      client = null;
     }
   }
 
-  _acceptNotification(Map<String, String> headers, String message) {
+  void _acceptNotification(Map<String, String> headers, String message) {
     try {
-      this._unreadNotifications = int.tryParse(message);
+      _unreadNotifications = int.tryParse(message);
       notifyListeners();
     } catch (e) {
       // do nothing
     }
   }
 
-  _handleError(StompClient client, error, stackTrace) {
+  void _handleError(StompClient client, error, stackTrace) {
     // do nothing for the moment
   }
 
-  void update(String token, String userId) async {
-    print('update');
+  Future<void> update(String token, String userId) async {
     if (token == null || userId == null) {
       _unreadNotifications = 0;
-      this._stopSubscribing(userId);
+      _stopSubscribing(userId);
       this.userId = null;
       this.token = null;
     } else {

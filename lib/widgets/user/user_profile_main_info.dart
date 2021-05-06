@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 class UserProfileMainInfo extends StatelessWidget {
   final UserModel user;
 
-  UserProfileMainInfo(this.user);
+  const UserProfileMainInfo(this.user);
 
   @override
   Widget build(BuildContext context) {
-    var userInfoTextStyle = const TextStyle(
+    const userInfoTextStyle = TextStyle(
       fontSize: 12,
       color: Colors.grey,
     );
@@ -21,59 +21,52 @@ class UserProfileMainInfo extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-            child: Container(
-              child: Flex(
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: UserAvatar(
-                      username: user.username,
-                      imagePath: FakeDataProvider.USER_AVATAR_PATH,
-                      radius: 35,
-                    ),
+            child: Flex(
+              direction: Axis.vertical,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: UserAvatar(
+                    username: user.username,
+                    imagePath: FakeDataProvider.USER_AVATAR_PATH,
+                    radius: 35,
                   ),
-                  Flex(
-                    direction: Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 2.0),
-                        child: GestureDetector(
-                          onTap: () => {},
-                          child: Text(
-                            '${user.username}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                ),
+                Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 2.0),
+                      child: GestureDetector(
+                        onTap: () => {},
+                        child: Text(
+                          user.username,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                      Wrap(
-                        children: [
-                          Text(
-                            'Dołączył(a) ',
-                            style: userInfoTextStyle,
-                          ),
-                          Text(
-                            '${DateUtil.getFormatted(user.registeredAt)}',
-                            style: userInfoTextStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Wrap(
+                      children: [
+                        const Text(
+                          'Dołączył(a) ',
+                          style: userInfoTextStyle,
+                        ),
+                        Text(
+                          DateUtil.getFormatted(user.registeredAt),
+                          style: userInfoTextStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

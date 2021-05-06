@@ -1,7 +1,5 @@
-import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
@@ -36,18 +34,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           future: _initUser(context, userId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: const LoadingIndicator());
+              return const Center(child: LoadingIndicator());
             } else {
               if (snapshot.error != null) {
-                return Center(
-                  child: const ServerErrorSplash(),
+                return const Center(
+                  child: ServerErrorSplash(),
                 );
               } else {
                 return Stack(
                   children: [
                     Flex(
                       direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         UserProfileMainInfo(_usersProfile.user),
                         UserProfileStatisticsInfo(),
@@ -76,7 +73,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     super.dispose();
   }
 
-  _initUser(BuildContext context, String userId) async {
+  Future<void> _initUser(BuildContext context, String userId) async {
     _usersProfile = await Provider.of<Users>(context, listen: false).findUsersProfile(userId);
   }
 }

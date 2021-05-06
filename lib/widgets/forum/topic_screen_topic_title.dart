@@ -4,12 +4,12 @@ class TopicScreenTopicTitle extends StatelessWidget {
 
   final String title;
 
-  TopicScreenTopicTitle(this.title);
+  const TopicScreenTopicTitle(this.title);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Text(
         title,
         style: Theme.of(context)

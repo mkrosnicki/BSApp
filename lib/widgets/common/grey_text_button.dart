@@ -1,11 +1,10 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class GreyTextButton extends StatelessWidget {
   final String label;
-  final Function function;
+  final Function() function;
 
-  GreyTextButton(this.label, this.function);
+  const GreyTextButton(this.label, this.function);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class GreyTextButton extends StatelessWidget {
       onPressed: function,
       child: Text(
         label,
-        style: TextStyle(
+        style: const TextStyle(
             color: Colors.black54,
             fontWeight: FontWeight.w400,
             fontSize: 13),

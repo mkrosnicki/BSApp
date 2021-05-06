@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:BSApp/models/http_exception.dart';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +35,13 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchMe() async {
-    var responseBody = await _apiProvider.get('/users/me', token: _token);
+    final responseBody = await _apiProvider.get('/users/me', token: _token);
     _me = UserModel.fromJson(responseBody);
   }
 
   Future<void> login(String email, String password) async {
-    final url = '/auth/login';
-    var body = {
+    const url = '/auth/login';
+    final body = {
           'email': email,
           'password': password,
         };
@@ -66,8 +65,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signup(String email, String password, String username) async {
-    final url = '/auth/signup';
-    var body = {
+    const url = '/auth/signup';
+    final body = {
       'email': email,
       'password': password,
       'username': username,
@@ -116,22 +115,22 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> resendVerificationToken(String email) async {
-    var queryParameters = {
+    final queryParameters = {
       'email': email,
     };
     await _apiProvider.get('/resend-token', requestParams: queryParameters);
   }
 
   Future<void> resetUserPassword(String email) async {
-    var queryParameters = {
+    final queryParameters = {
       'email': email,
     };
     await _apiProvider.get('/auth/reset-password', requestParams: queryParameters);
   }
 
   Future<void> changeUserPassword(String currentPassword, String newPassword) async {
-    var url = '/auth/change-password';
-    var body = {
+    final url = '/auth/change-password';
+    final body = {
       'userId': _userId,
       'currentPassword': currentPassword,
       'newPassword': newPassword,

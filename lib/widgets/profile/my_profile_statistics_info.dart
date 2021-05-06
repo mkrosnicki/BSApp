@@ -23,7 +23,6 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
       width: double.infinity,
       child: Flex(
         direction: Axis.horizontal,
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildStatisticTile('Okazje', 1, false, true),
@@ -34,20 +33,27 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
     );
   }
 
-  _buildStatisticTile(String label, int index, bool borderLeft, bool borderRight) {
+  Widget _buildStatisticTile(String label, int index, bool borderLeft, bool borderRight) {
     return Flexible(
-      flex: 1,
       child: GestureDetector(
         onTap: () => _setIndex(index),
         child: Container(
           width: double.infinity,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            border: Border(
+              left: borderLeft ? const BorderSide(
+                  color: MyColorsProvider.GREY_BORDER_COLOR) : const BorderSide(style: BorderStyle.none),
+              right: borderRight ? const BorderSide(
+                  color: MyColorsProvider.GREY_BORDER_COLOR) : const BorderSide(style: BorderStyle.none)
+            ),
+          ),
           child: Wrap(
             direction: Axis.vertical,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Text(
+              const Text(
                 '99',
                 style: activeMenuItemStyle,
               ),
@@ -57,22 +63,14 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
               ),
             ],
           ),
-          decoration: BoxDecoration(
-            border: Border(
-              left: borderLeft ? BorderSide(
-                  color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none),
-              right: borderRight ? BorderSide(
-                  color: MyColorsProvider.GREY_BORDER_COLOR, width: 1) : BorderSide(style: BorderStyle.none)
-            ),
-          ),
         ),
       ),
     );
   }
 
-  _setIndex(int i) {
+  void _setIndex(int i) {
     setState(() {
-      this.selectedIndex = i;
+      selectedIndex = i;
     });
   }
 }

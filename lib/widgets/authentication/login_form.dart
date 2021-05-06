@@ -2,9 +2,9 @@ import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/common/grey-text-button.dart';
+import 'package:BSApp/widgets/common/grey_text_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,13 +15,13 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  Map<String, String> _authData = {'email': '', 'password': ''};
+  final Map<String, String> _authData = {'email': '', 'password': ''};
   bool _isLoading = false;
 
-  var _emailController = TextEditingController();
-  var _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  _getFormFieldDecoration(String hintText) {
+  InputDecoration _getFormFieldDecoration(String hintText) {
     return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
         .copyWith(hintText: hintText);
   }
@@ -87,14 +87,14 @@ class _LoginFormState extends State<LoginForm> {
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Błąd logowania'),
+        title: const Text('Błąd logowania'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('Ok'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
+            child: const Text('Ok'),
           )
         ],
       ),
@@ -105,34 +105,32 @@ class _LoginFormState extends State<LoginForm> {
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Błąd logowania'),
+        title: const Text('Błąd logowania'),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
+            const Text(
               "Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n Nie otrzymałeś linku aktywacyjnego? Wyślij go ponownie.",
             ),
-            Column(crossAxisAlignment: CrossAxisAlignment.center,
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TextButton(
-                      child: Text(
-                        'Ok',
-                        textAlign: TextAlign.center,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      }),
-                  TextButton(
-                      child: Text(
-                        'Wyślij link atywacyjny ponownie',
-                        textAlign: TextAlign.center,
-                      ),
-                      onPressed: () {
-                        _resendActivationToken(context);
-                      })
-                ]),
+            Column(children: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    textAlign: TextAlign.center,
+                  )),
+              TextButton(
+                  onPressed: () {
+                    _resendActivationToken(context);
+                  },
+                  child: const Text(
+                    'Wyślij link aktywacyjny ponownie',
+                    textAlign: TextAlign.center,
+                  )),
+            ]),
           ],
         ),
       ),
@@ -142,8 +140,8 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Center(
-            child: const LoadingIndicator(),
+        ? const Center(
+            child: LoadingIndicator(),
           )
         : SingleChildScrollView(
             child: Padding(
@@ -154,9 +152,8 @@ class _LoginFormState extends State<LoginForm> {
                 child: Column(
                   children: [
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 12.0),
-                      child: Text(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: const Text(
                         'Zaloguj się',
                         style: TextStyle(
                             color: Colors.black87,
@@ -165,8 +162,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
@@ -185,8 +181,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
@@ -206,7 +201,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 6.0),
+                      margin: const EdgeInsets.only(top: 6.0),
                       child: PrimaryButton('Zaloguj się', _submit),
                     ),
                     Container(
@@ -219,8 +214,10 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         onPressed: () => Navigator.of(context)
                             .pushNamed(ResetPasswordScreen.routeName),
-                        child: GreyTextButton('Nie pamiętasz hasła?', () => Navigator.of(context)
-                            .pushNamed(ResetPasswordScreen.routeName)),
+                        child: GreyTextButton(
+                            'Nie pamiętasz hasła?',
+                            () => Navigator.of(context)
+                                .pushNamed(ResetPasswordScreen.routeName)),
                       ),
                     )
                   ],

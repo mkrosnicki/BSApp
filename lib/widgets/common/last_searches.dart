@@ -3,6 +3,7 @@ import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/widgets/common/no_old_searches_info.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'last_search_item.dart';
 import 'loading_indicator.dart';
@@ -15,10 +16,11 @@ class LastSearches extends StatefulWidget {
 class _LastSearchesState extends State<LastSearches> {
   List<FilterSettings> _cachedFilterSettings = [];
 
-  _initCookies() async {
+  Future<void> _initCookies() async {
     _cachedFilterSettings =
         await LastSearchesUtilService.getCachedFilterSettings();
-    print(_cachedFilterSettings);
+    final logger = Logger();
+    logger.i(_cachedFilterSettings);
   }
 
   @override
@@ -28,16 +30,15 @@ class _LastSearchesState extends State<LastSearches> {
       future: _initCookies(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: const LoadingIndicator());
+          return const Center(child: LoadingIndicator());
         } else {
           if (snapshot.error != null) {
-            return Center(
-              child: const ServerErrorSplash(),
+            return const Center(
+              child: ServerErrorSplash(),
             );
           } else {
             if (_cachedFilterSettings.isNotEmpty) {
               return ListView.builder(
-                scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -46,7 +47,7 @@ class _LastSearchesState extends State<LastSearches> {
                       alignment: Alignment.centerLeft,
                       child: const Text(
                         'Ostatnie wyszukiwania',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w600),
                       ),
                     );
@@ -68,19 +69,9 @@ class _LastSearchesState extends State<LastSearches> {
         }
       },
     );
-    // return _cachedFilterSettings.isNotEmpty
-    //     ? ListView.builder(
-    //         scrollDirection: Axis.vertical,
-    //         shrinkWrap: true,
-    //         itemBuilder: (context, index) => LastSearchItem(index),
-    //         itemCount: 5,
-    //       )
-    //     : Center(
-    //         child: Text('Brak ostatnich wyszukiwań'),
-    //       );
   }
 
-  _removeFilterSettingsAt(int index) {
+  void _removeFilterSettingsAt(int index) {
     setState(() {
       LastSearchesUtilService.removeFilterSettingsAt(index);
     });

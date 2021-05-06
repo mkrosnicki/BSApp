@@ -10,7 +10,7 @@ class UserAvatar extends StatelessWidget {
   final double radius;
   final Color backgroundColor;
 
-  UserAvatar({
+  const UserAvatar({
     this.username,
     this.imagePath,
     this.radius,
@@ -27,9 +27,7 @@ class UserAvatar extends StatelessWidget {
         minRadius: radius,
         maxRadius: radius,
         foregroundColor: Colors.white,
-        backgroundColor: backgroundColor != null
-            ? backgroundColor
-            : MyColorsProvider.DEEP_BLUE,
+        backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
         child: Text(username.substring(0, 1)),
       );
     }
@@ -38,9 +36,7 @@ class UserAvatar extends StatelessWidget {
         minRadius: radius,
         maxRadius: radius,
         foregroundColor: Colors.white,
-        backgroundColor: backgroundColor != null
-            ? backgroundColor
-            : MyColorsProvider.DEEP_BLUE,
+        backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
         backgroundImage: MemoryImage(image),
       );
     }
@@ -48,9 +44,7 @@ class UserAvatar extends StatelessWidget {
       minRadius: radius,
       maxRadius: radius,
       foregroundColor: Colors.white,
-      backgroundColor: backgroundColor != null
-          ? backgroundColor
-          : MyColorsProvider.DEEP_BLUE,
+      backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
       backgroundImage: NetworkImage(imagePath),
     );
   }

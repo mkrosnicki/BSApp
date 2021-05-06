@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class SortingTypeChip extends StatelessWidget {
   final SortingType sortingType;
   final bool isSelected;
-  final Function onClick;
+  final Function() onClick;
 
-  SortingTypeChip(this.sortingType, this.isSelected, this.onClick);
+  const SortingTypeChip(this.sortingType, this.isSelected, this.onClick);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,13 @@ class SortingTypeChip extends StatelessWidget {
       onTap: onClick,
       child: Container(
         width: 120.0,
-        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12, width: 0.8),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        ),
         child: Column(
           children: [
             Icon(
@@ -38,11 +43,6 @@ class SortingTypeChip extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: isSelected ? MyColorsProvider.DEEP_BLUE : Colors.black12, width: 0.8),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
         ),
       ),
     );

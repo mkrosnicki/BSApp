@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TopicScreenTopicBottomBar extends StatelessWidget {
   final String topicId;
 
-  TopicScreenTopicBottomBar(this.topicId);
+  const TopicScreenTopicBottomBar(this.topicId);
 
   @override
   Widget build(BuildContext context) {

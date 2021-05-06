@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 class ActivityItem extends StatelessWidget {
   final ActivityModel activity;
 
-  ActivityItem(this.activity);
+  const ActivityItem(this.activity);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,6 @@ class ActivityItem extends StatelessWidget {
       color: Colors.white,
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -43,8 +41,8 @@ class ActivityItem extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
                   child: Text(
-                    '${DateUtil.timeAgoString(activity.issuedAt)}',
-                    style: TextStyle(
+                    DateUtil.timeAgoString(activity.issuedAt),
+                    style: const TextStyle(
                         fontSize: 11, color: Colors.black54, height: 1.1),
                   ),
                 )
@@ -53,7 +51,7 @@ class ActivityItem extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(left: 4.0),
-            child: Icon(
+            child: const Icon(
               CupertinoIcons.chevron_right,
               color: MyColorsProvider.DEEP_BLUE,
               size: 18,
@@ -64,7 +62,7 @@ class ActivityItem extends StatelessWidget {
     );
   }
 
-  _buildActivityContent() {
+  Widget _buildActivityContent() {
     Widget content;
     switch (activity.activityType) {
       case ActivityType.TOPIC_CREATED:
@@ -89,7 +87,7 @@ class ActivityItem extends StatelessWidget {
     return content;
   }
 
-  _buildActivityIcon() {
+  Widget _buildActivityIcon() {
     Widget icon;
     switch (activity.activityType) {
       case ActivityType.TOPIC_CREATED:

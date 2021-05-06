@@ -63,9 +63,9 @@ class _CouponFormState extends State<CouponForm> {
       });
       await showInformationDialog(
         context,
-        Text('Sukces!'),
-        Text('Kupon zostało dodany'),
-        Text('Ok'),
+        const Text('Sukces!'),
+        const Text('Kupon zostało dodany'),
+        const Text('Ok'),
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
@@ -75,17 +75,17 @@ class _CouponFormState extends State<CouponForm> {
       }
       await showInformationDialog(
         context,
-        Text('Błąd podczas dodawania kuponu'),
+        const Text('Błąd podczas dodawania kuponu'),
         Text(errorMessage),
-        Text('Ok'),
+        const Text('Ok'),
       );
     } catch (error) {
       const errorMessage = 'Coś poszło nie tak. Spróbuj później!';
       await showInformationDialog(
         context,
-        Text('Błąd podczas dodawania ogłoszenia'),
-        Text(errorMessage),
-        Text('Ok'),
+        const Text('Błąd podczas dodawania ogłoszenia'),
+        const Text(errorMessage),
+        const Text('Ok'),
       );
     }
     setState(() {
@@ -109,8 +109,8 @@ class _CouponFormState extends State<CouponForm> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Center(
-            child: const LoadingIndicator(),
+        ? const Center(
+            child: LoadingIndicator(),
           )
         : SingleChildScrollView(
             child: Padding(
@@ -118,7 +118,6 @@ class _CouponFormState extends State<CouponForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
                       onTap: _takePicture,
@@ -127,20 +126,20 @@ class _CouponFormState extends State<CouponForm> {
                         height: 120,
                         decoration: BoxDecoration(
                             border: Border.all(width: 1, color: Colors.grey)),
+                        alignment: Alignment.center,
                         child: _newDeal.image != null
                             ? Image.file(
                                 _newDeal.image,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                               )
-                            : Text(
+                            : const Text(
                                 'Dodaj obrazek',
                                 textAlign: TextAlign.center,
                               ),
-                        alignment: Alignment.center,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
@@ -160,7 +159,7 @@ class _CouponFormState extends State<CouponForm> {
                       decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                           .copyWith(helperText: 'Tytuł kuponu'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
@@ -180,7 +179,7 @@ class _CouponFormState extends State<CouponForm> {
                       decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                           .copyWith(helperText: 'Opis'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
@@ -199,7 +198,7 @@ class _CouponFormState extends State<CouponForm> {
                       decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                           .copyWith(helperText: 'Kod kuponu'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
@@ -219,13 +218,13 @@ class _CouponFormState extends State<CouponForm> {
                       decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                           .copyWith(helperText: 'Link do kuponu'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Kupon internetowy'),
+                        const Text('Kupon internetowy'),
                         Switch.adaptive(
                             activeColor: MyColorsProvider.BLUE,
                             value:
@@ -235,7 +234,7 @@ class _CouponFormState extends State<CouponForm> {
                             }),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     if (!_showInternetOnly)
@@ -244,14 +243,14 @@ class _CouponFormState extends State<CouponForm> {
                         subtitle: _newDeal.voivodeship != null
                             ? Text(
                                 locationString(_newDeal),
-                                style: TextStyle(color: Colors.blue),
+                                style: const TextStyle(color: Colors.blue),
                               )
                             : const Text('Cała Polska'),
-                        trailing: Icon(Icons.chevron_right),
+                        trailing: const Icon(Icons.chevron_right),
                         onTap: () => _openLocationSelector(),
                         enabled: !_showInternetOnly,
                       ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     if (!_showInternetOnly)
@@ -273,25 +272,24 @@ class _CouponFormState extends State<CouponForm> {
                       subtitle: _newDeal.categories.isNotEmpty
                           ? Text(
                               categoriesString,
-                              style: TextStyle(color: Colors.blue),
+                              style: const TextStyle(color: Colors.blue),
                             )
                           : const Text('Wszystkie kategorie'),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => _openCategorySelector(context),
                     ),
                     const Text('Wiek dziecka'),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: AgeTypeChips(_newDeal),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.calendar_today),
+                          icon: const Icon(Icons.calendar_today),
                           onPressed: () => _selectDate(DealDateType.VALID_FROM),
                           color: MyColorsProvider.BLUE,
                         ),
@@ -301,7 +299,7 @@ class _CouponFormState extends State<CouponForm> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -318,7 +316,7 @@ class _CouponFormState extends State<CouponForm> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -355,19 +353,19 @@ class _CouponFormState extends State<CouponForm> {
                             });
                           },
                           child: _newDeal.discountType == DiscountType.ABSOLUTE
-                              ? Text('zł')
-                              : Text('%'),
+                              ? const Text('zł')
+                              : const Text('%'),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        child: Text('Dodaj kupon'),
                         onPressed: _submit,
+                        child: const Text('Dodaj kupon'),
                       ),
                     ),
                   ],
@@ -387,9 +385,9 @@ class _CouponFormState extends State<CouponForm> {
     return _newDeal.categories.map((e) => e.name).join(" / ");
   }
 
-  _openCategorySelector(BuildContext context) async {
+  Future<void> _openCategorySelector(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    var selectedCategories = await Navigator.of(context)
+    final selectedCategories = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
@@ -410,7 +408,7 @@ class _CouponFormState extends State<CouponForm> {
     });
   }
 
-  _openLocationSelector() async {
+  Future<void> _openLocationSelector() async {
     FocusScope.of(context).unfocus();
     await openLocationSelector(context, _newDeal);
     setState(() {});

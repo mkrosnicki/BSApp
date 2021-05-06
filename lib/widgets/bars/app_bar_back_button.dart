@@ -12,6 +12,7 @@ class AppBarBackButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
       child: TextButton(
+        onPressed: () {},
         child: Icon(CupertinoIcons.back, color: color,),
       ),
     );

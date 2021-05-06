@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class NotificationItemIcon extends StatelessWidget {
   final NotificationType notificationType;
 
-  NotificationItemIcon(this.notificationType);
+  const NotificationItemIcon(this.notificationType);
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,8 @@ class NotificationItemIcon extends StatelessWidget {
       case NotificationType.YOUR_TOPIC_REPLIED:
         return CupertinoIcons.bubble_left;
         break;
+      default:
+        return null;
     }
   }
 
@@ -62,6 +64,8 @@ class NotificationItemIcon extends StatelessWidget {
       case NotificationType.YOUR_POST_REPLIED:
         return Colors.deepPurple;
         break;
+      default:
+        return null;
     }
   }
 }

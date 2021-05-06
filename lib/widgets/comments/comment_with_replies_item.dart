@@ -9,7 +9,7 @@ class CommentWithRepliesItem extends StatefulWidget {
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  CommentWithRepliesItem(this.dealId, this.comment, this.commentToReplySubject);
+  const CommentWithRepliesItem(this.dealId, this.comment, this.commentToReplySubject);
 
   @override
   _CommentWithRepliesItemState createState() => _CommentWithRepliesItemState();
@@ -18,20 +18,18 @@ class CommentWithRepliesItem extends StatefulWidget {
 class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
-          Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Column(
-              children: widget.comment.subComments
-                  .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
-                  .toList(),
-            ),
+    return Column(
+      children: [
+        CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            children: widget.comment.subComments
+                .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
+                .toList(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

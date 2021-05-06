@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class TopicItemTopicInfo extends StatelessWidget {
   final TopicModel topic;
 
-  TopicItemTopicInfo(this.topic);
+  const TopicItemTopicInfo(this.topic);
 
   @override
   Widget build(BuildContext context) {

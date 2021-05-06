@@ -10,7 +10,7 @@ class PostItemQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Container(
         width: double.infinity,
         color: Colors.yellow.shade50,
@@ -20,7 +20,7 @@ class PostItemQuote extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                  vertical: 4.0, horizontal: 0.0),
+                  vertical: 4.0),
               child: Wrap(
                 children: [
                   Text(

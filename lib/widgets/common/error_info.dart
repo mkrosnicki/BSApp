@@ -8,7 +8,7 @@ class ErrorInfo extends StatelessWidget {
       child: Column(
         children: [
           Image.network('https://img.icons8.com/ios/150/000000/error--v3.png'),
-          Text('Wystąpił błąd podczas komunikacji z serwerem!'),
+          const Text('Wystąpił błąd podczas komunikacji z serwerem!'),
         ],
       ),
     );

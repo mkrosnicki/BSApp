@@ -19,7 +19,7 @@ class ServerErrorSplash extends StatelessWidget {
             const Text(
               'Błąd komunikacji z serwerem',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 18,
                   height: 2,
                   fontWeight: FontWeight.w600,

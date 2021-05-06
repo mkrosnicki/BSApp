@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyBorderIconButton extends StatelessWidget {
   final String label;
   final IconData iconData;
-  final Function function;
+  final Function() function;
   final String trailing;
   final bool isActive;
   final bool showBorder;
@@ -12,30 +12,29 @@ class MyBorderIconButton extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
 
-  MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false, this.backgroundColor = Colors.white});
+  const MyBorderIconButton({this.label, this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false, this.backgroundColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
-    var borderColor = color != null && isActive ? color : Color.fromRGBO(212, 227, 235, 1);
-    var textColor = color != null && isActive ? color : Colors.grey;
+    final borderColor = color != null && isActive ? color : const Color.fromRGBO(212, 227, 235, 1);
+    final textColor = color != null && isActive ? color : Colors.grey;
     return SizedBox(
       height: 25,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
           side: MaterialStateProperty.all<BorderSide>(
-            showBorder ? BorderSide(color: borderColor, width: 1.0, style: BorderStyle.solid) : BorderSide(style: BorderStyle.none)
+            showBorder ? BorderSide(color: borderColor) : const BorderSide(style: BorderStyle.none)
           ),
           elevation: MaterialStateProperty.all(0.0),
           padding: MaterialStateProperty.all<EdgeInsets>(
-              EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0)),
+              const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0)),
           alignment: Alignment.center,
-          minimumSize: MaterialStateProperty.all<Size>(Size(10, 25)),
+          minimumSize: MaterialStateProperty.all<Size>(const Size(10, 25)),
         ),
         onPressed: function,
         child: Flex(
           direction: Axis.horizontal,
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (label != null)

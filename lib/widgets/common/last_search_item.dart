@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 
 class LastSearchItem extends StatelessWidget {
   final FilterSettings filterSettings;
-  final Function removeFunction;
+  final Function() removeFunction;
 
-  LastSearchItem(this.filterSettings, this.removeFunction);
+  const LastSearchItem(this.filterSettings, this.removeFunction);
 
   @override
   Widget build(BuildContext context) {
-    var filtersString = _getFiltersString();
+    final filtersString = _getFiltersString();
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
           DealSearchResultScreen.routeName,
-          arguments: this.filterSettings),
+          arguments: filterSettings),
       child: Container(
         color: Colors.white,
         alignment: Alignment.center,
@@ -34,18 +34,18 @@ class LastSearchItem extends StatelessWidget {
                       if (filterSettings.phrase != null)
                         const Text(
                           'Wyszukiwana fraza ',
-                          style: const TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 12),
                         ),
                       if (filterSettings.phrase != null)
                         Text(
-                          '${filterSettings.phrase}',
+                          filterSettings.phrase,
                           style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       if (filterSettings.phrase == null)
                         const Text(
                           'Brak wyszukiwanej frazy',
-                          style: const TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 12),
                         ),
                     ],
                   ),
@@ -74,9 +74,9 @@ class LastSearchItem extends StatelessWidget {
     );
   }
 
-  _getFiltersString() {
-    List<String> filtersSet = _getFiltersSet();
-    var numberOfFilters = filtersSet.length;
+  String _getFiltersString() {
+    final List<String> filtersSet = _getFiltersSet();
+    final numberOfFilters = filtersSet.length;
     if (numberOfFilters == 0) {
       return 'Brak innych filtrów';
     } else if (numberOfFilters <= 2) {
@@ -87,7 +87,7 @@ class LastSearchItem extends StatelessWidget {
   }
 
   List<String> _getFiltersSet() {
-    List<String> filtersSet = [];
+    final List<String> filtersSet = [];
     if (filterSettings.categories.isNotEmpty) {
       filtersSet.add(filterSettings.lastCategoryString);
     }

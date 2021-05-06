@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppBarButton extends StatelessWidget {
 
   final Icon icon;
-  final Function onPress;
+  final Function() onPress;
 
   const AppBarButton({this.icon, this.onPress});
 

@@ -1,4 +1,3 @@
-
 class IllegalRequestException implements Exception {
   final String message;
 

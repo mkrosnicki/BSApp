@@ -4,7 +4,7 @@ import 'app_bar_bottom_border.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
 
-  final Color backgroundColor = Colors.red;
+  MaterialColor get backgroundColor => Colors.red;
   final String title;
   final Widget leading;
   final List<Widget> actions;
@@ -30,5 +30,5 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class DealItemInfoSection extends StatelessWidget {
   final DealModel deal;
 
-  DealItemInfoSection(this.deal);
+  const DealItemInfoSection(this.deal);
 
   @override
   Widget build(BuildContext context) {

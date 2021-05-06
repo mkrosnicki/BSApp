@@ -17,32 +17,32 @@ class NewTopicScreen extends StatefulWidget {
 
 class _NewTopicScreenState extends State<NewTopicScreen> {
   final _formKey = GlobalKey<FormState>();
-  var _topicTitleController = TextEditingController();
-  var _topicContentController = TextEditingController();
+  final _topicTitleController = TextEditingController();
+  final _topicContentController = TextEditingController();
 
   static const textFieldDecoration = InputDecoration(
-    hintStyle: const TextStyle(fontSize: 13),
+    hintStyle: TextStyle(fontSize: 13),
     border: InputBorder.none,
     isDense: true,
     contentPadding:
-        const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+        EdgeInsets.only(left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
     focusedBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(color: MyColorsProvider.BLUE),
+      borderSide: BorderSide(color: MyColorsProvider.BLUE),
     ),
     enabledBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
+      borderSide: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
     ),
     errorBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(color: MyColorsProvider.RED_SHADY),
+      borderSide: BorderSide(color: MyColorsProvider.RED_SHADY),
     ),
     focusedErrorBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(color: MyColorsProvider.RED_SHADY),
+      borderSide: BorderSide(color: MyColorsProvider.RED_SHADY),
     ),
   );
 
   @override
   Widget build(BuildContext context) {
-    String categoryId = ModalRoute.of(context).settings.arguments as String;
+    final String categoryId = ModalRoute.of(context).settings.arguments as String;
     final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
@@ -70,7 +70,6 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           child: Column(
             children: [
               TextFormField(
-                obscureText: false,
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 12),
@@ -87,13 +86,12 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   // _newPassword = value;
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
               ),
               TextFormField(
                 minLines: 10,
                 maxLines: 10,
-                obscureText: false,
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 12),
@@ -119,7 +117,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
     );
   }
 
-  _postNewTopic(String categoryId) {
+  void _postNewTopic(String categoryId) {
     Provider.of<Topics>(context, listen: false)
         .addNewTopic(_topicTitleController.text, _topicContentController.text,
             categoryId)

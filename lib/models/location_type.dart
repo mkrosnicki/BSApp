@@ -11,6 +11,8 @@ class LocationTypeHelper {
         return 'Okazja w internecie';
       case LocationType.LOCAL:
         return 'Okazja stacjonarna';
+      default:
+        return null;
     }
   }
 

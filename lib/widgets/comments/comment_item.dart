@@ -12,7 +12,7 @@ class CommentItem extends StatelessWidget {
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  CommentItem(this.comment, this.dealId, this.commentToReplySubject);
+  const CommentItem(this.comment, this.dealId, this.commentToReplySubject);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CommentItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       margin: const EdgeInsets.only(bottom: 4.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,
         border: Border.all(
           color: MyColorsProvider.GREY_BORDER_COLOR,

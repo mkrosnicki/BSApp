@@ -7,22 +7,20 @@ class CommentItemContent extends StatelessWidget {
   final CommentModel comment;
 
 
-  CommentItemContent(this.comment);
+  const CommentItemContent(this.comment);
 
   @override
   Widget build(BuildContext context) {
-    return         Flexible(
+    return Flexible(
       child: Container(
         padding: const EdgeInsets.all(4.0),
         margin: const EdgeInsets.only(left: 4.0),
         child: Flex(
           direction: Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 2.0),
+              margin: const EdgeInsets.only(bottom: 2.0),
               child: GestureDetector(
                 onTap: () => _navigateToUserProfileScreen(
                     context, comment.adderInfo.id),
@@ -37,7 +35,6 @@ class CommentItemContent extends StatelessWidget {
               ),
             ),
             Wrap(
-              direction: Axis.horizontal,
               children: [
                 if (_displayRepliedUsername(comment))
                   Text(
@@ -72,7 +69,7 @@ class CommentItemContent extends StatelessWidget {
     return comment.parentId == comment.replyForId;
   }
 
-  _navigateToUserProfileScreen(BuildContext context, String userId) {
+  void _navigateToUserProfileScreen(BuildContext context, String userId) {
     Navigator.of(context)
         .pushNamed(UserProfileScreen.routeName, arguments: userId);
   }

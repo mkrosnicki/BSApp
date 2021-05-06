@@ -1,4 +1,3 @@
-import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:flutter/material.dart';

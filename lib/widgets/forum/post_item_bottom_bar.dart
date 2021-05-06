@@ -15,7 +15,7 @@ class PostItemBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      padding: const EdgeInsets.only(top: 0.0),
+      padding: const EdgeInsets.only(),
       alignment: Alignment.centerRight,
       child: Flex(
         direction: Axis.horizontal,
@@ -24,7 +24,7 @@ class PostItemBottomBar extends StatelessWidget {
           Wrap(
             children: [
               Text(
-                '${DateUtil.timeAgoString(post.addedAt)}',
+                DateUtil.timeAgoString(post.addedAt),
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2
@@ -50,6 +50,9 @@ class PostItemBottomBar extends StatelessWidget {
             ],
           ),
           TextButton(
+            onPressed: () {
+              postToReplySubject.add(post);
+            },
             child: Text(
               'ODPOWIEDZ',
               style: Theme.of(context)
@@ -57,9 +60,6 @@ class PostItemBottomBar extends StatelessWidget {
                   .bodyText2
                   .copyWith(fontSize: 11, color: MyColorsProvider.BLUE),
             ),
-            onPressed: () {
-              postToReplySubject.add(post);
-            },
           ),
         ],
       ),

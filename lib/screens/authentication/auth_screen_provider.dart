@@ -5,7 +5,7 @@ import 'login_registration_screen.dart';
 class AuthScreenProvider {
 
   static void showLoginScreen(BuildContext context) {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
+    Navigator.of(context).push(MaterialPageRoute<Null>(
         builder: (BuildContext context) {
           return LoginRegistrationScreen();
         },

@@ -12,25 +12,24 @@ class TopicItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () => _navigateTo(context),
       child: Container(
         alignment: Alignment.topLeft,
         color: Colors.white,
         width: double.infinity,
-        margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             TopicItemUserAvatar(topic.adderInfo),
             TopicItemTopicInfo(topic),
           ],
         ),
       ),
-      onTap: () => _navigateTo(context),
     );
   }
 
-  _navigateTo(BuildContext context) {
+  void _navigateTo(BuildContext context) {
     Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic);
   }
 
@@ -38,7 +37,7 @@ class TopicItem extends StatelessWidget {
     if (input.length <= length) {
       return input;
     } else {
-      return input.substring(0, length) + "...";
+      return "${input.substring(0, length)}...";
     }
   }
 }

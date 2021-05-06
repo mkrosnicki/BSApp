@@ -109,14 +109,14 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                     titleSpacing: 0.0,
                     centerTitle: true,
                     bottom: PreferredSize(
+                        preferredSize: const Size.fromHeight(4.0),
                         child: Container(
                           color: _borderColorTween.value,
                           height: 0.5,
-                        ),
-                        preferredSize: Size.fromHeight(4.0)),
+                        ),),
                     title: Transform.translate(
                       offset: _transTween.value,
-                      child: Text(
+                      child: const Text(
                         'Szczegóły',
                         style: TextStyle(
                             color: Colors.black87,

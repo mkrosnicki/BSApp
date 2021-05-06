@@ -1,8 +1,6 @@
 enum SortingType {
-
   NEWEST,
   MOST_POPULAR
-
 }
 
 class SortingTypeHelper {
@@ -12,7 +10,7 @@ class SortingTypeHelper {
   }
 
   static SortingType fromString(String sortingTypeString) {
-    for (var sortingType in SortingType.values) {
+    for (final sortingType in SortingType.values) {
       if (asString(sortingType) == sortingTypeString) {
         return sortingType;
       }

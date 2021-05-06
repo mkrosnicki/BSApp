@@ -47,7 +47,7 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
     );
   }
 
-  _buildTabBar(String label) {
+  Widget _buildTabBar(String label) {
     return Tab(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,

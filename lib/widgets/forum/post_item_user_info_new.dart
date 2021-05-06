@@ -15,13 +15,11 @@ class PostItemUserInfoNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const userInfoTextStyle =
-        const TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+        TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserAvatar(
             username: post.adderInfo.username,
@@ -34,14 +32,10 @@ class PostItemUserInfoNew extends StatelessWidget {
               margin: const EdgeInsets.only(left: 4.0),
               child: Flex(
                 direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Flex(
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +47,7 @@ class PostItemUserInfoNew extends StatelessWidget {
                                   context, post.adderInfo.id),
                               child: Text(
                                 post.adderInfo.username,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blue,
@@ -79,7 +73,7 @@ class PostItemUserInfoNew extends StatelessWidget {
     );
   }
 
-  _navigateToUserProfileScreen(BuildContext context, String userId) {
+  void _navigateToUserProfileScreen(BuildContext context, String userId) {
     Navigator.of(context)
         .pushNamed(UserProfileScreen.routeName, arguments: userId);
   }

@@ -55,11 +55,11 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               future: _initCategories(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: const LoadingIndicator());
+                  return const Center(child: LoadingIndicator());
                 } else {
                   if (snapshot.error != null) {
-                    return Center(
-                      child: const ServerErrorSplash(),
+                    return const Center(
+                      child: ServerErrorSplash(),
                     );
                   } else {
                     return _buildVoivodeshipsList(_allVoivodeships);
@@ -71,7 +71,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     );
   }
 
-  _buildCitiesList(List<City> cities) {
+ Widget _buildCitiesList(List<City> cities) {
     return Column(
       children: [
         Expanded(
@@ -79,6 +79,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return FlatButton(
+                  onPressed: _selectAllCitiesInVoivodeship,
                   child: ListTile(
                     title: Text(
                       'Całe województwo ${_selectedVoivodeship.name}',
@@ -86,10 +87,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                     ),
                     focusColor: Colors.grey,
                   ),
-                  onPressed: _selectAllCitiesInVoivodeship,
                 );
               } else {
                 return FlatButton(
+                  onPressed: () => _selectCity(cities[index]),
                   child: ListTile(
                     title: Text(
                       cities[index].name,
@@ -97,7 +98,6 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                     ),
                     focusColor: Colors.grey,
                   ),
-                  onPressed: () => _selectCity(cities[index]),
                 );
               }
             },
@@ -108,12 +108,13 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
     );
   }
 
-  _buildVoivodeshipsList(List<Voivodeship> voivodeships) {
+  Widget _buildVoivodeshipsList(List<Voivodeship> voivodeships) {
     return Column(
       children: [
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
+              onPressed: () => _selectVoivodeship(voivodeships[index]),
               child: ListTile(
                 title: Text(
                   voivodeships[index].name,
@@ -132,7 +133,6 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                     : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
-              onPressed: () => _selectVoivodeship(voivodeships[index]),
             ),
             itemCount: voivodeships.length,
           ),
@@ -142,7 +142,7 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
   }
 
   String _getCitiesSuffix(int numOfCities) {
-    int lastDigit = numOfCities % 10;
+    final int lastDigit = numOfCities % 10;
     if (numOfCities == 1) {
       return 'miasto';
     } else if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {

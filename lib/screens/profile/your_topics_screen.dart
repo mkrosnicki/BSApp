@@ -12,8 +12,8 @@ class YourTopicsScreen extends StatelessWidget {
     final List<TopicModel> addedTopics =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: BaseAppBar(
-        leading: const AppBarBackButton(Colors.black),
+      appBar: const BaseAppBar(
+        leading: AppBarBackButton(Colors.black),
         title: 'Twoje tematy',
       ),
       body: ListView.builder(

@@ -6,7 +6,7 @@ class NotificationItemContent extends StatelessWidget {
 
   final NotificationModel notification;
 
-  NotificationItemContent(this.notification);
+  const NotificationItemContent(this.notification);
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +14,17 @@ class NotificationItemContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Flex(
         direction: Axis.vertical,
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             notificationTitle,
-            style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
+            style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
           ),
           Container(
             alignment: Alignment.topLeft,
             child: Text(
               notificationSubtitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 height: 1.5,
                 color: Colors.black,
@@ -70,6 +68,8 @@ class NotificationItemContent extends StatelessWidget {
             ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} inni napisali post w Twoim temacie'
             : '${notification.mainIssuerUsername} napisał(a) post w Twoim temacie';
         break;
+      default:
+        return '';
     }
   }
 
@@ -93,6 +93,8 @@ class NotificationItemContent extends StatelessWidget {
       case NotificationType.YOUR_TOPIC_REPLIED:
         return notification.relatedTopicTitle;
         break;
+      default:
+        return '';
     }
   }
 

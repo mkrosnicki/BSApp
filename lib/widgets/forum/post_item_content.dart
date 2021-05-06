@@ -9,7 +9,7 @@ class PostItemContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Text(
         post.content,
         style: Theme.of(context)

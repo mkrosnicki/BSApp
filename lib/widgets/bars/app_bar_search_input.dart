@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppBarSearchInput extends StatefulWidget {
-  final Function onTapInputFunction;
-  final Function onSubmitInputFunction;
+  final Function() onTapInputFunction;
+  final Function(String) onSubmitInputFunction;
   final TextEditingController searchInputController;
 
-  AppBarSearchInput(
+  const AppBarSearchInput(
       {this.onTapInputFunction,
       this.onSubmitInputFunction,
       this.searchInputController});
@@ -19,7 +19,7 @@ class AppBarSearchInput extends StatefulWidget {
 class _AppBarSearchInputState extends State<AppBarSearchInput> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: TextField(
         onTap: widget.onTapInputFunction,
@@ -30,8 +30,8 @@ class _AppBarSearchInputState extends State<AppBarSearchInput> {
         autofocus: true,
         decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(0.0),
+          prefixIcon: const Padding(
+            padding: EdgeInsets.all(0.0),
             child: Icon(
               CupertinoIcons.search,
               color: Colors.black54,

@@ -9,11 +9,11 @@ import 'package:provider/provider.dart';
 class DealRateBar extends StatelessWidget {
   final DealModel deal;
 
-  DealRateBar(this.deal);
+  const DealRateBar(this.deal);
 
   @override
   Widget build(BuildContext context) {
-    var dealsProvider = Provider.of<Deals>(context);
+    final dealsProvider = Provider.of<Deals>(context);
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Deals>(
         builder: (context, dealsData, child) => RateBar(
@@ -28,7 +28,7 @@ class DealRateBar extends StatelessWidget {
     );
   }
 
-  _vote(BuildContext context, bool isAuthenticated, bool isPositive) {
+  void _vote(BuildContext context, bool isAuthenticated, bool isPositive) {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {

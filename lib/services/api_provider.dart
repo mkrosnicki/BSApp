@@ -1,17 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/illegal_request_exception.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class ApiProvider {
   String token;
 
   ApiProvider({this.token});
+  final logger = Logger();
 
   final _ProtocolType _protocolType = _ProtocolType.HTTP;
   // final String _domain = "YOUR_LOCAL_IP:PORT";
-  final String _domain = "192.168.1.139:8080";
+  final String _domain = "192.168.1.128:8080";
 
 
   Future<dynamic> get(String endpoint, {String token, Map<String, dynamic> requestParams}) async {
@@ -35,15 +38,15 @@ class ApiProvider {
   Future<dynamic> _sendRequest(_RequestType requestType, String endpoint, {Map<String, dynamic> body, String token, Map<String, dynamic> requestParams}) async {
     var responseJson;
     try {
-      Map<String, String> headers = {};
+      final Map<String, String> headers = {};
       if (token != null) {
         headers.putIfAbsent("Authorization", () => 'Bearer $token');
       }
       if (requestType == _RequestType.POST || requestType == _RequestType.PATCH) {
         headers.putIfAbsent('Content-Type', () => 'application/json;charset=UTF-8');
       }
-      var uri = _buildUri(endpoint, requestParams);
-      print(uri);
+      final uri = _buildUri(endpoint, requestParams);
+      logger.i(uri);
       var response;
       switch (requestType) {
         case _RequestType.DELETE:
@@ -77,7 +80,7 @@ class ApiProvider {
     return responseJson;
   }
 
-  _buildUri(String endpoint, Map<String, dynamic> requestParams) {
+  Uri _buildUri(String endpoint, Map<String, dynamic> requestParams) {
     return _protocolType == _ProtocolType.HTTP ? Uri.http(_domain, endpoint, requestParams) : Uri.https(_domain, endpoint, requestParams);
   }
 

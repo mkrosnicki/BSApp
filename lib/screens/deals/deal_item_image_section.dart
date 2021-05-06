@@ -7,7 +7,7 @@ import 'deal_details_screen.dart';
 class DealItemImageSection extends StatelessWidget {
   final DealModel deal;
 
-  DealItemImageSection(this.deal);
+  const DealItemImageSection(this.deal);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,8 @@ class DealItemImageSection extends StatelessWidget {
             .pushNamed(DealDetailsScreen.routeName, arguments: deal);
       },
       child: Stack(
-        fit: StackFit.loose,
         children: [
-          Container(
+          const SizedBox(
             height: 130,
             width: double.infinity,
           ),
@@ -27,11 +26,11 @@ class DealItemImageSection extends StatelessWidget {
             height: 130,
             width: double.infinity,
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(4.0),
                 bottomLeft: Radius.circular(4.0),
               ),
-              child: deal.image != null ? deal.image : Image.network(
+              child: deal.image ?? Image.network(
                 'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
                 fit: BoxFit.cover,
               ),

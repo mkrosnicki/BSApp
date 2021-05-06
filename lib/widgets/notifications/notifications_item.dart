@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class NotificationItem extends StatelessWidget {
   final NotificationModel notification;
 
-  NotificationItem(this.notification);
+  const NotificationItem(this.notification);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,6 @@ class NotificationItem extends StatelessWidget {
       color: Colors.white,
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -36,8 +34,8 @@ class NotificationItem extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
                   child: Text(
-                    '${DateUtil.timeAgoString(notification.issuedAt)}',
-                    style: TextStyle(
+                    DateUtil.timeAgoString(notification.issuedAt),
+                    style: const TextStyle(
                         fontSize: 11, color: Colors.black54, height: 1.1),
                   ),
                 )
@@ -46,7 +44,7 @@ class NotificationItem extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(left: 4.0),
-            child: Icon(
+            child: const Icon(
               CupertinoIcons.chevron_right,
               color: MyColorsProvider.DEEP_BLUE,
               size: 18,

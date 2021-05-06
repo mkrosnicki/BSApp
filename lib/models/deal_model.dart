@@ -146,7 +146,7 @@ class DealModel {
   int get hashCode => id.hashCode;
 
   static _getImage(dealObject) {
-    var base64Image = base64Decode(dealObject['base64Image']);
+    final base64Image = base64Decode(dealObject['base64Image']);
     if (base64Image.isEmpty) {
       return null;
     }

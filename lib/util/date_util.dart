@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 class DateUtil {
 
   static final DateFormat _dateFormat = new DateFormat.yMMMMd('pl');
-  static final DateFormat _timeFormat = new DateFormat.Hm('pl');
 
   static String getFormatted(DateTime dateTime) {
     return _dateFormat.format(dateTime);

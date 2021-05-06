@@ -5,7 +5,6 @@ import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import 'deal_item.dart';
@@ -20,13 +19,13 @@ class DealsScreenMainContent extends StatelessWidget {
       future: Provider.of<Deals>(context, listen: false).fetchDeals(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: const LoadingIndicator(),
+          return const Center(
+            child: LoadingIndicator(),
           );
         } else {
           if (snapshot.error != null) {
-            return Center(
-              child: const ServerErrorSplash(),
+            return const Center(
+              child: ServerErrorSplash(),
             );
           } else {
             return Flexible(
@@ -52,7 +51,7 @@ class DealsScreenMainContent extends StatelessWidget {
     );
   }
 
-  void _initCategories(BuildContext context) async {
+  Future<void> _initCategories(BuildContext context) async {
     if (_allCategories == null) {
       await Provider.of<Categories>(context, listen: false)
           .fetchCategories()

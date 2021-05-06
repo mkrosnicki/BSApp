@@ -8,7 +8,7 @@ class CommentItemBottomSection extends StatelessWidget {
   final CommentModel comment;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  CommentItemBottomSection(this.comment, this.commentToReplySubject);
+  const CommentItemBottomSection(this.comment, this.commentToReplySubject);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CommentItemBottomSection extends StatelessWidget {
           Wrap(
             children: [
               Text(
-                '${DateUtil.timeAgoString(comment.addedAt)}',
+                DateUtil.timeAgoString(comment.addedAt),
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2
@@ -49,11 +49,11 @@ class CommentItemBottomSection extends StatelessWidget {
           ),
           InkWell(
             onTap: () => _startCommentReply(comment),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
                 'Odpowiedz',
-                style: const TextStyle(fontSize: 12, color: Colors.blue),
+                style: TextStyle(fontSize: 12, color: Colors.blue),
               ),
             ),
           )
@@ -62,7 +62,7 @@ class CommentItemBottomSection extends StatelessWidget {
     );
   }
 
-  _startCommentReply(CommentModel comment) {
+  void _startCommentReply(CommentModel comment) {
     commentToReplySubject.add(comment);
   }
 }

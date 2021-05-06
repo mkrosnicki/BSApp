@@ -7,12 +7,12 @@ class TopicItemUserAvatar extends StatelessWidget {
 
   final AdderInfoModel adderInfo;
 
-  TopicItemUserAvatar(this.adderInfo);
+  const TopicItemUserAvatar(this.adderInfo);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: UserAvatar(
         username: adderInfo.username,
         imagePath: FakeDataProvider.USER_AVATAR_PATH,

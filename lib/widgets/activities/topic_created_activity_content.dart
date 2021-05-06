@@ -6,7 +6,7 @@ class TopicCreatedActivityContent extends StatelessWidget {
   final String username;
   final TopicModel topic;
 
-  TopicCreatedActivityContent(this.username, this.topic);
+  const TopicCreatedActivityContent(this.username, this.topic);
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +14,18 @@ class TopicCreatedActivityContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Flex(
         direction: Axis.vertical,
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             '$username założył(a) nowy temat',
-            style: TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
+            style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
           ),
           Container(
             alignment: Alignment.topLeft,
             child: Text(
               topic.title,
               style:
-              TextStyle(
+              const TextStyle(
                 fontSize: 12,
                 height: 1.5,
                 color: Colors.black,

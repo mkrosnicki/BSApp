@@ -8,16 +8,16 @@ class ContentOrProgressIndicator extends StatelessWidget {
   final AsyncSnapshot snapshot;
   final Widget content;
 
-  ContentOrProgressIndicator({this.snapshot, this.content});
+  const ContentOrProgressIndicator({this.snapshot, this.content});
 
   @override
   Widget build(BuildContext context) {
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return const Center(child: const LoadingIndicator());
+      return const Center(child: LoadingIndicator());
     } else {
       if (snapshot.error != null) {
-        return Center(
-          child: const ServerErrorSplash(),
+        return const Center(
+          child: ServerErrorSplash(),
         );
       } else {
         return content;

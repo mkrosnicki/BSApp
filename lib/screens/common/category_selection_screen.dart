@@ -20,7 +20,7 @@ class CategorySelectionScreen extends StatefulWidget {
 
 class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
   List<CategoryModel> _allCategories;
-  List<CategoryModel> _selectedCategories = [];
+  final List<CategoryModel> _selectedCategories = [];
 
   Future<void> _initCategories() {
     if (_allCategories == null) {
@@ -56,8 +56,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   return Center(child: const LoadingIndicator());
                 } else {
                   if (snapshot.error != null) {
-                    return Center(
-                      child: const ServerErrorSplash(),
+                    return const Center(
+                      child: ServerErrorSplash(),
                     );
                   } else {
                     return _buildCategoriesList(_allCategories);
@@ -71,13 +71,13 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
     );
   }
 
-  _buildCategoriesList(List<CategoryModel> categories) {
+  Widget _buildCategoriesList(List<CategoryModel> categories) {
     return Column(
       children: [
         if (_selectedCategories.isNotEmpty)
           ListTile(
             title: Text(
-              '${_selectedCategories.elementAt(_selectedCategories.length - 1).name}',
+              _selectedCategories.elementAt(_selectedCategories.length - 1).name,
               style: const TextStyle(fontSize: 14),
             ),
             focusColor: Colors.grey,
@@ -90,7 +90,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 'Wszystko w kategorii ${_selectedCategories.elementAt(_selectedCategories.length - 1).name}',
                 style: const TextStyle(fontSize: 14),
               ),
-              subtitle: Text('Interesuje mnie wszystko w tej kategorii'),
+              subtitle: const Text('Interesuje mnie wszystko w tej kategorii'),
               focusColor: Colors.grey,
             ),
           ),
@@ -98,6 +98,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               padding: EdgeInsets.zero,
+              onPressed: () => _selectCategory(categories[index]),
               child: ListTile(
                 tileColor: Colors.white,
                 title: Text(
@@ -114,14 +115,13 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 ),
                 // subtitle: Text(
                 //     '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                subtitle: Text('${categories[index].description}',
+                subtitle: Text(categories[index].description,
                     style: const TextStyle(fontSize: 13)),
                 trailing: categories[index].subCategories.isEmpty
                     ? MyIconsProvider.NONE
                     : MyIconsProvider.FORWARD_ICON,
                 focusColor: Colors.grey,
               ),
-              onPressed: () => _selectCategory(categories[index]),
             ),
             itemCount: categories.length,
           ),
@@ -143,7 +143,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
     }
   }
 
-  _selectCategory(CategoryModel category) {
+  void _selectCategory(CategoryModel category) {
     if (category.subCategories.isEmpty) {
       _selectedCategories.add(category);
       _finishSelection();
@@ -154,11 +154,11 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
     }
   }
 
-  _finishSelection() {
+  void _finishSelection() {
     Navigator.of(context).pop([..._selectedCategories]);
   }
 
-  _goUp() {
+  void _goUp() {
     if (_selectedCategories.isEmpty) {
       Navigator.of(context).pop(null);
     } else {

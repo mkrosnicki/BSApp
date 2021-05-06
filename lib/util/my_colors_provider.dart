@@ -20,7 +20,7 @@ class MyColorsProvider {
   static const Color GREEN_LIGHT_SHADY = Color.fromRGBO(102, 187, 106, 0.9);
 
   static Color hexToColor(String code) {
-    return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+    return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
 }

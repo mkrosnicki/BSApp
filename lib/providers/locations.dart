@@ -1,6 +1,7 @@
 import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Locations with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
@@ -16,7 +17,8 @@ class Locations with ChangeNotifier {
       final List<Voivodeship> loadedVoivodeships = [];
       final responseBody = await _apiProvider.get('/voivodeships') as List;
       if (responseBody == null) {
-        print('No Voivodeships Found!');
+        final logger = Logger();
+        logger.e('No Voivodeships Found!');
       }
       responseBody.forEach((element) {
         loadedVoivodeships.add(Voivodeship.fromJson(element));

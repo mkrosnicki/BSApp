@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class DealItemTopSection extends StatelessWidget {
   final DealModel deal;
 
-  DealItemTopSection(this.deal);
+  const DealItemTopSection(this.deal);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,6 @@ class DealItemTopSection extends StatelessWidget {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           textBaseline: TextBaseline.alphabetic,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [

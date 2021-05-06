@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 class DealItem extends StatelessWidget {
   final DealModel deal;
 
-  DealItem(this.deal);
+  const DealItem(this.deal);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         color: Colors.white,
         border: Border.all(
           color: MyColorsProvider.GREY_BORDER_COLOR,

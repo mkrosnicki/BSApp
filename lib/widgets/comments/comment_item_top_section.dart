@@ -16,7 +16,6 @@ class CommentItemTopSection extends StatelessWidget {
     return Flex(
       direction: Axis.horizontal,
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         CommentItemUserAvatar(comment.adderInfo),
         CommentItemContent(comment),

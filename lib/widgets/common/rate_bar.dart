@@ -11,8 +11,8 @@ class RateBar extends StatelessWidget {
   int negativeVotes;
   bool wasVotedPositively;
   bool wasVotedNegatively;
-  Function negativeVoteFunction;
-  Function positiveVoteFunction;
+  Function() negativeVoteFunction;
+  Function() positiveVoteFunction;
 
   RateBar(
       this.positiveVotes,
@@ -22,7 +22,7 @@ class RateBar extends StatelessWidget {
       this.positiveVoteFunction,
       this.negativeVoteFunction);
 
-  _initDimensions() {
+  void _initDimensions() {
     maxHeight = 22.0;
     barHeight = maxHeight * 0.7;
   }
@@ -30,7 +30,7 @@ class RateBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _initDimensions();
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         children: [
@@ -38,7 +38,7 @@ class RateBar extends StatelessWidget {
             onTap: positiveVoteFunction,
             behavior: HitTestBehavior.translucent,
             child: Container(
-              margin: EdgeInsets.only(right: 4.0),
+              margin: const EdgeInsets.only(right: 4.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
@@ -51,7 +51,6 @@ class RateBar extends StatelessWidget {
             child: Flex(
               mainAxisSize: MainAxisSize.min,
               direction: Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
@@ -126,7 +125,7 @@ class RateBar extends StatelessWidget {
             onTap: negativeVoteFunction,
             behavior: HitTestBehavior.translucent,
             child: Container(
-              padding: EdgeInsets.only(left: 4.0),
+              padding: const EdgeInsets.only(left: 4.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsdown,
@@ -145,7 +144,7 @@ class RateBar extends StatelessWidget {
   }
 
   double _partOfAll(bool isPositive) {
-    var numOfVotes = isPositive ? positiveVotes : negativeVotes;
+    final numOfVotes = isPositive ? positiveVotes : negativeVotes;
     if (positiveVotes == 0 && negativeVotes == 0) {
       return 0.5;
     }

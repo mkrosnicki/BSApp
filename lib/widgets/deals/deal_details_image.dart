@@ -1,5 +1,4 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -11,12 +10,12 @@ import 'package:provider/provider.dart';
 class DealDetailsImage extends StatelessWidget {
   final DealModel deal;
 
-  DealDetailsImage(this.deal);
+  const DealDetailsImage(this.deal);
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double imageHeight = screenHeight * 0.35;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double imageHeight = screenHeight * 0.35;
     return Stack(
       children: [
         Container(
@@ -24,10 +23,10 @@ class DealDetailsImage extends StatelessWidget {
           height: imageHeight + 20,
           width: double.infinity,
         ),
-        Container(
+        SizedBox(
           height: imageHeight,
           width: double.infinity,
-          child: deal.image != null ? deal.image : Image.network(
+          child: deal.image ?? Image.network(
             'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
             fit: BoxFit.cover,
           ),
@@ -50,7 +49,7 @@ class DealDetailsImage extends StatelessWidget {
     );
   }
 
-  _toggleFavourites(BuildContext context, String dealId, bool isFavourite, bool isUserLoggedIn) {
+  void _toggleFavourites(BuildContext context, String dealId, bool isFavourite, bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
     } else if (isFavourite) {

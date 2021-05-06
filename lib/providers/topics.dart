@@ -1,9 +1,10 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Topics with ChangeNotifier {
-  ApiProvider _apiProvider = new ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
 
   List<TopicModel> allTopics = [];
   List<TopicModel> fetchedObservedTopics = [];
@@ -11,9 +12,9 @@ class Topics with ChangeNotifier {
   List<TopicModel> fetchedCategoryTopics = [];
   String token;
 
-  Topics.empty();
-
   Topics({this.allTopics, this.fetchedObservedTopics, this.token});
+
+  Topics.empty();
 
   List<TopicModel> get topics {
     return [...allTopics];
@@ -44,7 +45,8 @@ class Topics with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/topics', requestParams: requestParams) as List;
     if (responseBody == null) {
-      print('No Topics Found!');
+      final logger = Logger();
+      logger.i('No Topics Found!');
     }
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.fromJson(element));
@@ -58,7 +60,8 @@ class Topics with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/topics', requestParams: {'categoryId': categoryId}) as List;
     if (responseBody == null) {
-      print('No Topics Found!');
+      final logger = Logger();
+      logger.i('No Topics Found!');
     }
     responseBody.forEach((element) {
       loadedTopics.add(TopicModel.fromJson(element));
@@ -72,7 +75,8 @@ class Topics with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/users/me/topics/observed', token: token) as List;
     if (responseBody == null) {
-      print('No Topics Found!');
+      final logger = Logger();
+      logger.i('No Topics Found!');
     }
     responseBody.forEach((element) {
       fetchedTopics.add(TopicModel.fromJson(element));
@@ -86,7 +90,8 @@ class Topics with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/users/me/topics/added', token: token) as List;
     if (responseBody == null) {
-      print('No Topics Found!');
+      final logger = Logger();
+      logger.i('No Topics Found!');
     }
     responseBody.forEach((element) {
       fetchedTopics.add(TopicModel.fromJson(element));
@@ -102,7 +107,7 @@ class Topics with ChangeNotifier {
       'content': content,
       'categoriesIds': [categoryId]
     };
-    var topicSnapshot = await _apiProvider.post('/topics', addNewTopicDto, token: token);
+    final topicSnapshot = await _apiProvider.post('/topics', addNewTopicDto, token: token);
     await fetchCategoryTopics(categoryId);
     return TopicModel.fromJson(topicSnapshot);
   }
@@ -153,7 +158,7 @@ class Topics with ChangeNotifier {
     return fetchedObservedTopics.any((topic) => topic.id == topicId);
   }
 
-  void update(String token) async {
+  Future<void> update(String token) async {
     this.token = token;
     if (token == null) {
       fetchedObservedTopics = [];

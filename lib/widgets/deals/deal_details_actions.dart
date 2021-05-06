@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DealDetailsActions extends StatelessWidget {
   final DealModel deal;
 
-  DealDetailsActions(this.deal);
+  const DealDetailsActions(this.deal);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DealDetailsActions extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Divider(),
+          const Divider(),
           DealRateBar(deal),
         ],
       ),

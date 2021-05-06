@@ -16,13 +16,11 @@ class TopicScreenUserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const userInfoTextStyle =
-        const TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+        TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           UserAvatar(
             username: adderInfo.username,
@@ -35,14 +33,10 @@ class TopicScreenUserInfo extends StatelessWidget {
               margin: const EdgeInsets.only(left: 4.0),
               child: Flex(
                 direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Flex(
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +48,7 @@ class TopicScreenUserInfo extends StatelessWidget {
                                   context, adderInfo.id),
                               child: Text(
                                 adderInfo.username,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blue,
@@ -70,7 +64,7 @@ class TopicScreenUserInfo extends StatelessWidget {
                       ),
                       Text(
                         // '${_dateFormat.format(comment.addedAt)}',
-                        '${DateUtil.timeAgoString(addedAt)}',
+                        DateUtil.timeAgoString(addedAt),
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2
@@ -87,7 +81,7 @@ class TopicScreenUserInfo extends StatelessWidget {
     );
   }
 
-  _navigateToUserProfileScreen(BuildContext context, String userId) {
+  void _navigateToUserProfileScreen(BuildContext context, String userId) {
     Navigator.of(context)
         .pushNamed(UserProfileScreen.routeName, arguments: userId);
   }

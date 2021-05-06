@@ -26,15 +26,15 @@ import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
-import 'package:BSApp/screens/profile/your_deals_screen.dart';
-import 'package:BSApp/screens/profile/your_topics_screen.dart';
-import 'package:BSApp/screens/profile/your_profile_screen.dart';
 import 'package:BSApp/screens/profile/your_activity_screen.dart';
+import 'package:BSApp/screens/profile/your_deals_screen.dart';
+import 'package:BSApp/screens/profile/your_profile_screen.dart';
+import 'package:BSApp/screens/profile/your_topics_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('pl', null);
+    initializeDateFormatting('pl');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -123,7 +123,7 @@ class MyApp extends StatelessWidget {
           // scaffoldBackgroundColor: Color.fromRGBO(248, 250, 251, 1),
           scaffoldBackgroundColor: MyColorsProvider.BACKGROUND_COLOR,
           primarySwatch: Colors.blue,
-          accentColor: Color.fromRGBO(99, 137, 217, 1),
+          accentColor: const Color.fromRGBO(99, 137, 217, 1),
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
           // closer together (more dense) than on mobile platforms.

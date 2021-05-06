@@ -17,10 +17,10 @@ class CookiesUtilService {
 
   static Future<List<Map<String, dynamic>>> getCookieList(String cookie) async {
     final prefs = await SharedPreferences.getInstance();
-    var cookieValue = prefs.getString(cookie);
+    final cookieValue = prefs.getString(cookie);
     if (cookieValue != null) {
       final extractedCookie = json.decode(cookieValue) as List<dynamic>;
-      List<Map<String, dynamic>> extractedCookieList = extractedCookie.map((e) => e as Map<String, dynamic>).toList();
+      final List<Map<String, dynamic>> extractedCookieList = extractedCookie.map((e) => e as Map<String, dynamic>).toList();
       return extractedCookieList;
     } else {
       return [];

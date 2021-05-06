@@ -14,19 +14,19 @@ class ForumCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String categoryId = ModalRoute.of(context).settings.arguments as String;
-    var normalTopicsHeader = Container(
+    final String categoryId = ModalRoute.of(context).settings.arguments as String;
+    final normalTopicsHeader = Container(
       padding: const EdgeInsets.all(8.0),
-      child: Text(
+      child: const Text(
         'Tematy',
-        style: const TextStyle(fontSize: 15),
+        style: TextStyle(fontSize: 15),
       ),
     );
-    var pinnedTopicsHeader = Container(
+    final pinnedTopicsHeader = Container(
       padding: const EdgeInsets.all(8.0),
-      child: Text(
+      child: const Text(
         'Przypięte tematy',
-        style: const TextStyle(fontSize: 15),
+        style: TextStyle(fontSize: 15),
       ),
     );
     return Scaffold(
@@ -43,18 +43,18 @@ class ForumCategoryScreen extends StatelessWidget {
               .fetchCategoryTopics(categoryId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: const LoadingIndicator());
+              return const Center(child: LoadingIndicator());
             } else {
               if (snapshot.error != null) {
-                return Center(
-                  child: const ServerErrorSplash(),
+                return const Center(
+                  child: ServerErrorSplash(),
                 );
               } else {
                 return Consumer<Topics>(
                   builder: (context, topicsData, child) {
-                    List<TopicModel> pinnedTopics =
+                    final List<TopicModel> pinnedTopics =
                         topicsData.categoryTopicsPinned;
-                    List<TopicModel> notPinnedTopics =
+                    final List<TopicModel> notPinnedTopics =
                         topicsData.categoryTopicsNotPinned;
                     return ListView.builder(
                       itemBuilder: (context, index) {

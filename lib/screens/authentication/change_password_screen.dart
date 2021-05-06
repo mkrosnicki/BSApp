@@ -14,7 +14,7 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  var _newPasswordController = TextEditingController();
+  final _newPasswordController = TextEditingController();
   String _currentPassword = '';
   String _newPassword = '';
 
@@ -48,10 +48,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('Ok'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
+            child: const Text('Ok'),
           )
         ],
       ),
@@ -61,108 +61,106 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        leading: const AppBarBackButton(Colors.black),
+      appBar: const BaseAppBar(
+        leading: AppBarBackButton(Colors.black),
         title: 'Zmiana hasła',
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Zmiana',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Zmiana',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 40),
+                  ),
+                  const Text(
+                    'Hasła',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 40),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'W celu podaj swoje obecne hasło, następnie wprowadź nowe.',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black38,
                     ),
-                    Text(
-                      'Hasła',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'W celu podaj swoje obecne hasło, następnie wprowadź nowe.',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black38,
-                      ),
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: 'Obecne hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 3) {
-                                return 'Zbyt krótkie hasło';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _currentPassword = value;
-                            },
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'Obecne hasło'),
+                          obscureText: true,
+                          cursorColor: Colors.black,
+                          validator: (value) {
+                            if (value.isEmpty || value.length < 3) {
+                              return 'Zbyt krótkie hasło';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            _currentPassword = value;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Nowe hasło'),
+                          obscureText: true,
+                          cursorColor: Colors.black,
+                          controller: _newPasswordController,
+                          validator: (value) {
+                            if (value.isEmpty || value.length < 3) {
+                              return 'Zbyt krótkie hasło';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            _newPassword = value;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                              labelText: 'Potwierdź nowe hasło'),
+                          obscureText: true,
+                          cursorColor: Colors.black,
+                          validator: (value) {
+                            if (value != _newPasswordController.text) {
+                              return 'Hasła nie są takie same!';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            _newPassword = value;
+                          },
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _submit,
+                            child: const Text('Zmień hasło'),
                           ),
-                          TextFormField(
-                            decoration:
-                                const InputDecoration(labelText: 'Nowe hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            controller: _newPasswordController,
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 3) {
-                                return 'Zbyt krótkie hasło';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _newPassword = value;
-                            },
-                          ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: 'Potwierdź nowe hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            validator: (value) {
-                              if (value != _newPasswordController.text) {
-                                return 'Hasła nie są takie same!';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _newPassword = value;
-                            },
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              child: const Text('Zmień hasło'),
-                              onPressed: _submit,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

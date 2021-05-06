@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'clear_notifications_button.dart';
 
 class NotificationsScreen extends StatelessWidget {
-  static const routeName = '/nofifications';
+  static const routeName = '/notifications';
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class NotificationsScreen extends StatelessWidget {
               .fetchMyNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: const LoadingIndicator());
+              return const Center(child: LoadingIndicator());
             } else {
               if (snapshot.error != null) {
-                return Center(
-                  child: const ServerErrorSplash(),
+                return const Center(
+                  child: ServerErrorSplash(),
                 );
               } else {
                 return RefreshIndicator(
@@ -59,14 +59,14 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  _buildNoNotificationsSplashView() {
+  Widget _buildNoNotificationsSplashView() {
     return Container(
       color: Colors.white,
       child: const Center(
-        child: const Text(
+        child: Text(
           'Nie masz żadnych powiadomień',
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
               fontSize: 18,
               height: 1.5,
               fontWeight: FontWeight.w600,
@@ -76,5 +76,5 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
-  _refreshNotifications(BuildContext context) {}
+  Future<void> _refreshNotifications(BuildContext context) {}
 }

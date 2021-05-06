@@ -12,7 +12,7 @@ class MyProfileOptionsHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),

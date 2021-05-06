@@ -9,19 +9,22 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      onPressed: () => _logout(context),
       child: ListTile(
         title: Container(
           padding: EdgeInsets.all(10.0),
           alignment: Alignment.center,
-          child: Text('Wyloguj się', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),),
+          child: const Text(
+            'Wyloguj się',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          ),
         ),
         focusColor: Colors.grey,
       ),
-      onPressed: () => _logout(context),
     );
   }
 
-  void _logout(BuildContext context) async {
+  Future<void> _logout(BuildContext context) async {
     await Provider.of<Auth>(context, listen: false).logout();
   }
 }

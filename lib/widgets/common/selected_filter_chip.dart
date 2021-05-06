@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 class SelectedFilterChip extends StatelessWidget {
 
   final String label;
-  final Function onTapFunction;
-  final Function onDeleteFunction;
+  final Function() onTapFunction;
+  final Function() onDeleteFunction;
 
-  SelectedFilterChip({this.label, this.onTapFunction, this.onDeleteFunction});
+  const SelectedFilterChip({this.label, this.onTapFunction, this.onDeleteFunction});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
-      padding: EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(4.0),
       child: Wrap(
         direction: Axis.horizontal,
         children: [
@@ -26,7 +26,7 @@ class SelectedFilterChip extends StatelessWidget {
                 style: const TextStyle(fontSize: 10),
               ),
             ),
-            onTap: onTapFunction != null ? onTapFunction : () {},
+            onTap: onTapFunction ?? () {},
           ),
           InkWell(
             child: Padding(
@@ -37,11 +37,11 @@ class SelectedFilterChip extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            onTap: onDeleteFunction != null ? onDeleteFunction : () {},
+            onTap: onDeleteFunction ?? () {},
           ),
         ],
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: MyColorsProvider.BACKGROUND_COLOR,
         borderRadius: BorderRadius.all(
           Radius.circular(

@@ -23,17 +23,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              title: const Text('Hasło zostao zresetowane'),
+              title: const Text('Hasło zostało zresetowane'),
               actions: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TextButton(
-                      child: const Text('Ok'),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },
+                      child: const Text('Ok'),
                     )
                   ],
                 )
@@ -45,76 +44,74 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
+      appBar: const BaseAppBar(
         title: 'Resetowanie hasła',
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
-                      child: Text(
-                        'Resetowanie',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 40),
-                      ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 50.0),
+                    child: Text(
+                      'Resetowanie',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 40),
                     ),
-                    Text(
-                      'Hasła',
-                      style:
-                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  ),
+                  const Text(
+                    'Hasła',
+                    style:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'W celu zresetowania hasła podaj adres email na jaki zostało zarejestrowane konto.',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black38,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'W celu zresetowania hasła podaj adres email na jaki zostało zarejestrowane konto.',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black38,
-                      ),
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(labelText: 'Email'),
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: Colors.black,
-                            validator: (value) {
-                              if (value.isEmpty || !value.contains('@')) {
-                                return 'Nieprawidłowy e-mail!';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _email = value;
-                            },
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'Email'),
+                          keyboardType: TextInputType.emailAddress,
+                          cursorColor: Colors.black,
+                          validator: (value) {
+                            if (value.isEmpty || !value.contains('@')) {
+                              return 'Nieprawidłowy e-mail!';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            _email = value;
+                          },
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _submit,
+                            child: const Text('Zresetuj hasło'),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              child: const Text('Zresetuj hasło'),
-                              onPressed: _submit,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

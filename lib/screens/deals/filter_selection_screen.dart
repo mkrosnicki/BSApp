@@ -8,7 +8,7 @@ import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/filters/age_type_chip.dart';
 import 'package:BSApp/widgets/filters/sorting_type_chip.dart';
 import 'package:flutter/cupertino.dart';
@@ -167,8 +167,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     );
   }
 
-  _buildAgeTypeChips() {
-    List<Widget> list = [];
+  List<Widget> _buildAgeTypeChips() {
+    final List<Widget> list = [];
     AgeType.values.forEach(
       (e) => list.add(
         AgeTypeChip(
@@ -189,7 +189,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     return list;
   }
 
-  _buildSortingTypeChips() {
+  List<Widget> _buildSortingTypeChips() {
     List<Widget> list = [
       SortingTypeChip(
         SortingType.NEWEST,
@@ -214,7 +214,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openCategorySelector(BuildContext context) async {
-    var selectedCategories = await Navigator.of(context)
+    final selectedCategories = await Navigator.of(context)
         .pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {

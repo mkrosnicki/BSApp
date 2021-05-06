@@ -1,6 +1,5 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -12,7 +11,7 @@ class PostItemHeartButton extends StatelessWidget {
 
   final PostModel post;
 
-  PostItemHeartButton(this.post);
+  const PostItemHeartButton(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class PostItemHeartButton extends StatelessWidget {
     );
   }
 
-  _likeTePost(
+  void _likeTePost(
       BuildContext context,
       PostModel post,
       bool wasLikedByLoggedUser,

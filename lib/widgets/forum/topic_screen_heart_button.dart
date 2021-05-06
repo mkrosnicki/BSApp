@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class TopicScreenHeartButton extends StatelessWidget {
   final TopicModel topic;
 
-  TopicScreenHeartButton(this.topic);
+  const TopicScreenHeartButton(this.topic);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TopicScreenHeartButton extends StatelessWidget {
     );
   }
 
-  _toggleFavourites(BuildContext context, TopicModel topic, bool isFavourite,
+  void _toggleFavourites(BuildContext context, TopicModel topic, bool isFavourite,
       bool isUserLoggedIn) {
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);

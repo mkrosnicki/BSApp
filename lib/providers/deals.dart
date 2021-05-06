@@ -3,10 +3,11 @@ import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Deals with ChangeNotifier {
 
-  ApiProvider _apiProvider = new ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
 
   List<DealModel> allDeals = [];
   List<DealModel> fetchedObservedDeals = [];
@@ -15,9 +16,9 @@ class Deals with ChangeNotifier {
 
   String token;
 
-  Deals.empty();
-
   Deals({this.allDeals, this.fetchedObservedDeals, this.token});
+
+  Deals.empty();
 
 
   List<DealModel> get deals {
@@ -40,7 +41,8 @@ class Deals with ChangeNotifier {
     final List<DealModel> loadedDeals = [];
     final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      final logger = Logger();
+      logger.e('No Deals Found!');
     }
     // print(responseBody);
     responseBody.forEach((element) {
@@ -55,7 +57,8 @@ class Deals with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/users/me/deals/observed', token: token) as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      final logger = Logger();
+      logger.i('No Deals Found!');
     }
     responseBody.forEach((element) {
       fetchedDeals.add(DealModel.fromJson(element));
@@ -69,7 +72,8 @@ class Deals with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/users/me/deals/added', token: token) as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      final logger = Logger();
+      logger.i('No Deals Found!');
     }
     responseBody.forEach((element) {
       fetchedDeals.add(DealModel.fromJson(element));
@@ -81,9 +85,10 @@ class Deals with ChangeNotifier {
   Future<void> fetchDealsAddedBy(String userId) async {
     final List<DealModel> fetchedDeals = [];
     final responseBody =
-    await _apiProvider.get('/users/${userId}/addedDeals') as List;
+    await _apiProvider.get('/users/$userId/addedDeals') as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      final logger = Logger();
+      logger.i('No Deals Found!');
     }
     responseBody.forEach((element) {
       fetchedDeals.add(DealModel.fromJson(element));
@@ -109,8 +114,7 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> createNewDeal(AddDealModel newDeal) async {
-    return await _apiProvider.post('/deals', newDeal.toDto(), token: token);
-    // return fetchDeals();
+    return _apiProvider.post('/deals', newDeal.toDto(), token: token);
   }
 
   DealModel findById(String dealId) {

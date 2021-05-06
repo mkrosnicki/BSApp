@@ -13,8 +13,12 @@ class DiscountTypeHelper {
     switch (type) {
       case DiscountType.ABSOLUTE:
         return ' zł';
+        break;
       case DiscountType.PERCENTAGE:
         return '%';
+        break;
+      default:
+        return null;
     }
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class UserProfileActivitiesList extends StatelessWidget {
   final UsersProfileModel usersProfile;
 
-  UserProfileActivitiesList(this.usersProfile);
+  const UserProfileActivitiesList(this.usersProfile);
 
   @override
   Widget build(BuildContext context) {

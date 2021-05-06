@@ -14,6 +14,8 @@ class ForumCategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       padding: EdgeInsets.zero,
+      shape: const Border(bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
+      onPressed: () => _navigateToForum(context),
       child: ListTile(
         tileColor: Colors.white,
         leading: SizedBox(
@@ -24,17 +26,15 @@ class ForumCategoryItem extends StatelessWidget {
             fit: BoxFit.fitHeight,
           ),
         ),
-        title: Text(title, style: TextStyle(fontSize: 14),),
-        subtitle: Text(description, style: TextStyle(fontSize: 12),),
+        title: Text(title, style: const TextStyle(fontSize: 14),),
+        subtitle: Text(description, style: const TextStyle(fontSize: 12),),
         trailing: MyIconsProvider.FORWARD_ICON,
         focusColor: Colors.grey,
       ),
-      shape: Border(bottom: const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () => _navigateToForum(context),
     );
   }
 
-  void _navigateToForum(BuildContext context) async {
+  Future<void> _navigateToForum(BuildContext context) async {
     Navigator.of(context).pushNamed(ForumCategoryScreen.routeName, arguments: id);
   }
 }

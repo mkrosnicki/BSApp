@@ -31,8 +31,8 @@ class SearchModel {
       this.sortBy});
 
   static SearchModel of(dynamic searchSnapshot) {
-    var voivodeship = searchSnapshot['voivodeship'];
-    var city = searchSnapshot['city'];
+    final voivodeship = searchSnapshot['voivodeship'];
+    final city = searchSnapshot['city'];
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
@@ -60,7 +60,7 @@ class SearchModel {
   }
 
   bool isSame(FilterSettings filterSettings) {
-    Function eq = const DeepCollectionEquality.unordered().equals;
+    final Function eq = const DeepCollectionEquality.unordered().equals;
     return
       phrase == filterSettings.phrase &&
           eq(categories, filterSettings.categories) &&

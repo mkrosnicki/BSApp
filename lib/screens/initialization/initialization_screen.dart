@@ -14,7 +14,7 @@ class InitializationScreen extends StatelessWidget {
             children: [
               const Text(
                 'Ładowanie aplikacji',
-                style: const TextStyle(fontSize: 24, color: Colors.white),
+                style: TextStyle(fontSize: 24, color: Colors.white),
               ),
               const SizedBox(height: 10),
               JumpingDotsProgressIndicator(

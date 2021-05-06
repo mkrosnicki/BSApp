@@ -18,7 +18,6 @@ class YourProfileScreen extends StatefulWidget {
 }
 
 class _YourProfileScreenState extends State<YourProfileScreen> {
-  UsersProfileModel _usersProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +35,13 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       Provider.of<Users>(context, listen: false)
                           .getUsersProfile(auth.userId);
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: const LoadingIndicator(),
+                    return const Center(
+                      child: LoadingIndicator(),
                     );
                   } else {
                     if (snapshot.error != null) {
-                      return Center(
-                        child: const ServerErrorSplash(),
+                      return const Center(
+                        child: ServerErrorSplash(),
                       );
                     } else {
                       return Container(
@@ -50,7 +49,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         child: Flex(
                           direction: Axis.vertical,
                           mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ProfileUserInfo(auth.me),
                             MyProfileStatisticsInfo(),

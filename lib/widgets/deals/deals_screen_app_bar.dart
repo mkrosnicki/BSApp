@@ -38,10 +38,10 @@ class DealsScreenAppBar extends StatelessWidget {
     );
   }
 
-  _openFiltersButton(BuildContext context) {
+  Widget _openFiltersButton(BuildContext context) {
     return InkWell(
       onTap: () => _showFilterSelectionDialog(context),
-      child: Padding(
+      child: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
         child: Icon(
           CupertinoIcons.slider_horizontal_3,
@@ -51,13 +51,13 @@ class DealsScreenAppBar extends StatelessWidget {
     );
   }
 
-  _hideLastSearchesPanelButton() {
+  Widget _hideLastSearchesPanelButton() {
     return GestureDetector(
       onTap: () => _showLastSearchesPanel(false),
       child: const TextButton(
-        child: const Text(
+        child: Text(
           'Anuluj',
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black87,
             fontSize: 12,
             letterSpacing: 0.3,
@@ -67,7 +67,8 @@ class DealsScreenAppBar extends StatelessWidget {
     );
   }
 
-  _searchField(BuildContext context) {
+  Widget _searchField(BuildContext context) {
+    // ignore: sized_box_for_whitespace
     return Container(
       width: double.infinity,
       child: TextField(
@@ -79,9 +80,9 @@ class DealsScreenAppBar extends StatelessWidget {
         style: const TextStyle(fontSize: 12),
         decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
           hintText: 'Czego szukasz?',
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: const Icon(
+          prefixIcon: const Padding(
+            padding: EdgeInsets.all(0.0),
+            child: Icon(
               CupertinoIcons.search,
               color: Colors.black54,
               size: 15,
@@ -95,15 +96,15 @@ class DealsScreenAppBar extends StatelessWidget {
     );
   }
 
-  _navigateToResultsScreen(BuildContext context, String phrase) {
+  void _navigateToResultsScreen(BuildContext context, String phrase) {
     Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
         arguments: FilterSettings.phrase(phrase));
     _showLastSearchesPanel(false);
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    var newFilterSettings =
-        await Navigator.of(context).push(new MaterialPageRoute<FilterSettings>(
+    final newFilterSettings =
+        await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
             builder: (BuildContext context) {
               return FilterSelectionScreen();
             },
@@ -115,7 +116,7 @@ class DealsScreenAppBar extends StatelessWidget {
     }
   }
 
-  _showLastSearchesPanel(bool isShowSearch) async {
+  Future<void> _showLastSearchesPanel(bool isShowSearch) async {
     if (!isShowSearch) {
       _focusNode.unfocus();
     } else {

@@ -41,7 +41,7 @@ class TopicScreenInputBar extends StatelessWidget {
                       children: [
                         const Text(
                           'Odpowiadasz na post ',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.black54, fontSize: 13),
                         ),
                         Text(
@@ -54,14 +54,14 @@ class TopicScreenInputBar extends StatelessWidget {
                       ],
                     ),
                     InkWell(
+                      onTap: () {
+                        postToReplySubject.add(null);
+                      },
                       child: const Icon(
                         CupertinoIcons.clear,
                         color: Colors.black54,
                         size: 16,
                       ),
-                      onTap: () {
-                        postToReplySubject.add(null);
-                      },
                     ),
                   ],
                 ),
@@ -87,8 +87,7 @@ class TopicScreenInputBar extends StatelessWidget {
                 child: TextField(
                   controller: textEditingController,
                   focusNode: textFocusNode,
-                  style: TextStyle(fontSize: 14),
-                  autofocus: false,
+                  style: const TextStyle(fontSize: 14),
                   decoration: MyStylingProvider.TEXT_FIELD_DECORATION
                       .copyWith(hintText: 'Napisz post...'),
                 ),
@@ -100,8 +99,8 @@ class TopicScreenInputBar extends StatelessWidget {
                       return InkWell(
                         onTap: () => _addReply(
                             context, authData.isAuthenticated, snapshot.data),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             CupertinoIcons.chevron_right,
                             color: Colors.blue,
@@ -117,10 +116,10 @@ class TopicScreenInputBar extends StatelessWidget {
     );
   }
 
-  _addReply(
+  Future<void> _addReply(
       BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
     if (textEditingController.text.trim().isEmpty) {
-      return null;
+      return;
     }
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
@@ -133,20 +132,20 @@ class TopicScreenInputBar extends StatelessWidget {
     }
   }
 
-  _addReplyToPost(BuildContext context, PostModel postToReply) async {
+  Future<void> _addReplyToPost(BuildContext context, PostModel postToReply) async {
     await Provider.of<Posts>(context, listen: false).addReplyToPost(topicId,
         postToReply.id, textEditingController.text, postToReply.content);
     _clearTextBox();
     postToReplySubject.add(null);
   }
 
-  _addPostToTopic(BuildContext context) async {
+  Future<void> _addPostToTopic(BuildContext context) async {
     await Provider.of<Posts>(context, listen: false)
         .addPostToTopic(topicId, textEditingController.text);
     _clearTextBox();
   }
 
-  _clearTextBox() {
+  void _clearTextBox() {
     textEditingController.clear();
     textFocusNode.unfocus();
   }

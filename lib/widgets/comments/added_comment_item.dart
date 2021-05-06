@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class AddedCommentItem extends StatelessWidget {
   final CommentModel comment;
 
-  AddedCommentItem(this.comment);
+  const AddedCommentItem(this.comment);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class AddedCommentItem extends StatelessWidget {
       child: Flex(
         direction: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -36,9 +35,7 @@ class AddedCommentItem extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Flex(
                 direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   RichText(
                     overflow: TextOverflow.ellipsis,
@@ -52,7 +49,7 @@ class AddedCommentItem extends StatelessWidget {
                             height: 1.3,
                           ),
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: 'jakaś tam okazja',
                           style: TextStyle(
                             fontSize: 11,
@@ -68,7 +65,7 @@ class AddedCommentItem extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Text(
                       comment.content,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 11, color: Colors.black54, height: 1.3),
                     ),
                   ),
@@ -80,7 +77,7 @@ class AddedCommentItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             alignment: Alignment.topRight,
             child: Text(
-              '${DateUtil.timeAgoString(comment.addedAt)}',
+              DateUtil.timeAgoString(comment.addedAt),
               style: Theme.of(context)
                   .textTheme
                   .bodyText2

@@ -6,7 +6,7 @@ class MyProfileOptionItem extends StatelessWidget {
   final String title;
   final int number;
   final String route;
-  final Function function;
+  final Function() function;
   final dynamic arguments;
 
   const MyProfileOptionItem({this.title, this.number, this.route, this.function, this.arguments});
@@ -15,12 +15,18 @@ class MyProfileOptionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       padding: EdgeInsets.zero,
+      shape: const Border(
+          bottom: BorderSide(
+              color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
+      onPressed: () {
+        _preformAction(context);
+      },
       child: ListTile(
         title: Wrap(
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
             if (number != null)
               Container(
@@ -32,7 +38,7 @@ class MyProfileOptionItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 4.0),
                 child: Text(
                   number.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 10,
                       color: Colors.black87,
                       fontWeight: FontWeight.w400),
@@ -40,19 +46,13 @@ class MyProfileOptionItem extends StatelessWidget {
               ),
           ],
         ),
-        trailing: Icon(Icons.chevron_right),
+        trailing: const Icon(Icons.chevron_right),
         focusColor: Colors.grey,
       ),
-      shape: Border(
-          bottom: const BorderSide(
-              color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () {
-        _preformAction(context);
-      },
     );
   }
 
-  void _preformAction(BuildContext context) async {
+  Future<void> _preformAction(BuildContext context) async {
     var shouldNavigate = true;
     if (function != null) {
       shouldNavigate = await function();
@@ -62,7 +62,7 @@ class MyProfileOptionItem extends StatelessWidget {
     }
   }
 
-  _navigateTo(BuildContext context) {
+  void _navigateTo(BuildContext context) {
     Navigator.of(context).pushNamed(route, arguments: arguments);
   }
 }

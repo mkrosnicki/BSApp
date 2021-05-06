@@ -13,24 +13,24 @@ class TopicScreenPosts extends StatelessWidget {
   final TopicModel topic;
   final PublishSubject<PostModel> postToReplySubject;
 
-  TopicScreenPosts(this.topic, this.postToReplySubject);
+  const TopicScreenPosts(this.topic, this.postToReplySubject);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         children: [
           FutureBuilder(
             future: Provider.of<Posts>(context, listen: false).fetchPostsForTopic(topic.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: const LoadingIndicator());
+                return const Center(child: LoadingIndicator());
               } else {
                 if (snapshot.error != null) {
-                  return Center(
-                    child: const ServerErrorSplash(),
+                  return const Center(
+                    child: ServerErrorSplash(),
                   );
                 } else {
                   return Consumer<Posts>(

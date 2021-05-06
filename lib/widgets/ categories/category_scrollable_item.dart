@@ -17,7 +17,7 @@ class CategoryScrollableItem extends StatelessWidget {
               arguments: FilterSettings.categories([categoryModel])),
       child: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: Flex(
           direction: Axis.vertical,
           children: [
@@ -33,10 +33,9 @@ class CategoryScrollableItem extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.only(top: 2.0),
-                child: Text(_getShrinked(categoryModel.name), style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
+                child: Text(_getShrinked(categoryModel.name), style: const TextStyle(fontSize: 12), textAlign: TextAlign.center,),
               ),
             )
           ],

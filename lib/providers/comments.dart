@@ -1,17 +1,18 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class Comments with ChangeNotifier {
-  ApiProvider _apiProvider = new ApiProvider();
+  final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> fetchedDealComments = [];
   List<CommentModel> fetchedAddedComments = [];
   String token;
 
-  Comments.empty();
-
   Comments({this.fetchedDealComments, this.fetchedAddedComments, this.token});
+
+  Comments.empty();
 
   List<CommentModel> get allDealComments {
     return [...fetchedDealComments];
@@ -34,10 +35,11 @@ class Comments with ChangeNotifier {
     final responseBody =
         await _apiProvider.get('/deals/$dealId/comments') as List;
     if (responseBody == null) {
-      print('No Comments Found!');
+      final logger = Logger();
+      logger.i('No Comments Found!');
     }
     responseBody.forEach((element) {
-      var comment = CommentModel.fromJson(element);
+      final comment = CommentModel.fromJson(element);
       loadedComments.add(comment);
       loadedComments.addAll(comment.subComments);
     });
@@ -50,10 +52,11 @@ class Comments with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/users/me/comments', token: token) as List;
     if (responseBody == null) {
-      print('No Comments Found!');
+      final logger = Logger();
+      logger.i('No Comments Found!');
     }
     responseBody.forEach((element) {
-      var comment = CommentModel.fromJson(element);
+      final comment = CommentModel.fromJson(element);
       loadedComments.add(comment);
       loadedComments.addAll(comment.subComments);
     });

@@ -4,11 +4,11 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'form-title.dart';
+import 'form_title.dart';
 
 class RegistrationForm extends StatefulWidget {
   @override
@@ -17,30 +17,30 @@ class RegistrationForm extends StatefulWidget {
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  Map<String, String> _authData = {'email': '', 'password': '', 'username': ''};
+  final Map<String, String> _authData = {'email': '', 'password': '', 'username': ''};
   bool _isLoading = false;
 
-  var _emailController = TextEditingController();
-  var _nameController = TextEditingController();
-  var _passwordController = TextEditingController();
-  var _confirmPasswordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
-  _getFormFieldDecoration(String hintText) {
+  InputDecoration _getFormFieldDecoration(String hintText) {
     return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
         .copyWith(hintText: hintText);
   }
 
-  var formFieldDecoration = InputDecoration(
+  InputDecoration formFieldDecoration = const InputDecoration(
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     filled: true,
     fillColor: MyColorsProvider.GREY_BORDER_COLOR,
     focusColor: MyColorsProvider.GREY_BORDER_COLOR,
     border: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+      borderSide: BorderSide(width: 0, style: BorderStyle.none),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: const BorderSide(width: 0),
+      borderSide: BorderSide(width: 0),
     ),
   );
 
@@ -70,11 +70,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
           .contains('must be a well-formed email address')) {
         errorMessage = 'Email został podany w złym formacie!';
       }
-      await showInformationDialog(context, Text('Błąd rejestracji'), Text(errorMessage), Text('Ok'));
+      await showInformationDialog(context, const Text('Błąd rejestracji'), Text(errorMessage), const Text('Ok'));
     } catch (error) {
       const errorMessage =
           'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
-      await showInformationDialog(context, Text('Błąd rejestracji'), Text(errorMessage), Text('Ok'));
+      await showInformationDialog(context, const Text('Błąd rejestracji'), const Text(errorMessage), const Text('Ok'));
     }
 
     setState(() {
@@ -83,10 +83,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
     if (signUpSuccessful) {
       await showInformationDialog(
           context,
-          Text('Konto zostało utworzone.'),
-          Text(
+          const Text('Konto zostało utworzone.'),
+          const Text(
               'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.'),
-          Text('Ok'));
+          const Text('Ok'));
       Navigator.of(context).pop();
     }
   }
@@ -94,8 +94,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Center(
-            child: const LoadingIndicator(),
+        ? const Center(
+            child: LoadingIndicator(),
           )
         : SingleChildScrollView(
             child: Padding(
@@ -105,10 +105,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    FormTitle('Zarejestruj się'),
+                    const FormTitle('Zarejestruj się'),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                          vertical: 6.0),
                       child: TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
@@ -128,7 +128,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                          vertical: 6.0),
                       child: TextFormField(
                         controller: _nameController,
                         cursorColor: Colors.black,
@@ -136,7 +136,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         decoration: _getFormFieldDecoration('Imię'),
                         validator: (value) {
                           if (value.length < 3) {
-                            return 'Za krótkie imie, wprowadź conajmnie 3 znaki.';
+                            return 'Za krótkie imię, wprowadź co najmniej 3 znaki.';
                           } else {
                             return null;
                           }
@@ -148,7 +148,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                          vertical: 6.0),
                       child: TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
@@ -168,12 +168,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 0.0),
+                          vertical: 6.0),
                       child: TextFormField(
                         controller: _confirmPasswordController,
                         cursorColor: Colors.black,
                         obscureText: true,
-                        decoration: _getFormFieldDecoration('Potwiedź hasło'),
+                        decoration: _getFormFieldDecoration('Potwierdź hasło'),
                         validator: (value) {
                           if (value != _passwordController.text) {
                             return 'Hasła nie są takie same!';
@@ -188,7 +188,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 6.0),
+                      margin: const EdgeInsets.only(top: 6.0),
                       child: PrimaryButton('Stwórz konto', _submit),
                     ),
                   ],

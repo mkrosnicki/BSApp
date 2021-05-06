@@ -1,5 +1,5 @@
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
-import 'package:BSApp/widgets/common/primary-button.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +24,12 @@ class MainAuthScreen extends StatelessWidget {
         child: Column(
           children: [
             MainAuthScreenHeader(),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.0),
               child: Text(
-                  'Zaloguj się aby korzystać ze wszystkich funkcjonalności.', style: const TextStyle(fontSize: 13),),
+                'Zaloguj się aby korzystać ze wszystkich funkcjonalności.',
+                style: TextStyle(fontSize: 13),
+              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,

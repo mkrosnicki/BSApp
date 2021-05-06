@@ -34,7 +34,7 @@ class FilterSettings {
   }
 
   String get lastCategoryString {
-    return lastCategory != null ? lastCategory.name : null;
+    return lastCategory?.name;
   }
 
   String get locationString {
@@ -44,11 +44,11 @@ class FilterSettings {
   }
 
   String get simpleLocationString {
-    return city != null ? city.name : voivodeship != null ? voivodeship.name : null;
+    return city != null ? city.name : voivodeship?.name;
   }
 
   String get sortingString {
-    return sortBy != null ? '${SortingTypeHelper.getReadableM(sortBy)}' : null;
+    return sortBy != null ? SortingTypeHelper.getReadableM(sortBy) : null;
   }
 
   String get ageTypesString {
@@ -62,7 +62,7 @@ class FilterSettings {
   }
 
   Map<String, dynamic> toParamsMap() {
-    Map<String, dynamic> paramsMap = {};
+    final Map<String, dynamic> paramsMap = {};
     if (phrase != null) {
       paramsMap.putIfAbsent('phrase', () => phrase);
     }
@@ -92,7 +92,7 @@ class FilterSettings {
     return paramsMap;
   }
 
-  clear(
+  void clear(
       {bool clearInternetOnly = false,
       bool clearActiveOnly = false,
       bool clearLocation = false,
@@ -102,65 +102,65 @@ class FilterSettings {
       bool clearAgeTypes = false}) {
 
     if (clearInternetOnly) {
-      this.clearInternetOnly();
+      _clearInternetOnly();
     }
     if (clearActiveOnly) {
-      this.clearActiveOnly();
+      _clearActiveOnly();
     }
     if (clearLocation) {
-      this.clearLocation();
+      _clearLocation();
     }
     if (clearSorting) {
-      this.clearSorting();
+      _clearSorting();
     }
     if (clearPhrase) {
-      this.clearPhrase();
+      _clearPhrase();
     }
     if (clearCategories) {
-      this.clearCategories();
+      _clearCategories();
     }
     if (clearAgeTypes) {
-      this.clearAgeTypes();
+      _clearAgeTypes();
     }
   }
 
-  clearPhrase() {
-    this.phrase = null;
+  void _clearPhrase() {
+    phrase = null;
   }
 
-  clearInternetOnly() {
-    this.showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY;
+  void _clearInternetOnly() {
+    showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY;
   }
 
-  clearActiveOnly() {
-    this.showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY;
+  void _clearActiveOnly() {
+    showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY;
   }
 
-  clearCategories() {
-    this.categories = [];
+  void _clearCategories() {
+    categories = [];
   }
 
-  clearAgeTypes() {
-    this.ageTypes = [];
+  void _clearAgeTypes() {
+    ageTypes = [];
   }
 
-  clearSorting() {
-    this.sortBy = DEFAULT_SORTING_TYPE;
+  void _clearSorting() {
+    sortBy = DEFAULT_SORTING_TYPE;
   }
 
-  clearLocation() {
-    this.voivodeship = null;
-    this.city = null;
+  void _clearLocation() {
+    voivodeship = null;
+    city = null;
   }
 
-  clearAll() {
-    clearPhrase();
-    clearInternetOnly();
-    clearActiveOnly();
-    clearCategories();
-    clearAgeTypes();
-    clearSorting();
-    clearLocation();
+  void clearAll() {
+    _clearPhrase();
+    _clearInternetOnly();
+    _clearActiveOnly();
+    _clearCategories();
+    _clearAgeTypes();
+    _clearSorting();
+    _clearLocation();
   }
 
   bool areDefaults() {
@@ -193,8 +193,8 @@ class FilterSettings {
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
       'showActiveOnly': showActiveOnly.toString(),
       'showInternetOnly': showInternetOnly.toString(),
-      'voivodeship': voivodeship != null ? voivodeship.toJson() : null,
-      'city': city != null ? city.toJson() : null,
+      'voivodeship': voivodeship?.toJson(),
+      'city': city?.toJson(),
       'sortBy': sortBy != null ? SortingTypeHelper.asString(sortBy) : null,
     };
     return json;
@@ -207,8 +207,8 @@ class FilterSettings {
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
       'showActiveOnly': showActiveOnly.toString(),
       'showInternetOnly': showInternetOnly.toString(),
-      'voivodeship': voivodeship != null ? voivodeship.id : null,
-      'city': city != null ? city.name : null,
+      'voivodeship': voivodeship?.id,
+      'city': city?.name,
       'sortBy': sortBy != null ? SortingTypeHelper.asString(this.sortBy) : null,
     };
     return dto;
@@ -221,12 +221,12 @@ class FilterSettings {
       other is FilterSettings &&
           runtimeType == other.runtimeType &&
           phrase == other.phrase &&
-          DeepCollectionEquality.unordered().equals(categories, other.categories) &&
+          const DeepCollectionEquality.unordered().equals(categories, other.categories) &&
           showActiveOnly == other.showActiveOnly &&
           showInternetOnly == other.showInternetOnly &&
           voivodeship == other.voivodeship &&
           city == other.city &&
-          DeepCollectionEquality.unordered().equals(ageTypes, other.ageTypes) &&
+          const DeepCollectionEquality.unordered().equals(ageTypes, other.ageTypes) &&
           sortBy == other.sortBy;
 
   @override

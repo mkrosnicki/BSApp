@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String label;
-  final Function function;
+  final Function() function;
   final double fontSize;
 
   const PrimaryButton(this.label, this.function, {this.fontSize});
@@ -14,11 +14,11 @@ class PrimaryButton extends StatelessWidget {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(MyColorsProvider.BLUE),
       ),
+      onPressed: function,
       child: Text(
         label,
         style: TextStyle(fontSize: fontSize),
       ),
-      onPressed: function,
     );
   }
 }

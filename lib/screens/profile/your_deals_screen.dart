@@ -12,8 +12,8 @@ class YourDealsScreen extends StatelessWidget {
     final List<DealModel> addedDeals =
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: BaseAppBar(
-        leading: const AppBarBackButton(Colors.black),
+      appBar: const BaseAppBar(
+        leading: AppBarBackButton(Colors.black),
         title: 'Dodane okazje',
       ),
       body: ListView.builder(

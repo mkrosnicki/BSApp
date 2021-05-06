@@ -13,7 +13,7 @@ class AddDealScreen extends StatefulWidget {
 }
 
 class _AddDealScreenState extends State<AddDealScreen> {
-  var _newDeal = AddDealModel();
+  final _newDeal = AddDealModel();
 
   @override
   void initState() {

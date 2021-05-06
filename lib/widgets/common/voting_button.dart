@@ -1,9 +1,8 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class VotingButton extends StatelessWidget {
   final IconData iconData;
-  final Function function;
+  final Function() function;
   final String trailing;
   final bool isActive;
   final bool showBorder;
@@ -12,11 +11,11 @@ class VotingButton extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
 
-  VotingButton({this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false, this.backgroundColor = Colors.white});
+  const VotingButton({this.iconData, this.function, this.trailing, this.isActive = false, this.color, this.showBorder = true, this.fontSize = 11.0, this.isBold = false, this.backgroundColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
-    var textColor = color != null && isActive ? Colors.black : Colors.grey;
+    final textColor = color != null && isActive ? Colors.black : Colors.grey;
     return SizedBox(
       height: 20,
       child: ElevatedButton(
@@ -25,13 +24,12 @@ class VotingButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
           elevation: MaterialStateProperty.all(0.0),
           padding: MaterialStateProperty.all<EdgeInsets>(
-              EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0)),
+              const EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0)),
           minimumSize: MaterialStateProperty.all<Size>(const Size(4.0, 8.0)),
         ),
         onPressed: function,
         child: Flex(
           direction: Axis.horizontal,
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
               Padding(
