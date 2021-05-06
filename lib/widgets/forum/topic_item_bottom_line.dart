@@ -17,7 +17,7 @@ class TopicItemBottomLine extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '${topic.numberOfPosts} ${ConjugationHelper.postsConjugation(topic.numberOfPosts)}',
+            '${topic.numberOfPosts} ${ConjugationHelper.repliesConjugation(topic.numberOfPosts)}',
             style: const TextStyle(
                 fontSize: 11, color: Colors.black54, height: 1.1),
           ),

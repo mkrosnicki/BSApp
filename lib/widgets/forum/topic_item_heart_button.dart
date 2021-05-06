@@ -23,7 +23,7 @@ class TopicItemHeartButton extends StatelessWidget {
             onTap: () => _toggleFavourites(
                 context, topic, isObservedTopic, authData.isAuthenticated),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 2.0),
               child: Icon(
                   CupertinoIcons.heart_fill,
                   size: 20,
