@@ -1,4 +1,4 @@
-import 'package:BSApp/providers/my_info.dart';
+import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -28,8 +28,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       ),
       body: SafeArea(
         child: FutureBuilder(
-          future: Provider.of<MyInfo>(context, listen: false)
-              .fetchMyNotifications(),
+          future:
+              Provider.of<Auth>(context, listen: false).fetchMyNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
@@ -41,7 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               } else {
                 return RefreshIndicator(
                   onRefresh: () => _refreshNotifications(context),
-                  child: Consumer<MyInfo>(
+                  child: Consumer<Auth>(
                     builder: (context, myInfo, child) {
                       if (myInfo.myNotifications.isEmpty) {
                         return _buildNoNotificationsSplashView();
@@ -84,8 +84,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   void deactivate() {
-    print('deactiveatedeactiveatedeactiveatedeactiveatedeactiveate');
-    Provider.of<MyInfo>(context, listen: false).updateNotificationsSeenAt();
+    Provider.of<Auth>(context, listen: false).updateNotificationsSeenAt();
     super.deactivate();
   }
 }

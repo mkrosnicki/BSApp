@@ -9,12 +9,11 @@ class AppBarBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: TextButton(
-        onPressed: () {},
-        child: Icon(CupertinoIcons.back, color: color,),
-      ),
+    return TextButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      child: Icon(CupertinoIcons.back, color: color,),
     );
   }
 }

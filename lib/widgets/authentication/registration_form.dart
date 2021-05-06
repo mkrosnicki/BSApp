@@ -54,7 +54,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     });
     var signUpSuccessful = false;
     try {
-      await Provider.of<Auth>(context, listen: false).signup(
+      await Provider.of<Auth>(context, listen: false).signUp(
         _authData['email'],
         _authData['password'],
         _authData['username'],

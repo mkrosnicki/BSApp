@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stomp/stomp.dart';
+import 'package:BSApp/services/custom_stomp' as customStomp;
 
 class Auth with ChangeNotifier {
 
   final ApiProvider _apiProvider = ApiProvider();
+  StompClient _client;
+  int _unreadNotifications = 0;
+  List<NotificationModel> _notifications = [];
   String _token;
   DateTime _expiryDate;
   String _userId;
@@ -34,44 +40,33 @@ class Auth with ChangeNotifier {
     return _me;
   }
 
-  Future<void> fetchMe() async {
-    final responseBody = await _apiProvider.get('/users/me', token: _token);
-    _me = UserModel.fromJson(responseBody);
+  DateTime get notificationsSeenAt {
+    return _me != null ? _me.notificationsSeenAt : null;
+  }
+
+  int get unreadNotificationsCount {
+    return _unreadNotifications;
+  }
+
+  bool get newNotificationsPresent {
+    return unreadNotificationsCount > 0;
+  }
+
+  List<NotificationModel> get myNotifications {
+    return [..._notifications];
   }
 
   Future<void> login(String email, String password) async {
-    const url = '/auth/login';
-    final body = {
-          'email': email,
-          'password': password,
-        };
-    final responseData = await _apiProvider.post(url, body);
-    _token = responseData['token'];
-    await fetchMe();
-    var decoded = _decodeToken(_token);
-    _userId = _extractUserId(decoded);
-    _expiryDate = _extractExpiryDate(decoded);
-    _autoLogout();
-    notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    final userData = json.encode(
-      {
-        'token': _token,
-        'userId': _userId,
-        'expiryDate': _expiryDate.toIso8601String(),
-      },
-    );
-    prefs.setString('authData', userData);
-  }
-
-  Future<void> signup(String email, String password, String username) async {
-    const url = '/auth/signup';
-    final body = {
+    final responseData = await _apiProvider.post('/auth/login', {
       'email': email,
       'password': password,
-      'username': username,
-    };
-    await _apiProvider.post(url, body);
+    });
+    _handleAuthenticationResponse(responseData);
+    await fetchMe();
+    notifyListeners();
+    _scheduleAutoLogout();
+    _saveAuthCookie();
+    _connectToNotificationsSocket(_userId);
   }
 
   Future<bool> tryAutoLogin() async {
@@ -88,10 +83,19 @@ class Auth with ChangeNotifier {
     _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
     _expiryDate = expiryDate;
-    notifyListeners();
-    _autoLogout();
     await fetchMe();
+    notifyListeners();
+    _scheduleAutoLogout();
+    _connectToNotificationsSocket(_userId);
     return true;
+  }
+
+  Future<void> signUp(String email, String password, String username) async {
+    await _apiProvider.post('/auth/signup', {
+      'email': email,
+      'password': password,
+      'username': username,
+    });
   }
 
   Future<void> logout() async {
@@ -103,10 +107,9 @@ class Auth with ChangeNotifier {
       _authTimer.cancel();
       _authTimer = null;
     }
+    _disconnectFromNotificationsSocket(_userId);
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    // prefs.remove('authData');
-    prefs.clear();
+    _removeAuthCookie();
   }
 
   Future<void> deleteAccount() async {
@@ -115,30 +118,113 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> resendVerificationToken(String email) async {
-    final queryParameters = {
+    await _apiProvider.get('/resend-token', requestParams: {
       'email': email,
-    };
-    await _apiProvider.get('/resend-token', requestParams: queryParameters);
+    });
   }
 
   Future<void> resetUserPassword(String email) async {
-    final queryParameters = {
+    await _apiProvider.get('/auth/reset-password', requestParams: {
       'email': email,
-    };
-    await _apiProvider.get('/auth/reset-password', requestParams: queryParameters);
+    });
   }
 
   Future<void> changeUserPassword(String currentPassword, String newPassword) async {
-    final url = '/auth/change-password';
-    final body = {
+    await _apiProvider.post('/auth/change-password', {
       'userId': _userId,
       'currentPassword': currentPassword,
       'newPassword': newPassword,
-    };
-    await _apiProvider.post(url, body);
+    });
   }
 
-  void _autoLogout() {
+  Future<void> fetchMe() async {
+    final responseBody = await _apiProvider.get('/users/me', token: _token);
+    _me = UserModel.fromJson(responseBody);
+  }
+
+  Future<void> updateNotificationsSeenAt() async {
+    final responseBody = await _apiProvider.patch(
+        '/users/me/',
+        {'notificationsSeenAtUpdate': true},
+        token: _token
+    );
+    if (responseBody == null) {
+      print('No User Found!');
+    }
+    _me = UserModel.fromJson(responseBody);
+  }
+
+  Future<void> fetchMyNotifications() async {
+    final List<NotificationModel> fetchedNotifications = [];
+    final responseBody =
+    await _apiProvider.get('/users/me/notifications', token: _token) as List;
+    if (responseBody == null) {
+      print('No Deals Found!');
+    }
+    responseBody.forEach((element) {
+      fetchedNotifications.add(NotificationModel.fromJson(element));
+    });
+    _notifications = fetchedNotifications;
+    notifyListeners();
+  }
+
+  void _handleAuthenticationResponse(dynamic authenticationResponse) {
+    _token = authenticationResponse['token'];
+    final decoded = _decodeToken(_token);
+    _userId = _extractUserId(decoded);
+    _expiryDate = _extractExpiryDate(decoded);
+  }
+
+  Future<void> _saveAuthCookie() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userData = json.encode(
+      {
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String(),
+      },
+    );
+    prefs.setString('authData', userData);
+  }
+
+  Future<void> _removeAuthCookie() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('authData');
+  }
+
+  Future<void> _connectToNotificationsSocket(String userId) async {
+    await customStomp.connect(
+      'ws://192.168.162.241:8080/ws',
+      onConnect: (StompClient client, Map<String, String> headers) {
+        _client = client;
+        _client.subscribeString(
+          userId,
+          '/topics/notifications/$userId',
+          _acceptNotification,
+        );
+      },
+      onFault: _handleWebSocketConnectionError,
+    );
+    notifyListeners();
+  }
+
+  void _disconnectFromNotificationsSocket(String userId) {
+    if (_client != null) {
+      _client.unsubscribe(userId);
+      _client = null;
+    }
+  }
+
+  void _acceptNotification(Map<String, String> headers, String message) {
+    try {
+      _unreadNotifications = int.tryParse(message);
+      notifyListeners();
+    } catch (e) {
+      // do nothing
+    }
+  }
+
+  void _scheduleAutoLogout() {
     if (_authTimer != null) {
       _authTimer.cancel();
     }
@@ -151,11 +237,11 @@ class Auth with ChangeNotifier {
     final payload = parts[1];
     final String normalized = base64Url.normalize(payload);
     final String decodedStr = utf8.decode(base64Url.decode(normalized));
-    return json.decode(decodedStr);
+    return json.decode(decodedStr) as Map<String, dynamic>;
   }
 
   String _extractUserId(Map<String, dynamic> decoded) {
-    return decoded['sub'];
+    return decoded['sub'] as String;
   }
 
   int _extractExpiresInMs(Map<String, dynamic> decoded) {
@@ -170,6 +256,10 @@ class Auth with ChangeNotifier {
 
   DateTime _extractExpiryDate(Map<String, dynamic> decoded) {
     return _parseToExpiryDate(_extractExpiresInMs(decoded));
+  }
+
+  void _handleWebSocketConnectionError(StompClient client, error, stackTrace) {
+    // do nothing for the moment
   }
 
 }
