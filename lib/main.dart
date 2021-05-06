@@ -1,7 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
-import 'package:BSApp/providers/current_user_info.dart';
+import 'package:BSApp/providers/my_info.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/notifications.dart';
@@ -85,8 +85,8 @@ class MyApp extends StatelessWidget {
           update: (context, auth, previousNotifications) =>
           previousNotifications..update(auth.token, auth.userId),
         ),
-        ChangeNotifierProxyProvider<Auth, CurrentUserInfo>(
-          create: (context) => CurrentUserInfo.empty(),
+        ChangeNotifierProxyProvider<Auth, MyInfo>(
+          create: (context) => MyInfo.empty(),
           lazy: false,
           update: (context, auth, previousUserInfo) =>
           previousUserInfo..update(auth, previousUserInfo),
