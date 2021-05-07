@@ -13,14 +13,13 @@ class DealRateBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dealsProvider = Provider.of<Deals>(context);
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Deals>(
         builder: (context, dealsData, child) => RateBar(
           dealsData.findById(deal.id).numberOfPositiveVotes + 30,
           dealsData.findById(deal.id).numberOfNegativeVotes + 7,
-          dealsProvider.wasVotedPositivelyBy(deal.id, authData.userId),
-          dealsProvider.wasVotedNegativelyBy(deal.id, authData.userId),
+          deal.hasPositiveVoteFrom(authData.userId),
+          deal.hasNegativeVoteFrom(authData.userId),
           () => _vote(context, authData.isAuthenticated, true),
           () => _vote(context, authData.isAuthenticated, false),
         ),

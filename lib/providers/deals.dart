@@ -9,14 +9,14 @@ class Deals with ChangeNotifier {
 
   final ApiProvider _apiProvider = ApiProvider();
 
-  List<DealModel> allDeals = [];
+  List<DealModel> _deals = [];
 
   String _token;
 
   Deals.empty();
 
   List<DealModel> get deals {
-    return [...allDeals];
+    return [..._deals];
   }
 
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
@@ -25,13 +25,34 @@ class Deals with ChangeNotifier {
       final logger = Logger();
       logger.e('No Deals Found!');
     }
-    allDeals = DealModel.fromJsonList(responseBody);
+    _deals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
+  Future<void> fetchMyObservedDeals() async {
+    final responseBody =
+    await _apiProvider.get('/users/me/deals/observed', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Deals Found!');
+    }
+    _deals = DealModel.fromJsonList(responseBody);
+  }
+
+  Future<void> fetchMyAddedDeals() async {
+    final responseBody = await _apiProvider.get('/users/me/deals/added', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Deals Found!');
+    }
+    _deals = DealModel.fromJsonList(responseBody);
+  }
+
   Future<void> voteForDeal(String dealId, bool isPositive) async {
-    await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: _token);
-    return fetchDeals();
+    final responseBody = await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: _token);
+    final DealModel votedDeal = DealModel.fromJson(responseBody);
+    _deals[_deals.indexWhere((element) => element.id == votedDeal.id)] = votedDeal;
+    notifyListeners();
   }
 
   Future<void> createNewDeal(AddDealModel newDeal) async {
@@ -39,18 +60,11 @@ class Deals with ChangeNotifier {
   }
 
   DealModel findById(String dealId) {
-    return allDeals.firstWhere((deal) => deal.id == dealId);
+    return _deals.firstWhere((deal) => deal.id == dealId);
   }
 
-  bool wasVotedPositivelyBy(String dealId, String userId) {
-    return findById(dealId).positiveVoters.any((element) => element == userId);
-  }
-
-  bool wasVotedNegativelyBy(String dealId, String userId) {
-    return findById(dealId).negativeVoters.any((element) => element == userId);
-  }
-
-  void update(String token) {
+  void update(String token, List<DealModel> deals) {
+    _deals = deals;
     _token = token;
   }
 }

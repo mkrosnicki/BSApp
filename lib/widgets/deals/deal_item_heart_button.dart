@@ -17,8 +17,8 @@ class DealItemHeartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<CurrentUser>(
-        builder: (context, dealsData, child) {
-          final bool isObservedDeal = dealsData.isObservedDeal(deal);
+        builder: (context, currentUserData, child) {
+          final bool isObservedDeal = currentUserData.observesDeal(deal);
           return GestureDetector(
             onTap: () => _toggleFavourites(
                 context, deal, isObservedDeal, authData.isAuthenticated),

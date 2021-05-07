@@ -122,7 +122,7 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
-  bool isObservedDeal(DealModel deal) {
+  bool observesDeal(DealModel deal) {
     return _observedDeals.contains(deal);
   }
 
@@ -132,6 +132,8 @@ class CurrentUser with ChangeNotifier {
     if (!isAuthenticated) {
       _addedDeals = [];
       _observedDeals = [];
+    } else {
+      await fetchObservedDeals();
     }
     notifyListeners();
   }

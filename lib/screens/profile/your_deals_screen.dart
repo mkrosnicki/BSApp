@@ -1,5 +1,4 @@
-import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -14,16 +13,13 @@ class YourDealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<DealModel> addedDeals =
-        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: const BaseAppBar(
         leading: AppBarBackButton(Colors.black),
         title: 'Dodane okazje',
       ),
       body: FutureBuilder(
-        future:
-        Provider.of<CurrentUser>(context, listen: false).fetchAddedDeals(),
+        future: Provider.of<Deals>(context, listen: false).fetchMyAddedDeals(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: LoadingIndicator());
@@ -33,14 +29,14 @@ class YourDealsScreen extends StatelessWidget {
                 child: ServerErrorSplash(),
               );
             } else {
-              return Consumer<CurrentUser>(
-                builder: (context, currentUserData, child) {
-                  return currentUserData.addedDeals.isNotEmpty
+              return Consumer<Deals>(
+                builder: (context, dealsData, child) {
+                  return dealsData.deals.isNotEmpty
                       ? ListView.builder(
-                    itemBuilder: (context, index) =>
-                        DealItem(currentUserData.addedDeals[index]),
-                    itemCount: currentUserData.addedDeals.length,
-                  )
+                          itemBuilder: (context, index) =>
+                              DealItem(dealsData.deals[index]),
+                          itemCount: dealsData.deals.length,
+                        )
                       : _buildNoAddedDealsSplashView();
                 },
               );

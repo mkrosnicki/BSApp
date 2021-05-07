@@ -110,6 +110,14 @@ class DealModel {
     );
   }
 
+  bool hasPositiveVoteFrom(String userId) {
+    return positiveVoters.any((element) => element == userId);
+  }
+
+  bool hasNegativeVoteFrom(String userId) {
+    return negativeVoters.any((element) => element == userId);
+  }
+
   String get priceString {
     if (dealType == DealType.OCCASION) {
      return '${currentPrice.toString()} zł';
