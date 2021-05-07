@@ -36,7 +36,7 @@ class MyStylingProvider {
   );
 
   static const Border BOTTOM_GREY_BORDER = Border(bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5));
-  static const Border TOP_GREY_BORDER = Border(top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.2));
+  static const Border TOP_GREY_BORDER = Border(top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5));
   static const Border TOP_BOTTOM_BORDER = Border(top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5), bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5));
 
   static const TextStyle TEXT_BLACK = TextStyle(color: Colors.black87);

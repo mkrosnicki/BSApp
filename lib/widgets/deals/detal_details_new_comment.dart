@@ -78,46 +78,52 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             }
           },
         ),
-        Container(
-          width: double.infinity,
-          // height: MediaQuery.of(context).size.height * 0.1,
-          height: 50.0,
-          padding: const EdgeInsets.only(left: 10.0),
-          decoration: const BoxDecoration(
-            border: MyStylingProvider.TOP_GREY_BORDER,
-            color: Colors.white,
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: 50,
+            maxHeight: 80,
           ),
-          child: Flex(
-            direction: Axis.horizontal,
-            children: [
-              Flexible(
-                child: TextField(
-                  controller: textEditingController,
-                  focusNode: textFocusNode,
-                  style: const TextStyle(fontSize: 14),
-                  decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+            decoration: const BoxDecoration(
+              border: MyStylingProvider.TOP_GREY_BORDER,
+              color: Colors.white,
+            ),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Flexible(
+                  child: TextField(
+                    minLines: 1,
+                    maxLines: 3,
+                    controller: textEditingController,
+                    focusNode: textFocusNode,
+                    style: const TextStyle(fontSize: 13),
+                    decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
+                  ),
                 ),
-              ),
-              Consumer<Auth>(
-                builder: (context, authData, child) {
-                  return StreamBuilder(
-                    stream: widget._commentToReplyStream,
-                    builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-                      return InkWell(
-                        onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            CupertinoIcons.chevron_right,
-                            color: Colors.blue,
+                Consumer<Auth>(
+                  builder: (context, authData, child) {
+                    return StreamBuilder(
+                      stream: widget._commentToReplyStream,
+                      builder: (context, AsyncSnapshot<CommentModel> snapshot) {
+                        return InkWell(
+                          onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              CupertinoIcons.chevron_right,
+                              color: Colors.blue,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                  );
-                },
-              ),
-            ],
+                        );
+                      }
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ],
