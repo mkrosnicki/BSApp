@@ -18,7 +18,7 @@ class PostItemHeartButton extends StatelessWidget {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Posts>(
         builder: (context, postsData, child) {
-          final bool wasLikedByLoggedUser = postsData.wasLikedBy(post.id, authData.userId);
+          final bool wasLikedByLoggedUser = post.wasLikedBy(authData.userId);
           return InkWell(
             onTap: () {
               _likeTePost(context, post, wasLikedByLoggedUser, authData.isAuthenticated);

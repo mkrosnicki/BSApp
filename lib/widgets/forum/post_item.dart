@@ -2,7 +2,7 @@ import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/widgets/forum/post_item_bottom_bar.dart';
 import 'package:BSApp/widgets/forum/post_item_content.dart';
 import 'package:BSApp/widgets/forum/post_item_quote.dart';
-import 'package:BSApp/widgets/forum/post_item_user_info_new.dart';
+import 'package:BSApp/widgets/forum/post_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
@@ -24,7 +24,7 @@ class PostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PostItemUserInfoNew(post),
+          PostItemUserInfo(post),
           if (post.quote != null) PostItemQuote(post),
           PostItemContent(post),
           PostItemBottomBar(post, postToReplySubject),

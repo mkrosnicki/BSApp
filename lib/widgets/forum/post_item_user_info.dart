@@ -7,10 +7,10 @@ import 'package:BSApp/widgets/forum/post_item_heart_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PostItemUserInfoNew extends StatelessWidget {
+class PostItemUserInfo extends StatelessWidget {
   final PostModel post;
 
-  const PostItemUserInfoNew(this.post);
+  const PostItemUserInfo(this.post);
 
   @override
   Widget build(BuildContext context) {

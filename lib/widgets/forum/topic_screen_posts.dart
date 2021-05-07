@@ -23,7 +23,8 @@ class TopicScreenPosts extends StatelessWidget {
       child: Column(
         children: [
           FutureBuilder(
-            future: Provider.of<Posts>(context, listen: false).fetchPostsForTopic(topic.id),
+            future: Provider.of<Posts>(context, listen: false)
+                .fetchPostsForTopic(topic.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: LoadingIndicator());
@@ -34,11 +35,13 @@ class TopicScreenPosts extends StatelessWidget {
                   );
                 } else {
                   return Consumer<Posts>(
-                    builder: (context, postsData, child) => Column(
-                      children: postsData.allTopicPosts
-                          .map((post) => PostItem(post, postToReplySubject))
-                          .toList(),
-                    ),
+                      builder: (context, postsData, child) {
+                        return Column(
+                          children: postsData.allTopicPosts
+                              .map((post) => PostItem(post, postToReplySubject))
+                              .toList(),
+                        );
+                      }
                   );
                 }
               }

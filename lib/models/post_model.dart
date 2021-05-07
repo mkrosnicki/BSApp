@@ -28,6 +28,14 @@ class PostModel {
     @required this.likers,
   });
 
+  static List<PostModel> fromJsonList(List<dynamic> postsSnapshot) {
+    final List<PostModel> posts = [];
+    for (final postSnapshot in postsSnapshot) {
+      posts.add(fromJson(postSnapshot));
+    }
+    return posts;
+  }
+
   static PostModel fromJson(dynamic postSnapshot) {
     if (postSnapshot == null) {
       return null;
@@ -44,6 +52,10 @@ class PostModel {
       replyForUsername: postSnapshot['replyForUsername'],
       likers: [...postSnapshot['likers'] as List],
     );
+  }
+
+  bool wasLikedBy(String userId) {
+    return likers.any((element) => element == userId);
   }
 
   @override

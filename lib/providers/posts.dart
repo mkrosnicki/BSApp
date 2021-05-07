@@ -23,34 +23,24 @@ class Posts with ChangeNotifier {
   }
 
   Future<void> fetchPostsForTopic(String topicId) async {
-    final List<PostModel> loadedPosts = [];
     final responseBody =
         await _apiProvider.get('/topics/$topicId/posts') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Posts Found!');
     }
-    responseBody.forEach((element) {
-      final post = PostModel.fromJson(element);
-      loadedPosts.add(post);
-    });
-    fetchedTopicPosts = loadedPosts;
+    fetchedTopicPosts = PostModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchAddedPosts() async {
-    final List<PostModel> loadedPosts = [];
     final responseBody =
         await _apiProvider.get('/users/me/posts', token: token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Posts Found!');
     }
-    responseBody.forEach((element) {
-      final post = PostModel.fromJson(element);
-      loadedPosts.add(post);
-    });
-    fetchedAddedPosts = loadedPosts;
+    fetchedAddedPosts = PostModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
