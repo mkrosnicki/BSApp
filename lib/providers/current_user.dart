@@ -132,6 +132,14 @@ class CurrentUser with ChangeNotifier {
     return _observedDeals.contains(deal);
   }
 
+  bool observesTopic(TopicModel topic) {
+    return _observedTopics.contains(topic);
+  }
+
+  bool observesSearch(SearchModel search) {
+    return _observedSearches.contains(search);
+  }
+
   void update(String token, String userId) async {
     _token = token;
     if (!isAuthenticated) {
