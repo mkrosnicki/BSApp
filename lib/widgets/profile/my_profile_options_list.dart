@@ -21,18 +21,15 @@ class MyProfileOptionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final menuOptions = [
       const MyProfileOptionsHeader('Twoja aktywność'),
-      MyProfileOptionItem(
+      const MyProfileOptionItem(
           title: 'Lista aktywności',
-          route: YourActivityScreen.routeName,
-          arguments: usersProfile.activities),
-      MyProfileOptionItem(
+          route: YourActivityScreen.routeName),
+      const MyProfileOptionItem(
           title: 'Twoje okazje',
-          route: YourDealsScreen.routeName,
-          arguments: usersProfile.addedDeals),
-      MyProfileOptionItem(
+          route: YourDealsScreen.routeName),
+      const MyProfileOptionItem(
           title: 'Twoje tematy',
-          route: YourTopicsScreen.routeName,
-          arguments: usersProfile.addedTopics),
+          route: YourTopicsScreen.routeName),
       const MyProfileOptionsHeader('Ustawienia'),
       const MyProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
       const MyProfileOptionItem(

@@ -1,4 +1,6 @@
+import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,9 @@ class CurrentUser with ChangeNotifier {
   String _token;
   List<DealModel> _observedDeals = [];
   List<DealModel> _addedDeals = [];
+  List<TopicModel> _observedTopics = [];
+  List<TopicModel> _addedTopics = [];
+  List<ActivityModel> _activities;
 
   CurrentUser.empty();
 
@@ -30,6 +35,18 @@ class CurrentUser with ChangeNotifier {
     return [..._addedDeals];
   }
 
+  List<ActivityModel> get activities {
+    return [..._activities];
+  }
+
+  List<TopicModel> get observedTopics {
+    return [..._observedTopics];
+  }
+
+  List<TopicModel> get addedTopics {
+    return [..._addedTopics];
+  }
+
   Future<void> fetchMe() async {
     final responseBody = await _apiProvider.get('/users/me', token: _token);
     _me = UserModel.fromJson(responseBody);
@@ -43,7 +60,6 @@ class CurrentUser with ChangeNotifier {
       logger.i('No Deals Found!');
     }
     _observedDeals = DealModel.fromJsonList(responseBody);
-    notifyListeners();
   }
 
   Future<void> fetchAddedDeals() async {
@@ -53,7 +69,33 @@ class CurrentUser with ChangeNotifier {
       logger.i('No Deals Found!');
     }
     _addedDeals = DealModel.fromJsonList(responseBody);
-    notifyListeners();
+  }
+
+  Future<void> fetchActivities() async {
+    final responseBody = await _apiProvider.get('/users/me/activities', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Activities Found!');
+    }
+    _activities = ActivityModel.fromJsonList(responseBody);
+  }
+
+  Future<void> fetchAddedTopics() async {
+    final responseBody = await _apiProvider.get('/users/me/topics/added', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Topics Found!');
+    }
+    _addedTopics = TopicModel.fromJsonList(responseBody);
+  }
+
+  Future<void> fetchObservedTopics() async {
+    final responseBody = await _apiProvider.get('/users/me/topics/observed', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Topics Found!');
+    }
+    _observedTopics = TopicModel.fromJsonList(responseBody);
   }
 
   void update(String token, String userId) async {

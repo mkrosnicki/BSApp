@@ -30,6 +30,14 @@ class TopicModel {
     @required this.negativeVoters,
   });
 
+  static List<TopicModel> fromJsonList(List<dynamic> topicsSnapshot) {
+    final List<TopicModel> topics = [];
+    for (final topicSnapshot in topicsSnapshot) {
+      topics.add(fromJson(topicSnapshot));
+    }
+    return topics;
+  }
+
   static TopicModel fromJson(dynamic topicSnapshot) {
     if (topicSnapshot == null) {
       return null;

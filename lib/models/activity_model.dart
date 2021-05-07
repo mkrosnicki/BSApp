@@ -27,6 +27,14 @@ class ActivityModel {
       this.relatedPost,
       this.relatedComment});
 
+  static List<ActivityModel> fromJsonList(List<dynamic> activitiesSnapshot) {
+    final List<ActivityModel> activities = [];
+    for (final activitySnapshot in activitiesSnapshot) {
+      activities.add(fromJson(activitySnapshot));
+    }
+    return activities;
+  }
+
   static ActivityModel fromJson(dynamic activitySnapshot) {
     return ActivityModel(
       id: activitySnapshot['id'],

@@ -60,9 +60,11 @@ class UserModel {
 
   static _getAvatar(userSnapshot) {
     var encodedAvatar = userSnapshot['avatar'];
+    print(encodedAvatar);
     if (encodedAvatar == null) {
       return null;
     }
+    print(base64Decode(encodedAvatar));
     return base64Decode(encodedAvatar);
   }
 

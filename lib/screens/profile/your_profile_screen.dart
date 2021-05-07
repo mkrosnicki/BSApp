@@ -50,7 +50,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                           direction: Axis.vertical,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            ProfileUserInfo(auth.me),
+                            ProfileUserInfo(usersProfile.user),
                             MyProfileStatisticsInfo(),
                             MyProfileOptionsList(usersProfile),
                           ],
