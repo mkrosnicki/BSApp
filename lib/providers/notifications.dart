@@ -48,6 +48,14 @@ class Notifications with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteMyNotifications() async {
+    await _apiProvider.delete('/users/me/notifications', token: _token).then((value) {
+      _lastNotificationDate = null;
+      _notifications = [];
+    });
+    notifyListeners();
+  }
+
   Future<void> _connectToNotificationsSocket(String userId) async {
     await customStomp.connect(
       'ws://192.168.162.241:8080/ws',
