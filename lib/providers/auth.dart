@@ -13,7 +13,7 @@ class Auth with ChangeNotifier {
 
   final ApiProvider _apiProvider = ApiProvider();
   StompClient _client;
-  int _unreadNotifications = 0;
+  DateTime _lastNotificationDate;
   List<NotificationModel> _notifications = [];
   String _token;
   DateTime _expiryDate;
@@ -44,12 +44,15 @@ class Auth with ChangeNotifier {
     return _me != null ? _me.notificationsSeenAt : null;
   }
 
-  int get unreadNotificationsCount {
-    return _unreadNotifications;
+  DateTime get unreadNotificationsCount {
+    return _lastNotificationDate;
   }
 
   bool get newNotificationsPresent {
-    return unreadNotificationsCount > 0;
+    if (notificationsSeenAt != null && _lastNotificationDate != null) {
+      return notificationsSeenAt.isBefore(_lastNotificationDate);
+    }
+    return false;
   }
 
   List<NotificationModel> get myNotifications {
@@ -152,6 +155,7 @@ class Auth with ChangeNotifier {
       print('No User Found!');
     }
     _me = UserModel.fromJson(responseBody);
+    notifyListeners();
   }
 
   Future<void> fetchMyNotifications() async {
@@ -197,7 +201,7 @@ class Auth with ChangeNotifier {
       'ws://192.168.162.241:8080/ws',
       onConnect: (StompClient client, Map<String, String> headers) {
         _client = client;
-        _client.subscribeString(
+        _client.subscribeJson(
           userId,
           '/topics/notifications/$userId',
           _acceptNotification,
@@ -210,14 +214,16 @@ class Auth with ChangeNotifier {
 
   void _disconnectFromNotificationsSocket(String userId) {
     if (_client != null) {
-      _client.unsubscribe(userId);
+      if (!_client.isDisconnected) {
+        _client.unsubscribe(userId);
+      }
       _client = null;
     }
   }
 
-  void _acceptNotification(Map<String, String> headers, String message) {
+  void _acceptNotification(Map<String, String> headers, dynamic message) {
     try {
-      _unreadNotifications = int.tryParse(message);
+      _lastNotificationDate = DateTime.tryParse(message);
       notifyListeners();
     } catch (e) {
       // do nothing
