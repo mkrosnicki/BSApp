@@ -10,8 +10,6 @@ class Deals with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<DealModel> allDeals = [];
-  List<DealModel> fetchedAddedDeals = [];
-  List<DealModel> fetchedUserAddedDeals = [];
 
   String token;
 
@@ -23,14 +21,6 @@ class Deals with ChangeNotifier {
     return [...allDeals];
   }
 
-  List<DealModel> get addedDeals {
-    return [...fetchedAddedDeals];
-  }
-
-  List<DealModel> get userAddedDeals {
-    return [...fetchedUserAddedDeals];
-  }
-
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
     final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
     if (responseBody == null) {
@@ -38,28 +28,6 @@ class Deals with ChangeNotifier {
       logger.e('No Deals Found!');
     }
     allDeals = DealModel.fromJsonList(responseBody);
-    notifyListeners();
-  }
-
-  Future<void> fetchAddedDeals() async {
-    final responseBody =
-    await _apiProvider.get('/users/me/deals/added', token: token) as List;
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.i('No Deals Found!');
-    }
-    fetchedAddedDeals = DealModel.fromJsonList(responseBody);
-    notifyListeners();
-  }
-
-  Future<void> fetchDealsAddedBy(String userId) async {
-    final responseBody =
-    await _apiProvider.get('/users/$userId/addedDeals') as List;
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.i('No Deals Found!');
-    }
-    fetchedUserAddedDeals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
@@ -86,10 +54,5 @@ class Deals with ChangeNotifier {
 
   void update(String token) async {
     this.token = token;
-    if (token == null) {
-      fetchedAddedDeals = [];
-    } else {
-      await fetchAddedDeals();
-    }
   }
 }
