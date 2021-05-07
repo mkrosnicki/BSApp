@@ -14,7 +14,6 @@ import 'package:logger/logger.dart';
 class CurrentUser with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
   UserDetailsModel _details;
-  UserModel _me;
   String _token;
   List<DealModel> _observedDeals = [];
   List<DealModel> _addedDeals = [];
@@ -61,7 +60,7 @@ class CurrentUser with ChangeNotifier {
     _observedSearches = _details.observedSearches;
   }
 
-  Future<void> fetchObservedDeals() async {
+  Future<void> _fetchObservedDeals() async {
     final responseBody =
     await _apiProvider.get('/users/me/deals/observed', token: _token) as List;
     if (responseBody == null) {
@@ -71,7 +70,7 @@ class CurrentUser with ChangeNotifier {
     _observedDeals = DealModel.fromJsonList(responseBody);
   }
 
-  Future<void> fetchAddedDeals() async {
+  Future<void> _fetchAddedDeals() async {
     final responseBody = await _apiProvider.get('/users/me/deals/added', token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
@@ -89,7 +88,7 @@ class CurrentUser with ChangeNotifier {
     _activities = ActivityModel.fromJsonList(responseBody);
   }
 
-  Future<void> fetchAddedTopics() async {
+  Future<void> _fetchAddedTopics() async {
     final responseBody = await _apiProvider.get('/users/me/topics/added', token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
@@ -98,7 +97,7 @@ class CurrentUser with ChangeNotifier {
     _addedTopics = TopicModel.fromJsonList(responseBody);
   }
 
-  Future<void> fetchObservedTopics() async {
+  Future<void> _fetchObservedTopics() async {
     final responseBody = await _apiProvider.get('/users/me/topics/observed', token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
@@ -125,6 +124,20 @@ class CurrentUser with ChangeNotifier {
   Future<void> removeFromObservedDeals(String dealId) async {
     await _apiProvider.delete('/users/me/deals/observed/$dealId', token: _token);
     _observedDeals.removeWhere((element) => element.id == dealId);
+    notifyListeners();
+  }
+
+  Future<void> addToObservedTopics(String topicId) async {
+    final addTopicToFavouritesDto = {'topicId': topicId};
+    final responseBody = await _apiProvider.post('/users/me/topics/observed', addTopicToFavouritesDto, token: _token);
+    final TopicModel addedTopic = TopicModel.fromJson(responseBody);
+    _observedTopics.add(addedTopic);
+    notifyListeners();
+  }
+
+  Future<void> removeFromObservedTopics(String topicId) async {
+    await _apiProvider.delete('/users/me/topics/observed/$topicId', token: _token);
+    _observedTopics.removeWhere((element) => element.id == topicId);
     notifyListeners();
   }
 

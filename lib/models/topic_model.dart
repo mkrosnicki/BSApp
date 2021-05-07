@@ -60,6 +60,14 @@ class TopicModel {
     );
   }
 
+  bool hasPositiveVoteFrom(String topicId, String userId) {
+    return positiveVoters.any((element) => element == userId);
+  }
+
+  bool hasNegativeVoteFrom(String topicId, String userId) {
+    return negativeVoters.any((element) => element == userId);
+  }
+
 
   @override
   String toString() {

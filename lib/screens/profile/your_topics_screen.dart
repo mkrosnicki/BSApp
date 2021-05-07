@@ -1,5 +1,4 @@
-import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -20,8 +19,7 @@ class YourTopicsScreen extends StatelessWidget {
         title: 'Twoje tematy',
       ),
       body: FutureBuilder(
-        future:
-            Provider.of<CurrentUser>(context, listen: false).fetchAddedTopics(),
+        future: Provider.of<Topics>(context, listen: false).fetchAddedTopics(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: LoadingIndicator());
@@ -31,13 +29,13 @@ class YourTopicsScreen extends StatelessWidget {
                 child: ServerErrorSplash(),
               );
             } else {
-              return Consumer<CurrentUser>(
-                builder: (context, currentUserData, child) {
-                  return currentUserData.addedTopics.isNotEmpty
+              return Consumer<Topics>(
+                builder: (context, topicsData, child) {
+                  return topicsData.topics.isNotEmpty
                       ? ListView.builder(
                           itemBuilder: (context, index) =>
-                              TopicItem(currentUserData.addedTopics[index]),
-                          itemCount: currentUserData.addedTopics.length,
+                              TopicItem(topicsData.topics[index]),
+                          itemCount: topicsData.topics.length,
                         )
                       : _buildNoStartedTopicsSplashView();
                 },

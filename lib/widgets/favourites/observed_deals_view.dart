@@ -1,5 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
@@ -14,9 +14,8 @@ class ObservedDealsView extends StatelessWidget {
       builder: (context, auth, child) {
         if (auth.isAuthenticated) {
           return FutureBuilder(
-            future:
-            Provider.of<CurrentUser>(context, listen: false)
-                .fetchObservedDeals(),
+            future: Provider.of<Deals>(context, listen: false)
+                .fetchMyObservedDeals(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: LoadingIndicator());
@@ -26,20 +25,19 @@ class ObservedDealsView extends StatelessWidget {
                     child: ServerErrorSplash(),
                   );
                 } else {
-                  return Consumer<CurrentUser>(
-                    builder: (context, currentUserData, child) {
-                      return currentUserData.observedDeals.isNotEmpty
+                  return Consumer<Deals>(
+                    builder: (context, dealsData, child) {
+                      return dealsData.deals.isNotEmpty
                           ? ListView.builder(
-                        itemBuilder: (context, index) =>
-                            Column(
-                              children: [
-                                DealItem(currentUserData.observedDeals[index]),
-                                DealItem(currentUserData.observedDeals[index]),
-                                DealItem(currentUserData.observedDeals[index]),
-                              ],
-                            ),
-                        itemCount: currentUserData.observedDeals.length,
-                      )
+                              itemBuilder: (context, index) => Column(
+                                children: [
+                                  DealItem(dealsData.deals[index]),
+                                  DealItem(dealsData.deals[index]),
+                                  DealItem(dealsData.deals[index]),
+                                ],
+                              ),
+                              itemCount: dealsData.deals.length,
+                            )
                           : _buildNoObservedDealsSplashView();
                     },
                   );

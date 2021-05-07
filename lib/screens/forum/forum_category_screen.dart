@@ -53,9 +53,9 @@ class ForumCategoryScreen extends StatelessWidget {
                 return Consumer<Topics>(
                   builder: (context, topicsData, child) {
                     final List<TopicModel> pinnedTopics =
-                        topicsData.categoryTopicsPinned;
+                        topicsData.pinnedTopics;
                     final List<TopicModel> notPinnedTopics =
-                        topicsData.categoryTopicsNotPinned;
+                        topicsData.notPinnedTopics;
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         if (pinnedTopics.isNotEmpty && index == 0) {
@@ -76,9 +76,9 @@ class ForumCategoryScreen extends StatelessWidget {
                           return TopicItem(notPinnedTopics[index - 1]);
                         }
                       },
-                      itemCount: topicsData.categoryTopicsPinned.isNotEmpty
-                          ? topicsData.categoryTopics.length + 2
-                          : topicsData.categoryTopics.length + 1,
+                      itemCount: topicsData.pinnedTopics.isNotEmpty
+                          ? topicsData.topics.length + 2
+                          : topicsData.topics.length + 1,
                     );
                   },
                 );
