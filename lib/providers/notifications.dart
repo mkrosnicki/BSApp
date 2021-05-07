@@ -1,92 +1,100 @@
 import 'package:BSApp/models/notification_model.dart';
+import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:BSApp/services/custom_stomp' as customStomp;
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:stomp/stomp.dart';
 
 class Notifications with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
-  int _unreadNotifications = 0;
-  List<NotificationModel> notifications = [];
+  StompClient _client;
+  DateTime _lastNotificationDate;
+  DateTime _notificationsSeenAt;
+  List<NotificationModel> _notifications = [];
   StompClient client;
-  String userId;
-  String token;
+  UserModel me;
+  String _token;
+
 
   Notifications.empty();
 
-  int get numberOfUnreadNotifications {
-    return _unreadNotifications;
+
+  DateTime get notificationsSeenAt {
+    return _notificationsSeenAt;
   }
 
-  bool get areNewNotifications {
-    return numberOfUnreadNotifications > 0;
+  bool get areUnseenNotifications {
+    if (_notificationsSeenAt != null && _lastNotificationDate != null) {
+      return _notificationsSeenAt.isBefore(_lastNotificationDate);
+    }
+    return false;
   }
 
   List<NotificationModel> get myNotifications {
-    return [...notifications];
+    return [..._notifications];
   }
 
   Future<void> fetchMyNotifications() async {
     final List<NotificationModel> fetchedNotifications = [];
     final responseBody =
-    await _apiProvider.get('/users/me/notifications', token: token) as List;
+    await _apiProvider.get('/users/me/notifications', token: _token) as List;
     if (responseBody == null) {
-      final logger = Logger();
-      logger.i('No Notifications Found!');
+      print('No Deals Found!');
     }
     responseBody.forEach((element) {
       fetchedNotifications.add(NotificationModel.fromJson(element));
     });
-    notifications = fetchedNotifications;
+    _notifications = fetchedNotifications;
     notifyListeners();
   }
 
-  Future<void> _startSubscribing(String userId) {
-    customStomp.connect(
+  Future<void> _connectToNotificationsSocket(String userId) async {
+    await customStomp.connect(
       'ws://192.168.162.241:8080/ws',
       onConnect: (StompClient client, Map<String, String> headers) {
-        this.client = client;
-        this.client.subscribeString(
+        _client = client;
+        _client.subscribeJson(
           userId,
           '/topics/notifications/$userId',
           _acceptNotification,
         );
       },
-      onFault: _handleError,
+      onFault: _handleWebSocketConnectionError,
     );
+    notifyListeners();
   }
 
-  void _stopSubscribing(String userId) {
-    if (client != null) {
-      client.unsubscribe(userId);
-      client = null;
+  void _disconnectFromNotificationsSocket(String userId) {
+    if (_client != null) {
+      if (!_client.isDisconnected) {
+        _client.unsubscribe(userId);
+      }
+      _client = null;
     }
   }
 
-  void _acceptNotification(Map<String, String> headers, String message) {
+  void _acceptNotification(Map<String, String> headers, dynamic message) {
     try {
-      _unreadNotifications = int.tryParse(message);
+      _lastNotificationDate = DateTime.tryParse(message);
       notifyListeners();
     } catch (e) {
       // do nothing
     }
   }
 
-  void _handleError(StompClient client, error, stackTrace) {
+  void _handleWebSocketConnectionError(StompClient client, error, stackTrace) {
     // do nothing for the moment
   }
 
-  Future<void> update(String token, String userId) async {
+  Future<void> update(String token, String userId, DateTime notificationsSeenAt) async {
     if (token == null || userId == null) {
-      _unreadNotifications = 0;
-      _stopSubscribing(userId);
-      this.userId = null;
-      this.token = null;
+      _disconnectFromNotificationsSocket(userId);
+      _token = null;
+      _notificationsSeenAt = null;
     } else {
-      this.token = token;
-      this.userId = userId;
-      await _startSubscribing(userId);
+      _token = token;
+      _notificationsSeenAt = notificationsSeenAt;
+      await _connectToNotificationsSocket(userId);
     }
   }
 }

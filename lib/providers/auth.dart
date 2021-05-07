@@ -1,20 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stomp/stomp.dart';
-import 'package:BSApp/services/custom_stomp' as customStomp;
 
 class Auth with ChangeNotifier {
-
   final ApiProvider _apiProvider = ApiProvider();
-  StompClient _client;
-  DateTime _lastNotificationDate;
-  List<NotificationModel> _notifications = [];
   String _token;
   DateTime _expiryDate;
   String _userId;
@@ -26,7 +19,9 @@ class Auth with ChangeNotifier {
   }
 
   String get token {
-    if (_expiryDate != null && _expiryDate.isAfter(DateTime.now()) && _token != null) {
+    if (_expiryDate != null &&
+        _expiryDate.isAfter(DateTime.now()) &&
+        _token != null) {
       return _token;
     }
     return _token;
@@ -40,25 +35,6 @@ class Auth with ChangeNotifier {
     return _me;
   }
 
-  DateTime get notificationsSeenAt {
-    return _me != null ? _me.notificationsSeenAt : null;
-  }
-
-  DateTime get unreadNotificationsCount {
-    return _lastNotificationDate;
-  }
-
-  bool get newNotificationsPresent {
-    if (notificationsSeenAt != null && _lastNotificationDate != null) {
-      return notificationsSeenAt.isBefore(_lastNotificationDate);
-    }
-    return false;
-  }
-
-  List<NotificationModel> get myNotifications {
-    return [..._notifications];
-  }
-
   Future<void> login(String email, String password) async {
     final responseData = await _apiProvider.post('/auth/login', {
       'email': email,
@@ -69,7 +45,7 @@ class Auth with ChangeNotifier {
     notifyListeners();
     _scheduleAutoLogout();
     _saveAuthCookie();
-    _connectToNotificationsSocket(_userId);
+    // _connectToNotificationsSocket(_userId);
   }
 
   Future<bool> tryAutoLogin() async {
@@ -77,7 +53,8 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('authData')) {
       return false;
     }
-    final extractedUserData = json.decode(prefs.getString('authData')) as Map<String, Object>;
+    final extractedUserData =
+        json.decode(prefs.getString('authData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
     if (expiryDate.isBefore(DateTime.now())) {
@@ -89,7 +66,7 @@ class Auth with ChangeNotifier {
     await fetchMe();
     notifyListeners();
     _scheduleAutoLogout();
-    _connectToNotificationsSocket(_userId);
+    // _connectToNotificationsSocket(_userId);
     return true;
   }
 
@@ -110,7 +87,7 @@ class Auth with ChangeNotifier {
       _authTimer.cancel();
       _authTimer = null;
     }
-    _disconnectFromNotificationsSocket(_userId);
+    // _disconnectFromNotificationsSocket(_userId);
     notifyListeners();
     _removeAuthCookie();
   }
@@ -132,7 +109,8 @@ class Auth with ChangeNotifier {
     });
   }
 
-  Future<void> changeUserPassword(String currentPassword, String newPassword) async {
+  Future<void> changeUserPassword(
+      String currentPassword, String newPassword) async {
     await _apiProvider.post('/auth/change-password', {
       'userId': _userId,
       'currentPassword': currentPassword,
@@ -145,30 +123,14 @@ class Auth with ChangeNotifier {
     _me = UserModel.fromJson(responseBody);
   }
 
-  Future<void> updateNotificationsSeenAt() async {
+  Future<void> updateMe() async {
     final responseBody = await _apiProvider.patch(
-        '/users/me/',
-        {'notificationsSeenAtUpdate': true},
-        token: _token
-    );
+        '/users/me/', {'notificationsSeenAtUpdate': true},
+        token: _token);
     if (responseBody == null) {
       print('No User Found!');
     }
     _me = UserModel.fromJson(responseBody);
-    notifyListeners();
-  }
-
-  Future<void> fetchMyNotifications() async {
-    final List<NotificationModel> fetchedNotifications = [];
-    final responseBody =
-    await _apiProvider.get('/users/me/notifications', token: _token) as List;
-    if (responseBody == null) {
-      print('No Deals Found!');
-    }
-    responseBody.forEach((element) {
-      fetchedNotifications.add(NotificationModel.fromJson(element));
-    });
-    _notifications = fetchedNotifications;
     notifyListeners();
   }
 
@@ -194,40 +156,6 @@ class Auth with ChangeNotifier {
   Future<void> _removeAuthCookie() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('authData');
-  }
-
-  Future<void> _connectToNotificationsSocket(String userId) async {
-    await customStomp.connect(
-      'ws://192.168.162.241:8080/ws',
-      onConnect: (StompClient client, Map<String, String> headers) {
-        _client = client;
-        _client.subscribeJson(
-          userId,
-          '/topics/notifications/$userId',
-          _acceptNotification,
-        );
-      },
-      onFault: _handleWebSocketConnectionError,
-    );
-    notifyListeners();
-  }
-
-  void _disconnectFromNotificationsSocket(String userId) {
-    if (_client != null) {
-      if (!_client.isDisconnected) {
-        _client.unsubscribe(userId);
-      }
-      _client = null;
-    }
-  }
-
-  void _acceptNotification(Map<String, String> headers, dynamic message) {
-    try {
-      _lastNotificationDate = DateTime.tryParse(message);
-      notifyListeners();
-    } catch (e) {
-      // do nothing
-    }
   }
 
   void _scheduleAutoLogout() {
@@ -263,9 +191,4 @@ class Auth with ChangeNotifier {
   DateTime _extractExpiryDate(Map<String, dynamic> decoded) {
     return _parseToExpiryDate(_extractExpiresInMs(decoded));
   }
-
-  void _handleWebSocketConnectionError(StompClient client, error, stackTrace) {
-    // do nothing for the moment
-  }
-
 }

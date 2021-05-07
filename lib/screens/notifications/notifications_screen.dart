@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -29,7 +30,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: SafeArea(
         child: FutureBuilder(
           future:
-              Provider.of<Auth>(context, listen: false).fetchMyNotifications(),
+              Provider.of<Notifications>(context, listen: false).fetchMyNotifications(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
@@ -41,15 +42,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               } else {
                 return RefreshIndicator(
                   onRefresh: () => _refreshNotifications(context),
-                  child: Consumer<Auth>(
-                    builder: (context, myInfo, child) {
-                      if (myInfo.myNotifications.isEmpty) {
+                  child: Consumer<Notifications>(
+                    builder: (context, notificationsData, child) {
+                      if (notificationsData.myNotifications.isEmpty) {
                         return _buildNoNotificationsSplashView();
                       } else {
                         return ListView.builder(
                           itemBuilder: (context, index) =>
-                              NotificationItem(myInfo.myNotifications[index]),
-                          itemCount: myInfo.myNotifications.length,
+                              NotificationItem(notificationsData.myNotifications[index]),
+                          itemCount: notificationsData.myNotifications.length,
                         );
                       }
                     },
@@ -80,11 +81,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  Future<void> _refreshNotifications(BuildContext context) {}
+  Future<void> _refreshNotifications(BuildContext context) {
+    Provider.of<Notifications>(context, listen: false).fetchMyNotifications();
+  }
 
   @override
   void deactivate() {
-    Provider.of<Auth>(context, listen: false).updateNotificationsSeenAt();
+    Provider.of<Auth>(context, listen: false).updateMe();
     super.deactivate();
   }
 }
