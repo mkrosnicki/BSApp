@@ -44,7 +44,6 @@ class Deals with ChangeNotifier {
       final logger = Logger();
       logger.e('No Deals Found!');
     }
-    // print(responseBody);
     responseBody.forEach((element) {
       loadedDeals.add(DealModel.fromJson(element));
     });

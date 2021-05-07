@@ -64,7 +64,6 @@ class MyInfo with ChangeNotifier {
   }
 
   _connectNotificationsSocket(String userId) {
-    print(userId);
     customStomp.connect(
       'ws://192.168.162.241:8080/ws',
       onConnect: (StompClient client, Map<String, String> headers) {
