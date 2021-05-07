@@ -13,9 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileOptionsList extends StatelessWidget {
-  final UsersProfileModel usersProfile;
 
-  const MyProfileOptionsList(this.usersProfile);
+  const MyProfileOptionsList();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -68,6 +69,6 @@ class MyProfileAvatar extends StatelessWidget {
       return;
     }
     final File newAvatar = File(imageFile.path);
-    await Provider.of<Users>(context, listen: false).updateMyAvatar(newAvatar);
+    await Provider.of<CurrentUser>(context, listen: false).updateMyAvatar(newAvatar);
   }
 }

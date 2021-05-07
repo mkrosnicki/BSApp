@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/topic_model.dart';
@@ -96,6 +99,13 @@ class CurrentUser with ChangeNotifier {
       logger.i('No Topics Found!');
     }
     _observedTopics = TopicModel.fromJsonList(responseBody);
+  }
+
+  Future<void> updateMyAvatar(File newAvatar) async {
+    final updateAvatarDto = {'avatar': base64Encode(newAvatar.readAsBytesSync()),};
+    final responseBody = await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
+    _me = UserModel.fromJson(responseBody);
+    notifyListeners();
   }
 
   void update(String token, String userId) async {

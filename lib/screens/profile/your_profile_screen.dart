@@ -1,6 +1,5 @@
-import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
@@ -18,7 +17,6 @@ class YourProfileScreen extends StatefulWidget {
 }
 
 class _YourProfileScreenState extends State<YourProfileScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
@@ -28,12 +26,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
-                future: Provider.of<Users>(context, listen: false)
-                    .fetchUsersProfile(auth.userId),
+                future:
+                    Provider.of<CurrentUser>(context, listen: false).fetchMe(),
                 builder: (context, snapshot) {
-                  final UsersProfileModel usersProfile =
-                      Provider.of<Users>(context, listen: false)
-                          .getUsersProfile(auth.userId);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: LoadingIndicator(),
@@ -44,17 +39,21 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         child: ServerErrorSplash(),
                       );
                     } else {
-                      return Container(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ProfileUserInfo(usersProfile.user),
-                            MyProfileStatisticsInfo(),
-                            MyProfileOptionsList(usersProfile),
-                          ],
-                        ),
+                      return Consumer<CurrentUser>(
+                        builder: (context, currentUserData, child) {
+                          return Container(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Flex(
+                              direction: Axis.vertical,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ProfileUserInfo(currentUserData.me),
+                                MyProfileStatisticsInfo(),
+                                const MyProfileOptionsList(),
+                              ],
+                            ),
+                          );
+                        },
                       );
                     }
                   }

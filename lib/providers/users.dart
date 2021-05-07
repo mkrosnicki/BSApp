@@ -56,7 +56,6 @@ class Users with ChangeNotifier {
   Future<void> updateMyAvatar(File newAvatar) async {
     final updateAvatarDto = {'avatar': base64Encode(newAvatar.readAsBytesSync()),};
     await _apiProvider.patch('/users/me/', updateAvatarDto, token: token);
-    // return fetchSavedSearches();
   }
 
   Future<void> update(String token) async {
