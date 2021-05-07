@@ -11,12 +11,9 @@ class AppBarAddTopicButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName, arguments: categoryId),
-      child: TextButton(
-        onPressed: () {},
-        child: Icon(CupertinoIcons.plus, color: color,),
-      ),
+    return TextButton(
+      onPressed: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName, arguments: categoryId),
+      child: Icon(CupertinoIcons.plus, color: color,),
     );
   }
 }
