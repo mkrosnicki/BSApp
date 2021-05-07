@@ -1,7 +1,7 @@
 import 'notification_type.dart';
 
 class NotificationModel {
-  final String id;
+  final List<String> ids;
   final String mainIssuerId;
   final String mainIssuerUsername;
   final int totalNumberOfIssuers;
@@ -17,7 +17,7 @@ class NotificationModel {
   final String relatedCommentContent;
 
   NotificationModel(
-      {this.id,
+      {this.ids,
       this.mainIssuerId,
       this.mainIssuerUsername,
       this.totalNumberOfIssuers,
@@ -32,38 +32,39 @@ class NotificationModel {
       this.relatedCommentId,
       this.relatedCommentContent});
 
-  static NotificationModel fromJson(dynamic activitySnapshot) {
+  static NotificationModel fromJson(dynamic notificationSnapshot) {
     return NotificationModel(
-      id: activitySnapshot['id'],
-      mainIssuerId: activitySnapshot['mainIssuerId'],
-      mainIssuerUsername: activitySnapshot['mainIssuerUsername'],
-      totalNumberOfIssuers: activitySnapshot['totalNumberOfIssuers'],
-      issuedAt: DateTime.parse(activitySnapshot['issuedAt']),
+      ids: (notificationSnapshot['ids'] as List).map((e) => e.toString()).toList(),
+      mainIssuerId: notificationSnapshot['mainIssuerId'],
+      mainIssuerUsername: notificationSnapshot['mainIssuerUsername'],
+      totalNumberOfIssuers: notificationSnapshot['totalNumberOfIssuers'],
+      issuedAt: DateTime.parse(notificationSnapshot['issuedAt']),
       notificationType: NotificationTypeHelper.fromString(
-          activitySnapshot['notificationType']),
-      relatedTopicId: activitySnapshot['relatedTopicId'],
-      relatedTopicTitle: activitySnapshot['relatedTopicTitle'],
-      relatedDealId: activitySnapshot['relatedDealId'],
-      relatedDealTitle: activitySnapshot['relatedDealTitle'],
-      relatedPostId: activitySnapshot['relatedPostId'],
-      relatedPostContent: activitySnapshot['relatedPostContent'],
-      relatedCommentId: activitySnapshot['relatedCommentId'],
-      relatedCommentContent: activitySnapshot['relatedCommentContent'],
+          notificationSnapshot['notificationType']),
+      relatedTopicId: notificationSnapshot['relatedTopicId'],
+      relatedTopicTitle: notificationSnapshot['relatedTopicTitle'],
+      relatedDealId: notificationSnapshot['relatedDealId'],
+      relatedDealTitle: notificationSnapshot['relatedDealTitle'],
+      relatedPostId: notificationSnapshot['relatedPostId'],
+      relatedPostContent: notificationSnapshot['relatedPostContent'],
+      relatedCommentId: notificationSnapshot['relatedCommentId'],
+      relatedCommentContent: notificationSnapshot['relatedCommentContent'],
     );
   }
+
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is NotificationModel &&
           runtimeType == other.runtimeType &&
-          id == other.id;
+          ids == other.ids;
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => ids.hashCode;
 
   @override
   String toString() {
-    return 'NotificationModel{id: $id, mainIssuerId: $mainIssuerId, mainIssuerUsername: $mainIssuerUsername, totalNumberOfIssuers: $totalNumberOfIssuers, issuedAt: $issuedAt, notificationType: $notificationType, relatedTopicId: $relatedTopicId, relatedTopicTitle: $relatedTopicTitle, relatedDealId: $relatedDealId, relatedDealTitle: $relatedDealTitle, relatedPostId: $relatedPostId, relatedPostContent: $relatedPostContent, relatedCommentId: $relatedCommentId, relatedCommentContent: $relatedCommentContent}';
+    return 'NotificationModel{ids: $ids, issuedAt: $issuedAt, notificationType: $notificationType, relatedTopicId: $relatedTopicId, relatedDealId: $relatedDealId, relatedPostId: $relatedPostId}';
   }
 }
