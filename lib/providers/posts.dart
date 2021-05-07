@@ -70,8 +70,10 @@ class Posts with ChangeNotifier {
   }
 
   Future<void> likeThePost(PostModel post, bool isLike) async {
-    await _apiProvider.post('/posts/${post.id}/likes', {'isLike': isLike}, token: token);
-    return fetchPostsForTopic(post.topicId);
+    final responseBody = await _apiProvider.post('/posts/${post.id}/likes', {'isLike': isLike}, token: token);
+    final PostModel updatedPost = PostModel.fromJson(responseBody);
+    fetchedTopicPosts[fetchedTopicPosts.indexWhere((element) => element.id == updatedPost.id)] = updatedPost;
+    notifyListeners();
   }
 
   bool wasLikedBy(String postId, String userId) {

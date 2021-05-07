@@ -108,6 +108,24 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addToObservedDeals(String dealId) async {
+    final addDealToFavouritesDto = {'dealId': dealId};
+    final responseBody = await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: _token);
+    final DealModel addedDeal = DealModel.fromJson(responseBody);
+    _observedDeals.add(addedDeal);
+    notifyListeners();
+  }
+
+  Future<void> removeFromObservedDeals(String dealId) async {
+    await _apiProvider.delete('/users/me/deals/observed/$dealId', token: _token);
+    _observedDeals.removeWhere((element) => element.id == dealId);
+    notifyListeners();
+  }
+
+  bool isObservedDeal(DealModel deal) {
+    return _observedDeals.contains(deal);
+  }
+
   void update(String token, String userId) async {
     _token = token;
     _userId = userId;
@@ -115,7 +133,6 @@ class CurrentUser with ChangeNotifier {
       _addedDeals = [];
       _observedDeals = [];
     }
-    await fetchMe();
     notifyListeners();
   }
 }
