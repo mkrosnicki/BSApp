@@ -49,14 +49,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                         const Text(
                           'Odpowiadasz na komentarz ',
                           style: TextStyle(
-                              color: Colors.black87, fontSize: 12),
+                              color: Colors.black, fontSize: 12),
                         ),
                         Text(
-                          '@${snapshot.data.adderInfo.username}',
+                          snapshot.data.adderInfo.username,
                           style: const TextStyle(
-                              color: MyColorsProvider.DEEP_BLUE,
+                              color: Colors.black,
                               fontSize: 12,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -66,8 +66,8 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       },
                       child: const Icon(
                         CupertinoIcons.clear,
-                        color: Colors.black54,
-                        size: 16,
+                        color: MyColorsProvider.DEEP_BLUE,
+                        size: 19,
                       ),
                     ),
                   ],
