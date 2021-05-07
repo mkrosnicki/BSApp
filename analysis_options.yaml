@@ -6,6 +6,8 @@ linter:
 
 analyzer:
   errors:
-    argument_type_not_assignable: ignore
-    invalid_assignment: ignore
-    list_element_type_not_assignable: igonre
+    argument_type_not_assignable: info
+    list_element_type_not_assignable: info
+    invalid_assignment: info
+    return_of_invalid_type: info
+    non_bool_operand: info
