@@ -20,12 +20,12 @@ class UserModel {
         this.avatar});
 
   static UserModel fromJson(dynamic userSnapshot) {
-    var registeredAt = userSnapshot['registeredAt'];
-    var lastLoginAt = userSnapshot['lastLoginAt'];
-    var notificationsSeenAt = userSnapshot['notificationsSeenAt'];
+    final registeredAt = userSnapshot['registeredAt'] as String;
+    final lastLoginAt = userSnapshot['lastLoginAt'] as String;
+    final notificationsSeenAt = userSnapshot['notificationsSeenAt'] as String;
     return UserModel(
-        id: userSnapshot['id'],
-        username: userSnapshot['username'],
+        id: userSnapshot['id'] as String,
+        username: userSnapshot['username'] as String,
         registeredAt:
         registeredAt != null ? DateTime.parse(registeredAt) : null,
         lastLoginAt: lastLoginAt != null ? DateTime.parse(lastLoginAt) : null,
@@ -35,14 +35,9 @@ class UserModel {
         avatar: _getAvatar(userSnapshot));
   }
 
-  static _getAvatar(userSnapshot) {
-    var encodedAvatar = userSnapshot['avatar'];
-    print(encodedAvatar);
-    if (encodedAvatar == null) {
-      return null;
-    }
-    print(base64Decode(encodedAvatar));
-    return base64Decode(encodedAvatar);
+  static Uint8List _getAvatar(userSnapshot) {
+    final encodedAvatar = userSnapshot['avatar'] as String;
+    return encodedAvatar != null ? base64Decode(encodedAvatar) : null;
   }
 
   Uint8List get avatarBytes {

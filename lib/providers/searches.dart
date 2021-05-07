@@ -27,7 +27,7 @@ class Searches with ChangeNotifier {
       logger.i('No Subscriptions Found!');
     }
     responseBody.forEach((element) {
-      loadedSearches.add(SearchModel.of(element));
+      loadedSearches.add(SearchModel.fromJson(element));
     });
     fetchedSavedSearches = loadedSearches;
     notifyListeners();

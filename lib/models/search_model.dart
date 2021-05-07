@@ -30,7 +30,7 @@ class SearchModel {
       this.ageTypes,
       this.sortBy});
 
-  static SearchModel of(dynamic searchSnapshot) {
+  static SearchModel fromJson(dynamic searchSnapshot) {
     final voivodeship = searchSnapshot['voivodeship'];
     final city = searchSnapshot['city'];
     return SearchModel(

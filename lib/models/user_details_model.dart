@@ -1,89 +1,44 @@
-import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/models/topic_model.dart';
-import 'package:flutter/material.dart';
+import 'package:BSApp/models/user_model.dart';
 
-import 'comment_model.dart';
 import 'deal_model.dart';
 
-class UserModel {
-  final String id;
-  final String username;
-  final DateTime registeredAt;
-  final DateTime lastLoginAt;
-  final DateTime notificationsSeenAt;
-  final List<PostModel> addedPosts;
-  final List<TopicModel> addedTopics;
-  final List<DealModel> addedDeals;
-  final List<CommentModel> addedComments;
-  final Uint8List avatar;
+class UserDetailsModel {
+  final UserModel user;
+  final List<SearchModel> observedSearches;
+  final List<TopicModel> observedTopics;
+  final List<DealModel> observedDeals;
 
-  UserModel(
-      {this.id,
-      this.username,
-      this.registeredAt,
-      this.lastLoginAt,
-      this.notificationsSeenAt,
-      this.addedPosts,
-      this.addedComments,
-      this.addedDeals,
-      this.addedTopics,
-      this.avatar});
+  UserDetailsModel(
+      {this.user,
+      this.observedSearches,
+      this.observedDeals,
+      this.observedTopics});
 
-  static UserModel fromJson(dynamic userSnapshot) {
-    final registeredAt = userSnapshot['registeredAt'] as String;
-    final lastLoginAt = userSnapshot['lastLoginAt'] as String;
-    final notificationsSeenAt = userSnapshot['notificationsSeenAt'] as String;
-    return UserModel(
-        id: userSnapshot['id'] as String,
-        username: userSnapshot['username'] as String,
-        registeredAt: registeredAt != null ? DateTime.parse(registeredAt) : null,
-        lastLoginAt: lastLoginAt != null ? DateTime.parse(lastLoginAt) : null,
-        notificationsSeenAt: notificationsSeenAt != null ? DateTime.parse(notificationsSeenAt) : null,
-        // todo
-        addedPosts: (userSnapshot['addedPosts'] as List)
-            .map((e) => PostModel.fromJson(e))
-            .toList(),
-        addedTopics: (userSnapshot['addedTopics'] as List)
-            .map((e) => TopicModel.fromJson(e))
-            .toList(),
-        addedDeals: (userSnapshot['addedDeals'] as List)
-            .map((e) => DealModel.fromJson(e))
-            .toList(),
-        addedComments: (userSnapshot['addedComments'] as List)
-            .map((e) => CommentModel.fromJson(e))
-            .toList(),
-        avatar: _getAvatar(userSnapshot));
-  }
-
-  static Uint8List _getAvatar(userSnapshot) {
-    final encodedAvatar = userSnapshot['avatar'] as String;
-    if (encodedAvatar == null) {
-      return null;
-    }
-    return base64Decode(encodedAvatar);
-  }
-
-  Uint8List get avatarBytes {
-    return avatar;
-  }
-
-  Image get getAvatar {
-    return avatar != null ? Image.memory(avatar) : null;
+  static UserDetailsModel fromJson(dynamic userSnapshot) {
+    return UserDetailsModel(
+      user: UserModel.fromJson(userSnapshot['user']),
+      observedSearches: (userSnapshot['observedSearches'] as List)
+          .map((e) => SearchModel.fromJson(e))
+          .toList(),
+      observedTopics: (userSnapshot['observedTopics'] as List)
+          .map((e) => TopicModel.fromJson(e))
+          .toList(),
+      observedDeals: (userSnapshot['observedDeals'] as List)
+          .map((e) => DealModel.fromJson(e))
+          .toList(),
+    );
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserModel && runtimeType == other.runtimeType && id == other.id;
+      other is UserDetailsModel &&
+          runtimeType == other.runtimeType &&
+          user.id == other.user.id;
 
   @override
-  int get hashCode => id.hashCode;
-
-  @override
-  String toString() {
-    return 'UserModel{id: $id, username: $username, registeredAt: $registeredAt, lastLoginAt: $lastLoginAt, notificationsSeenAt: $notificationsSeenAt, avatar: $avatar}';
-  }
+  int get hashCode => user.id.hashCode;
 }
