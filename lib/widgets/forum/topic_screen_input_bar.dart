@@ -30,9 +30,9 @@ class TopicScreenInputBar extends StatelessWidget {
             if (snapshot.hasData && snapshot.data != null) {
               textFocusNode.requestFocus();
               return Container(
-                color: MyColorsProvider.SUPER_LIGHT_GREY,
                 padding: const EdgeInsets.only(left: 14.0, right: 10.0),
                 height: 40,
+                color: MyColorsProvider.SUPER_LIGHT_GREY,
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,15 +41,14 @@ class TopicScreenInputBar extends StatelessWidget {
                       children: [
                         const Text(
                           'Odpowiadasz na post ',
-                          style: TextStyle(
-                              color: Colors.black54, fontSize: 13),
+                          style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                         Text(
-                          '@${snapshot.data.adderInfo.username}',
+                          '${snapshot.data.adderInfo.username}',
                           style: const TextStyle(
-                              color: MyColorsProvider.BLUE,
+                              color: Colors.black,
                               fontSize: 12,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -59,8 +58,8 @@ class TopicScreenInputBar extends StatelessWidget {
                       },
                       child: const Icon(
                         CupertinoIcons.clear,
-                        color: Colors.black54,
-                        size: 16,
+                        color: MyColorsProvider.DEEP_BLUE,
+                        size: 19,
                       ),
                     ),
                   ],
@@ -132,7 +131,8 @@ class TopicScreenInputBar extends StatelessWidget {
     }
   }
 
-  Future<void> _addReplyToPost(BuildContext context, PostModel postToReply) async {
+  Future<void> _addReplyToPost(
+      BuildContext context, PostModel postToReply) async {
     await Provider.of<Posts>(context, listen: false).addReplyToPost(topicId,
         postToReply.id, textEditingController.text, postToReply.content);
     _clearTextBox();
