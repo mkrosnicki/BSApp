@@ -38,61 +38,45 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
-    final List<DealModel> loadedDeals = [];
     final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.e('No Deals Found!');
     }
-    responseBody.forEach((element) {
-      loadedDeals.add(DealModel.fromJson(element));
-    });
-    allDeals = loadedDeals;
+    allDeals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchObservedDeals() async {
-    final List<DealModel> fetchedDeals = [];
     final responseBody =
         await _apiProvider.get('/users/me/deals/observed', token: token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Deals Found!');
     }
-    responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.fromJson(element));
-    });
-    fetchedObservedDeals = fetchedDeals;
+    fetchedObservedDeals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchAddedDeals() async {
-    final List<DealModel> fetchedDeals = [];
     final responseBody =
     await _apiProvider.get('/users/me/deals/added', token: token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Deals Found!');
     }
-    responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.fromJson(element));
-    });
-    fetchedAddedDeals = fetchedDeals;
+    fetchedAddedDeals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchDealsAddedBy(String userId) async {
-    final List<DealModel> fetchedDeals = [];
     final responseBody =
     await _apiProvider.get('/users/$userId/addedDeals') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Deals Found!');
     }
-    responseBody.forEach((element) {
-      fetchedDeals.add(DealModel.fromJson(element));
-    });
-    fetchedUserAddedDeals = fetchedDeals;
+    fetchedUserAddedDeals = DealModel.fromJsonList(responseBody);
     notifyListeners();
   }
 

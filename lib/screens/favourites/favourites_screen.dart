@@ -1,12 +1,7 @@
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/widgets/common/error_info.dart';
-import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/server_error_splash.dart';
-import 'package:BSApp/widgets/deals/deal_item.dart';
-import 'package:BSApp/widgets/searches/observed_search_item.dart';
+import 'package:BSApp/widgets/favourites/observed_deals_view.dart';
+import 'package:BSApp/widgets/favourites/observed_searches_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +45,10 @@ class _FavouritesScreenState extends State<FavouritesScreen>
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: const Text('Obserwowane', style: TextStyle(color: Colors.black, fontSize: 18),),
+              title: const Text(
+                'Obserwowane',
+                style: TextStyle(color: Colors.black, fontSize: 18),
+              ),
               pinned: true,
               floating: true,
               centerTitle: true,
@@ -63,129 +61,26 @@ class _FavouritesScreenState extends State<FavouritesScreen>
                 labelPadding: const EdgeInsets.all(10.0),
                 indicatorColor: MyColorsProvider.BLUE,
                 labelColor: Colors.black,
-                labelStyle: const TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
-                unselectedLabelStyle: const TextStyle(color: Colors.black, fontSize: 12),
-                tabs: [
-                  const Text('Okazje'),
-                  const Text('Wyszukiwania'),
+                labelStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600),
+                unselectedLabelStyle:
+                    const TextStyle(color: Colors.black, fontSize: 12),
+                tabs: const [
+                  Text('Okazje'),
+                  Text('Wyszukiwania'),
                 ],
               ),
             ),
           ];
         },
-        body: Consumer<Auth>(
-          builder: (context, auth, child) {
-            return TabBarView(
-              controller: _tabController,
-              children: auth.isAuthenticated
-                  ? [
-                      FutureBuilder(
-                        future: Provider.of<Deals>(context, listen: false)
-                            .fetchObservedDeals(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(child: LoadingIndicator());
-                          } else {
-                            if (snapshot.error != null) {
-                              return const Center(
-                                child: ServerErrorSplash(),
-                              );
-                            } else {
-                              return Consumer<Deals>(
-                                builder: (context, dealsData, child) {
-                                  return dealsData.observedDeals.isNotEmpty
-                                      ? ListView.builder(
-                                          itemBuilder: (context, index) =>
-                                              Column(
-                                            children: [
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                              DealItem(dealsData
-                                                  .observedDeals[index]),
-                                            ],
-                                          ),
-                                          itemCount:
-                                              dealsData.observedDeals.length,
-                                        )
-                                      : _buildNoObservedDealsSplashView();
-                                },
-                              );
-                            }
-                          }
-                        },
-                      ),
-                      FutureBuilder(
-                        future: Provider.of<Searches>(context, listen: false)
-                            .fetchSavedSearches(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(child: LoadingIndicator());
-                          } else {
-                            if (snapshot.error != null) {
-                              return ErrorInfo();
-                            } else {
-                              return Consumer<Searches>(
-                                builder: (context, searchesData, child) {
-                                  return searchesData.savedSearches.isNotEmpty
-                                      ? ListView.builder(
-                                          itemBuilder: (context, index) =>
-                                              ObservedSearchItem(searchesData
-                                                  .savedSearches[index]),
-                                          itemCount:
-                                              searchesData.savedSearches.length,
-                                        )
-                                      : _buildNoObservedSearchesSplashView();
-                                },
-                              );
-                            }
-                          }
-                        },
-                      ),
-                    ]
-                  : [
-                      _buildNoObservedDealsSplashView(),
-                      _buildNoObservedSearchesSplashView(),
-                    ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNoObservedDealsSplashView() {
-    return Container(
-      color: Colors.white,
-      child: const Center(
-        child: Text(
-          'Nie obserwujesz żadnych okazji',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 18,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-              color: MyColorsProvider.LIGHT_GRAY),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNoObservedSearchesSplashView() {
-    return Container(
-      color: Colors.white,
-      child: const Center(
-        child: Text(
-          'Nie obserwujesz \nżadnych wyszukiwań',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 18,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-              color: MyColorsProvider.LIGHT_GRAY),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            ObservedDealsView(),
+            ObservedSearchesView(),
+          ],
         ),
       ),
     );

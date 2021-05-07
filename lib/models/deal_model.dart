@@ -64,6 +64,14 @@ class DealModel {
     @required this.image,
   });
 
+  static List<DealModel> fromJsonList(List<dynamic> dealsSnapshot) {
+    final List<DealModel> deals = [];
+    for (final dealSnapshot in dealsSnapshot) {
+      deals.add(fromJson(dealSnapshot));
+    }
+    return deals;
+  }
+
   static DealModel fromJson(dynamic dealSnapshot) {
     if (dealSnapshot == null) {
       return null;

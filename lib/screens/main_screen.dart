@@ -1,5 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/my_info.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
