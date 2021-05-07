@@ -28,20 +28,18 @@ class DealsScreenMainContent extends StatelessWidget {
               child: ServerErrorSplash(),
             );
           } else {
-            return Flexible(
-              child: RefreshIndicator(
-                onRefresh: () => _refreshDeals(context),
-                child: Consumer<Deals>(
-                  builder: (context, dealsData, child) => ListView.builder(
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return CategoriesScrollable(_allCategories);
-                      } else {
-                        return DealItem(dealsData.deals[index - 1]);
-                      }
-                    },
-                    itemCount: dealsData.deals.length + 1,
-                  ),
+            return RefreshIndicator(
+              onRefresh: () => _refreshDeals(context),
+              child: Consumer<Deals>(
+                builder: (context, dealsData, child) => ListView.builder(
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return CategoriesScrollable(_allCategories);
+                    } else {
+                      return DealItem(dealsData.deals[index - 1]);
+                    }
+                  },
+                  itemCount: dealsData.deals.length + 1,
                 ),
               ),
             );
