@@ -11,9 +11,7 @@ class Deals with ChangeNotifier {
 
   List<DealModel> allDeals = [];
 
-  String token;
-
-  Deals({this.allDeals, this.token});
+  String _token;
 
   Deals.empty();
 
@@ -32,12 +30,12 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> voteForDeal(String dealId, bool isPositive) async {
-    await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: token);
+    await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: _token);
     return fetchDeals();
   }
 
   Future<void> createNewDeal(AddDealModel newDeal) async {
-    return _apiProvider.post('/deals', newDeal.toDto(), token: token);
+    return _apiProvider.post('/deals', newDeal.toDto(), token: _token);
   }
 
   DealModel findById(String dealId) {
@@ -52,7 +50,7 @@ class Deals with ChangeNotifier {
     return findById(dealId).negativeVoters.any((element) => element == userId);
   }
 
-  void update(String token) async {
-    this.token = token;
+  void update(String token) {
+    _token = token;
   }
 }
