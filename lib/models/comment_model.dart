@@ -34,6 +34,14 @@ class CommentModel {
       this.positiveVoters,
       this.negativeVoters});
 
+  static List<CommentModel> fromJsonList(List<dynamic> commentsSnapshot) {
+    final List<CommentModel> comments = [];
+    for (final commentSnapshot in commentsSnapshot) {
+      comments.add(fromJson(commentSnapshot));
+    }
+    return comments;
+  }
+
   static CommentModel fromJson(dynamic commentSnapshot) {
     if (commentSnapshot == null) {
       return null;

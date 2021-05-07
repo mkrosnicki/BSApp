@@ -41,62 +41,46 @@ class Topics with ChangeNotifier {
   }
 
   Future<void> fetchTopics({Map<String, dynamic> requestParams}) async {
-    final List<TopicModel> loadedTopics = [];
     final responseBody =
         await _apiProvider.get('/topics', requestParams: requestParams) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
-    responseBody.forEach((element) {
-      loadedTopics.add(TopicModel.fromJson(element));
-    });
-    allTopics = loadedTopics;
+    allTopics = TopicModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchCategoryTopics(String categoryId) async {
-    final List<TopicModel> loadedTopics = [];
     final responseBody =
     await _apiProvider.get('/topics', requestParams: {'categoryId': categoryId}) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
-    responseBody.forEach((element) {
-      loadedTopics.add(TopicModel.fromJson(element));
-    });
-    fetchedCategoryTopics = loadedTopics;
+    fetchedCategoryTopics = TopicModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchObservedTopics() async {
-    final List<TopicModel> fetchedTopics = [];
     final responseBody =
         await _apiProvider.get('/users/me/topics/observed', token: token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
-    responseBody.forEach((element) {
-      fetchedTopics.add(TopicModel.fromJson(element));
-    });
-    fetchedObservedTopics = fetchedTopics;
+    fetchedObservedTopics = TopicModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchAddedTopics() async {
-    final List<TopicModel> fetchedTopics = [];
     final responseBody =
         await _apiProvider.get('/users/me/topics/added', token: token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
-    responseBody.forEach((element) {
-      fetchedTopics.add(TopicModel.fromJson(element));
-    });
-    fetchedAddedTopics = fetchedTopics;
+    fetchedAddedTopics = TopicModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
@@ -124,19 +108,11 @@ class Topics with ChangeNotifier {
   }
 
   Future<void> voteForTopic(String topicId, bool isPositive) async {
-    await _apiProvider.post(
-        '/topics/$topicId/votes', {'isPositive': isPositive},
+    await _apiProvider.post('/topics/$topicId/votes',
+        {'isPositive': isPositive},
         token: token);
     return fetchTopics();
   }
-
-  // Future<TopicModel> fetchById(String topicId) async {
-  //   final responseBody = await _apiProvider.get('/topics/$topicId');
-  //   if (responseBody == null) {
-  //     print('No Topic Found!');
-  //   }
-  //   return TopicModel.fromJson(responseBody);
-  // }
 
   TopicModel findById(String topicId) {
     return categoryTopics.firstWhere((topic) => topic.id == topicId);
@@ -164,7 +140,6 @@ class Topics with ChangeNotifier {
       fetchedObservedTopics = [];
       fetchedAddedTopics = [];
     } else {
-      await fetchAddedTopics();
       await fetchObservedTopics();
     }
   }
