@@ -116,6 +116,7 @@ class _OccasionFormState extends State<OccasionForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: _takePicture,
@@ -154,7 +155,9 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.title = value;
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Tytuł ogłoszenia'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -173,7 +176,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.description = value;
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Opis'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText('Opis'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -192,7 +196,9 @@ class _OccasionFormState extends State<OccasionForm> {
                       onChanged: (value) {
                         _newDeal.urlLocation = value;
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Link do okazji'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -205,8 +211,8 @@ class _OccasionFormState extends State<OccasionForm> {
                           const Text('Okazja internetowa'),
                           Switch.adaptive(
                               activeColor: MyColorsProvider.BLUE,
-                              value:
-                                  _newDeal.locationType == LocationType.INTERNET,
+                              value: _newDeal.locationType ==
+                                  LocationType.INTERNET,
                               onChanged: (value) {
                                 _changeLocation(value);
                               }),
@@ -241,7 +247,9 @@ class _OccasionFormState extends State<OccasionForm> {
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
-                            decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Opis lokalizacji'),
+                            decoration: MyStylingProvider
+                                .textFormFiledDecorationWithLabelText(
+                                    'Opis lokalizacji'),
                           ),
                         ],
                       ),
@@ -256,7 +264,11 @@ class _OccasionFormState extends State<OccasionForm> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => _openCategorySelector(context),
                     ),
-                    const Text('Wiek dziecka'),
+                    Container(
+                        margin: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                        child: const Text('Wiek dziecka')),
                     SizedBox(
                       width: double.infinity,
                       child: AgeTypeChips(_newDeal),
@@ -310,7 +322,9 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.regularPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Regularna cena'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Regularna cena'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -329,7 +343,9 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.currentPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Aktualna cena'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Aktualna cena'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -348,7 +364,9 @@ class _OccasionFormState extends State<OccasionForm> {
                       onSaved: (value) {
                         _newDeal.shippingPrice = double.parse(value);
                       },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Koszt dostawy'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Koszt dostawy'),
                     ),
                     SizedBox(
                       width: double.infinity,

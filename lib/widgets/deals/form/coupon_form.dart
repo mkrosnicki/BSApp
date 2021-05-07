@@ -118,6 +118,7 @@ class _CouponFormState extends State<CouponForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: _takePicture,
@@ -283,7 +284,11 @@ class _CouponFormState extends State<CouponForm> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => _openCategorySelector(context),
                     ),
-                    const Text('Wiek dziecka'),
+                    Container(
+                        margin: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                        child: const Text('Wiek dziecka')),
                     SizedBox(
                       width: double.infinity,
                       child: AgeTypeChips(_newDeal),
