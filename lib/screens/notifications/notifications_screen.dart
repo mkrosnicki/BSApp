@@ -81,8 +81,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  Future<void> _refreshNotifications(BuildContext context) {
-    Provider.of<Notifications>(context, listen: false).fetchMyNotifications();
+  Future<void> _refreshNotifications(BuildContext context) async {
+    await Provider.of<Notifications>(context, listen: false).fetchMyNotifications();
   }
 
   @override
