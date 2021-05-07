@@ -156,8 +156,8 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.title = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                          .copyWith(helperText: 'Tytuł kuponu'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText('Tytuł kuponu'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -176,8 +176,8 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.description = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                          .copyWith(helperText: 'Opis'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText('Opis'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -195,8 +195,8 @@ class _CouponFormState extends State<CouponForm> {
                       onSaved: (value) {
                         _newDeal.dealCode = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                          .copyWith(helperText: 'Kod kuponu'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText('Kod kuponu'),
                     ),
                     const SizedBox(
                       height: 10,
@@ -215,24 +215,28 @@ class _CouponFormState extends State<CouponForm> {
                       onChanged: (value) {
                         _newDeal.urlLocation = value;
                       },
-                      decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                          .copyWith(helperText: 'Link do kuponu'),
+                      decoration: MyStylingProvider
+                          .textFormFiledDecorationWithLabelText(
+                              'Link do kuponu'),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Kupon internetowy'),
-                        Switch.adaptive(
-                            activeColor: MyColorsProvider.BLUE,
-                            value:
-                                _newDeal.locationType == LocationType.INTERNET,
-                            onChanged: (value) {
-                              _changeLocation(value);
-                            }),
-                      ],
+                    Container(
+                      margin: const EdgeInsets.only(left: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Kupon internetowy'),
+                          Switch.adaptive(
+                              activeColor: MyColorsProvider.BLUE,
+                              value: _newDeal.locationType ==
+                                  LocationType.INTERNET,
+                              onChanged: (value) {
+                                _changeLocation(value);
+                              }),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -262,8 +266,9 @@ class _CouponFormState extends State<CouponForm> {
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
-                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                                .copyWith(helperText: 'Opis lokalizacji'),
+                            decoration: MyStylingProvider
+                                .textFormFiledDecorationWithLabelText(
+                                    'Opis lokalizacji'),
                           ),
                         ],
                       ),
@@ -337,8 +342,9 @@ class _CouponFormState extends State<CouponForm> {
                             onSaved: (value) {
                               _newDeal.discountValue = double.parse(value);
                             },
-                            decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                                .copyWith(helperText: 'Wartość kuponu'),
+                            decoration: MyStylingProvider
+                                .textFormFiledDecorationWithLabelText(
+                                    'Wartość kuponu'),
                           ),
                         ),
                         TextButton(
@@ -363,9 +369,12 @@ class _CouponFormState extends State<CouponForm> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: TextButton(
                         onPressed: _submit,
-                        child: const Text('Dodaj kupon'),
+                        child: const Text(
+                          'Dodaj kupon',
+                          style: MyStylingProvider.TEXT_BLACK,
+                        ),
                       ),
                     ),
                   ],
