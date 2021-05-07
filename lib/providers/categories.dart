@@ -26,7 +26,6 @@ class Categories with ChangeNotifier {
       });
       _categories = loadedCategories;
     }
-    notifyListeners();
   }
 
 }
