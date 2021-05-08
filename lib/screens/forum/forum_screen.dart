@@ -46,7 +46,8 @@ class ForumScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  'Popularne wątki',
+                  'Popularne tematy'
+                      '',
                   style: TextStyle(fontSize: 16),
                 ),
               ),

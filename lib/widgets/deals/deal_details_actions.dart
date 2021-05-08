@@ -16,7 +16,7 @@ class DealDetailsActions extends StatelessWidget {
       child: Column(
         children: [
           const Divider(),
-          DealRateBar(deal),
+          DealRateBar(deal.id),
         ],
       ),
     );
