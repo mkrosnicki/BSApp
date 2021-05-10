@@ -52,7 +52,7 @@ class YourDealsScreen extends StatelessWidget {
       color: Colors.white,
       child: const Center(
         child: Text(
-          'Nie dodałeś',
+          'Brak okazji',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 18,

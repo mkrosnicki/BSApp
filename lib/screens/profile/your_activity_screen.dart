@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/activities.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/activities/activity_item.dart';
@@ -20,7 +21,7 @@ class YourActivityScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future:
-            Provider.of<CurrentUser>(context, listen: false).fetchActivities(),
+            Provider.of<Activities>(context, listen: false).fetchMyActivities(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: LoadingIndicator());
@@ -30,7 +31,7 @@ class YourActivityScreen extends StatelessWidget {
                 child: ServerErrorSplash(),
               );
             } else {
-              return Consumer<CurrentUser>(
+              return Consumer<Activities>(
                 builder: (context, currentUserData, child) {
                   return currentUserData.activities.isNotEmpty
                       ? ListView.builder(
