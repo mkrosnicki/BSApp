@@ -6,20 +6,13 @@ import 'package:logger/logger.dart';
 class Posts with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
-  List<PostModel> fetchedTopicPosts = [];
-  List<PostModel> fetchedAddedPosts = [];
-  String token;
-
-  Posts({this.fetchedTopicPosts, this.fetchedAddedPosts, this.token});
+  List<PostModel> _posts = [];
+  String _token;
 
   Posts.empty();
 
-  List<PostModel> get allTopicPosts {
-    return [...fetchedTopicPosts];
-  }
-
-  List<PostModel> get addedPosts {
-    return [...fetchedAddedPosts];
+  List<PostModel> get posts {
+    return [..._posts];
   }
 
   Future<void> fetchPostsForTopic(String topicId) async {
@@ -29,18 +22,18 @@ class Posts with ChangeNotifier {
       final logger = Logger();
       logger.i('No Posts Found!');
     }
-    fetchedTopicPosts = PostModel.fromJsonList(responseBody);
+    _posts = PostModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> fetchAddedPosts() async {
     final responseBody =
-        await _apiProvider.get('/users/me/posts', token: token) as List;
+        await _apiProvider.get('/users/me/posts', token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Posts Found!');
     }
-    fetchedAddedPosts = PostModel.fromJsonList(responseBody);
+    _posts = PostModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
@@ -49,7 +42,7 @@ class Posts with ChangeNotifier {
       'topicId': topicId,
       'content': content,
     };
-    await _apiProvider.post('/posts', addPostToTopicDto, token: token);
+    await _apiProvider.post('/posts', addPostToTopicDto, token: _token);
     return fetchPostsForTopic(topicId);
   }
 
@@ -61,18 +54,18 @@ class Posts with ChangeNotifier {
       'content': replyContent,
       'quote': quote
     };
-    await _apiProvider.post('/posts', addReplyToPostDto, token: token);
+    await _apiProvider.post('/posts', addReplyToPostDto, token: _token);
     return fetchPostsForTopic(topicId);
   }
 
   PostModel findById(String postId) {
-    return allTopicPosts.firstWhere((post) => post.id == postId);
+    return posts.firstWhere((post) => post.id == postId);
   }
 
   Future<void> likeThePost(PostModel post, bool isLike) async {
-    final responseBody = await _apiProvider.post('/posts/${post.id}/likes', {'isLike': isLike}, token: token);
+    final responseBody = await _apiProvider.post('/posts/${post.id}/likes', {'isLike': isLike}, token: _token);
     final PostModel updatedPost = PostModel.fromJson(responseBody);
-    fetchedTopicPosts[fetchedTopicPosts.indexWhere((element) => element.id == updatedPost.id)] = updatedPost;
+    _posts[_posts.indexWhere((element) => element.id == updatedPost.id)] = updatedPost;
     notifyListeners();
   }
 
@@ -80,15 +73,8 @@ class Posts with ChangeNotifier {
     return findById(postId).likers.any((element) => element == userId);
   }
 
-  void update(String token) async {
-    this.token = token;
-    if (token == null) {
-      fetchedTopicPosts = [];
-      fetchedAddedPosts = [];
-    } else {
-      // todo
-      // await fetchAddedTopics();
-      // await fetchObservedTopics();
-    }
+  void update(String token, List<PostModel> posts) async {
+    _token = token;
+    _posts = posts;
   }
 }

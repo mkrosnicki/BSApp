@@ -37,7 +37,7 @@ class TopicScreenPosts extends StatelessWidget {
                   return Consumer<Posts>(
                       builder: (context, postsData, child) {
                         return Column(
-                          children: postsData.allTopicPosts
+                          children: postsData.posts
                               .map((post) => PostItem(post, postToReplySubject))
                               .toList(),
                         );

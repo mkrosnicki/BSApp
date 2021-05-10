@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Posts.empty(),
           lazy: true,
           update: (context, auth, previousPosts) =>
-              previousPosts..update(auth.token),
+              previousPosts..update(auth.token, previousPosts.posts),
         ),
         ChangeNotifierProxyProvider<CurrentUser, Notifications>(
           create: (context) => Notifications.empty(),
