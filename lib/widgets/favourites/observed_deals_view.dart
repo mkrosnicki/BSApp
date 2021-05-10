@@ -11,38 +11,37 @@ import 'package:provider/provider.dart';
 class ObservedDealsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CurrentUser>(
-      builder: (context, currentUser, child) {
-        if (currentUser.isAuthenticated) {
-          return FutureBuilder(
-            future: Provider.of<Deals>(context, listen: false)
-                .fetchMyObservedDeals(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: LoadingIndicator());
-              } else {
-                if (snapshot.error != null) {
-                  return const Center(
-                    child: ServerErrorSplash(),
-                  );
-                } else {
-                  return Consumer<Deals>(builder: (context, dealsData, child) {
-                    return dealsData.deals.isNotEmpty
-                        ? ListView.builder(
-                            itemBuilder: (context, index) {
-                              final DealModel deal = dealsData.deals[index];
-                              return DealItem(deal);
-                            },
-                            itemCount: dealsData.deals.length,
-                          )
-                        : _buildNoObservedDealsSplashView();
-                  });
-                }
-              }
-            },
-          );
+    return FutureBuilder(
+      future: Provider.of<Deals>(context, listen: false).fetchMyObservedDeals(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: LoadingIndicator());
         } else {
-          return _buildNoObservedDealsSplashView();
+          if (snapshot.error != null) {
+            return const Center(
+              child: ServerErrorSplash(),
+            );
+          } else {
+            return Consumer<Deals>(builder: (context, dealsData, child) {
+              return Consumer<CurrentUser>(
+                  builder: (context, currentUser, child) {
+                final List<DealModel> observedDeals = dealsData.deals
+                    .where((element) => currentUser.observesDeal(element))
+                    .toList();
+                return observedDeals.isNotEmpty
+                    ? ListView.builder(
+                        itemBuilder: (context, index) {
+                          final DealModel deal = observedDeals[index];
+                          return currentUser.observesDeal(deal)
+                              ? DealItem(deal)
+                              : null;
+                        },
+                        itemCount: observedDeals.length,
+                      )
+                    : _buildNoObservedDealsSplashView();
+              });
+            });
+          }
         }
       },
     );

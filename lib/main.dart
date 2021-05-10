@@ -57,11 +57,11 @@ class MyApp extends StatelessWidget {
           update: (context, auth, previousCurrentUser) =>
           previousCurrentUser..update(auth.token, auth.userId),
         ),
-        ChangeNotifierProxyProvider<CurrentUser, Deals>(
+        ChangeNotifierProxyProvider<Auth, Deals>(
           create: (context) => Deals.empty(),
           lazy: true,
-          update: (context, previousCurrentUser, previousDeals) =>
-              previousDeals..update(previousCurrentUser.token, previousDeals.deals, previousCurrentUser.observedDeals),
+          update: (context, auth, previousDeals) =>
+              previousDeals..update(auth.token, previousDeals.deals),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Notifications.empty(),
           lazy: false,
           update: (context, currentUser, previousNotifications) =>
-          previousNotifications..update(currentUser.token, currentUser.me.id, currentUser.me?.notificationsSeenAt),
+          previousNotifications..update(currentUser.token, currentUser.me?.id, currentUser.me?.notificationsSeenAt),
         ),
         ChangeNotifierProxyProvider<Auth, Activities>(
           create: (context) => Activities.empty(),

@@ -10,14 +10,12 @@ class Deals with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<DealModel> _deals = [];
-  List<DealModel> _observedDeals = [];
 
   String _token;
 
   Deals.empty();
 
   List<DealModel> get deals {
-    print('deals!!!!!!!!!!!!!!!!!!');
     return [..._deals];
   }
 
@@ -32,15 +30,16 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> fetchMyObservedDeals() async {
-    if (_token != null) {
-      _deals = _observedDeals;
-    } else {
-      _deals = [];
+    final responseBody = await _apiProvider.get('/users/me/deals/observed', token: _token) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Deals Found!');
     }
+    _deals = DealModel.fromJsonList(responseBody);
   }
 
   Future<void> fetchDealsAddedBy(String userId) async {
-    final responseBody = await _apiProvider.get('/users/${userId}/deals/added') as List;
+    final responseBody = await _apiProvider.get('/users/$userId/deals/added') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Deals Found!');
@@ -72,9 +71,8 @@ class Deals with ChangeNotifier {
     return _deals.firstWhere((deal) => deal.id == dealId);
   }
 
-  void update(String token, List<DealModel> deals, List<DealModel> observedDeals) {
+  void update(String token, List<DealModel> deals) {
     _deals = deals;
     _token = token;
-    _observedDeals = observedDeals;
   }
 }
