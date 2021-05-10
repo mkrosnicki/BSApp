@@ -20,19 +20,17 @@ class Comments with ChangeNotifier {
   }
 
   Future<void> fetchCommentsForDeal(String dealId) async {
-    final List<CommentModel> loadedComments = [];
     final responseBody =
         await _apiProvider.get('/deals/$dealId/comments') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
     }
-    responseBody.forEach((element) {
-      final comment = CommentModel.fromJson(element);
-      loadedComments.add(comment);
-      loadedComments.addAll(comment.subComments);
-    });
-    _comments = loadedComments;
+    final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
+    _comments.addAll(loadedComments);
+    for (final comment in loadedComments) {
+      _comments.addAll(comment.subComments);
+    }
     notifyListeners();
   }
 
