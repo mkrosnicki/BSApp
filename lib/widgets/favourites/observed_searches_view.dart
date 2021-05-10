@@ -27,7 +27,7 @@ class ObservedSearchesView extends StatelessWidget {
               return Consumer<CurrentUser>(
                   builder: (context, currentUser, child) {
                 final List<SearchModel> observedDeals = searchesData
-                    .savedSearches
+                    .searches
                     .where((element) => currentUser.observesSearch(element))
                     .toList();
                 return observedDeals.isNotEmpty

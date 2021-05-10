@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Searches>(
           create: (context) => Searches.empty(),
           update: (context, auth, previousSearches) =>
-              previousSearches..update(auth.token),
+              previousSearches..update(auth.token, previousSearches.searches),
         ),
         ChangeNotifierProxyProvider<Auth, Topics>(
           create: (context) => Topics.empty(),

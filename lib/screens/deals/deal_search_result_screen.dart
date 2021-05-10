@@ -1,4 +1,5 @@
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
@@ -66,8 +67,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               children: [
                 const Text(
                   'Znalezione okazje',
-                  style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
@@ -133,11 +133,11 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           Expanded(
             child: TextField(
               controller: _searchTextController,
-              onSubmitted: (phrase) {}, // todo
+              onSubmitted: (phrase) {},
+              // todo
               keyboardType: TextInputType.text,
               style: const TextStyle(fontSize: 12),
-              decoration:
-              MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
+              decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
                 hintText: 'Czego szukasz?',
                 prefixIcon: const Padding(
                   padding: EdgeInsets.all(0.0),
@@ -153,23 +153,26 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               ),
             ),
           ),
-          Consumer<Searches>(
-            builder: (context, searchesData, child) => GestureDetector(
-              onTap: () {
-                if (searchesData.token == null) {
-                  AuthScreenProvider.showLoginScreen(context);
-                } else {
-                  _saveSearch();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: searchesData.isSaved(filterSettings)
-                    ? const Icon(CupertinoIcons.heart_fill, color: Colors.black87)
-                    : const Icon(CupertinoIcons.heart, color: Colors.black87),
+          Consumer<CurrentUser>(
+            builder: (context, currentUser, child) => Consumer<Searches>(
+              builder: (context, searchesData, child) => GestureDetector(
+                onTap: () {
+                  if (currentUser.isAuthenticated) {
+                    AuthScreenProvider.showLoginScreen(context);
+                  } else {
+                    _saveSearch();
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: searchesData.isSaved(filterSettings)
+                      ? const Icon(CupertinoIcons.heart_fill,
+                          color: Colors.black87)
+                      : const Icon(CupertinoIcons.heart, color: Colors.black87),
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
     );

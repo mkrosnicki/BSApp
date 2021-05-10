@@ -7,52 +7,42 @@ import 'package:logger/logger.dart';
 class Searches with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
-  List<SearchModel> fetchedSavedSearches = [];
-  String token;
-
-  Searches({this.fetchedSavedSearches, this.token});
+  List<SearchModel> _searches = [];
+  String _token;
 
   Searches.empty();
 
-  List<SearchModel> get savedSearches {
-    return [...fetchedSavedSearches];
+  List<SearchModel> get searches {
+    return [..._searches];
   }
 
   Future<void> fetchObservedSearches() async {
-    final List<SearchModel> loadedSearches = [];
     final responseBody =
-    await _apiProvider.get('/users/me/subscriptions', token: token) as List;
+    await _apiProvider.get('/users/me/subscriptions', token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Subscriptions Found!');
     }
-    responseBody.forEach((element) {
-      loadedSearches.add(SearchModel.fromJson(element));
-    });
-    fetchedSavedSearches = loadedSearches;
+    _searches = SearchModel.fromJsonList(responseBody);
     notifyListeners();
   }
 
   Future<void> saveSearch(Map<String, dynamic> saveSearchDto) async {
-    await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: token);
+    await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: _token);
     return fetchObservedSearches();
   }
 
   bool isSaved(FilterSettings filterSettings) {
-    return savedSearches.any((element) => element.isSame(filterSettings));
+    return searches.any((element) => element.isSame(filterSettings));
   }
 
   Future<void> deleteSearch(String searchId) async {
-    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: token);
+    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: _token);
     return fetchObservedSearches();
   }
 
-  void update(String token) async {
-    this.token = token;
-    if (token == null) {
-      fetchedSavedSearches = [];
-    } else {
-      await fetchObservedSearches();
-    }
+  void update(String token, List<SearchModel> searches) async {
+    _token = token;
+    _searches = searches;
   }
 }

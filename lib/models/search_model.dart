@@ -30,6 +30,14 @@ class SearchModel {
       this.ageTypes,
       this.sortBy});
 
+  static List<SearchModel> fromJsonList(List<dynamic> searchesSnapshot) {
+    final List<SearchModel> searches = [];
+    for (final searchSnapshot in searchesSnapshot) {
+      searches.add(fromJson(searchSnapshot));
+    }
+    return searches;
+  }
+
   static SearchModel fromJson(dynamic searchSnapshot) {
     final voivodeship = searchSnapshot['voivodeship'];
     final city = searchSnapshot['city'];
