@@ -73,7 +73,7 @@ class Posts with ChangeNotifier {
     return findById(postId).likers.any((element) => element == userId);
   }
 
-  void update(String token, List<PostModel> posts) async {
+  void update(String token, List<PostModel> posts) {
     _token = token;
     _posts = posts;
   }

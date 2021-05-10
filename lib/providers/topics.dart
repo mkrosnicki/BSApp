@@ -80,15 +80,17 @@ class Topics with ChangeNotifier {
 
   Future<TopicModel> addNewTopic(
       String title, String content, String categoryId) async {
-    final addNewTopicDto = {
-      'title': title,
-      'content': content,
-      'categoriesIds': [categoryId]
-    };
-    final topicSnapshot =
-        await _apiProvider.post('/topics', addNewTopicDto, token: _token);
+    final topicSnapshot = await _apiProvider.post(
+        '/topics',
+        {
+          'title': title,
+          'content': content,
+          'categoriesIds': [categoryId]
+        },
+        token: _token);
     final TopicModel newTopic = TopicModel.fromJson(topicSnapshot);
     _topics.add(newTopic);
+    notifyListeners();
     return newTopic;
   }
 
@@ -100,6 +102,10 @@ class Topics with ChangeNotifier {
     _topics[_topics.indexWhere((element) => element.id == votedTopic.id)] =
         votedTopic;
     notifyListeners();
+  }
+
+  TopicModel findById(String topicId) {
+    return _topics.firstWhere((topic) => topic.id == topicId);
   }
 
   Future<void> update(String token, List<TopicModel> topics) async {
