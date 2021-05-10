@@ -8,11 +8,11 @@ import 'package:rxdart/rxdart.dart';
 
 class UserProfileContent extends StatelessWidget {
   final PublishSubject<int> contentIdSubject;
-  final UsersProfileModel usersProfile;
+  final String userId;
 
   Stream<int> get _contentIdStream => contentIdSubject.stream;
 
-  const UserProfileContent(this.usersProfile, this.contentIdSubject);
+  const UserProfileContent(this.userId, this.contentIdSubject);
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,11 @@ class UserProfileContent extends StatelessWidget {
       builder: (context, AsyncSnapshot<int> snapshot) {
         final int contentId = snapshot.data ?? 0;
         if (contentId == 0) {
-          return UserProfileActivitiesList(usersProfile.user.id);
+          return UserProfileActivitiesList(userId);
         } else if (contentId == 1) {
-          return UserProfileAddedDeals(usersProfile.user.id);
+          return UserProfileAddedDeals(userId);
         } else if (contentId == 2) {
-          return UserProfileAddedTopics(usersProfile.user.id);
+          return UserProfileAddedTopics(userId);
         } else {
           return const Text('Error');
         }

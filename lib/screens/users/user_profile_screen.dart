@@ -1,3 +1,4 @@
+import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -21,7 +22,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  UsersProfileModel _usersProfile;
+  UserModel _user;
 
   final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 
@@ -46,10 +47,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     Flex(
                       direction: Axis.vertical,
                       children: [
-                        UserProfileMainInfo(_usersProfile.user),
+                        UserProfileMainInfo(_user),
                         UserProfileStatisticsInfo(),
                         UserProfileScrollableMenu(_contentIdSubject),
-                        UserProfileContent(_usersProfile, _contentIdSubject),
+                        UserProfileContent(userId, _contentIdSubject),
                       ],
                     ),
                     Container(
@@ -74,6 +75,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future<void> _initUser(BuildContext context, String userId) async {
-    _usersProfile = await Provider.of<Users>(context, listen: false).findUsersProfile(userId);
+    _user = await Provider.of<Users>(context, listen: false).findUser(userId);
   }
 }

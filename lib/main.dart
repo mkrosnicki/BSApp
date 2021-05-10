@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Users.empty(),
           lazy: false,
           update: (context, auth, previousUsers) =>
-          previousUsers..update(auth.token),
+          previousUsers..update(),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),

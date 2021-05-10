@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/services/api_provider.dart';
@@ -10,10 +7,8 @@ import 'package:logger/logger.dart';
 class Users with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
-  String token;
-
-  final Map<String, UserModel> _idToUserMap = {};
-  final Map<String, UsersProfileModel> _idToUsersProfileMap = {};
+  UserModel _user;
+  UsersProfileModel _usersProfile;
 
   Users.empty();
 
@@ -23,42 +18,36 @@ class Users with ChangeNotifier {
       final logger = Logger();
       logger.e('No User Found!');
     }
-    _idToUserMap.update(userId, (value) => UserModel.fromJson(responseBody), ifAbsent: () => UserModel.fromJson(responseBody));
+    _user = UserModel.fromJson(responseBody);
   }
 
   Future<void> fetchUsersProfile(String userId) async {
-    final responseBody = await _apiProvider.get('/users/$userId/profile') as Map;
+    final responseBody =
+        await _apiProvider.get('/users/$userId/profile') as Map;
     if (responseBody == null) {
       final logger = Logger();
       logger.e('No User Profile Found!');
     }
-    _idToUsersProfileMap.update(userId, (value) => UsersProfileModel.fromJson(responseBody), ifAbsent: () => UsersProfileModel.fromJson(responseBody));
+    _usersProfile = UsersProfileModel.fromJson(responseBody);
   }
 
   Future<UserModel> findUser(String userId) async {
     await fetchUser(userId);
-    return _idToUserMap[userId];
+    return _user;
   }
 
   Future<UsersProfileModel> findUsersProfile(String userId) async {
     await fetchUsersProfile(userId);
-    return _idToUsersProfileMap[userId];
+    return _usersProfile;
   }
 
   UserModel getUser(String userId) {
-    return _idToUserMap[userId];
+    return _user;
   }
 
   UsersProfileModel getUsersProfile(String userId) {
-    return _idToUsersProfileMap[userId];
+    return _usersProfile;
   }
 
-  Future<void> updateMyAvatar(File newAvatar) async {
-    final updateAvatarDto = {'avatar': base64Encode(newAvatar.readAsBytesSync()),};
-    await _apiProvider.patch('/users/me/', updateAvatarDto, token: token);
-  }
-
-  Future<void> update(String token) async {
-    this.token = token;
-  }
+  void update() {}
 }
