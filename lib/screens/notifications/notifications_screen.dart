@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -87,7 +88,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   void deactivate() {
-    Provider.of<Auth>(context, listen: false).updateMe();
+    Provider.of<Notifications>(context, listen: false).updateNotificationsTimestamp();
+    Provider.of<CurrentUser>(context, listen: false).updateNotificationsTimestamp();
     super.deactivate();
   }
 }

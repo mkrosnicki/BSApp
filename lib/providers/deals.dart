@@ -10,12 +10,14 @@ class Deals with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<DealModel> _deals = [];
+  List<DealModel> _observedDeals = [];
 
   String _token;
 
   Deals.empty();
 
   List<DealModel> get deals {
+    print('deals!!!!!!!!!!!!!!!!!!');
     return [..._deals];
   }
 
@@ -30,13 +32,11 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> fetchMyObservedDeals() async {
-    final responseBody =
-    await _apiProvider.get('/users/me/deals/observed', token: _token) as List;
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.i('No Deals Found!');
+    if (_token != null) {
+      _deals = _observedDeals;
+    } else {
+      _deals = [];
     }
-    _deals = DealModel.fromJsonList(responseBody);
   }
 
   Future<void> fetchMyAddedDeals() async {
@@ -63,8 +63,9 @@ class Deals with ChangeNotifier {
     return _deals.firstWhere((deal) => deal.id == dealId);
   }
 
-  void update(String token, List<DealModel> deals) {
+  void update(String token, List<DealModel> deals, List<DealModel> observedDeals) {
     _deals = deals;
     _token = token;
+    _observedDeals = observedDeals;
   }
 }

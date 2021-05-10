@@ -35,8 +35,7 @@ class DealRateBar extends StatelessWidget {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
-      Provider.of<Deals>(context, listen: false)
-          .voteForDeal(dealId, isPositive);
+      Provider.of<Deals>(context, listen: false).voteForDeal(dealId, isPositive);
     }
   }
 }

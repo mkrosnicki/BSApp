@@ -1,5 +1,6 @@
 import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/notifications/notification_item_content.dart';
@@ -15,10 +16,10 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (context, authData, child) {
-        final bool wasSeen = authData.isAuthenticated &&
-            notification.issuedAt.isBefore(authData.me.notificationsSeenAt);
+    return Consumer<CurrentUser>(
+      builder: (context, currentUser, child) {
+        final bool wasSeen = currentUser.isAuthenticated &&
+            notification.issuedAt.isBefore(currentUser.me.notificationsSeenAt);
         return Stack(
           children: [
             Container(

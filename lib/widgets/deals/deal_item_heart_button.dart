@@ -15,21 +15,19 @@ class DealItemHeartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (context, authData, child) => Consumer<CurrentUser>(
-        builder: (context, currentUserData, child) {
-          final bool isObservedDeal = currentUserData.observesDeal(deal);
-          return GestureDetector(
-            onTap: () => _toggleFavourites(
-                context, deal, isObservedDeal, authData.isAuthenticated),
-            child: isObservedDeal
-                ? Icon(CupertinoIcons.heart_fill,
-                    size: iconSize, color: MyColorsProvider.LIGHT_RED_SHADY)
-                : Icon(CupertinoIcons.heart_fill,
-                    size: iconSize, color: MyColorsProvider.LIGHT_GRAY),
-          );
-        },
-      ),
+    return Consumer<CurrentUser>(
+      builder: (context, currentUser, child) {
+        final bool isObservedDeal = currentUser.observesDeal(deal);
+        return GestureDetector(
+          onTap: () => _toggleFavourites(
+              context, deal, isObservedDeal, currentUser.isAuthenticated),
+          child: isObservedDeal
+              ? Icon(CupertinoIcons.heart_fill,
+              size: iconSize, color: MyColorsProvider.LIGHT_RED_SHADY)
+              : Icon(CupertinoIcons.heart_fill,
+              size: iconSize, color: MyColorsProvider.LIGHT_GRAY),
+        );
+      },
     );
   }
 

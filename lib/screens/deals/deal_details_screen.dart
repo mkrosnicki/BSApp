@@ -83,7 +83,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DealDetailsImage(deal),

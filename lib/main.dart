@@ -50,11 +50,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Auth(),
         ),
-        ChangeNotifierProxyProvider<Auth, Deals>(
+        ChangeNotifierProxyProvider<Auth, CurrentUser>(
+          create: (context) => CurrentUser.empty(),
+          lazy: false,
+          update: (context, auth, previousCurrentUser) =>
+          previousCurrentUser..update(auth.token, auth.userId),
+        ),
+        ChangeNotifierProxyProvider<CurrentUser, Deals>(
           create: (context) => Deals.empty(),
           lazy: true,
-          update: (context, auth, previousDeals) =>
-              previousDeals..update(auth.token, previousDeals.deals),
+          update: (context, previousCurrentUser, previousDeals) =>
+              previousDeals..update(previousCurrentUser.token, previousDeals.deals, previousCurrentUser.observedDeals),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
@@ -79,17 +85,11 @@ class MyApp extends StatelessWidget {
           update: (context, auth, previousPosts) =>
               previousPosts..update(auth.token),
         ),
-        ChangeNotifierProxyProvider<Auth, Notifications>(
+        ChangeNotifierProxyProvider<CurrentUser, Notifications>(
           create: (context) => Notifications.empty(),
           lazy: false,
-          update: (context, auth, previousNotifications) =>
-          previousNotifications..update(auth.token, auth.userId, auth.me?.notificationsSeenAt),
-        ),
-        ChangeNotifierProxyProvider<Auth, CurrentUser>(
-          create: (context) => CurrentUser.empty(),
-          lazy: false,
-          update: (context, auth, previousCurrentUser) =>
-          previousCurrentUser..update(auth.token, auth.userId),
+          update: (context, currentUser, previousNotifications) =>
+          previousNotifications..update(currentUser.token, currentUser.me.id, currentUser.me?.notificationsSeenAt),
         ),
         ChangeNotifierProxyProvider<Auth, Users>(
           create: (context) => Users.empty(),

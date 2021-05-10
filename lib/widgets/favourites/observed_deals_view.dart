@@ -1,4 +1,5 @@
-import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -10,9 +11,9 @@ import 'package:provider/provider.dart';
 class ObservedDealsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (context, auth, child) {
-        if (auth.isAuthenticated) {
+    return Consumer<CurrentUser>(
+      builder: (context, currentUser, child) {
+        if (currentUser.isAuthenticated) {
           return FutureBuilder(
             future: Provider.of<Deals>(context, listen: false)
                 .fetchMyObservedDeals(),
@@ -25,22 +26,17 @@ class ObservedDealsView extends StatelessWidget {
                     child: ServerErrorSplash(),
                   );
                 } else {
-                  return Consumer<Deals>(
-                    builder: (context, dealsData, child) {
-                      return dealsData.deals.isNotEmpty
-                          ? ListView.builder(
-                              itemBuilder: (context, index) => Column(
-                                children: [
-                                  DealItem(dealsData.deals[index]),
-                                  DealItem(dealsData.deals[index]),
-                                  DealItem(dealsData.deals[index]),
-                                ],
-                              ),
-                              itemCount: dealsData.deals.length,
-                            )
-                          : _buildNoObservedDealsSplashView();
-                    },
-                  );
+                  return Consumer<Deals>(builder: (context, dealsData, child) {
+                    return dealsData.deals.isNotEmpty
+                        ? ListView.builder(
+                            itemBuilder: (context, index) {
+                              final DealModel deal = dealsData.deals[index];
+                              return DealItem(deal);
+                            },
+                            itemCount: dealsData.deals.length,
+                          )
+                        : _buildNoObservedDealsSplashView();
+                  });
                 }
               }
             },

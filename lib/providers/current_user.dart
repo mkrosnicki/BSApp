@@ -32,6 +32,10 @@ class CurrentUser with ChangeNotifier {
     return _details?.user;
   }
 
+  String get token {
+    return _token;
+  }
+
   List<DealModel> get observedDeals {
     return [..._observedDeals];
   }
@@ -113,6 +117,15 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateNotificationsTimestamp() async {
+    final updateNotificationsTimestampDto = {'notificationsSeenAtUpdate': true};
+    final responseBody = await _apiProvider.patch(
+        '/users/me/', updateNotificationsTimestampDto,
+        token: _token);
+    _details = UserDetailsModel.fromJson(responseBody);
+    // notifyListeners();
+  }
+
   Future<void> addToObservedDeals(String dealId) async {
     final addDealToFavouritesDto = {'dealId': dealId};
     final responseBody = await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: _token);
@@ -153,7 +166,7 @@ class CurrentUser with ChangeNotifier {
     return _observedSearches.contains(search);
   }
 
-  void update(String token, String userId) async {
+  Future<void> update(String token, String userId) async {
     _token = token;
     if (!isAuthenticated) {
       _addedDeals = [];

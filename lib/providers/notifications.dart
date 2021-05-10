@@ -56,6 +56,11 @@ class Notifications with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateNotificationsTimestamp() async {
+    _notificationsSeenAt = DateTime.now();
+    notifyListeners();
+  }
+
   Future<void> _connectToNotificationsSocket(String userId) async {
     await customStomp.connect(
       'ws://192.168.162.241:8080/ws',
