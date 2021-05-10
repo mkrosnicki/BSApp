@@ -1,4 +1,3 @@
-import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,8 @@ class Searches with ChangeNotifier {
   }
 
   Future<void> fetchObservedSearches() async {
-    final responseBody =
-    await _apiProvider.get('/users/me/subscriptions', token: _token) as List;
+    final responseBody = await _apiProvider.get('/users/me/subscriptions',
+        token: _token) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Subscriptions Found!');
@@ -27,21 +26,7 @@ class Searches with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveSearch(Map<String, dynamic> saveSearchDto) async {
-    await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: _token);
-    return fetchObservedSearches();
-  }
-
-  bool isSaved(FilterSettings filterSettings) {
-    return searches.any((element) => element.isSame(filterSettings));
-  }
-
-  Future<void> deleteSearch(String searchId) async {
-    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: _token);
-    return fetchObservedSearches();
-  }
-
-  void update(String token, List<SearchModel> searches) async {
+  Future<void> update(String token, List<SearchModel> searches) async {
     _token = token;
     _searches = searches;
   }

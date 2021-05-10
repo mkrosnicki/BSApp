@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/user_details_model.dart';
@@ -155,6 +156,19 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addToObservedSearches(Map<String, dynamic> saveSearchDto) async {
+    final responseBody = await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: _token);
+    final SearchModel addedSearch = SearchModel.fromJson(responseBody);
+    _observedSearches.add(addedSearch);
+    notifyListeners();
+  }
+
+  Future<void> removeFromObservedSearches(String searchId) async {
+    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: _token);
+    _observedSearches.removeWhere((element) => element.id == searchId);
+    notifyListeners();
+  }
+
   bool observesDeal(DealModel deal) {
     return _observedDeals.contains(deal);
   }
@@ -165,6 +179,10 @@ class CurrentUser with ChangeNotifier {
 
   bool observesSearch(SearchModel search) {
     return _observedSearches.contains(search);
+  }
+
+  bool observesFilterSettings(FilterSettings filterSettings) {
+    return _observedSearches.any((element) => element.isSame(filterSettings));
   }
 
   Future<void> update(String token, String userId) async {

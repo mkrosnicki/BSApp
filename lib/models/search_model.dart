@@ -39,23 +39,21 @@ class SearchModel {
   }
 
   static SearchModel fromJson(dynamic searchSnapshot) {
-    final voivodeship = searchSnapshot['voivodeship'];
-    final city = searchSnapshot['city'];
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
       categories: (searchSnapshot['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList(),
       showActiveOnly: searchSnapshot['showActiveOnly'],
       showInternetOnly: searchSnapshot['showInternetOnly'],
-      voivodeship: voivodeship != null ? Voivodeship.fromJson(searchSnapshot['voivodeship']) : null,
-      city: city != null ? City.fromJson(searchSnapshot['city']) : null,
+      voivodeship: Voivodeship.fromJson(searchSnapshot['voivodeship']),
+      city: City.fromJson(searchSnapshot['city']),
       ageTypes: (searchSnapshot['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList(),
       sortBy: SortingTypeHelper.fromString(searchSnapshot['sortBy']),
     );
   }
 
   FilterSettings toFilterSettings() {
-    var filterSettings = new FilterSettings();
+    final FilterSettings filterSettings = FilterSettings();
     filterSettings.phrase = phrase;
     filterSettings.categories = categories;
     filterSettings.ageTypes = ageTypes;

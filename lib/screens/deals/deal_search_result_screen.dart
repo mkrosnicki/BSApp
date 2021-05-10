@@ -6,6 +6,7 @@ import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_add_to_observed_searches_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
@@ -153,26 +154,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
               ),
             ),
           ),
-          Consumer<CurrentUser>(
-            builder: (context, currentUser, child) => Consumer<Searches>(
-              builder: (context, searchesData, child) => GestureDetector(
-                onTap: () {
-                  if (currentUser.isAuthenticated) {
-                    AuthScreenProvider.showLoginScreen(context);
-                  } else {
-                    _saveSearch();
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: searchesData.isSaved(filterSettings)
-                      ? const Icon(CupertinoIcons.heart_fill,
-                          color: Colors.black87)
-                      : const Icon(CupertinoIcons.heart, color: Colors.black87),
-                ),
-              ),
-            ),
-          )
+          AppBarAddToObservedSearchesButton(filterSettings),
         ],
       ),
     );
@@ -272,7 +254,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   void _saveSearch() {
-    Provider.of<Searches>(context, listen: false)
-        .saveSearch(filterSettings.toSaveSearchDto());
+    Provider.of<CurrentUser>(context, listen: false)
+        .addToObservedSearches(filterSettings.toSaveSearchDto());
   }
 }

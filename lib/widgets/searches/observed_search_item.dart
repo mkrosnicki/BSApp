@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
@@ -56,8 +57,8 @@ class ObservedSearchItem extends StatelessWidget {
                 SecondaryButton(
                   'Przestań obserwować',
                   () {
-                    Provider.of<Searches>(context, listen: false)
-                        .deleteSearch(searchModel.id);
+                    Provider.of<CurrentUser>(context, listen: false)
+                        .removeFromObservedSearches(searchModel.id);
                   },
                   fontSize: 11,
                 ),
