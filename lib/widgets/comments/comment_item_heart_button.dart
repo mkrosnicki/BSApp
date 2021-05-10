@@ -1,3 +1,4 @@
+import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
@@ -18,7 +19,8 @@ class CommentItemHeartButton extends StatelessWidget {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Comments>(
         builder: (context, commentsData, child) {
-          final bool wasVotedByLoggedUser = commentsData.wasVotedPositivelyBy(commentId, authData.userId);
+          final CommentModel comment = commentsData.findById(commentId);
+          final bool wasVotedByLoggedUser = comment.hasPositiveVoteFrom(authData.userId);
           return InkWell(
             onTap: () => _voteForComment(
                 context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),

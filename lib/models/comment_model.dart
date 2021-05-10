@@ -47,24 +47,32 @@ class CommentModel {
       return null;
     }
     return CommentModel(
-      id: commentSnapshot['id'],
-      content: commentSnapshot['content'],
-      quote: commentSnapshot['quote'],
-      parentId: commentSnapshot['parentId'],
-      replyForId: commentSnapshot['replyForId'],
-      replyForUserId: commentSnapshot['replyForUserId'],
-      replyForUsername: commentSnapshot['replyForUsername'],
-      points: commentSnapshot['points'],
+      id: commentSnapshot['id'] as String,
+      content: commentSnapshot['content'] as String,
+      quote: commentSnapshot['quote'] as String,
+      parentId: commentSnapshot['parentId'] as String,
+      replyForId: commentSnapshot['replyForId'] as String,
+      replyForUserId: commentSnapshot['replyForUserId'] as String,
+      replyForUsername: commentSnapshot['replyForUsername'] as String,
+      points: commentSnapshot['points'] as int,
       subComments: (commentSnapshot['subComments'] as List)
           .map((e) => CommentModel.fromJson(e))
           .toList(),
-      addedAt: DateTime.parse(commentSnapshot['addedAt']),
+      addedAt: DateTime.parse(commentSnapshot['addedAt'] as String),
       adderInfo: AdderInfoModel.fromJson(commentSnapshot['adderInfo']),
-      numberOfPositiveVotes: commentSnapshot['numberOfPositiveVotes'],
-      numberOfNegativeVotes: commentSnapshot['numberOfNegativeVotes'],
+      numberOfPositiveVotes: commentSnapshot['numberOfPositiveVotes'] as int,
+      numberOfNegativeVotes: commentSnapshot['numberOfNegativeVotes'] as int,
       positiveVoters: [...commentSnapshot['positiveVoters'] as List],
       negativeVoters: [...commentSnapshot['negativeVoters'] as List],
     );
+  }
+
+  bool hasPositiveVoteFrom(String userId) {
+    return positiveVoters.any((element) => element == userId);
+  }
+
+  bool hasNegativeVoteFrom(String userId) {
+    return negativeVoters.any((element) => element == userId);
   }
 
   @override

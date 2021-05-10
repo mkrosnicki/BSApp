@@ -56,7 +56,7 @@ class DealDetailsComments extends StatelessWidget {
                 } else {
                   return Consumer<Comments>(
                     builder: (context, commentsData, child) {
-                      if (commentsData.mainDealComments.isEmpty) {
+                      if (commentsData.parentComments.isEmpty) {
                         return Container(
                           height: 200,
                           color: Colors.white,
@@ -73,7 +73,7 @@ class DealDetailsComments extends StatelessWidget {
                       } else {
                         return Column(
                           // todo nullpointer after some time?!
-                          children: commentsData.mainDealComments
+                          children: commentsData.parentComments
                               .map((comment) => CommentWithRepliesItem(
                                   deal.id, comment, commentToReplySubject))
                               .toList(),

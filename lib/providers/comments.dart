@@ -6,28 +6,17 @@ import 'package:logger/logger.dart';
 class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
-  List<CommentModel> fetchedDealComments = [];
-  List<CommentModel> fetchedAddedComments = [];
-  String token;
-
-  Comments({this.fetchedDealComments, this.fetchedAddedComments, this.token});
+  List<CommentModel> _comments = [];
+  String _token;
 
   Comments.empty();
 
-  List<CommentModel> get allDealComments {
-    return [...fetchedDealComments];
+  List<CommentModel> get comments {
+    return [..._comments];
   }
 
-  List<CommentModel> get mainDealComments {
-    return fetchedDealComments.where((element) => element.parentId == null).toList();
-  }
-
-  List<CommentModel> get allAddedComments {
-    return [...fetchedAddedComments];
-  }
-
-  List<CommentModel> get mainAddedComments {
-    return fetchedAddedComments.where((element) => element.parentId == null).toList();
+  List<CommentModel> get parentComments {
+    return _comments.where((element) => element.parentId == null).toList();
   }
 
   Future<void> fetchCommentsForDeal(String dealId) async {
@@ -43,53 +32,35 @@ class Comments with ChangeNotifier {
       loadedComments.add(comment);
       loadedComments.addAll(comment.subComments);
     });
-    fetchedDealComments = loadedComments;
-    notifyListeners();
-  }
-
-  Future<void> fetchAddedComments() async {
-    final List<CommentModel> loadedComments = [];
-    final responseBody =
-    await _apiProvider.get('/users/me/comments', token: token) as List;
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.i('No Comments Found!');
-    }
-    responseBody.forEach((element) {
-      final comment = CommentModel.fromJson(element);
-      loadedComments.add(comment);
-      loadedComments.addAll(comment.subComments);
-    });
-    fetchedAddedComments = loadedComments;
+    _comments = loadedComments;
     notifyListeners();
   }
 
   Future<void> addCommentToDeal(String dealId, String content) async {
     final addCommentToDealDto = {'content': content};
-    await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: token);
+    await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
     return fetchCommentsForDeal(dealId);
   }
 
   Future<void> addReplyToComment(String dealId, String commentId, String replyContent) async {
     final addCommentToDealDto = {'replyContent': replyContent};
-    await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: token);
+    await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
     return fetchCommentsForDeal(dealId);
   }
 
   Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
-    await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: token);
-    return fetchCommentsForDeal(dealId);
+    final responseBody = await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: _token);
+    final CommentModel updatedComment = CommentModel.fromJson(responseBody);
+    _comments[_comments.indexWhere((element) => element.id == updatedComment.id)] = updatedComment;
+    notifyListeners();
   }
 
   CommentModel findById(String commentId) {
-    return allDealComments.firstWhere((comment) => comment.id == commentId);
+    return comments.firstWhere((comment) => comment.id == commentId);
   }
 
-  bool wasVotedPositivelyBy(String commentId, String userId) {
-    return findById(commentId).positiveVoters.any((element) => element == userId);
-  }
-
-  bool wasVotedNegativelyBy(String commentId, String userId) {
-    return findById(commentId).negativeVoters.any((element) => element == userId);
+  void update(String token, List<CommentModel> comments) {
+    _token = token;
+    _comments = comments;
   }
 }

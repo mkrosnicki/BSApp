@@ -65,9 +65,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
-          update: (context, auth, previousComments) {
-            return Comments(token: auth.token);
-          },
+          update: (context, auth, previousComments) => previousComments..update(auth.token, previousComments.comments),
         ),
         ChangeNotifierProxyProvider<Auth, Searches>(
           create: (context) => Searches.empty(),
