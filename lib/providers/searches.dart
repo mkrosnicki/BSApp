@@ -18,7 +18,7 @@ class Searches with ChangeNotifier {
     return [...fetchedSavedSearches];
   }
 
-  Future<void> fetchSavedSearches() async {
+  Future<void> fetchObservedSearches() async {
     final List<SearchModel> loadedSearches = [];
     final responseBody =
     await _apiProvider.get('/users/me/subscriptions', token: token) as List;
@@ -35,7 +35,7 @@ class Searches with ChangeNotifier {
 
   Future<void> saveSearch(Map<String, dynamic> saveSearchDto) async {
     await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: token);
-    return fetchSavedSearches();
+    return fetchObservedSearches();
   }
 
   bool isSaved(FilterSettings filterSettings) {
@@ -44,7 +44,7 @@ class Searches with ChangeNotifier {
 
   Future<void> deleteSearch(String searchId) async {
     await _apiProvider.delete('/users/me/subscriptions/$searchId', token: token);
-    return fetchSavedSearches();
+    return fetchObservedSearches();
   }
 
   void update(String token) async {
@@ -52,7 +52,7 @@ class Searches with ChangeNotifier {
     if (token == null) {
       fetchedSavedSearches = [];
     } else {
-      await fetchSavedSearches();
+      await fetchObservedSearches();
     }
   }
 }

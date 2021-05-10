@@ -32,9 +32,7 @@ class ObservedDealsView extends StatelessWidget {
                     ? ListView.builder(
                         itemBuilder: (context, index) {
                           final DealModel deal = observedDeals[index];
-                          return currentUser.observesDeal(deal)
-                              ? DealItem(deal)
-                              : null;
+                          return DealItem(deal);
                         },
                         itemCount: observedDeals.length,
                       )
