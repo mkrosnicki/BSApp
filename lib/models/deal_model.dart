@@ -14,6 +14,7 @@ class DealModel {
   final String title;
   final String description;
   final String link;
+  final String code;
   final DealType dealType;
   final List<String> categories;
   final LocationType locationType;
@@ -43,6 +44,7 @@ class DealModel {
     @required this.title,
     @required this.description,
     @required this.link,
+    @required this.code,
     @required this.dealType,
     @required this.categories,
     @required this.locationType,
@@ -85,6 +87,7 @@ class DealModel {
       title: dealSnapshot['title'],
       description: dealSnapshot['description'],
       link: dealSnapshot['link'],
+      code: dealSnapshot['code'],
       dealType: DealTypeHelper.of(dealSnapshot['dealType']),
       categories: [
         ...(dealSnapshot['categories'] as List).map((e) => e['name']).toList()

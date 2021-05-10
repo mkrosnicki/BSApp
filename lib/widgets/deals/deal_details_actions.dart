@@ -12,10 +12,11 @@ class DealDetailsActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0, bottom: 10.0),
       child: Column(
         children: [
-          const Divider(),
+          // const Divider(),
+          // Text('Ocena'),
           DealRateBar(deal.id),
         ],
       ),
