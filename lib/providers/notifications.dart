@@ -35,16 +35,12 @@ class Notifications with ChangeNotifier {
   }
 
   Future<void> fetchMyNotifications() async {
-    final List<NotificationModel> fetchedNotifications = [];
     final responseBody =
     await _apiProvider.get('/users/me/notifications', token: _token) as List;
     if (responseBody == null) {
       print('No Deals Found!');
     }
-    responseBody.forEach((element) {
-      fetchedNotifications.add(NotificationModel.fromJson(element));
-    });
-    _notifications = fetchedNotifications;
+    _notifications = NotificationModel.fromJsonList(responseBody);
     notifyListeners();
   }
 

@@ -67,6 +67,17 @@ class Topics with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> fetchTopicsAddedBy(String userId) async {
+    final responseBody =
+        await _apiProvider.get('/users/$userId/topics/added') as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Topics Found!');
+    }
+    _topics = TopicModel.fromJsonList(responseBody);
+    notifyListeners();
+  }
+
   Future<TopicModel> addNewTopic(
       String title, String content, String categoryId) async {
     final addNewTopicDto = {

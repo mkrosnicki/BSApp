@@ -13,7 +13,7 @@ import 'package:logger/logger.dart';
 
 class CurrentUser with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
-  UserDetailsModel _details;
+  UserModel _me;
   String _token;
   List<DealModel> _observedDeals = [];
   List<DealModel> _addedDeals = [];
@@ -29,7 +29,7 @@ class CurrentUser with ChangeNotifier {
   }
 
   UserModel get me {
-    return _details?.user;
+    return _me;
   }
 
   String get token {
@@ -58,10 +58,11 @@ class CurrentUser with ChangeNotifier {
 
   Future<void> fetchMe() async {
     final responseBody = await _apiProvider.get('/users/me', token: _token);
-    _details = UserDetailsModel.fromJson(responseBody);
-    _observedDeals = _details.observedDeals;
-    _observedTopics = _details.observedTopics;
-    _observedSearches = _details.observedSearches;
+    final UserDetailsModel details = UserDetailsModel.fromJson(responseBody);
+    _me = details.user;
+    _observedDeals = details.observedDeals;
+    _observedTopics = details.observedTopics;
+    _observedSearches = details.observedSearches;
   }
 
   Future<void> _fetchObservedDeals() async {
@@ -113,7 +114,7 @@ class CurrentUser with ChangeNotifier {
   Future<void> updateMyAvatar(File newAvatar) async {
     final updateAvatarDto = {'avatar': base64Encode(newAvatar.readAsBytesSync()),};
     final responseBody = await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
-    _details = UserDetailsModel.fromJson(responseBody);
+    _me = UserModel.fromJson(responseBody);
     notifyListeners();
   }
 
@@ -122,7 +123,7 @@ class CurrentUser with ChangeNotifier {
     final responseBody = await _apiProvider.patch(
         '/users/me/', updateNotificationsTimestampDto,
         token: _token);
-    _details = UserDetailsModel.fromJson(responseBody);
+    _me = UserModel.fromJson(responseBody);
     // notifyListeners();
   }
 

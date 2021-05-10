@@ -39,6 +39,15 @@ class Deals with ChangeNotifier {
     }
   }
 
+  Future<void> fetchDealsAddedBy(String userId) async {
+    final responseBody = await _apiProvider.get('/users/${userId}/deals/added') as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Deals Found!');
+    }
+    _deals = DealModel.fromJsonList(responseBody);
+  }
+
   Future<void> fetchMyAddedDeals() async {
     final responseBody = await _apiProvider.get('/users/me/deals/added', token: _token) as List;
     if (responseBody == null) {

@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/activities.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
@@ -90,6 +91,12 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (context, currentUser, previousNotifications) =>
           previousNotifications..update(currentUser.token, currentUser.me.id, currentUser.me?.notificationsSeenAt),
+        ),
+        ChangeNotifierProxyProvider<Auth, Activities>(
+          create: (context) => Activities.empty(),
+          lazy: true,
+          update: (context, auth, previousActivities) =>
+          previousActivities..update(auth.token, previousActivities.activities),
         ),
         ChangeNotifierProxyProvider<Auth, Users>(
           create: (context) => Users.empty(),

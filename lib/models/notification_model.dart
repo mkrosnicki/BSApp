@@ -32,6 +32,14 @@ class NotificationModel {
       this.relatedCommentId,
       this.relatedCommentContent});
 
+  static List<NotificationModel> fromJsonList(List<dynamic> notificationsSnapshot) {
+    final List<NotificationModel> notifications = [];
+    for (final notificationSnapshot in notificationsSnapshot) {
+      notifications.add(fromJson(notificationSnapshot));
+    }
+    return notifications;
+  }
+
   static NotificationModel fromJson(dynamic notificationSnapshot) {
     return NotificationModel(
       ids: (notificationSnapshot['ids'] as List).map((e) => e.toString()).toList(),

@@ -21,11 +21,11 @@ class UserProfileContent extends StatelessWidget {
       builder: (context, AsyncSnapshot<int> snapshot) {
         final int contentId = snapshot.data ?? 0;
         if (contentId == 0) {
-          return UserProfileActivitiesList(usersProfile);
+          return UserProfileActivitiesList(usersProfile.user.id);
         } else if (contentId == 1) {
-          return UserProfileAddedDeals(usersProfile.addedDeals);
+          return UserProfileAddedDeals(usersProfile.user.id);
         } else if (contentId == 2) {
-          return UserProfileAddedTopics(usersProfile.addedTopics);
+          return UserProfileAddedTopics(usersProfile.user.id);
         } else {
           return const Text('Error');
         }
