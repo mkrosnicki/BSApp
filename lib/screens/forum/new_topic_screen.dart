@@ -1,3 +1,4 @@
+import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -16,6 +17,7 @@ class NewTopicScreen extends StatefulWidget {
 }
 
 class _NewTopicScreenState extends State<NewTopicScreen> {
+  TopicCategoryModel topicCategory;
   final _formKey = GlobalKey<FormState>();
   final _topicTitleController = TextEditingController();
   final _topicContentController = TextEditingController();
@@ -42,7 +44,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String categoryId = ModalRoute.of(context).settings.arguments as String;
+    final passedCategory = ModalRoute.of(context).settings.arguments;
+    topicCategory = passedCategory != null ? passedCategory as TopicCategoryModel : null;
     final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
@@ -52,7 +55,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           TextButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                _postNewTopic(categoryId);
+                _postNewTopic(topicCategory);
               }
             },
             child: const Text(
@@ -117,10 +120,10 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
     );
   }
 
-  void _postNewTopic(String categoryId) {
+  void _postNewTopic(TopicCategoryModel topicCategory) {
     Provider.of<Topics>(context, listen: false)
         .addNewTopic(_topicTitleController.text, _topicContentController.text,
-            categoryId)
+            topicCategory.id)
         .then((topic) {
       Navigator.of(context)
           .popAndPushNamed(TopicScreen.routeName, arguments: topic);

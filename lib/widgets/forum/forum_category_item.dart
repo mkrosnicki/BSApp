@@ -1,14 +1,13 @@
+import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:flutter/material.dart';
 
 class ForumCategoryItem extends StatelessWidget {
-  final String title;
-  final String description;
-  final String id;
+  final TopicCategoryModel topicCategory;
 
-  const ForumCategoryItem({this.title, this.description, this.id});
+  const ForumCategoryItem(this.topicCategory);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +27,8 @@ class ForumCategoryItem extends StatelessWidget {
               fit: BoxFit.fitHeight,
             ),
           ),
-          title: Text(title, style: const TextStyle(fontSize: 14),),
-          subtitle: Text(description, style: const TextStyle(fontSize: 12),),
+          title: Text(topicCategory.name, style: const TextStyle(fontSize: 14),),
+          subtitle: Text(topicCategory.description, style: const TextStyle(fontSize: 12),),
           trailing: MyIconsProvider.FORWARD_ICON,
           focusColor: Colors.grey,
         ),
@@ -38,6 +37,6 @@ class ForumCategoryItem extends StatelessWidget {
   }
 
   Future<void> _navigateToForum(BuildContext context) async {
-    Navigator.of(context).pushNamed(ForumCategoryScreen.routeName, arguments: id);
+    Navigator.of(context).pushNamed(ForumCategoryScreen.routeName, arguments: topicCategory);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/forum_categories_view.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,12 @@ class _ForumScreenState extends State<ForumScreen> {
                   TextStyle(color: Colors.black, fontSize: 12),
               tabs: [
                 Text('Kategorie'),
-                Text('Moje tematy'),
+                Text('Obserwowane tematy'),
               ],
             ),
+            actions: [
+              AppBarAddTopicButton(null),
+            ],
           ),
         ),
         body: TabBarView(

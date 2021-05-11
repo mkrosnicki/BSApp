@@ -1,3 +1,4 @@
+import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
@@ -14,7 +15,7 @@ class ForumCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String categoryId = ModalRoute.of(context).settings.arguments as String;
+    final TopicCategoryModel topicCategory = ModalRoute.of(context).settings.arguments as TopicCategoryModel;
     final normalTopicsHeader = Container(
       padding: const EdgeInsets.all(8.0),
       child: const Text(
@@ -34,13 +35,13 @@ class ForumCategoryScreen extends StatelessWidget {
         title: 'Tematy',
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          AppBarAddTopicButton(Colors.black, categoryId),
+          AppBarAddTopicButton(topicCategory),
         ],
       ),
       body: SafeArea(
         child: FutureBuilder(
           future: Provider.of<Topics>(context, listen: false)
-              .fetchCategoryTopics(categoryId),
+              .fetchCategoryTopics(topicCategory.id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
