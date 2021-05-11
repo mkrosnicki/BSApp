@@ -7,11 +7,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   MaterialColor get backgroundColor => Colors.red;
   final String title;
   final Widget leading;
+  final PreferredSizeWidget bottom;
   final List<Widget> actions;
 
   /// you can add more fields that meet your needs
 
-  const BaseAppBar({Key key, this.title, this.actions, this.leading})
+  const BaseAppBar({Key key, this.title, this.actions, this.leading, this.bottom})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       titleSpacing: 8,
       backgroundColor: Colors.white,
       elevation: 0,
-      bottom: const AppBarBottomBorder(),
+      bottom: bottom ?? const AppBarBottomBorder(),
       automaticallyImplyLeading: false,
       centerTitle: true,
       leading: leading,

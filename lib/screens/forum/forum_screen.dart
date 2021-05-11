@@ -1,110 +1,48 @@
-import 'package:BSApp/models/adder_info_model.dart';
-import 'package:BSApp/models/topic_category_model.dart';
-import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/providers/topic_categories.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/server_error_splash.dart';
-import 'package:BSApp/widgets/forum/forum_category_item.dart';
-import 'package:BSApp/widgets/forum/topic_item.dart';
+import 'package:BSApp/widgets/forum/forum_categories_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ForumScreen extends StatelessWidget {
+class ForumScreen extends StatefulWidget {
   static const routeName = '/forum';
 
-  List<TopicCategoryModel> _allCategories;
+  @override
+  _ForumScreenState createState() => _ForumScreenState();
+}
 
-  Future<void> _initCategories(BuildContext context) {
-    if (_allCategories == null) {
-      return Provider.of<TopicCategories>(context, listen: false)
-          .fetchTopicCategories()
-          .then((_) {
-        _allCategories = Provider.of<TopicCategories>(context, listen: false)
-            .topicCategories;
-      });
-    } else {
-      return Future(() => {});
-    }
-  }
+class _ForumScreenState extends State<ForumScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> widgets = List.generate(10, (index) => 'Option number $index');
-    return Scaffold(
-      appBar: BaseAppBar(
-        title: 'Forum',
-        actions: [
-          // const AppBarCloseButton(Colors.black),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Popularne tematy'
-                      '',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              ...widgets
-                  .sublist(0, 2)
-                  .map((e) => TopicItem(
-                        TopicModel(
-                            id: '1',
-                            numberOfPosts: 10,
-                            addedAt: DateTime.now(),
-                            title: 'Jakiś fajny temat do dyskusji',
-                            content:
-                                'Blablabla jakaś tam treść blabla dupa dupa',
-                            adderInfo: AdderInfoModel(
-                              id: '1',
-                              username: 'FakeUser',
-                              registeredAt: DateTime(2020),
-                              addedDeals: 5,
-                              addedComments: 5,
-                              addedPosts: 5,
-                            )),
-                      ))
-                  .toList(),
-              Container(
-                padding: EdgeInsets.all(8.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Kategorie',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-              FutureBuilder(
-                future: _initCategories(context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: const LoadingIndicator());
-                  } else {
-                    if (snapshot.error != null) {
-                      return Center(
-                        child: const ServerErrorSplash(),
-                      );
-                    } else {
-                      return Column(
-                        children: _allCategories
-                            .map((e) => ForumCategoryItem(
-                                  title: e.name,
-                                  description: e.description,
-                                  id: e.id,
-                                ))
-                            .toList(),
-                      );
-                    }
-                  }
-                },
-              )
-            ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(80.0),
+          child: BaseAppBar(
+            title: 'Forum',
+            bottom: TabBar(
+              labelPadding: EdgeInsets.all(10.0),
+              indicatorColor: MyColorsProvider.BLUE,
+              labelColor: Colors.black,
+              labelStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600),
+              unselectedLabelStyle:
+                  TextStyle(color: Colors.black, fontSize: 12),
+              tabs: [
+                Text('Kategorie'),
+                Text('Moje tematy'),
+              ],
+            ),
           ),
+        ),
+        body: TabBarView(
+          children: [
+            ForumCategoriesView(),
+            const Text('2'),
+          ],
         ),
       ),
     );

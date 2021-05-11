@@ -12,24 +12,27 @@ class ForumCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      shape: const Border(bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () => _navigateToForum(context),
-      child: ListTile(
-        tileColor: Colors.white,
-        leading: SizedBox(
-          height: 40,
-          width: 40,
-          child: Image.asset(
-            'assets/images/car.png',
-            fit: BoxFit.fitHeight,
+    return Container(
+      margin: const EdgeInsets.only(top: 6.0),
+      child: FlatButton(
+        padding: EdgeInsets.zero,
+        shape: const Border(bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
+        onPressed: () => _navigateToForum(context),
+        child: ListTile(
+          tileColor: Colors.white,
+          leading: SizedBox(
+            height: 40,
+            width: 40,
+            child: Image.asset(
+              'assets/images/car.png',
+              fit: BoxFit.fitHeight,
+            ),
           ),
+          title: Text(title, style: const TextStyle(fontSize: 14),),
+          subtitle: Text(description, style: const TextStyle(fontSize: 12),),
+          trailing: MyIconsProvider.FORWARD_ICON,
+          focusColor: Colors.grey,
         ),
-        title: Text(title, style: const TextStyle(fontSize: 14),),
-        subtitle: Text(description, style: const TextStyle(fontSize: 12),),
-        trailing: MyIconsProvider.FORWARD_ICON,
-        focusColor: Colors.grey,
       ),
     );
   }
