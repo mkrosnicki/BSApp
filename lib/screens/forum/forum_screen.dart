@@ -1,4 +1,5 @@
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/forum/forum_categories_view.dart';
@@ -12,6 +13,12 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
+  static const menuItemStyle = TextStyle(color: Colors.black, fontSize: 13);
+  static const activeMenuItemStyle =
+      TextStyle(color: Colors.black, fontSize: 13);
+  static const Border activeItemDecoration = Border(
+    bottom: BorderSide(color: MyColorsProvider.DEEP_BLUE),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +31,10 @@ class _ForumScreenState extends State<ForumScreen> {
             title: 'Forum',
             bottom: TabBar(
               labelPadding: EdgeInsets.all(10.0),
-              indicatorColor: MyColorsProvider.BLUE,
+              indicatorColor: MyColorsProvider.DEEP_BLUE,
               labelColor: Colors.black,
-              labelStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600),
-              unselectedLabelStyle:
-                  TextStyle(color: Colors.black, fontSize: 12),
+              labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
+              unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
               tabs: [
                 Text('Kategorie'),
                 Text('Obserwowane tematy'),

@@ -25,9 +25,9 @@ class _LastSearchesState extends State<LastSearches> {
 
   @override
   Widget build(BuildContext context) {
-    _initCookies();
+    _initCookies(); // todo remove?
     return FutureBuilder(
-      future: _initCookies(),
+      future: _initCookies(), // todo keep??
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingIndicator());

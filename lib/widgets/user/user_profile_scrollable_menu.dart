@@ -1,4 +1,5 @@
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,13 +14,6 @@ class UserProfileScrollableMenu extends StatefulWidget {
 }
 
 class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
-  static const menuItemStyle = TextStyle(color: Colors.black, fontSize: 13);
-  static const activeMenuItemStyle =
-      TextStyle(color: Colors.black, fontSize: 13);
-  static const Border activeItemDecoration = Border(
-    bottom: BorderSide(
-        color: MyColorsProvider.DEEP_BLUE),
-  );
 
   int selectedIndex = 0;
 
@@ -47,10 +41,16 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
     return Expanded(
       child: FlatButton(
         onPressed: () => _setIndex(index),
-        shape: selectedIndex == index ? activeItemDecoration : const Border(),
+        shape: selectedIndex == index
+            ? const Border(
+                bottom: BorderSide(color: MyColorsProvider.DEEP_BLUE),
+              )
+            : const Border(),
         child: Text(
           label,
-          style: selectedIndex == index ? activeMenuItemStyle : menuItemStyle,
+          style: selectedIndex == index
+              ? MyStylingProvider.SELECTED_TAB_TEXT_STYLE
+              : MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
         ),
       ),
     );
