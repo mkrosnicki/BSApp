@@ -14,16 +14,12 @@ class TopicCategories with ChangeNotifier {
 
   Future<void> fetchTopicCategories() async {
     if (_topicCategories.isEmpty) {
-      final List<TopicCategoryModel> loadedCategories = [];
       final responseBody = await _apiProvider.get('/topic-categories') as List;
       if (responseBody == null) {
         final logger = Logger();
         logger.i('No Topic Categories Found!');
       }
-      responseBody.forEach((element) {
-        loadedCategories.add(TopicCategoryModel.fromJson(element));
-      });
-      _topicCategories = loadedCategories;
+      _topicCategories = TopicCategoryModel.fromJsonList(responseBody);
     }
     notifyListeners();
   }

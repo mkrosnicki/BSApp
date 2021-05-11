@@ -7,11 +7,19 @@ class TopicCategoryModel {
 
   TopicCategoryModel({this.id, this.name, this.description, this.subCategories});
 
+  static List<TopicCategoryModel> fromJsonList(List<dynamic> categoriesSnapshot) {
+    final List<TopicCategoryModel> categories = [];
+    for (final categorySnapshot in categoriesSnapshot) {
+      categories.add(fromJson(categorySnapshot));
+    }
+    return categories;
+  }
+
   static TopicCategoryModel fromJson(dynamic categorySnapshot) {
     return TopicCategoryModel(
-      id: categorySnapshot['id'],
-      name: categorySnapshot['name'],
-      description: categorySnapshot['description'],
+      id: categorySnapshot['id'] as String,
+      name: categorySnapshot['name'] as String,
+      description: categorySnapshot['description'] as String,
       subCategories: (categorySnapshot['subCategories'] as List).map((e) => TopicCategoryModel.fromJson(e)).toList()
     );
   }

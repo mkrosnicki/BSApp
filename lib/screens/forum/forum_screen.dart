@@ -13,12 +13,6 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
-  static const menuItemStyle = TextStyle(color: Colors.black, fontSize: 13);
-  static const activeMenuItemStyle =
-      TextStyle(color: Colors.black, fontSize: 13);
-  static const Border activeItemDecoration = Border(
-    bottom: BorderSide(color: MyColorsProvider.DEEP_BLUE),
-  );
 
   @override
   Widget build(BuildContext context) {
