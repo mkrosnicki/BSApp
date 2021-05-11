@@ -23,7 +23,15 @@ class TopicItemTopicInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TopicItemTitleLines(topic),
-                TopicItemHeartButton(topic),
+                Wrap(
+                  children: [
+                    if (topic.pinned) Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: Icon(CupertinoIcons.lock_fill, size: 17,),
+                    ),
+                    TopicItemHeartButton(topic),
+                  ],
+                ),
               ],
             ),
             TopicItemBottomLine(topic),

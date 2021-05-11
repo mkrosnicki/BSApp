@@ -14,32 +14,19 @@ class TopicItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _navigateTo(context),
-      child: Stack(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            color: topic.pinned ? Colors.blue.shade50 : Colors.white,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(vertical: 4.0),
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-            child: Row(
-              children: [
-                TopicItemUserAvatar(topic.adderInfo),
-                TopicItemTopicInfo(topic),
-              ],
-            ),
-          ),
-          if (topic.pinned) const Positioned(
-            top: 7.0,
-            left: 5.0,
-            child: const Icon(
-              CupertinoIcons.shield_lefthalf_fill,
-              size: 16,
-              color: Colors.black,
-            ),
-          )
-        ],
+      child: Container(
+        alignment: Alignment.topLeft,
+        // color: topic.pinned ? Colors.blue.shade50 : Colors.white,
+        color: Colors.white,
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 4.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+        child: Row(
+          children: [
+            TopicItemUserAvatar(topic.adderInfo),
+            TopicItemTopicInfo(topic),
+          ],
+        ),
       ),
     );
   }
