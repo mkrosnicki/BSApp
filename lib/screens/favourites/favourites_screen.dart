@@ -1,9 +1,8 @@
-import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/favourites/observed_deals_view.dart';
 import 'package:BSApp/widgets/favourites/observed_searches_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class FavouritesScreen extends StatefulWidget {
   static const routeName = '/favourites';
@@ -46,7 +45,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
           return <Widget>[
             SliverAppBar(
               title: const Text(
-                'Obserwowane',
+                'Ulubione',
                 style: TextStyle(color: Colors.black, fontSize: 18),
               ),
               pinned: true,
@@ -59,14 +58,11 @@ class _FavouritesScreenState extends State<FavouritesScreen>
               bottom: TabBar(
                 controller: _tabController,
                 labelPadding: const EdgeInsets.all(10.0),
-                indicatorColor: MyColorsProvider.BLUE,
+                indicatorColor: MyColorsProvider.DEEP_BLUE,
                 labelColor: Colors.black,
-                labelStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600),
+                labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
                 unselectedLabelStyle:
-                    const TextStyle(color: Colors.black, fontSize: 12),
+                    MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
                 tabs: const [
                   Text('Okazje'),
                   Text('Wyszukiwania'),
