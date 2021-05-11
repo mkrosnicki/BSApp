@@ -31,7 +31,7 @@ class _TopicScreenState extends State<TopicScreen> {
     final topic = ModalRoute.of(context).settings.arguments as TopicModel;
     return Scaffold(
       appBar: BaseAppBar(
-        title: 'Temat',
+        title: topic.title,
         leading: const AppBarBackButton(Colors.black),
         actions: [
           TopicScreenHeartButton(topic),

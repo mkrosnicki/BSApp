@@ -18,7 +18,7 @@ class ForumCategoryScreen extends StatelessWidget {
     final TopicCategoryModel topicCategory = ModalRoute.of(context).settings.arguments as TopicCategoryModel;
     return Scaffold(
       appBar: BaseAppBar(
-        title: 'Tematy',
+        title: topicCategory.name,
         leading: const AppBarBackButton(Colors.black),
         actions: [
           AppBarAddTopicButton(topicCategory),

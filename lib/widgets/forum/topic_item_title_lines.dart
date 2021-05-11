@@ -21,7 +21,7 @@ class TopicItemTitleLines extends StatelessWidget {
     return Text(
       topic.title,
       style: Theme.of(context).textTheme.subtitle1.copyWith(
-            fontSize: 13,
+            fontSize: 14,
             fontWeight: FontWeight.w400,
           ),
     );
