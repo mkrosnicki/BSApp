@@ -73,34 +73,81 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           key: _formKey,
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                margin: const EdgeInsets.only(bottom: 14.0, top: 6.0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom:
-                        BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      topicCategory != null ? topicCategory.name : 'Wybierz kategorię',
-                      style: const TextStyle(fontSize: 13, color: Colors.black54),
+              GestureDetector(
+                onTap: () => showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            leading: new Icon(Icons.photo),
+                            title: new Text('Photo'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: new Icon(Icons.music_note),
+                            title: new Text('Music'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: new Icon(Icons.videocam),
+                            title: new Text('Video'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            leading: new Icon(Icons.share),
+                            title: new Text('Share'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    }),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 8.0),
+                  margin: const EdgeInsets.only(bottom: 14.0, top: 6.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      bottom:
+                          BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
                     ),
-                    const Icon(CupertinoIcons.forward, size: 18),
-                  ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        topicCategory != null
+                            ? topicCategory.name
+                            : 'Wybierz kategorię',
+                        style: const TextStyle(
+                            fontSize: 13, color: Colors.black54),
+                      ),
+                      const Icon(
+                        CupertinoIcons.forward,
+                        size: 18,
+                        color: MyColorsProvider.DEEP_BLUE,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               TextFormField(
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 12),
-                decoration: textFieldDecoration.copyWith(hintText: 'Tytuł'),
+                decoration: textFieldDecoration.copyWith(
+                    hintText: 'O czym chcesz porozmawiać?'),
                 controller: _topicTitleController,
                 validator: (value) {
                   if (value.isEmpty || value.length < 5) {
