@@ -3,6 +3,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
+import 'package:BSApp/widgets/deals/deal_details_author.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
 import 'package:BSApp/widgets/deals/deal_details_image.dart';
@@ -88,6 +89,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                           DealDetailsImage(deal),
                           DealDetailsDescription(deal),
                           DealDetailsActions(deal),
+                          DealDetailsAuthor(deal),
                           DealDetailsComments(deal, _commentToReplySubject),
                         ],
                       ),
