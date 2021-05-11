@@ -45,7 +45,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
   @override
   Widget build(BuildContext context) {
     final passedCategory = ModalRoute.of(context).settings.arguments;
-    topicCategory = passedCategory != null ? passedCategory as TopicCategoryModel : null;
+    topicCategory =
+        passedCategory != null ? passedCategory as TopicCategoryModel : null;
     final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
@@ -72,6 +73,29 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           key: _formKey,
           child: Column(
             children: [
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                margin: const EdgeInsets.only(bottom: 14.0, top: 6.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom:
+                        BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      topicCategory != null ? topicCategory.name : 'Wybierz kategorię',
+                      style: const TextStyle(fontSize: 13, color: Colors.black54),
+                    ),
+                    const Icon(CupertinoIcons.forward, size: 18),
+                  ],
+                ),
+              ),
               TextFormField(
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
@@ -90,11 +114,11 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 },
               ),
               const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(12.0),
               ),
               TextFormField(
-                minLines: 10,
-                maxLines: 10,
+                minLines: 12,
+                maxLines: 12,
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 12),
