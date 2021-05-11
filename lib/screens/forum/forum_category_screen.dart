@@ -16,20 +16,6 @@ class ForumCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TopicCategoryModel topicCategory = ModalRoute.of(context).settings.arguments as TopicCategoryModel;
-    final normalTopicsHeader = Container(
-      padding: const EdgeInsets.all(8.0),
-      child: const Text(
-        'Tematy',
-        style: TextStyle(fontSize: 15),
-      ),
-    );
-    final pinnedTopicsHeader = Container(
-      padding: const EdgeInsets.all(8.0),
-      child: const Text(
-        'Przypięte tematy',
-        style: TextStyle(fontSize: 15),
-      ),
-    );
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Tematy',
@@ -53,33 +39,11 @@ class ForumCategoryScreen extends StatelessWidget {
               } else {
                 return Consumer<Topics>(
                   builder: (context, topicsData, child) {
-                    final List<TopicModel> pinnedTopics =
-                        topicsData.pinnedTopics;
-                    final List<TopicModel> notPinnedTopics =
-                        topicsData.notPinnedTopics;
                     return ListView.builder(
                       itemBuilder: (context, index) {
-                        if (pinnedTopics.isNotEmpty && index == 0) {
-                          return pinnedTopicsHeader;
-                        } else if (pinnedTopics.isEmpty && index == 0) {
-                          return normalTopicsHeader;
-                        } else if (pinnedTopics.isNotEmpty &&
-                            index < pinnedTopics.length + 1) {
-                          return TopicItem(pinnedTopics[index - 1]);
-                        } else if (pinnedTopics.isNotEmpty &&
-                            index == pinnedTopics.length + 1) {
-                          return normalTopicsHeader;
-                        } else if (pinnedTopics.isNotEmpty &&
-                            index > pinnedTopics.length + 1) {
-                          return TopicItem(
-                              notPinnedTopics[index - pinnedTopics.length - 2]);
-                        } else {
-                          return TopicItem(notPinnedTopics[index - 1]);
-                        }
+                        return TopicItem(topicsData.topics[index]);
                       },
-                      itemCount: topicsData.pinnedTopics.isNotEmpty
-                          ? topicsData.topics.length + 2
-                          : topicsData.topics.length + 1,
+                      itemCount: topicsData.topics.length,
                     );
                   },
                 );
