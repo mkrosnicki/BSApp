@@ -3,6 +3,7 @@ import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'auth_screen_provider.dart';
 
@@ -19,11 +20,19 @@ class MainAuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        elevation: 0.0,
+        brightness: Brightness.light,
+        backwardsCompatibility: false,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            MainAuthScreenHeader(),
+            const MainAuthScreenHeader(),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20.0),
               child: Text(

@@ -34,6 +34,7 @@ import 'package:BSApp/screens/profile/your_topics_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +47,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('pl');
+    // FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //     statusBarColor: Colors.white
+    // ));
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

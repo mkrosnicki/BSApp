@@ -1,10 +1,13 @@
 import 'package:BSApp/models/topic_category_model.dart';
+import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/loading_indicator.dart';
+import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +48,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
   @override
   Widget build(BuildContext context) {
     final passedCategory = ModalRoute.of(context).settings.arguments;
-    topicCategory =
+    topicCategory = topicCategory == null &&
         passedCategory != null ? passedCategory as TopicCategoryModel : null;
     final node = FocusScope.of(context);
     return Scaffold(
@@ -77,38 +80,62 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 onTap: () => showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ListTile(
-                            leading: new Icon(Icons.photo),
-                            title: new Text('Photo'),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ListTile(
-                            leading: new Icon(Icons.music_note),
-                            title: new Text('Music'),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ListTile(
-                            leading: new Icon(Icons.videocam),
-                            title: new Text('Video'),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ListTile(
-                            leading: new Icon(Icons.share),
-                            title: new Text('Share'),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                      return FutureBuilder(
+                        future:
+                            Provider.of<TopicCategories>(context, listen: false)
+                                .fetchTopicCategories(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(child: LoadingIndicator());
+                          } else {
+                            if (snapshot.error != null) {
+                              return const Center(
+                                child: ServerErrorSplash(),
+                              );
+                            } else {
+                              return Consumer<TopicCategories>(
+                                builder: (context, topicCategoriesData, child) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('Wybierz kategorię'),
+                                        ),
+                                        ...topicCategoriesData.topicCategories
+                                            .map(
+                                              (e) => GestureDetector(
+                                                onTap: () => _chooseCategory(e),
+                                                child: ListTile(
+                                                  leading: SizedBox(
+                                                    height: 35,
+                                                    width: 35,
+                                                    child: Image.asset(
+                                                      'assets/images/car.png',
+                                                      fit: BoxFit.fitHeight,
+                                                    ),
+                                                  ),
+                                                  title: Text(
+                                                    e.name,
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
                       );
                     }),
                 child: Container(
@@ -198,6 +225,13 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
         .then((topic) {
       Navigator.of(context)
           .popAndPushNamed(TopicScreen.routeName, arguments: topic);
+    });
+  }
+
+  void _chooseCategory(TopicCategoryModel topicCategory) {
+    print(topicCategory);
+    setState(() {
+      this.topicCategory = topicCategory;
     });
   }
 }

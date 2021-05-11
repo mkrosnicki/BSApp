@@ -3,6 +3,7 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/favourites/observed_deals_view.dart';
 import 'package:BSApp/widgets/favourites/observed_searches_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FavouritesScreen extends StatefulWidget {
   static const routeName = '/favourites';
@@ -37,6 +38,11 @@ class _FavouritesScreenState extends State<FavouritesScreen>
         preferredSize: const Size.square(0.0),
         child: AppBar(
           backgroundColor: Colors.blue.shade300,
+          elevation: 0.0,
+          brightness: Brightness.light,
+          backwardsCompatibility: false,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.white),
         ),
       ),
       body: NestedScrollView(

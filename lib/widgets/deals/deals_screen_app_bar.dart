@@ -4,6 +4,7 @@ import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealsScreenAppBar extends StatelessWidget {
@@ -20,6 +21,9 @@ class DealsScreenAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleSpacing: 8,
+      brightness: Brightness.light,
+      backwardsCompatibility: false,
+      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       title: _searchField(context),
       backgroundColor: Colors.white,
       elevation: 0,

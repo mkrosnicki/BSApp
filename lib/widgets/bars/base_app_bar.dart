@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'app_bar_bottom_border.dart';
 
-class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
-
+class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   MaterialColor get backgroundColor => Colors.red;
   final String title;
   final Widget leading;
@@ -12,7 +12,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   /// you can add more fields that meet your needs
 
-  const BaseAppBar({Key key, this.title, this.actions, this.leading, this.bottom})
+  const BaseAppBar(
+      {Key key, this.title, this.actions, this.leading, this.bottom})
       : super(key: key);
 
   @override
@@ -21,12 +22,18 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
       titleSpacing: 8,
       backgroundColor: Colors.white,
       elevation: 0,
+      brightness: Brightness.light,
+      backwardsCompatibility: false,
+      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       bottom: bottom ?? const AppBarBottomBorder(),
       automaticallyImplyLeading: false,
       centerTitle: true,
       leading: leading,
       actions: actions,
-      title: Text(title, style: const TextStyle(color: Colors.black, fontSize: 17),),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.black, fontSize: 17),
+      ),
     );
   }
 

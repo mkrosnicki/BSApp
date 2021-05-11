@@ -4,6 +4,7 @@ import 'package:BSApp/widgets/authentication/registration_form.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginRegistrationScreen extends StatefulWidget {
   static const routeName = '/auth';
@@ -24,24 +25,32 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
           centerTitle: true,
           automaticallyImplyLeading: false,
           elevation: 0.0,
+          brightness: Brightness.light,
+          backwardsCompatibility: false,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: MyColorsProvider.DEEP_BLUE),
           leading: const AppBarCloseButton(Colors.white),
           backgroundColor: MyColorsProvider.BLUE,
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorWeight: 3.0,
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+            unselectedLabelStyle:
+                TextStyle(fontSize: 13),
             indicatorColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white,
-            labelPadding: EdgeInsets.all(0),
+            labelPadding: EdgeInsets.all(10.0),
             tabs: [
-              _buildTabBar('Zaloguj się'),
-              _buildTabBar('Stwórz konto'),
+              Text('Zaloguj się'),
+              Text('Stwórz konto'),
             ],
           ),
         ),
         body: TabBarView(
-          children: [LoginForm(), RegistrationForm()],
+          children: [
+            LoginForm(),
+            RegistrationForm(),
+          ],
         ),
       ),
     );
@@ -55,10 +64,6 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
           Expanded(
             child: Container(
               width: double.infinity,
-              // decoration: BoxDecoration(
-              //     border: Border(
-              //         bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5))),
-              // padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
               child: Center(child: Text(label)),
             ),
           ),
