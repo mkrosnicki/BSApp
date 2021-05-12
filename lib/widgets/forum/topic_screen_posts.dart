@@ -4,6 +4,7 @@ import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/post_item.dart';
+import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -11,61 +12,33 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopicScreenPosts extends StatelessWidget {
   final TopicModel topic;
+  final String postToScrollId;
   final PublishSubject<PostModel> postToReplySubject;
-  final ItemScrollController _scrollController = ItemScrollController();
 
-  TopicScreenPosts(this.topic, this.postToReplySubject);
+  const TopicScreenPosts(this.topic, this.postToScrollId, this.postToReplySubject);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 500,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: FutureBuilder(
-            future: Provider.of<Posts>(context, listen: false)
-                .fetchPostsForTopic(topic.id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: LoadingIndicator());
-              } else {
-                if (snapshot.error != null) {
-                  return const Center(
-                    child: ServerErrorSplash(),
-                  );
-                } else {
-                  return Consumer<Posts>(
-                    builder: (context, postsData, child) {
-                      return ScrollablePositionedList.builder(
-                        itemScrollController: _scrollController,
-                        itemCount: postsData.posts.length,
-                        itemBuilder: (context, index) {
-                          return PostItem(
-                              postsData.posts[index], postToReplySubject);
-                        },
-                      );
-                      return Column(
-                        children: postsData.posts
-                            .map((post) => PostItem(post, postToReplySubject))
-                            .toList(),
-                      );
-                    },
-                  );
-                }
-              }
-            },
-          ),
-        ),
-        FlatButton(
-          onPressed: () {
-            _scrollController.scrollTo(
-                index: 5, duration: Duration(milliseconds: 200));
+    return Consumer<Posts>(
+      builder: (context, postsData, child) {
+        return ScrollablePositionedList.builder(
+          itemCount: postsData.posts.length + 1,
+          initialScrollIndex: _determineInitialIndex(postToScrollId, postsData.posts),
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return TopicScreenTopicInfo(topic);
+            } else {
+              return PostItem(
+                  postsData.posts[index - 1], postToReplySubject);
+            }
           },
-          child: Text('dupa'),
-        ),
-      ],
+        );
+      },
     );
+  }
+
+  int _determineInitialIndex(String postToScrollId, List<PostModel> posts) {
+    final int foundIndex = posts.indexWhere((post) => post.id == postToScrollId);
+    return foundIndex != -1 ? foundIndex + 1 : 0;
   }
 }

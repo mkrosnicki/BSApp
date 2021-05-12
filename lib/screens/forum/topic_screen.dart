@@ -9,6 +9,7 @@ import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/post_item.dart';
 import 'package:BSApp/widgets/forum/topic_screen_heart_button.dart';
 import 'package:BSApp/widgets/forum/topic_screen_input_bar.dart';
+import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,30 +61,13 @@ class _TopicScreenState extends State<TopicScreen> {
                   child: ServerErrorSplash(),
                 );
               } else {
-                return Consumer<Posts>(
-                  builder: (context, postsData, child) {
-                    final String postToScrollId = topicScreenArguments.postToScrollId;
-                    postsData.posts.indexWhere((element) => element.topicId == postToScrollId);
-                    return Column(
-                      children: [
-                        Expanded(
-                          child: ScrollablePositionedList.builder(
-                            itemCount: postsData.posts.length + 1,
-                            initialScrollIndex: _determineInitialIndex(topicScreenArguments, postsData.posts),
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                return TopicScreenTopicInfo(topic);
-                              } else {
-                                return PostItem(
-                                    postsData.posts[index - 1], _postToReplySubject);
-                              }
-                            },
-                          ),
-                        ),
-                        TopicScreenInputBar(topic.id, _postToReplySubject),
-                      ],
-                    );
-                  },
+                return Column(
+                  children: [
+                    Expanded(
+                      child: TopicScreenPosts(topic, topicScreenArguments.postToScrollId, _postToReplySubject),
+                    ),
+                    TopicScreenInputBar(topic.id, _postToReplySubject),
+                  ],
                 );
               }
             }
@@ -91,11 +75,5 @@ class _TopicScreenState extends State<TopicScreen> {
         ),
       ),
     );
-  }
-
-  int _determineInitialIndex(TopicScreenArguments topicScreenArguments, List<PostModel> posts) {
-    final String postToScrollId = topicScreenArguments.postToScrollId;
-    final int foundIndex = posts.indexWhere((post) => post.id == postToScrollId);
-    return foundIndex != -1 ? foundIndex + 1 : 0;
   }
 }
