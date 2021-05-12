@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/widgets/forum/topic_item_topic_info.dart';
 import 'package:BSApp/widgets/forum/topic_item_user_avatar.dart';
@@ -32,7 +33,7 @@ class TopicItem extends StatelessWidget {
   }
 
   void _navigateTo(BuildContext context) {
-    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: topic);
+    Navigator.of(context).pushNamed(TopicScreen.routeName, arguments: TopicScreenArguments(topic));
   }
 
   String shortenTo(String input, int length) {

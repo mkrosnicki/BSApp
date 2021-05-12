@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_category_model.dart';
+import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
@@ -251,7 +252,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
             topicCategory.id)
         .then((topic) {
       Navigator.of(context)
-          .popAndPushNamed(TopicScreen.routeName, arguments: topic);
+          .popAndPushNamed(TopicScreen.routeName, arguments: TopicScreenArguments(topic));
     });
   }
 
