@@ -45,8 +45,6 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
     ),
   );
 
-
-
   void initTopicCategory() {
     final passedCategory = ModalRoute.of(context).settings.arguments;
     if (topicCategory == null && passedCategory != null) {
@@ -57,7 +55,6 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
   @override
   Widget build(BuildContext context) {
     initTopicCategory();
-    final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Nowy temat',
@@ -84,7 +81,9 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           child: Column(
             children: [
               GestureDetector(
-                onTap: () => showModalBottomSheet(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  showModalBottomSheet(
                     context: context,
                     builder: (context) {
                       return FutureBuilder(
@@ -111,15 +110,12 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                       children: [
                                         const Padding(
                                           padding: EdgeInsets.all(8.0),
-                                          child: Text('Wybierz kategorię'),
+                                          child: Text('Wybierz temat'),
                                         ),
                                         ...topicCategoriesData.topicCategories
                                             .map(
                                               (e) => GestureDetector(
-                                                onTap: () {
-                                                  FocusScope.of(context).unfocus();
-                                                  _chooseCategory(e);
-                                                },
+                                                onTap: () => _chooseCategory(e),
                                                 child: ListTile(
                                                   leading: SizedBox(
                                                     height: 35,
@@ -147,7 +143,9 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                           }
                         },
                       );
-                    }),
+                    },
+                  );
+                },
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
@@ -163,16 +161,32 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        topicCategory != null
-                            ? topicCategory.name
-                            : 'Wybierz kategorię',
-                        style: const TextStyle(
-                            fontSize: 13, color: Colors.black54),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (topicCategory != null) SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: Image.asset(
+                              'assets/images/car.png',
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              topicCategory != null
+                                  ? topicCategory.name
+                                  : 'Wybierz temat',
+                              style: const TextStyle(
+                                  fontSize: 13, color: Colors.black87),
+                            ),
+                          ),
+                        ],
                       ),
                       const Icon(
-                        CupertinoIcons.forward,
-                        size: 18,
+                        CupertinoIcons.chevron_down,
+                        size: 20,
                         color: MyColorsProvider.DEEP_BLUE,
                       ),
                     ],
@@ -182,9 +196,9 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
               TextFormField(
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 13),
                 decoration: textFieldDecoration.copyWith(
-                    hintText: 'O czym chcesz porozmawiać?'),
+                    hintText: 'Tytuł'),
                 controller: _topicTitleController,
                 validator: (value) {
                   if (value.isEmpty || value.length < 5) {
@@ -205,7 +219,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 maxLines: 12,
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
-                style: const TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 13),
                 onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                 decoration:
                     textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
@@ -239,7 +253,6 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
   }
 
   void _chooseCategory(TopicCategoryModel topicCategory) {
-    print(topicCategory);
     Navigator.pop(context);
     setState(() {
       this.topicCategory = topicCategory;
