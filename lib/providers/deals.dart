@@ -56,6 +56,17 @@ class Deals with ChangeNotifier {
     _deals = DealModel.fromJsonList(responseBody);
   }
 
+  Future<void> fetchDeal(String dealId) async {
+    final responseBody =
+    await _apiProvider.get('/deals/$dealId');
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Deal Found!');
+    }
+    _deals.clear();
+    _deals.add(DealModel.fromJson(responseBody));
+  }
+
   Future<void> voteForDeal(String dealId, bool isPositive) async {
     final responseBody = await _apiProvider.post('/deals/$dealId/votes', {'isPositive': isPositive}, token: _token);
     final DealModel votedDeal = DealModel.fromJson(responseBody);

@@ -1,9 +1,13 @@
+import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/notification_type.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/topics.dart';
+import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -99,6 +103,12 @@ class NotificationItem extends StatelessWidget {
       case NotificationType.YOUR_POST_REPLIED:
         _navigateToTopic(context);
         break;
+      case NotificationType.YOUR_DEAL_RATED:
+      case NotificationType.YOUR_DEAL_COMMENTED:
+      case NotificationType.YOUR_COMMENT_REPLIED:
+      case NotificationType.YOUR_COMMENT_RATED:
+        _navigateToDeal(context);
+        break;
       default:
       // do noting
     }
@@ -112,6 +122,17 @@ class NotificationItem extends StatelessWidget {
       Navigator.of(context).pushNamed(TopicScreen.routeName,
           arguments: TopicScreenArguments(topic,
               postToScrollId: notification.relatedPostId));
+    });
+  }
+
+  void _navigateToDeal(BuildContext context) {
+    final dealsProvider = Provider.of<Deals>(context, listen: false);
+    dealsProvider.fetchDeal(notification.relatedDealId).then((_) {
+      final DealModel deal =
+          dealsProvider.findById(notification.relatedDealId);
+      Navigator.of(context).pushNamed(DealDetailsScreen.routeName,
+          arguments: DealScreenArguments(deal,
+              commentToScrollId: notification.relatedCommentId));
     });
   }
 }
