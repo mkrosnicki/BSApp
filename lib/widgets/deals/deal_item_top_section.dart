@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/widgets/deals/deal_item_heart_button.dart';
@@ -20,7 +21,7 @@ class DealItemTopSection extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () => Navigator.of(context)
-                  .pushNamed(DealDetailsScreen.routeName, arguments: deal),
+                  .pushNamed(DealDetailsScreen.routeName, arguments: DealScreenArguments(deal)),
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 direction: Axis.horizontal,

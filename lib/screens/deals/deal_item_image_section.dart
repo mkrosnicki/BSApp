@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class DealItemImageSection extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(DealDetailsScreen.routeName, arguments: deal);
+            .pushNamed(DealDetailsScreen.routeName, arguments: DealScreenArguments(deal));
       },
       child: Stack(
         children: [

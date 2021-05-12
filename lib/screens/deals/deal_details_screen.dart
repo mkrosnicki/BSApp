@@ -1,5 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
@@ -67,7 +68,8 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    final deal = ModalRoute.of(context).settings.arguments as DealModel;
+    final DealScreenArguments dealScreenArguments = ModalRoute.of(context).settings.arguments as DealScreenArguments;
+    final DealModel deal = dealScreenArguments.deal;
     return Scaffold(
       // appBar: AppBar(),
       body: NotificationListener<ScrollNotification>(
