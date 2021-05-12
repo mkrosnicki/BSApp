@@ -21,6 +21,5 @@ class TopicCategories with ChangeNotifier {
       }
       _topicCategories = TopicCategoryModel.fromJsonList(responseBody);
     }
-    notifyListeners();
   }
 }

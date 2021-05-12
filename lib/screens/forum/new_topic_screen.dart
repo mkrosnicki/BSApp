@@ -45,11 +45,18 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
     ),
   );
 
+
+
+  void initTopicCategory() {
+    final passedCategory = ModalRoute.of(context).settings.arguments;
+    if (topicCategory == null && passedCategory != null) {
+      topicCategory = passedCategory as TopicCategoryModel;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final passedCategory = ModalRoute.of(context).settings.arguments;
-    topicCategory = topicCategory == null &&
-        passedCategory != null ? passedCategory as TopicCategoryModel : null;
+    initTopicCategory();
     final node = FocusScope.of(context);
     return Scaffold(
       appBar: BaseAppBar(
@@ -109,7 +116,10 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                         ...topicCategoriesData.topicCategories
                                             .map(
                                               (e) => GestureDetector(
-                                                onTap: () => _chooseCategory(e),
+                                                onTap: () {
+                                                  FocusScope.of(context).unfocus();
+                                                  _chooseCategory(e);
+                                                },
                                                 child: ListTile(
                                                   leading: SizedBox(
                                                     height: 35,
@@ -196,7 +206,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 cursorColor: Colors.black,
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 12),
-                onFieldSubmitted: (_) => node.unfocus(),
+                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                 decoration:
                     textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
                 controller: _topicContentController,
@@ -230,6 +240,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
 
   void _chooseCategory(TopicCategoryModel topicCategory) {
     print(topicCategory);
+    Navigator.pop(context);
     setState(() {
       this.topicCategory = topicCategory;
     });
