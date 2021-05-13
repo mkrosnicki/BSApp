@@ -11,6 +11,7 @@ import 'package:BSApp/widgets/deals/deal_details_image.dart';
 import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsScreen extends StatefulWidget {
@@ -21,10 +22,9 @@ class DealDetailsScreen extends StatefulWidget {
 }
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProviderStateMixin {
-
   AnimationController _colorAnimationController;
   AnimationController _textAnimationController;
-  Animation _colorTween, _iconColorTween, _borderColorTween;
+  Animation<Color> _colorTween, _iconColorTween, _titleColorTween, _borderColorTween;
   Animation<Offset> _transTween;
 
   final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
@@ -37,21 +37,16 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
 
   @override
   void initState() {
-    _colorAnimationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 0));
-    _colorTween = ColorTween(begin: Colors.transparent, end: Colors.white)
-        .animate(_colorAnimationController);
-    _iconColorTween = ColorTween(begin: Colors.white, end: Colors.black)
-        .animate(_colorAnimationController);
-    _borderColorTween = ColorTween(
-            begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
+    _colorAnimationController = AnimationController(vsync: this, duration: Duration(seconds: 0));
+    _colorTween = ColorTween(begin: Colors.transparent, end: Colors.white).animate(_colorAnimationController);
+    _iconColorTween = ColorTween(begin: Colors.white, end: Colors.black).animate(_colorAnimationController);
+    _titleColorTween = ColorTween(begin: Colors.transparent, end: Colors.black).animate(_colorAnimationController);
+    _borderColorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
         .animate(_colorAnimationController);
 
-    _textAnimationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 0));
+    _textAnimationController = AnimationController(vsync: this, duration: Duration(seconds: 0));
 
-    _transTween = Tween(begin: Offset(-10, 40), end: Offset(-10, 0))
-        .animate(_textAnimationController);
+    _transTween = Tween(begin: const Offset(-10, 40), end: const Offset(-10, 0)).animate(_textAnimationController);
 
     super.initState();
   }
@@ -60,8 +55,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
     if (scrollInfo.metrics.axis == Axis.vertical) {
       _colorAnimationController.animateTo(scrollInfo.metrics.pixels / 175);
 
-      _textAnimationController.animateTo(
-          (scrollInfo.metrics.pixels - 175) / 50);
+      _textAnimationController.animateTo((scrollInfo.metrics.pixels - 175) / 50);
       return true;
     }
   }
@@ -71,13 +65,12 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
     final DealScreenArguments dealScreenArguments = ModalRoute.of(context).settings.arguments as DealScreenArguments;
     final DealModel deal = dealScreenArguments.deal;
     return Scaffold(
-      // appBar: AppBar(),
       body: NotificationListener<ScrollNotification>(
         onNotification: _scrollListener,
         child: Container(
           width: double.infinity,
-          margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          padding: const EdgeInsets.all(0),
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
           // color: Colors.white,
           child: Stack(
             children: [
@@ -101,36 +94,36 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                 ],
               ),
               Container(
-                height: 80,
+                height: 70,
                 child: AnimatedBuilder(
                   animation: _colorAnimationController,
-                  builder: (context, child) => AppBar(
-                    leading: const AppBarBackButton(Colors.white),
-                    automaticallyImplyLeading: false,
-                    backgroundColor: _colorTween.value,
-                    elevation: 0,
-                    titleSpacing: 0.0,
-                    centerTitle: true,
-                    bottom: PreferredSize(
+                  builder: (context, child) {
+                    return AppBar(
+                      leading: AppBarBackButton(_iconColorTween.value),
+                      automaticallyImplyLeading: false,
+                      backgroundColor: _colorTween.value,
+                      elevation: 0,
+                      titleSpacing: 0.0,
+                      centerTitle: true,
+                      brightness: Brightness.light,
+                      backwardsCompatibility: false,
+                      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+                      bottom: PreferredSize(
                         preferredSize: const Size.fromHeight(4.0),
                         child: Container(
                           color: _borderColorTween.value,
                           height: 0.5,
-                        ),),
-                    title: Transform.translate(
-                      offset: _transTween.value,
-                      child: const Text(
-                        'Szczegóły',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                        ),
                       ),
-                    ),
-                    iconTheme: IconThemeData(
-                      color: _iconColorTween.value,
-                    ),
-                  ),
+                      title: Text(
+                        deal.title,
+                        style: TextStyle(color: _titleColorTween.value, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      iconTheme: IconThemeData(
+                        color: _iconColorTween.value,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
