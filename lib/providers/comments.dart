@@ -16,6 +16,7 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
+    print(_comments.where((element) => element.parentId == null).toList());
     return _comments.where((element) => element.parentId == null).toList();
   }
 
@@ -27,6 +28,7 @@ class Comments with ChangeNotifier {
       logger.i('No Comments Found!');
     }
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
+    _comments.clear();
     _comments.addAll(loadedComments);
     for (final comment in loadedComments) {
       _comments.addAll(comment.subComments);
