@@ -23,9 +23,7 @@ class DealDetailsScreen extends StatefulWidget {
 
 class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProviderStateMixin {
   AnimationController _colorAnimationController;
-  AnimationController _textAnimationController;
   Animation<Color> _colorTween, _iconColorTween, _titleColorTween, _borderColorTween;
-  Animation<Offset> _transTween;
 
   final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
 
@@ -37,25 +35,18 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
 
   @override
   void initState() {
-    _colorAnimationController = AnimationController(vsync: this, duration: Duration(seconds: 0));
+    _colorAnimationController = AnimationController(vsync: this, duration: Duration.zero);
     _colorTween = ColorTween(begin: Colors.transparent, end: Colors.white).animate(_colorAnimationController);
     _iconColorTween = ColorTween(begin: Colors.white, end: Colors.black).animate(_colorAnimationController);
     _titleColorTween = ColorTween(begin: Colors.transparent, end: Colors.black).animate(_colorAnimationController);
     _borderColorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
         .animate(_colorAnimationController);
-
-    _textAnimationController = AnimationController(vsync: this, duration: Duration(seconds: 0));
-
-    _transTween = Tween(begin: const Offset(-10, 40), end: const Offset(-10, 0)).animate(_textAnimationController);
-
     super.initState();
   }
 
   bool _scrollListener(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.axis == Axis.vertical) {
       _colorAnimationController.animateTo(scrollInfo.metrics.pixels / 175);
-
-      _textAnimationController.animateTo((scrollInfo.metrics.pixels - 175) / 50);
       return true;
     }
   }
@@ -71,7 +62,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
           width: double.infinity,
           margin: EdgeInsets.zero,
           padding: EdgeInsets.zero,
-          // color: Colors.white,
           child: Stack(
             children: [
               Column(
@@ -93,12 +83,12 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   DealDetailsNewComment(deal.id, _commentToReplySubject),
                 ],
               ),
-              Container(
-                height: 70,
-                child: AnimatedBuilder(
-                  animation: _colorAnimationController,
-                  builder: (context, child) {
-                    return AppBar(
+              AnimatedBuilder(
+                animation: _colorAnimationController,
+                builder: (context, child) {
+                  return Container(
+                    height: 70.0,
+                    child: AppBar(
                       leading: AppBarBackButton(_iconColorTween.value),
                       automaticallyImplyLeading: false,
                       backgroundColor: _colorTween.value,
@@ -122,9 +112,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                       iconTheme: IconThemeData(
                         color: _iconColorTween.value,
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
