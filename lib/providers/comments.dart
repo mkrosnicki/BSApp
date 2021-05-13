@@ -16,7 +16,6 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
-    print(_comments.where((element) => element.parentId == null).toList());
     return _comments.where((element) => element.parentId == null).toList();
   }
 
