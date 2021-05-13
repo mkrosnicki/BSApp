@@ -23,14 +23,12 @@ class DealDetailsComments extends StatelessWidget {
         Container(
           color: Colors.white,
           width: double.infinity,
-          padding: const EdgeInsets.only(
-              top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
+          padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
           // margin: const EdgeInsets.only(top: 8.0),
           alignment: Alignment.centerLeft,
           child: const Text(
             'Komentarze',
-            style: TextStyle(
-                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
+            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ),
         Container(
@@ -39,8 +37,7 @@ class DealDetailsComments extends StatelessWidget {
           // margin: const EdgeInsets.only(top: 5.0),
           // padding: const EdgeInsets.only(top: 5.0),
           child: FutureBuilder(
-            future: Provider.of<Comments>(context, listen: false)
-                .fetchCommentsForDeal(deal.id),
+            future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
@@ -57,26 +54,16 @@ class DealDetailsComments extends StatelessWidget {
                   return Consumer<Comments>(
                     builder: (context, commentsData, child) {
                       if (commentsData.parentComments.isEmpty) {
-                        return Container(
-                          height: 200,
-                          color: Colors.white,
-                          child: const Center(
-                            child: Text(
-                              'Nikt jeszcze nie dodał komentarza',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: MyColorsProvider.LIGHT_GRAY),
-                            ),
-                          ),
-                        );
+                        return _noOneAddedACommentSplash();
                       } else {
-                        return Column(
-                          // todo nullpointer after some time?!
-                          children: commentsData.parentComments
-                              .map((comment) => CommentWithRepliesItem(
-                                  deal.id, comment, commentToReplySubject))
-                              .toList(),
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: commentsData.parentComments.length,
+                          physics: const ClampingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return CommentWithRepliesItem(
+                                deal.id, commentsData.parentComments[index], commentToReplySubject);
+                          },
                         );
                       }
                     },
@@ -87,6 +74,19 @@ class DealDetailsComments extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _noOneAddedACommentSplash() {
+    return Container(
+      height: 200,
+      color: Colors.white,
+      child: const Center(
+        child: Text(
+          'Nikt jeszcze nie dodał komentarza',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColorsProvider.LIGHT_GRAY),
+        ),
+      ),
     );
   }
 }
