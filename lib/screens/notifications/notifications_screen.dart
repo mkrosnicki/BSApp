@@ -66,55 +66,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
       );
     });
-    return Scaffold(
-      appBar: BaseAppBar(
-        title: 'Powiadomienia',
-        actions: [
-          ClearNotificationsButton(),
-        ],
-      ),
-      body: SafeArea(
-        child: Consumer<CurrentUser>(
-          builder: (context, currentUser, child) {
-            if (!currentUser.isAuthenticated) {
-              return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n swoje powiadomienia');
-            } else {
-              return FutureBuilder(
-                future: Provider.of<Notifications>(context, listen: false).fetchMyNotifications(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: LoadingIndicator());
-                  } else {
-                    if (snapshot.error != null) {
-                      return const Center(
-                        child: ServerErrorSplash(),
-                      );
-                    } else {
-                      return RefreshIndicator(
-                        onRefresh: () => _refreshNotifications(context),
-                        child: Consumer<Notifications>(
-                          builder: (context, notificationsData, child) {
-                            if (notificationsData.myNotifications.isEmpty) {
-                              return _buildNoNotificationsSplashView();
-                            } else {
-                              return ListView.builder(
-                                itemBuilder: (context, index) =>
-                                    NotificationItem(notificationsData.myNotifications[index]),
-                                itemCount: notificationsData.myNotifications.length,
-                              );
-                            }
-                          },
-                        ),
-                      );
-                    }
-                  }
-                },
-              );
-            }
-          },
-        ),
-      ),
-    );
   }
 
   Widget _buildNoNotificationsSplashView() {
