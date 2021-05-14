@@ -29,7 +29,7 @@ class CommentItemHeartButton extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Icon(
                 CupertinoIcons.heart_fill,
-                size: 14,
+                size: 16,
                 color:
                 wasVotedByLoggedUser
                     ? MyColorsProvider.RED_SHADY

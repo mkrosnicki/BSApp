@@ -31,45 +31,42 @@ class DealDetailsComments extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ),
-        Container(
-          width: double.infinity,
-          child: FutureBuilder(
-            future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                  height: 200,
-                  color: Colors.white,
-                  child: const Center(child: LoadingIndicator()),
+        FutureBuilder(
+          future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(
+                height: 200,
+                color: Colors.white,
+                child: const Center(child: LoadingIndicator()),
+              );
+            } else {
+              if (snapshot.error != null) {
+                return const Center(
+                  child: ServerErrorSplash(),
                 );
               } else {
-                if (snapshot.error != null) {
-                  return const Center(
-                    child: ServerErrorSplash(),
-                  );
-                } else {
-                  return Consumer<Comments>(
-                    builder: (context, commentsData, child) {
-                      if (commentsData.parentComments.isEmpty) {
-                        return _noOneAddedACommentSplash();
-                      } else {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: commentsData.parentComments.length,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CommentWithRepliesItem(
-                                deal.id, commentsData.parentComments[index], commentToReplySubject);
-                          },
-                        );
-                      }
-                    },
-                  );
-                }
+                return Consumer<Comments>(
+                  builder: (context, commentsData, child) {
+                    if (commentsData.parentComments.isEmpty) {
+                      return _noOneAddedACommentSplash();
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: commentsData.parentComments.length,
+                        physics: const ClampingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return CommentWithRepliesItem(
+                              deal.id, commentsData.parentComments[index], commentToReplySubject);
+                        },
+                      );
+                    }
+                  },
+                );
               }
-            },
-          ),
-        )
+            }
+          },
+        ),
       ],
     );
   }
