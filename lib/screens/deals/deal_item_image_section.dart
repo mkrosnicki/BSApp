@@ -15,7 +15,7 @@ class DealItemImageSection extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(DealDetailsScreen.routeName, arguments: DealScreenArguments(deal));
+            .pushNamed(DealDetailsScreen.routeName, arguments: deal);
       },
       child: Stack(
         children: [

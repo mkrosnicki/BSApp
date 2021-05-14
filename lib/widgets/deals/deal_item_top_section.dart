@@ -21,7 +21,7 @@ class DealItemTopSection extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () => Navigator.of(context)
-                  .pushNamed(DealDetailsScreen.routeName, arguments: DealScreenArguments(deal)),
+                  .pushNamed(DealDetailsScreen.routeName, arguments: deal),
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 direction: Axis.horizontal,

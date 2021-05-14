@@ -14,6 +14,7 @@ import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
+import 'package:BSApp/screens/comments/comment_screen.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/screens/deals/add_deal_screen.dart';
@@ -161,6 +162,7 @@ class MyApp extends StatelessWidget {
           ChangePasswordScreen.routeName: (ctx) => ChangePasswordScreen(),
           AddDealScreen.routeName: (ctx) => AddDealScreen(),
           NewTopicScreen.routeName: (ctx) => NewTopicScreen(),
+          CommentScreen.routeName: (ctx) => CommentScreen(),
         },
       ),
     );

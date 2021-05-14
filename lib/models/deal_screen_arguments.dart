@@ -1,8 +1,9 @@
-import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/comment_model.dart';
 
-class DealScreenArguments {
-  final DealModel deal;
+class CommentScreenArguments {
+  final CommentModel comment;
+  final String dealId;
   final String commentToScrollId;
 
-  DealScreenArguments(this.deal, {this.commentToScrollId});
+  CommentScreenArguments(this.comment, this.dealId, {this.commentToScrollId});
 }

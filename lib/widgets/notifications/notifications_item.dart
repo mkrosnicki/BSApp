@@ -7,6 +7,7 @@ import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/topics.dart';
+import 'package:BSApp/screens/comments/comment_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
@@ -26,16 +27,15 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CurrentUser>(
       builder: (context, currentUser, child) {
-        final bool wasSeen = currentUser.isAuthenticated &&
-            notification.issuedAt.isBefore(currentUser.me.notificationsSeenAt);
+        final bool wasSeen =
+            currentUser.isAuthenticated && notification.issuedAt.isBefore(currentUser.me.notificationsSeenAt);
         return Stack(
           children: [
             GestureDetector(
               onTap: () => _navigateToSource(context),
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4.0),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
+                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
                 width: double.infinity,
                 color: wasSeen ? Colors.white : Colors.blue.shade50,
                 // color: Colors.white,
@@ -44,8 +44,7 @@ class NotificationItem extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                      child:
-                          NotificationItemIcon(notification.notificationType),
+                      child: NotificationItemIcon(notification.notificationType),
                     ),
                     Flexible(
                       child: Column(
@@ -53,14 +52,10 @@ class NotificationItem extends StatelessWidget {
                         children: [
                           NotificationItemContent(notification),
                           Container(
-                            padding: const EdgeInsets.only(
-                                left: 12.0, right: 12.0, top: 6.0),
+                            padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
                             child: Text(
                               DateUtil.timeAgoString(notification.issuedAt),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.black54,
-                                  height: 1.1),
+                              style: const TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
                             ),
                           )
                         ],
@@ -105,9 +100,11 @@ class NotificationItem extends StatelessWidget {
         break;
       case NotificationType.YOUR_DEAL_RATED:
       case NotificationType.YOUR_DEAL_COMMENTED:
+        _navigateToDeal(context);
+        break;
       case NotificationType.YOUR_COMMENT_REPLIED:
       case NotificationType.YOUR_COMMENT_RATED:
-        _navigateToDeal(context);
+        _navigateToComment(context);
         break;
       default:
       // do noting
@@ -117,22 +114,25 @@ class NotificationItem extends StatelessWidget {
   void _navigateToTopic(BuildContext context) {
     final topicsProvider = Provider.of<Topics>(context, listen: false);
     topicsProvider.fetchTopic(notification.relatedTopicId).then((_) {
-      final TopicModel topic =
-          topicsProvider.findById(notification.relatedTopicId);
+      final TopicModel topic = topicsProvider.findById(notification.relatedTopicId);
       Navigator.of(context).pushNamed(TopicScreen.routeName,
-          arguments: TopicScreenArguments(topic,
-              postToScrollId: notification.relatedPostId));
+          arguments: TopicScreenArguments(topic, postToScrollId: notification.relatedPostId));
     });
   }
 
   void _navigateToDeal(BuildContext context) {
     final dealsProvider = Provider.of<Deals>(context, listen: false);
     dealsProvider.fetchDeal(notification.relatedDealId).then((_) {
-      final DealModel deal =
-          dealsProvider.findById(notification.relatedDealId);
-      Navigator.of(context).pushNamed(DealDetailsScreen.routeName,
-          arguments: DealScreenArguments(deal,
-              commentToScrollId: notification.relatedCommentId));
+      final DealModel deal = dealsProvider.findById(notification.relatedDealId);
+      Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+    });
+  }
+
+  void _navigateToComment(BuildContext context) {
+    final dealsProvider = Provider.of<Deals>(context, listen: false);
+    dealsProvider.fetchDeal(notification.relatedDealId).then((_) {
+      final DealModel deal = dealsProvider.findById(notification.relatedDealId);
+      Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: CommentScreenArguments(null, null));
     });
   }
 }

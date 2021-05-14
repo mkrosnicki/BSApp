@@ -53,8 +53,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    final DealScreenArguments dealScreenArguments = ModalRoute.of(context).settings.arguments as DealScreenArguments;
-    final DealModel deal = dealScreenArguments.deal;
+    final DealModel deal = ModalRoute.of(context).settings.arguments as DealModel;
     return Scaffold(
       body: NotificationListener<ScrollNotification>(
         onNotification: _scrollListener,
