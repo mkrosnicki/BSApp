@@ -17,8 +17,8 @@ class TopicScreenInputBar extends StatelessWidget {
 
   Stream<PostModel> get _postToReplyStream => postToReplySubject.stream;
 
-  TextEditingController textEditingController = TextEditingController();
-  FocusNode textFocusNode = FocusNode();
+  final TextEditingController textEditingController = TextEditingController();
+  final FocusNode textFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +41,11 @@ class TopicScreenInputBar extends StatelessWidget {
                       children: [
                         const Text(
                           'Odpowiadasz na post ',
-                          style: TextStyle(color: Colors.black, fontSize: 12),
+                          style: TextStyle(color: Colors.black54, fontSize: 11),
                         ),
                         Text(
                           '${snapshot.data.adderInfo.username}',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -77,41 +74,49 @@ class TopicScreenInputBar extends StatelessWidget {
           ),
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
             decoration: const BoxDecoration(
-              border: MyStylingProvider.TOP_GREY_BORDER,
+              border: MyStylingProvider.TOP_GREY_BORDER_THICK,
               color: Colors.white,
             ),
             child: Flex(
               direction: Axis.horizontal,
               children: [
                 Flexible(
-                  child: TextField(
-                    minLines: 1,
-                    maxLines: 3,
-                    controller: textEditingController,
-                    focusNode: textFocusNode,
-                    style: const TextStyle(fontSize: 13),
-                    decoration: MyStylingProvider.TEXT_FIELD_DECORATION
-                        .copyWith(hintText: 'Napisz post...'),
-                  ),
-                ),
-                Consumer<Auth>(
-                  builder: (context, authData, child) => StreamBuilder(
-                      stream: _postToReplyStream,
-                      builder: (context, AsyncSnapshot<PostModel> snapshot) {
-                        return InkWell(
-                          onTap: () => _addReply(
-                              context, authData.isAuthenticated, snapshot.data),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              CupertinoIcons.chevron_right,
-                              color: Colors.blue,
-                            ),
+                  child: Stack(
+                    children: [
+                      TextField(
+                        minLines: 1,
+                        maxLines: 3,
+                        controller: textEditingController,
+                        focusNode: textFocusNode,
+                        style: const TextStyle(fontSize: 13),
+                        decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                            .copyWith(hintText: 'Napisz post...'),
+                      ),
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Consumer<Auth>(
+                            builder: (context, authData, child) => StreamBuilder(
+                                stream: _postToReplyStream,
+                                builder: (context, AsyncSnapshot<PostModel> snapshot) {
+                                  return InkWell(
+                                    onTap: () => _addReply(context, authData.isAuthenticated, snapshot.data),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Icon(
+                                        CupertinoIcons.chevron_right,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  );
+                                }),
                           ),
-                        );
-                      }),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -121,8 +126,7 @@ class TopicScreenInputBar extends StatelessWidget {
     );
   }
 
-  Future<void> _addReply(
-      BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
+  Future<void> _addReply(BuildContext context, bool isUserLoggedIn, PostModel postToReply) async {
     if (textEditingController.text.trim().isEmpty) {
       return;
     }
@@ -137,17 +141,15 @@ class TopicScreenInputBar extends StatelessWidget {
     }
   }
 
-  Future<void> _addReplyToPost(
-      BuildContext context, PostModel postToReply) async {
-    await Provider.of<Posts>(context, listen: false).addReplyToPost(topicId,
-        postToReply.id, textEditingController.text, postToReply.content);
+  Future<void> _addReplyToPost(BuildContext context, PostModel postToReply) async {
+    await Provider.of<Posts>(context, listen: false)
+        .addReplyToPost(topicId, postToReply.id, textEditingController.text, postToReply.content);
     _clearTextBox();
     postToReplySubject.add(null);
   }
 
   Future<void> _addPostToTopic(BuildContext context) async {
-    await Provider.of<Posts>(context, listen: false)
-        .addPostToTopic(topicId, textEditingController.text);
+    await Provider.of<Posts>(context, listen: false).addPostToTopic(topicId, textEditingController.text);
     _clearTextBox();
   }
 

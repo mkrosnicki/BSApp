@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsNewComment extends StatefulWidget {
-
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
@@ -23,7 +22,6 @@ class DealDetailsNewComment extends StatefulWidget {
 }
 
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
-
   TextEditingController textEditingController = TextEditingController();
   FocusNode textFocusNode = FocusNode();
 
@@ -48,15 +46,11 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       children: [
                         const Text(
                           'Odpowiadasz na komentarz ',
-                          style: TextStyle(
-                              color: Colors.black, fontSize: 12),
+                          style: TextStyle(color: Colors.black54, fontSize: 11),
                         ),
                         Text(
                           snapshot.data.adderInfo.username,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -85,42 +79,53 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
           ),
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
             decoration: const BoxDecoration(
-              border: MyStylingProvider.TOP_GREY_BORDER,
+              border: MyStylingProvider.TOP_GREY_BORDER_THICK,
               color: Colors.white,
             ),
             child: Flex(
               direction: Axis.horizontal,
               children: [
+                // Icon(CupertinoIcons.person),
                 Flexible(
-                  child: TextField(
-                    minLines: 1,
-                    maxLines: 3,
-                    controller: textEditingController,
-                    focusNode: textFocusNode,
-                    style: const TextStyle(fontSize: 13),
-                    decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(hintText: 'Twój komentarz...'),
-                  ),
-                ),
-                Consumer<Auth>(
-                  builder: (context, authData, child) {
-                    return StreamBuilder(
-                      stream: widget._commentToReplyStream,
-                      builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-                        return InkWell(
-                          onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              CupertinoIcons.chevron_right,
-                              color: Colors.blue,
-                            ),
+                  child: Stack(
+                    children: [
+                      TextField(
+                        minLines: 1,
+                        maxLines: 3,
+                        controller: textEditingController,
+                        focusNode: textFocusNode,
+                        style: const TextStyle(fontSize: 13),
+                        decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                            .copyWith(hintText: 'Twój komentarz...'),
+                      ),
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Consumer<Auth>(
+                            builder: (context, authData, child) {
+                              return StreamBuilder(
+                                  stream: widget._commentToReplyStream,
+                                  builder: (context, AsyncSnapshot<CommentModel> snapshot) {
+                                    return InkWell(
+                                      onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                        child: Icon(
+                                          CupertinoIcons.chevron_right,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
                           ),
-                        );
-                      }
-                    );
-                  },
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -146,15 +151,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   }
 
   Future<void> _addReplyToComment(CommentModel commentToReply) async {
-    await Provider.of<Comments>(context, listen: false).addReplyToComment(
-        widget.dealId, commentToReply.id, textEditingController.text);
+    await Provider.of<Comments>(context, listen: false)
+        .addReplyToComment(widget.dealId, commentToReply.id, textEditingController.text);
     _clearTextBox();
     widget.commentToReplySubject.add(null);
   }
 
   Future<void> _addCommentToDeal() async {
-    await Provider.of<Comments>(context, listen: false)
-        .addCommentToDeal(widget.dealId, textEditingController.text);
+    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, textEditingController.text);
     _clearTextBox();
   }
 

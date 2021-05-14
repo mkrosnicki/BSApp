@@ -54,11 +54,11 @@ class PostItemBottomBar extends StatelessWidget {
               postToReplySubject.add(post);
             },
             child: Text(
-              'ODPOWIEDZ',
+              'Odpowiedz',
               style: Theme.of(context)
                   .textTheme
                   .bodyText2
-                  .copyWith(fontSize: 11, color: MyColorsProvider.BLUE),
+                  .copyWith(fontSize: 12, color: MyColorsProvider.BLUE),
             ),
           ),
         ],
