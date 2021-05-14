@@ -15,35 +15,35 @@ class ForumMyTopicsView extends StatelessWidget {
     return SafeArea(
       child: Consumer<CurrentUser>(builder: (context, currentUser, child) {
         if (currentUser.isAuthenticated) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: FutureBuilder(
-              future: Provider.of<Topics>(context, listen: false).fetchObservedTopics(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: LoadingIndicator());
+          return FutureBuilder(
+            future: Provider.of<Topics>(context, listen: false).fetchObservedTopics(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: LoadingIndicator());
+              } else {
+                if (snapshot.error != null) {
+                  return const Center(
+                    child: ServerErrorSplash(),
+                  );
                 } else {
-                  if (snapshot.error != null) {
-                    return const Center(
-                      child: ServerErrorSplash(),
-                    );
-                  } else {
-                    return Consumer<Topics>(
-                      builder: (context, topicsData, child) {
-                        final List<TopicModel> observedTopics =
-                            topicsData.topics.where((element) => currentUser.observesTopic(element)).toList();
-                        return topicsData.topics.isNotEmpty
-                            ? ListView.builder(
+                  return Consumer<Topics>(
+                    builder: (context, topicsData, child) {
+                      final List<TopicModel> observedTopics =
+                          topicsData.topics.where((element) => currentUser.observesTopic(element)).toList();
+                      return topicsData.topics.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: ListView.builder(
                                 itemBuilder: (context, index) => TopicItem(observedTopics[index]),
                                 itemCount: observedTopics.length,
-                              )
-                            : _buildNoObservedTopicsView();
-                      },
-                    );
-                  }
+                              ),
+                            )
+                          : _buildNoObservedTopicsView();
+                    },
+                  );
                 }
-              },
-            ),
+              }
+            },
           );
         } else {
           return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n zapisane tematy');
@@ -57,7 +57,7 @@ class ForumMyTopicsView extends StatelessWidget {
       color: Colors.white,
       child: const Center(
         child: Text(
-          'Brak tematów',
+          'Nie obserwujesz żadnych tematów',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 18, height: 1.5, fontWeight: FontWeight.w600, color: MyColorsProvider.LIGHT_GRAY),
         ),
