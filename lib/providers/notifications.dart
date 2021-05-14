@@ -38,9 +38,10 @@ class Notifications with ChangeNotifier {
     final responseBody =
     await _apiProvider.get('/users/me/notifications', token: _token) as List;
     if (responseBody == null) {
-      print('No Deals Found!');
+      print('No Notifications Found!');
     }
     _notifications = NotificationModel.fromJsonList(responseBody);
+    // todo exception after notification
     notifyListeners();
   }
 
@@ -49,11 +50,13 @@ class Notifications with ChangeNotifier {
       _lastNotificationDate = null;
       _notifications = [];
     });
+    // todo exception after notification
     notifyListeners();
   }
 
   Future<void> updateNotificationsTimestamp() async {
     _notificationsSeenAt = DateTime.now();
+    // todo exception after notification
     notifyListeners();
   }
 
