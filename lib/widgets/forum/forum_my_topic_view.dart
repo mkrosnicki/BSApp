@@ -46,10 +46,7 @@ class ForumMyTopicsView extends StatelessWidget {
             ),
           );
         } else {
-          return const Padding(
-            padding: EdgeInsets.only(top: 12.0),
-            child: LoginToContinueSplash('Zaloguj się, aby zobaczyć\n zapisane tematy'),
-          );
+          return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n zapisane tematy');
         }
       }),
     );

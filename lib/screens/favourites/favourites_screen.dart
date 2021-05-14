@@ -1,5 +1,6 @@
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
 import 'package:BSApp/widgets/favourites/observed_deals_view.dart';
 import 'package:BSApp/widgets/favourites/observed_searches_view.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,7 @@ class FavouritesScreen extends StatefulWidget {
   _FavouritesScreenState createState() => _FavouritesScreenState();
 }
 
-class _FavouritesScreenState extends State<FavouritesScreen>
-    with SingleTickerProviderStateMixin {
+class _FavouritesScreenState extends State<FavouritesScreen> with SingleTickerProviderStateMixin {
   ScrollController _scrollViewController;
   TabController _tabController;
 
@@ -41,8 +41,7 @@ class _FavouritesScreenState extends State<FavouritesScreen>
           elevation: 0.0,
           brightness: Brightness.light,
           backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.white),
+          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
         ),
       ),
       body: NestedScrollView(
@@ -61,18 +60,19 @@ class _FavouritesScreenState extends State<FavouritesScreen>
               // collapsedHeight: 15.0,
               backgroundColor: Colors.white,
               forceElevated: innerBoxIsScrolled,
-              bottom: TabBar(
-                controller: _tabController,
-                labelPadding: const EdgeInsets.all(10.0),
-                indicatorColor: MyColorsProvider.DEEP_BLUE,
-                labelColor: Colors.black,
-                labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
-                unselectedLabelStyle:
-                    MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
-                tabs: const [
-                  Text('Okazje'),
-                  Text('Wyszukiwania'),
-                ],
+              bottom: DecoratedTabBar(
+                tabBar: TabBar(
+                  controller: _tabController,
+                  labelPadding: const EdgeInsets.all(10.0),
+                  indicatorColor: MyColorsProvider.DEEP_BLUE,
+                  labelColor: Colors.black,
+                  labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
+                  unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
+                  tabs: const [
+                    Text('Okazje'),
+                    Text('Wyszukiwania'),
+                  ],
+                ),
               ),
             ),
           ];
