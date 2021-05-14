@@ -35,15 +35,28 @@ class Comments with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> fetchComment(String commentId) async {
+    final responseBody =
+    await _apiProvider.get('/comments/$commentId');
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Topics Found!');
+    }
+    _comments.clear();
+    _comments.add(CommentModel.fromJson(responseBody));
+  }
+
   Future<void> addCommentToDeal(String dealId, String content) async {
     final addCommentToDealDto = {'content': content};
     await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
+    // todo fetch? notify is enough probably
     return fetchCommentsForDeal(dealId);
   }
 
   Future<void> addReplyToComment(String dealId, String commentId, String replyContent) async {
     final addCommentToDealDto = {'replyContent': replyContent};
     await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
+    // todo fetch? notify is enough probably
     return fetchCommentsForDeal(dealId);
   }
 

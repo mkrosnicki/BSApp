@@ -1,9 +1,11 @@
+import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/notification_type.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/topics.dart';
@@ -99,9 +101,9 @@ class NotificationItem extends StatelessWidget {
         _navigateToTopic(context);
         break;
       case NotificationType.YOUR_DEAL_RATED:
-      case NotificationType.YOUR_DEAL_COMMENTED:
         _navigateToDeal(context);
         break;
+      case NotificationType.YOUR_DEAL_COMMENTED:
       case NotificationType.YOUR_COMMENT_REPLIED:
       case NotificationType.YOUR_COMMENT_RATED:
         _navigateToComment(context);
@@ -129,10 +131,10 @@ class NotificationItem extends StatelessWidget {
   }
 
   void _navigateToComment(BuildContext context) {
-    final dealsProvider = Provider.of<Deals>(context, listen: false);
-    dealsProvider.fetchDeal(notification.relatedDealId).then((_) {
-      final DealModel deal = dealsProvider.findById(notification.relatedDealId);
-      Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: CommentScreenArguments(null, null));
+    final commentsProvider = Provider.of<Comments>(context, listen: false);
+    commentsProvider.fetchComment(notification.relatedCommentId).then((_) {
+      final CommentModel comment = commentsProvider.findById(notification.relatedCommentId);
+      Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: CommentScreenArguments(comment, notification.relatedDealId));
     });
   }
 }

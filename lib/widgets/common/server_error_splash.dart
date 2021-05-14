@@ -14,9 +14,9 @@ class ServerErrorSplash extends StatelessWidget {
         child: Wrap(
           direction: Axis.vertical,
           crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            const Icon(CupertinoIcons.wifi_slash, color: MyColorsProvider.LIGHT_GRAY, size: 60),
-            const Text(
+          children: const [
+            Icon(CupertinoIcons.wifi_slash, color: MyColorsProvider.LIGHT_GRAY, size: 60),
+            Text(
               'Błąd komunikacji z serwerem',
               textAlign: TextAlign.center,
               style: TextStyle(
