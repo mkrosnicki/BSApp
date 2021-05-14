@@ -21,19 +21,21 @@ class CommentItemHeartButton extends StatelessWidget {
         builder: (context, commentsData, child) {
           final CommentModel comment = commentsData.findById(commentId);
           final bool wasVotedByLoggedUser = comment.hasPositiveVoteFrom(authData.userId);
-          return InkWell(
-            onTap: () => _voteForComment(
-                context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              alignment: Alignment.centerRight,
-              child: Icon(
-                CupertinoIcons.heart_fill,
-                size: 16,
-                color:
-                wasVotedByLoggedUser
-                    ? MyColorsProvider.RED_SHADY
-                    : MyColorsProvider.LIGHT_GRAY,
+          return Container(
+            alignment: Alignment.topCenter,
+            child: InkWell(
+              onTap: () => _voteForComment(
+                  context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: Icon(
+                  CupertinoIcons.heart_fill,
+                  size: 18,
+                  color:
+                  wasVotedByLoggedUser
+                      ? MyColorsProvider.RED_SHADY
+                      : MyColorsProvider.LIGHT_GRAY,
+                ),
               ),
             ),
           );

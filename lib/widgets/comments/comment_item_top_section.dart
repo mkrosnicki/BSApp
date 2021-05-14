@@ -13,14 +13,16 @@ class CommentItemTopSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flex(
-      direction: Axis.horizontal,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CommentItemUserAvatar(comment.adderInfo),
-        CommentItemContent(comment),
-        CommentItemHeartButton(dealId, comment.id),
-      ],
+    return IntrinsicHeight(
+      child: Flex(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        direction: Axis.horizontal,
+        children: [
+          CommentItemUserAvatar(comment.adderInfo),
+          CommentItemContent(comment),
+          CommentItemHeartButton(dealId, comment.id),
+        ],
+      ),
     );
   }
 }
