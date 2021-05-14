@@ -1,5 +1,4 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/notification_type.dart';
 import 'package:BSApp/models/topic_model.dart';
@@ -129,8 +128,6 @@ class NotificationItem extends StatelessWidget {
   }
 
   void _navigateToComment(BuildContext context) {
-    Navigator.of(context).pushNamed(CommentScreen.routeName,
-        arguments: CommentScreenArguments(
-            notification.relatedParentCommentId, notification.relatedDealId, notification.relatedCommentId));
+    Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: notification);
   }
 }
