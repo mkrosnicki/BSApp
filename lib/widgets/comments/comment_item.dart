@@ -15,19 +15,11 @@ class CommentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       width: double.infinity,
       padding: comment.isParent()
           ? const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0)
           : const EdgeInsets.only(left: 34.0, right: 8.0, top: 8.0, bottom: 8.0),
-      margin: const EdgeInsets.only(bottom: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-        color: Colors.white,
-        border: Border.all(
-          color: MyColorsProvider.GREY_BORDER_COLOR,
-          width: 0.2,
-        ),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
