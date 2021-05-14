@@ -5,9 +5,7 @@ import 'package:BSApp/widgets/comments/comment_item_top_section.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 class CommentItem extends StatelessWidget {
-
   final CommentModel comment;
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
@@ -19,7 +17,9 @@ class CommentItem extends StatelessWidget {
     return Container(
       // color: Colors.white,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      padding: comment.isParent()
+          ? const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0)
+          : const EdgeInsets.only(left: 20.0, right: 8.0, top: 8.0, bottom: 8.0),
       margin: const EdgeInsets.only(bottom: 4.0),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),

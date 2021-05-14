@@ -21,13 +21,10 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
     return Column(
       children: [
         CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Column(
-            children: widget.comment.subComments
-                .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
-                .toList(),
-          ),
+        Column(
+          children: widget.comment.subComments
+              .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
+              .toList(),
         ),
       ],
     );

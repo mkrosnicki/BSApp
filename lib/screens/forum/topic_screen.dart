@@ -6,16 +6,13 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
-import 'package:BSApp/widgets/forum/post_item.dart';
 import 'package:BSApp/widgets/forum/topic_screen_heart_button.dart';
 import 'package:BSApp/widgets/forum/topic_screen_input_bar.dart';
 import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
-import 'package:BSApp/widgets/forum/topic_screen_topic_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TopicScreen extends StatefulWidget {
   static const routeName = '/topic';
@@ -50,8 +47,7 @@ class _TopicScreenState extends State<TopicScreen> {
         margin: const EdgeInsets.symmetric(),
         padding: const EdgeInsets.all(0),
         child: FutureBuilder(
-          future: Provider.of<Posts>(context, listen: false)
-              .fetchPostsForTopic(topic.id),
+          future: Provider.of<Posts>(context, listen: false).fetchPostsForTopic(topic.id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());

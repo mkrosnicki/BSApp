@@ -75,6 +75,10 @@ class CommentModel {
     return negativeVoters.any((element) => element == userId);
   }
 
+  bool isParent() {
+    return parentId == null;
+  }
+
   @override
   String toString() {
     return 'CommentModel{id: $id, content: $content, quote: $quote, subComments: $subComments, points: $points, parentId: $parentId, replyForId: $replyForId, replyForUserId: $replyForUserId, replyForUsername: $replyForUsername, addedAt: $addedAt, adderInfo: $adderInfo}';

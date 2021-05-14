@@ -24,7 +24,7 @@ class DealDetailsComments extends StatelessWidget {
           color: Colors.white,
           width: double.infinity,
           padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
-          // margin: const EdgeInsets.only(top: 8.0),
+          margin: EdgeInsets.zero,
           alignment: Alignment.centerLeft,
           child: const Text(
             'Komentarze',
@@ -33,9 +33,6 @@ class DealDetailsComments extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          color: Colors.white,
-          // margin: const EdgeInsets.only(top: 5.0),
-          // padding: const EdgeInsets.only(top: 5.0),
           child: FutureBuilder(
             future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
             builder: (context, snapshot) {
