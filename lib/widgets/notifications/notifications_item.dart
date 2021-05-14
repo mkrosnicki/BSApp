@@ -131,10 +131,9 @@ class NotificationItem extends StatelessWidget {
   }
 
   void _navigateToComment(BuildContext context) {
-    final commentsProvider = Provider.of<Comments>(context, listen: false);
-    commentsProvider.fetchComment(notification.relatedCommentId).then((_) {
-      final CommentModel comment = commentsProvider.findById(notification.relatedCommentId);
-      Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: CommentScreenArguments(comment, notification.relatedDealId));
-    });
+    Navigator.of(context).pushNamed(
+        CommentScreen.routeName,
+        arguments: CommentScreenArguments(notification.relatedParentCommentId, notification.relatedDealId, notification.relatedCommentId)
+    );
   }
 }

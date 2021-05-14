@@ -4,6 +4,7 @@ import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -28,18 +29,19 @@ class CommentScreen extends StatelessWidget {
         .arguments as CommentScreenArguments;
     final String dealId = commentScreenArguments.dealId;
     final String commentToScrollId = commentScreenArguments.commentToScrollId;
-    final CommentModel comment = commentScreenArguments.comment;
+    final String parentCommentId = commentScreenArguments.commentId;
 
     return Scaffold(
-      appBar: BaseAppBar(
-        title: 'Odpowiedź na komentarz',
+      appBar: const BaseAppBar(
+        title: 'Komentarze',
+        leading: AppBarBackButton(Colors.black),
       ),
       body: Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(),
         padding: const EdgeInsets.all(0),
         child: FutureBuilder(
-          future: Provider.of<Comments>(context, listen: false).fetchComment(comment.id),
+          future: Provider.of<Comments>(context, listen: false).fetchComment(parentCommentId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
@@ -54,16 +56,16 @@ class CommentScreen extends StatelessWidget {
                     Expanded(
                       child: Consumer<Comments>(
                         builder: (context, commentsData, child) {
-                          final CommentModel aComment = commentsData.findById(comment.id);
+                          final CommentModel comment = commentsData.findById(parentCommentId);
                           return ScrollablePositionedList.builder(
-                            itemCount: aComment.subComments.length + 1,
-                            initialScrollIndex: _determineInitialIndex(commentToScrollId, aComment.subComments),
+                            itemCount: comment.subComments.length + 1,
+                            initialScrollIndex: _determineInitialIndex(commentToScrollId, comment),
                             itemBuilder: (context, index) {
                               if (index == 0) {
                                 return CommentItem(comment, dealId, _commentToReplySubject);
                               } else {
                                 return CommentItem(
-                                    aComment.subComments[index - 1], dealId, _commentToReplySubject);
+                                    comment.subComments[index - 1], dealId, _commentToReplySubject);
                               }
                             },
                           );
@@ -81,9 +83,13 @@ class CommentScreen extends StatelessWidget {
     );
   }
 
-  int _determineInitialIndex(String postToScrollId, List<CommentModel> comments) {
-    final int foundIndex = comments.indexWhere((comment) => comment.id == postToScrollId);
-    return foundIndex != -1 ? foundIndex + 1 : 0;
+  int _determineInitialIndex(String commentToScrollId, CommentModel comment) {
+    if (comment.id == commentToScrollId) {
+      return 0;
+    } else {
+      final int foundIndex = comment.subComments.indexWhere((comment) => comment.id == commentToScrollId);
+      return foundIndex != -1 ? foundIndex + 1 : 0;
+    }
   }
 
   void _navigateToDeal(BuildContext context, String dealId) {

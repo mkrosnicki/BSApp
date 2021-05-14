@@ -13,6 +13,7 @@ class NotificationModel {
   final String relatedDealTitle;
   final String relatedPostId;
   final String relatedPostContent;
+  final String relatedParentCommentId;
   final String relatedCommentId;
   final String relatedCommentContent;
 
@@ -29,6 +30,7 @@ class NotificationModel {
       this.relatedDealTitle,
       this.relatedPostId,
       this.relatedPostContent,
+      this.relatedParentCommentId,
       this.relatedCommentId,
       this.relatedCommentContent});
 
@@ -55,6 +57,7 @@ class NotificationModel {
       relatedDealTitle: notificationSnapshot['relatedDealTitle'],
       relatedPostId: notificationSnapshot['relatedPostId'],
       relatedPostContent: notificationSnapshot['relatedPostContent'],
+      relatedParentCommentId: notificationSnapshot['relatedParentCommentId'],
       relatedCommentId: notificationSnapshot['relatedCommentId'],
       relatedCommentContent: notificationSnapshot['relatedCommentContent'],
     );

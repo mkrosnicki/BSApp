@@ -42,8 +42,10 @@ class Comments with ChangeNotifier {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
+    final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();
-    _comments.add(CommentModel.fromJson(responseBody));
+    _comments.add(comment);
+    _comments.addAll(comment.subComments);
   }
 
   Future<void> addCommentToDeal(String dealId, String content) async {
