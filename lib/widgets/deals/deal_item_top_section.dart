@@ -1,5 +1,4 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/widgets/deals/deal_item_heart_button.dart';
@@ -13,6 +12,7 @@ class DealItemTopSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isExpired = _isExpired();
     return Flex(
       direction: Axis.vertical,
       children: [
@@ -20,8 +20,7 @@ class DealItemTopSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () => Navigator.of(context)
-                  .pushNamed(DealDetailsScreen.routeName, arguments: deal),
+              onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal),
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 direction: Axis.horizontal,
@@ -30,7 +29,10 @@ class DealItemTopSection extends StatelessWidget {
                     flex: 8,
                     child: Text(
                       deal.title,
-                      style: const TextStyle(fontSize: 13),
+                      style: TextStyle(
+                        fontSize: 13,
+                        decoration: isExpired ? TextDecoration.lineThrough : TextDecoration.none,
+                      ),
                       overflow: TextOverflow.clip,
                     ),
                   ),
@@ -49,21 +51,20 @@ class DealItemTopSection extends StatelessWidget {
           children: [
             Text(
               '${deal.priceString} ',
-              style: TextStyle(
-                  color: Colors.blue.shade500,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600),
+              style: TextStyle(color: Colors.blue.shade500, fontSize: 15, fontWeight: FontWeight.w600, decoration: isExpired ? TextDecoration.lineThrough : TextDecoration.none),
             ),
-            if (deal.dealType == DealType.OCCASION && deal.regularPrice != null) Text(
-              '${deal.regularPrice} zł',
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                  decoration: TextDecoration.lineThrough),
-            ),
+            if (deal.dealType == DealType.OCCASION && deal.regularPrice != null)
+              Text(
+                '${deal.regularPrice} zł',
+                style: const TextStyle(fontSize: 14, color: Colors.grey, decoration: TextDecoration.lineThrough),
+              ),
           ],
         )
       ],
     );
+  }
+
+  bool _isExpired() {
+    return deal.endDate != null && DateTime.now().isAfter(deal.endDate);
   }
 }

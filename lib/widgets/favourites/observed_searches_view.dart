@@ -28,15 +28,15 @@ class ObservedSearchesView extends StatelessWidget {
                 } else {
                   return Consumer<Searches>(
                     builder: (context, searchesData, child) {
-                      final List<SearchModel> observedDeals =
+                      final List<SearchModel> observedSearches =
                           searchesData.searches.where((element) => currentUser.observesSearch(element)).toList();
-                      return observedDeals.isNotEmpty
+                      return observedSearches.isNotEmpty
                           ? ListView.builder(
                               itemBuilder: (context, index) {
-                                final SearchModel search = observedDeals[index];
+                                final SearchModel search = observedSearches[index];
                                 return ObservedSearchItem(search);
                               },
-                              itemCount: observedDeals.length,
+                              itemCount: observedSearches.length,
                             )
                           : _buildNoObservedDealsSplashView();
                     },

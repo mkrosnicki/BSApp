@@ -53,7 +53,7 @@ class DealItemImageSection extends StatelessWidget {
                 minHeight: minIndicatorHeight,
               ),
               child: Center(
-                child: Text(_isExpired() ? 'Wygasła' : 'Niedługo wygasa', style: const TextStyle(fontSize: 10, color: Colors.white),),
+                child: Text(_isExpired() ? 'Wygasła' : 'Niedługo wygasa', style: const TextStyle(fontSize: 11, color: Colors.white),),
               ),
             ),
           ),

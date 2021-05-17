@@ -1,8 +1,5 @@
 import 'package:BSApp/models/filter_settings.dart';
-import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/providers/searches.dart';
-import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -60,8 +57,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.only(
-                top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
             child: Flex(
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,8 +69,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                 InkWell(
                   onTap: () => _showFilterSelectionDialog(context),
                   child: const Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                     child: Icon(
                       CupertinoIcons.slider_horizontal_3,
                       color: Colors.black87,
@@ -85,8 +80,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
             ),
           ),
           FutureBuilder(
-            future: Provider.of<Deals>(context, listen: false)
-                .fetchDeals(requestParams: filterSettings.toParamsMap()),
+            future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: LoadingIndicator());
@@ -99,8 +93,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   return Flexible(
                     child: Consumer<Deals>(
                       builder: (context, dealsData, child) => ListView.builder(
-                        itemBuilder: (context, index) =>
-                            DealItem(dealsData.deals[index]),
+                        itemBuilder: (context, index) => DealItem(dealsData.deals[index]),
                         itemCount: dealsData.deals.length,
                       ),
                     ),
@@ -116,8 +109,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
 
   void _initFilterSettings() {
     if (filterSettings == null) {
-      final passedFilterSettings =
-          ModalRoute.of(context).settings.arguments as FilterSettings;
+      final passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
       filterSettings = passedFilterSettings ?? FilterSettings();
       _searchTextController.text = filterSettings.phrase;
       LastSearchesUtilService.saveFilterSettings(passedFilterSettings);
@@ -161,13 +153,12 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   }
 
   Future _showFilterSelectionDialog(BuildContext context) async {
-    final newFilterSettings =
-        await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
-            builder: (BuildContext context) {
-              return FilterSelectionScreen();
-            },
-            settings: RouteSettings(arguments: filterSettings),
-            fullscreenDialog: true));
+    final newFilterSettings = await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
+        builder: (BuildContext context) {
+          return FilterSelectionScreen();
+        },
+        settings: RouteSettings(arguments: filterSettings),
+        fullscreenDialog: true));
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
@@ -180,8 +171,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
 
   List<Widget> _buildFilterChips() {
     final List<Widget> chips = [];
-    if (filterSettings.showInternetOnly !=
-        FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
+    if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
       chips.add(
         SelectedFilterChip(
           label: 'Tylko Internetowe',
@@ -205,8 +195,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         ),
       );
     }
-    if (filterSettings.showActiveOnly !=
-        FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
+    if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
       chips.add(
         SelectedFilterChip(
           label: 'Tylko Aktywne',
@@ -251,10 +240,5 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           clearCategories: clearCategories,
           clearAgeTypes: clearAgeTypes);
     });
-  }
-
-  void _saveSearch() {
-    Provider.of<CurrentUser>(context, listen: false)
-        .addToObservedSearches(filterSettings.toSaveSearchDto());
   }
 }

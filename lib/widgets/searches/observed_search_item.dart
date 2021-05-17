@@ -18,7 +18,7 @@ class ObservedSearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final filterSettings = searchModel.toFilterSettings();
     return Container(
-      margin: const EdgeInsets.only(bottom: 10.0),
+      margin: const EdgeInsets.only(top: 10.0),
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       width: double.infinity,

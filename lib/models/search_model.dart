@@ -39,6 +39,8 @@ class SearchModel {
   }
 
   static SearchModel fromJson(dynamic searchSnapshot) {
+    print('searchSnapshotsearchSnapshotsearchSnapshotsearchSnapshotsearchSnapshot');
+    print(searchSnapshot);
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
@@ -77,6 +79,14 @@ class SearchModel {
           eq(ageTypes, filterSettings.ageTypes) &&
           sortBy == filterSettings.sortBy;
   }
+
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is SearchModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {

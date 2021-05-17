@@ -45,65 +45,57 @@ class CurrentUser with ChangeNotifier {
     final updateAvatarDto = {
       'avatar': base64Encode(newAvatar.readAsBytesSync()),
     };
-    final responseBody =
-        await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
+    final responseBody = await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
     _me = UserModel.fromJson(responseBody);
     notifyListeners();
   }
 
   Future<void> updateNotificationsTimestamp() async {
     final updateNotificationsTimestampDto = {'notificationsSeenAtUpdate': true};
-    final responseBody = await _apiProvider
-        .patch('/users/me/', updateNotificationsTimestampDto, token: _token);
+    final responseBody = await _apiProvider.patch('/users/me/', updateNotificationsTimestampDto, token: _token);
     _me = UserModel.fromJson(responseBody);
     // notifyListeners();
   }
 
   Future<void> addToObservedDeals(String dealId) async {
     final addDealToFavouritesDto = {'dealId': dealId};
-    final responseBody = await _apiProvider.post(
-        '/users/me/deals/observed', addDealToFavouritesDto,
-        token: _token);
+    final responseBody = await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: _token);
     final DealModel addedDeal = DealModel.fromJson(responseBody);
     _observedDeals.add(addedDeal);
     notifyListeners();
   }
 
   Future<void> removeFromObservedDeals(String dealId) async {
-    await _apiProvider.delete('/users/me/deals/observed/$dealId',
-        token: _token);
+    await _apiProvider.delete('/users/me/deals/observed/$dealId', token: _token);
     _observedDeals.removeWhere((element) => element.id == dealId);
     notifyListeners();
   }
 
   Future<void> addToObservedTopics(String topicId) async {
     final addTopicToFavouritesDto = {'topicId': topicId};
-    final responseBody = await _apiProvider.post(
-        '/users/me/topics/observed', addTopicToFavouritesDto,
-        token: _token);
+    final responseBody = await _apiProvider.post('/users/me/topics/observed', addTopicToFavouritesDto, token: _token);
     final TopicModel addedTopic = TopicModel.fromJson(responseBody);
     _observedTopics.add(addedTopic);
     notifyListeners();
   }
 
   Future<void> removeFromObservedTopics(String topicId) async {
-    await _apiProvider.delete('/users/me/topics/observed/$topicId',
-        token: _token);
+    await _apiProvider.delete('/users/me/topics/observed/$topicId', token: _token);
     _observedTopics.removeWhere((element) => element.id == topicId);
     notifyListeners();
   }
 
   Future<void> addToObservedSearches(Map<String, dynamic> saveSearchDto) async {
-    final responseBody = await _apiProvider
-        .post('/users/me/subscriptions', saveSearchDto, token: _token);
+    final responseBody = await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: _token);
+    print('responseBodyresponseBodyresponseBodyresponseBody');
+    print(responseBody);
     final SearchModel addedSearch = SearchModel.fromJson(responseBody);
     _observedSearches.add(addedSearch);
     notifyListeners();
   }
 
   Future<void> removeFromObservedSearches(String searchId) async {
-    await _apiProvider.delete('/users/me/subscriptions/$searchId',
-        token: _token);
+    await _apiProvider.delete('/users/me/subscriptions/$searchId', token: _token);
     _observedSearches.removeWhere((element) => element.id == searchId);
     notifyListeners();
   }
@@ -117,6 +109,10 @@ class CurrentUser with ChangeNotifier {
   }
 
   bool observesSearch(SearchModel search) {
+    print('_observedSearches_observedSearches_observedSearches_observedSearches');
+    print(search);
+    print(_observedSearches);
+    print(_observedSearches.contains(search));
     return _observedSearches.contains(search);
   }
 

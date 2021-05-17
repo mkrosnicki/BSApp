@@ -15,30 +15,23 @@ class AppBarAddToObservedSearchesButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CurrentUser>(
       builder: (context, currentUser, child) {
-        final bool isObservedSearch =
-            currentUser.observesFilterSettings(filterSettings);
+        final bool isObservedSearch = currentUser.observesFilterSettings(filterSettings);
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () =>
-              _saveSearch(context, filterSettings, currentUser.isAuthenticated),
+          onTap: () => _saveSearch(context, filterSettings, currentUser.isAuthenticated),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Icon(CupertinoIcons.heart_fill,
-                size: 20,
-                color: isObservedSearch
-                    ? MyColorsProvider.RED_SHADY
-                    : MyColorsProvider.LIGHT_GRAY),
+                size: 20, color: isObservedSearch ? MyColorsProvider.RED_SHADY : MyColorsProvider.LIGHT_GRAY),
           ),
         );
       },
     );
   }
 
-  void _saveSearch(BuildContext context, FilterSettings filterSettings,
-      bool isAuthenticated) {
+  void _saveSearch(BuildContext context, FilterSettings filterSettings, bool isAuthenticated) {
     if (isAuthenticated) {
-      Provider.of<CurrentUser>(context, listen: false)
-          .addToObservedSearches(filterSettings.toSaveSearchDto());
+      Provider.of<CurrentUser>(context, listen: false).addToObservedSearches(filterSettings.toSaveSearchDto());
     } else {
       AuthScreenProvider.showLoginScreen(context);
     }
