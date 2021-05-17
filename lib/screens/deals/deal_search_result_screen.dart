@@ -191,7 +191,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       chips.add(
         SelectedFilterChip(
           label: filterSettings.simpleLocationString,
-          onDeleteFunction: () => _clearFilterSettings(clearSorting: true),
+          onDeleteFunction: () => _clearFilterSettings(clearLocation: true),
         ),
       );
     }
@@ -215,7 +215,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       chips.add(
         SelectedFilterChip(
           label: filterSettings.sortingString,
-          onDeleteFunction: () => _clearFilterSettings(clearActiveOnly: true),
+          onDeleteFunction: () => _clearFilterSettings(clearSorting: true),
         ),
       );
     }
@@ -232,7 +232,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       bool clearAgeTypes = false}) {
     setState(() {
       filterSettings.clear(
-          clearInternetOnly: false,
+          clearInternetOnly: clearInternetOnly,
           clearActiveOnly: clearActiveOnly,
           clearLocation: clearLocation,
           clearSorting: clearSorting,
