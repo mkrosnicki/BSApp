@@ -36,6 +36,9 @@ class NotificationItemIcon extends StatelessWidget {
       case NotificationType.YOUR_POST_REPLIED:
         return CupertinoIcons.reply;
         break;
+      case NotificationType.YOUR_POST_LIKED:
+        return CupertinoIcons.hand_thumbsup;
+        break;
       case NotificationType.YOUR_TOPIC_REPLIED:
         return CupertinoIcons.bubble_left;
         break;
@@ -60,6 +63,9 @@ class NotificationItemIcon extends StatelessWidget {
         break;
       case NotificationType.YOUR_TOPIC_REPLIED:
         return MyColorsProvider.BLUE;
+        break;
+      case NotificationType.YOUR_POST_LIKED:
+        return Colors.deepPurple;
         break;
       case NotificationType.YOUR_POST_REPLIED:
         return Colors.deepPurple;

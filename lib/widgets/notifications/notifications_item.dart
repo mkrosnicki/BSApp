@@ -95,6 +95,7 @@ class NotificationItem extends StatelessWidget {
     switch (notification.notificationType) {
       case NotificationType.YOUR_TOPIC_REPLIED:
       case NotificationType.YOUR_POST_REPLIED:
+      case NotificationType.YOUR_POST_LIKED:
         _navigateToTopic(context);
         break;
       case NotificationType.YOUR_DEAL_RATED:

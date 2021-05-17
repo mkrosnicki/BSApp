@@ -5,6 +5,7 @@ enum NotificationType {
   YOUR_COMMENT_RATED,
   YOUR_TOPIC_REPLIED,
   YOUR_POST_REPLIED,
+  YOUR_POST_LIKED
 }
 
 class NotificationTypeHelper {

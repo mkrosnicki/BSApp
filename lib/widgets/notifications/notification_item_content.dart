@@ -63,6 +63,11 @@ class NotificationItemContent extends StatelessWidget {
             ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} odpowiedzieli na Twój post w temacie'
             : '${notification.mainIssuerUsername} odpowiedział(a) na Twój post w temacie';
         break;
+      case NotificationType.YOUR_POST_LIKED:
+        return notification.totalNumberOfIssuers > 1
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} polubili na Twój post w temacie'
+            : '${notification.mainIssuerUsername} polubił(a) Twój post w temacie';
+        break;
       case NotificationType.YOUR_TOPIC_REPLIED:
         return notification.totalNumberOfIssuers > 1
             ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} inni napisali post w Twoim temacie'
@@ -88,6 +93,9 @@ class NotificationItemContent extends StatelessWidget {
         return _shortenTo(notification.relatedCommentContent, 40);
         break;
       case NotificationType.YOUR_POST_REPLIED:
+        return notification.relatedTopicTitle;
+        break;
+      case NotificationType.YOUR_POST_LIKED:
         return notification.relatedTopicTitle;
         break;
       case NotificationType.YOUR_TOPIC_REPLIED:
