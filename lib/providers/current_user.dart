@@ -94,7 +94,7 @@ class CurrentUser with ChangeNotifier {
 
   Future<void> removeFromObserved(FilterSettings filterSettings) async {
     final foundSearch = _observedSearches.firstWhere((element) => element.isSame(filterSettings));
-    await removeFromObservedSearches(foundSearch.id);
+    return removeFromObservedSearches(foundSearch.id);
   }
 
   Future<void> removeFromObservedSearches(String searchId) async {
