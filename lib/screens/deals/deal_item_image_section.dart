@@ -53,7 +53,7 @@ class DealItemImageSection extends StatelessWidget {
                 minHeight: minIndicatorHeight,
               ),
               child: Center(
-                child: Text(_isExpired() ? 'Wygasła' : 'Niedługo wygasa', style: const TextStyle(fontSize: 11, color: Colors.white),),
+                child: Text(_isExpired() ? 'Wygasła' : 'Wygasa za ${_expiresInHours()}h', style: const TextStyle(fontSize: 11, color: Colors.white),),
               ),
             ),
           ),
@@ -63,14 +63,19 @@ class DealItemImageSection extends StatelessWidget {
   }
 
   bool _willBeValidLongerThanOneDay() {
-    return deal.endDate == null || deal.endDate.difference(DateTime.now()).inDays > 1;
+    return deal.endDate == null || _expiresInHours() > 24;
   }
 
   bool _isExpired() {
     return deal.endDate != null && DateTime.now().isAfter(deal.endDate);
   }
 
+  // todo handle minutes, seconds, ...
+  int _expiresInHours() {
+    return deal.endDate.difference(DateTime.now()).inHours;
+  }
+
   bool _isNearExpiry() {
-    return deal.endDate != null && DateTime.now().difference(deal.endDate).inDays <= 1;
+    return deal.endDate != null && DateTime.now().difference(deal.endDate).inHours <= 24;
   }
 }
