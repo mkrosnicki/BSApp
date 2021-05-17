@@ -11,6 +11,10 @@ class DealItemImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    const double imageHeight = 130.0;
+    const double minIndicatorHeight = 22.0;
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
@@ -18,11 +22,11 @@ class DealItemImageSection extends StatelessWidget {
       child: Stack(
         children: [
           const SizedBox(
-            height: 130,
+            height: imageHeight,
             width: double.infinity,
           ),
           Container(
-            height: 130,
+            height: imageHeight,
             width: double.infinity,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -36,19 +40,17 @@ class DealItemImageSection extends StatelessWidget {
                   ),
             ),
           ),
-          if (!_willBeValidLongerThanOneDay()) Positioned(
-            bottom: 0.0,
-            left: 0.0,
+          if (!_willBeValidLongerThanOneDay()) ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(4.0),
+              bottomLeft: Radius.circular(4.0),
+            ),
             child: Container(
-              clipBehavior: Clip.hardEdge,
+              margin: const EdgeInsets.only(top: imageHeight - minIndicatorHeight),
               padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                border: Border.all(color: Colors.grey),
-                color: Colors.black26,
-              ),
+              color: Colors.black26,
               constraints: const BoxConstraints(
-                minHeight: 22,
+                minHeight: minIndicatorHeight,
               ),
               child: Center(
                 child: Text(_isExpired() ? 'Wygasła' : 'Niedługo wygasa', style: const TextStyle(fontSize: 10, color: Colors.white),),
@@ -61,7 +63,7 @@ class DealItemImageSection extends StatelessWidget {
   }
 
   bool _willBeValidLongerThanOneDay() {
-    return deal.endDate == null && DateTime.now().difference(deal.endDate).inDays > 1;
+    return deal.endDate == null || deal.endDate.difference(DateTime.now()).inDays > 1;
   }
 
   bool _isExpired() {
