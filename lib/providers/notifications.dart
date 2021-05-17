@@ -41,8 +41,6 @@ class Notifications with ChangeNotifier {
       print('No Notifications Found!');
     }
     _notifications = NotificationModel.fromJsonList(responseBody);
-    // todo exception after notification
-    notifyListeners();
   }
 
   Future<void> deleteMyNotifications() async {
@@ -108,7 +106,9 @@ class Notifications with ChangeNotifier {
     } else {
       _token = token;
       _notificationsSeenAt = notificationsSeenAt;
-      await _connectToNotificationsSocket(userId);
+      _connectToNotificationsSocket(userId);
+      await fetchMyNotifications();
+      notifyListeners();
     }
   }
 }
