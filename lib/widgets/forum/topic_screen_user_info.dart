@@ -24,6 +24,7 @@ class TopicScreenUserInfo extends StatelessWidget {
         children: [
           UserAvatar(
             username: adderInfo.username,
+            image: adderInfo.avatar,
             imagePath: FakeDataProvider.USER_AVATAR_PATH,
             radius: 15,
           ),

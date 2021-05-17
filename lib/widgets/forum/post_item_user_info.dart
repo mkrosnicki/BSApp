@@ -23,6 +23,7 @@ class PostItemUserInfo extends StatelessWidget {
         children: [
           UserAvatar(
             username: post.adderInfo.username,
+            image: post.adderInfo.avatar,
             imagePath: FakeDataProvider.USER_AVATAR_PATH,
             radius: 15,
           ),

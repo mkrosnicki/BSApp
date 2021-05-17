@@ -15,6 +15,7 @@ class TopicItemUserAvatar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: UserAvatar(
         username: adderInfo.username,
+        image: adderInfo.avatar,
         imagePath: FakeDataProvider.USER_AVATAR_PATH,
         radius: 20,
       ),
