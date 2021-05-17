@@ -1,6 +1,6 @@
 import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/widgets/comments/comment_item_likes_string.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,28 +23,16 @@ class CommentItemBottomSection extends StatelessWidget {
             children: [
               Text(
                 DateUtil.timeAgoString(comment.addedAt),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(fontSize: 11, color: Colors.grey),
+                style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   '',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(fontSize: 11, color: Colors.grey),
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
                 ),
               ),
-              Text(
-                '${comment.numberOfPositiveVotes} ${ConjugationHelper.likesConjugation(comment.numberOfPositiveVotes)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(fontSize: 11, color: Colors.grey),
-              ),
+              CommentItemLikesString(comment.id),
             ],
           ),
           InkWell(
