@@ -39,8 +39,6 @@ class SearchModel {
   }
 
   static SearchModel fromJson(dynamic searchSnapshot) {
-    print('searchSnapshotsearchSnapshotsearchSnapshotsearchSnapshotsearchSnapshot');
-    print(searchSnapshot);
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],

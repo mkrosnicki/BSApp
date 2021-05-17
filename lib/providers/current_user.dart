@@ -87,11 +87,14 @@ class CurrentUser with ChangeNotifier {
 
   Future<void> addToObservedSearches(Map<String, dynamic> saveSearchDto) async {
     final responseBody = await _apiProvider.post('/users/me/subscriptions', saveSearchDto, token: _token);
-    print('responseBodyresponseBodyresponseBodyresponseBody');
-    print(responseBody);
     final SearchModel addedSearch = SearchModel.fromJson(responseBody);
     _observedSearches.add(addedSearch);
     notifyListeners();
+  }
+
+  Future<void> removeFromObserved(FilterSettings filterSettings) async {
+    final foundSearch = _observedSearches.firstWhere((element) => element.isSame(filterSettings));
+    await removeFromObservedSearches(foundSearch.id);
   }
 
   Future<void> removeFromObservedSearches(String searchId) async {
@@ -109,10 +112,6 @@ class CurrentUser with ChangeNotifier {
   }
 
   bool observesSearch(SearchModel search) {
-    print('_observedSearches_observedSearches_observedSearches_observedSearches');
-    print(search);
-    print(_observedSearches);
-    print(_observedSearches.contains(search));
     return _observedSearches.contains(search);
   }
 

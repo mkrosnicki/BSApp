@@ -1,7 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/providers/current_user.dart';
-import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/common/secondary_button.dart';
@@ -18,7 +17,7 @@ class ObservedSearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final filterSettings = searchModel.toFilterSettings();
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 8.0),
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       width: double.infinity,
@@ -31,19 +30,13 @@ class ObservedSearchItem extends StatelessWidget {
               runAlignment: WrapAlignment.spaceBetween,
               runSpacing: 4.0,
               children: [
-                if (searchModel.phrase != null)
-                  _buildItem('Szukana fraza', searchModel.phrase),
-                if (filterSettings.categories.isNotEmpty)
-                  _buildItem('Kategoria', filterSettings.categoriesString),
-                if (filterSettings.voivodeship != null)
-                  _buildItem('Lokalizacja', filterSettings.locationString),
-                if (filterSettings.ageTypes.isNotEmpty)
-                  _buildItem('Wiek dziecka', filterSettings.ageTypesString),
-                if (filterSettings.showActiveOnly !=
-                    FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY)
+                if (searchModel.phrase != null) _buildItem('Szukana fraza', searchModel.phrase),
+                if (filterSettings.categories.isNotEmpty) _buildItem('Kategoria', filterSettings.categoriesString),
+                if (filterSettings.voivodeship != null) _buildItem('Lokalizacja', filterSettings.locationString),
+                if (filterSettings.ageTypes.isNotEmpty) _buildItem('Wiek dziecka', filterSettings.ageTypesString),
+                if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY)
                   _buildItem('Tylko aktywne okazje', 'Tak'),
-                if (filterSettings.showInternetOnly !=
-                    FilterSettings.DEFAULT_SHOW_INTERNET_ONLY)
+                if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY)
                   _buildItem('Tylko internetowe okazje', 'Tak'),
               ],
             ),
@@ -56,10 +49,7 @@ class ObservedSearchItem extends StatelessWidget {
               children: [
                 SecondaryButton(
                   'Przestań obserwować',
-                  () {
-                    Provider.of<CurrentUser>(context, listen: false)
-                        .removeFromObservedSearches(searchModel.id);
-                  },
+                  () => Provider.of<CurrentUser>(context, listen: false).removeFromObservedSearches(searchModel.id),
                   fontSize: 11,
                 ),
                 PrimaryButton(
@@ -88,8 +78,7 @@ class ObservedSearchItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 11, color: Colors.black54)),
+                      overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: Colors.black54)),
                   Text(
                     value,
                     overflow: TextOverflow.ellipsis,
