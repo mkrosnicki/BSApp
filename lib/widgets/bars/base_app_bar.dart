@@ -32,7 +32,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black, fontSize: 17),
+        style: const TextStyle(color: Colors.black, fontSize: 16),
       ),
     );
   }

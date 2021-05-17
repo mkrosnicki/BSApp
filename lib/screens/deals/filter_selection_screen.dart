@@ -49,7 +49,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
             onPressed: _clearFilters,
             child: const Text(
               'Wyczyść',
-              style: MyStylingProvider.TEXT_BLACK,
+              style: TextStyle(color: MyColorsProvider.BLUE),
             ),
           ),
         ],

@@ -30,7 +30,7 @@ class FilterSettings {
   }
 
   String get categoriesString {
-    return categories.map((e) => e.name).join(" / ");
+    return categories.isNotEmpty ? categories.map((e) => e.name).join(" / ") : 'Wszystkie';
   }
 
   String get lastCategoryString {
@@ -163,18 +163,35 @@ class FilterSettings {
     _clearLocation();
   }
 
+  int filtersCount() {
+    int count = 0;
+    if (showInternetOnly != DEFAULT_SHOW_INTERNET_ONLY) {
+      count++;
+    }
+    if (showActiveOnly != DEFAULT_SHOW_ACTIVE_ONLY) {
+      count++;
+    }
+    if (categories.isNotEmpty) {
+      count++;
+    }
+    if (ageTypes.isNotEmpty) {
+      count++;
+    }
+    if (sortBy != DEFAULT_SORTING_TYPE) {
+      count++;
+    }
+    if (city != null || voivodeship != null) {
+      count++;
+    }
+    return count;
+  }
+
   bool areDefaults() {
-    return showInternetOnly == DEFAULT_SHOW_INTERNET_ONLY &&
-        showActiveOnly == DEFAULT_SHOW_ACTIVE_ONLY &&
-        categories.isEmpty &&
-        ageTypes.isEmpty &&
-        sortBy == DEFAULT_SORTING_TYPE &&
-        city == null &&
-        voivodeship == null;
+    return filtersCount() == 0;
   }
 
   static FilterSettings fromJson(Map<String, dynamic> json) {
-    FilterSettings newFilterSettings = FilterSettings();
+    final FilterSettings newFilterSettings = FilterSettings();
     newFilterSettings.phrase = json['phrase'];
     newFilterSettings.categories = (json['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList();
     newFilterSettings.ageTypes = (json['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList();

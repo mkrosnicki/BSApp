@@ -1,7 +1,9 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/screens/deals/filter_settings_bar.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_to_observed_searches_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -45,40 +47,41 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (!filterSettings.areDefaults())
-            Container(
-              color: Colors.white,
-              width: double.infinity,
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(
-                // direction: Axis.vertical,
-                children: _buildFilterChips(),
-              ),
-            ),
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
-            child: Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Znalezione okazje',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-                InkWell(
-                  onTap: () => _showFilterSelectionDialog(context),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
-                    child: Icon(
-                      CupertinoIcons.slider_horizontal_3,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // if (!filterSettings.areDefaults())
+          //   Container(
+          //     color: Colors.white,
+          //     width: double.infinity,
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Wrap(
+          //       // direction: Axis.vertical,
+          //       children: _buildFilterChips(),
+          //     ),
+          //   ),
+          FilterSettingsBar(filterSettings, _updateFilterSettings),
+          // Container(
+          //   color: Colors.white,
+          //   padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
+          //   child: Flex(
+          //     direction: Axis.horizontal,
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       const Text(
+          //         'Znalezione okazje',
+          //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          //       ),
+          //       InkWell(
+          //         onTap: () => _showFilterSelectionDialog(context),
+          //         child: const Padding(
+          //           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+          //           child: Icon(
+          //             CupertinoIcons.slider_horizontal_3,
+          //             color: Colors.black87,
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           FutureBuilder(
             future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
@@ -159,6 +162,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         },
         settings: RouteSettings(arguments: filterSettings),
         fullscreenDialog: true));
+    _updateFilterSettings(newFilterSettings);
+  }
+
+  _updateFilterSettings(FilterSettings newFilterSettings) {
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
