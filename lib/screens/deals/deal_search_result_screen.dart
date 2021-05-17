@@ -13,6 +13,7 @@ import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DealSearchResultScreen extends StatefulWidget {
@@ -37,6 +38,9 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           titleSpacing: 6,
           title: _createSearchBox(context),
           leadingWidth: 40.0,
+          brightness: Brightness.light,
+          backwardsCompatibility: false,
+          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
           automaticallyImplyLeading: false,
           leading: const AppBarBackButton(Colors.black87),
           backgroundColor: Colors.white,

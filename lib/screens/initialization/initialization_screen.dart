@@ -11,7 +11,8 @@ class InitializationScreen extends StatelessWidget {
         toolbarHeight: 0.0,
         brightness: Brightness.light,
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.DEEP_BLUE),
+        elevation: 0.0,
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.BLUE),
       ),
       backgroundColor: MyColorsProvider.BLUE,
       body: SafeArea(
