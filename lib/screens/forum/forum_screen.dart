@@ -22,7 +22,7 @@ class _ForumScreenState extends State<ForumScreen> {
       length: 2,
       child: Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(80.0),
+          preferredSize: Size.fromHeight(85.0),
           child: BaseAppBar(
             title: 'Forum',
             bottom: DecoratedTabBar(
