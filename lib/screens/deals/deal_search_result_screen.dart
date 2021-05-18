@@ -51,41 +51,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // if (!filterSettings.areDefaults())
-          //   Container(
-          //     color: Colors.white,
-          //     width: double.infinity,
-          //     padding: const EdgeInsets.all(8.0),
-          //     child: Wrap(
-          //       // direction: Axis.vertical,
-          //       children: _buildFilterChips(),
-          //     ),
-          //   ),
           FilterSettingsBar(filterSettings, _updateFilterSettings),
-          // Container(
-          //   color: Colors.white,
-          //   padding: const EdgeInsets.only(top: 4.0, bottom: 4.0, left: 12.0, right: 2.0),
-          //   child: Flex(
-          //     direction: Axis.horizontal,
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       const Text(
-          //         'Znalezione okazje',
-          //         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-          //       ),
-          //       InkWell(
-          //         onTap: () => _showFilterSelectionDialog(context),
-          //         child: const Padding(
-          //           padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
-          //           child: Icon(
-          //             CupertinoIcons.slider_horizontal_3,
-          //             color: Colors.black87,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           FutureBuilder(
             future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
@@ -159,17 +125,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     );
   }
 
-  Future _showFilterSelectionDialog(BuildContext context) async {
-    final newFilterSettings = await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
-        builder: (BuildContext context) {
-          return FilterSelectionScreen();
-        },
-        settings: RouteSettings(arguments: filterSettings),
-        fullscreenDialog: true));
-    _updateFilterSettings(newFilterSettings);
-  }
-
-  _updateFilterSettings(FilterSettings newFilterSettings) {
+  void _updateFilterSettings(FilterSettings newFilterSettings) {
     if (newFilterSettings != null) {
       setState(() {
         filterSettings = newFilterSettings;
@@ -178,78 +134,5 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         LastSearchesUtilService.saveFilterSettings(newFilterSettings);
       }
     }
-  }
-
-  List<Widget> _buildFilterChips() {
-    final List<Widget> chips = [];
-    if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
-      chips.add(
-        SelectedFilterChip(
-          label: 'Tylko Internetowe',
-          onDeleteFunction: () => _clearFilterSettings(clearInternetOnly: true),
-        ),
-      );
-    }
-    if (filterSettings.categories.isNotEmpty) {
-      chips.add(
-        SelectedFilterChip(
-          label: filterSettings.lastCategoryString,
-          onDeleteFunction: () => _clearFilterSettings(clearCategories: true),
-        ),
-      );
-    }
-    if (filterSettings.voivodeship != null) {
-      chips.add(
-        SelectedFilterChip(
-          label: filterSettings.simpleLocationString,
-          onDeleteFunction: () => _clearFilterSettings(clearLocation: true),
-        ),
-      );
-    }
-    if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
-      chips.add(
-        SelectedFilterChip(
-          label: 'Tylko Aktywne',
-          onDeleteFunction: () => _clearFilterSettings(clearActiveOnly: true),
-        ),
-      );
-    }
-    if (filterSettings.ageTypes.isNotEmpty) {
-      chips.add(
-        SelectedFilterChip(
-          label: filterSettings.ageTypesShortString,
-          onDeleteFunction: () => _clearFilterSettings(clearAgeTypes: true),
-        ),
-      );
-    }
-    if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
-      chips.add(
-        SelectedFilterChip(
-          label: filterSettings.sortingString,
-          onDeleteFunction: () => _clearFilterSettings(clearSorting: true),
-        ),
-      );
-    }
-    return chips;
-  }
-
-  void _clearFilterSettings(
-      {bool clearInternetOnly = false,
-      bool clearActiveOnly = false,
-      bool clearLocation = false,
-      bool clearSorting = false,
-      bool clearPhrase = false,
-      bool clearCategories = false,
-      bool clearAgeTypes = false}) {
-    setState(() {
-      filterSettings.clear(
-          clearInternetOnly: clearInternetOnly,
-          clearActiveOnly: clearActiveOnly,
-          clearLocation: clearLocation,
-          clearSorting: clearSorting,
-          clearPhrase: clearPhrase,
-          clearCategories: clearCategories,
-          clearAgeTypes: clearAgeTypes);
-    });
   }
 }
