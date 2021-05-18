@@ -10,15 +10,19 @@ class CategoriesScrollable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 95,
-        width: double.infinity,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) =>
-              CategoryScrollableItem(allCategories[index]),
-          itemCount: allCategories.length,
-        ));
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(top: 4.0),
+      child: SizedBox(
+          height: 95,
+          width: double.infinity,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (context, index) =>
+                CategoryScrollableItem(allCategories[index]),
+            itemCount: allCategories.length,
+          )),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/screens/deals/add_deal_screen.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
-import 'package:BSApp/screens/deals/filter_selection_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,52 +20,92 @@ class DealsScreenAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<bool>(
+      stream: _showLastSearchesStream,
+      builder: (context, AsyncSnapshot<bool> showSearchPanelSnapshot) {
+        final bool isSearchMode = showSearchPanelSnapshot.hasData && showSearchPanelSnapshot.data;
+        return isSearchMode ? _searchAppBar(context) : _mainAppBar(context);
+      },
+    );
+  }
+
+  Widget _searchAppBar(BuildContext context) {
     return AppBar(
-      titleSpacing: 8,
+      titleSpacing: 4,
+      leadingWidth: 0,
       brightness: Brightness.light,
+      centerTitle: true,
       backwardsCompatibility: false,
       systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       title: _searchField(context),
       backgroundColor: Colors.white,
       elevation: 0,
+      actions: [_stopSearchModeButton()],
+    );
+  }
+
+  Widget _mainAppBar(BuildContext context) {
+    return AppBar(
+      leadingWidth: 100.0,
+      brightness: Brightness.light,
+      centerTitle: true,
+      backwardsCompatibility: false,
+      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
+      leading: _addNewDealButton(context),
+      title: const Text(
+        'Okazje',
+        style: TextStyle(color: Colors.black, fontSize: 16),
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
       actions: [
-        StreamBuilder<bool>(
-          stream: _showLastSearchesStream,
-          builder: (context, AsyncSnapshot<bool> showSearchPanelSnapshot) {
-            final bool searchPanelVisible =
-                showSearchPanelSnapshot.hasData && showSearchPanelSnapshot.data;
-            return searchPanelVisible
-                ? _hideLastSearchesPanelButton()
-                : _openFiltersButton(context);
-          },
-        )
+        _startSearchModeButton(context),
       ],
     );
   }
 
-  Widget _openFiltersButton(BuildContext context) {
+  Widget _startSearchModeButton(BuildContext context) {
     return InkWell(
-      onTap: () => _showFilterSelectionDialog(context),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
-        child: Icon(
-          CupertinoIcons.slider_horizontal_3,
+      onTap: () => _showLastSearchesPanel(true),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.only(right: 8.0),
+        child: const Icon(
+          CupertinoIcons.search,
           color: Colors.black87,
+          size: 22,
         ),
       ),
     );
   }
 
-  Widget _hideLastSearchesPanelButton() {
+  Widget _stopSearchModeButton() {
     return GestureDetector(
       onTap: () => _showLastSearchesPanel(false),
       child: const TextButton(
         child: Text(
           'Anuluj',
           style: TextStyle(
-            color: Colors.black87,
+            color: MyColorsProvider.DEEP_BLUE,
             fontSize: 12,
-            letterSpacing: 0.3,
+            // letterSpacing: 0.3,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _addNewDealButton(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 6.0),
+      alignment: Alignment.centerLeft,
+      child: GestureDetector(
+        onTap: () => _navigateToAddDealScreen(context),
+        child: const TextButton(
+          child: Text(
+            'Dodaj',
+            style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 15),
           ),
         ),
       ),
@@ -101,23 +142,12 @@ class DealsScreenAppBar extends StatelessWidget {
   }
 
   void _navigateToResultsScreen(BuildContext context, String phrase) {
-    Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-        arguments: FilterSettings.phrase(phrase));
+    Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings.phrase(phrase));
     _showLastSearchesPanel(false);
   }
 
-  Future _showFilterSelectionDialog(BuildContext context) async {
-    final newFilterSettings =
-        await Navigator.of(context).push(MaterialPageRoute<FilterSettings>(
-            builder: (BuildContext context) {
-              return FilterSelectionScreen();
-            },
-            settings: RouteSettings(arguments: FilterSettings()),
-            fullscreenDialog: true));
-    if (newFilterSettings != null) {
-      Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-          arguments: newFilterSettings);
-    }
+  void _navigateToAddDealScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(AddDealScreen.routeName);
   }
 
   Future<void> _showLastSearchesPanel(bool isShowSearch) async {
