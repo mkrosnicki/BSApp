@@ -5,10 +5,10 @@ import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/profile/your_deals_screen.dart';
 import 'package:BSApp/screens/profile/your_topics_screen.dart';
+import 'package:BSApp/services/custom_confirm.dart';
 import 'package:BSApp/widgets/profile/logout_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
-import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,13 +56,12 @@ class MyProfileOptionsList extends StatelessWidget {
   }
 
   Future<bool> _deleteAccountFunction(BuildContext context) async {
-    final shouldDelete = await confirm(
+    final shouldDelete = await confirmDialog(
       context,
-      textOK: const Text('POTWIERDZAM - Usuń konto'),
-      textCancel: const Text('Anuluj'),
-      title: const Text('Usuwanie konta'),
-      content: const Text(
-          'Czy jesteś pewien, że chcesz usunąć konto? Nie można cofnąć tej operacji!'),
+      textOK: 'Usuń konto',
+      textCancel: 'Anuluj',
+      title: 'Usuwanie konta',
+      textContent: 'Czy jesteś pewien, że chcesz usunąć konto?\nNie można cofnąć tej operacji!',
     );
     if (shouldDelete) {
       await Provider.of<Auth>(context, listen: false).deleteAccount();

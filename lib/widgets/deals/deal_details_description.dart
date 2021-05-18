@@ -99,7 +99,7 @@ class DealDetailsDescription extends StatelessWidget {
               margin: const EdgeInsets.only(top: 16.0),
               child: const Text(
                 'Kod rabatowy',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
           if (deal.code != null)
