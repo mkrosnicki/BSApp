@@ -1,7 +1,10 @@
-import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
+import 'package:BSApp/screens/profile/about_app_screen.dart';
+import 'package:BSApp/screens/profile/contact_screen.dart';
+import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
+import 'package:BSApp/screens/profile/regulations_screen.dart';
 import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/profile/your_deals_screen.dart';
 import 'package:BSApp/screens/profile/your_topics_screen.dart';
@@ -13,26 +16,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileOptionsList extends StatelessWidget {
-
   const MyProfileOptionsList();
 
   @override
   Widget build(BuildContext context) {
     final menuOptions = [
       const MyProfileOptionsHeader('Twoja aktywność'),
-      const MyProfileOptionItem(
-          title: 'Lista aktywności',
-          route: YourActivityScreen.routeName),
-      const MyProfileOptionItem(
-          title: 'Twoje okazje',
-          route: YourDealsScreen.routeName),
-      const MyProfileOptionItem(
-          title: 'Twoje tematy',
-          route: YourTopicsScreen.routeName),
+      const MyProfileOptionItem(title: 'Lista aktywności', route: YourActivityScreen.routeName),
+      const MyProfileOptionItem(title: 'Twoje okazje', route: YourDealsScreen.routeName),
+      const MyProfileOptionItem(title: 'Twoje tematy', route: YourTopicsScreen.routeName),
       const MyProfileOptionsHeader('Ustawienia'),
       const MyProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
-      const MyProfileOptionItem(
-          title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
+      const MyProfileOptionItem(title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
       const MyProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
       MyProfileOptionItem(
         title: 'Usuń konto',
@@ -40,11 +35,10 @@ class MyProfileOptionsList extends StatelessWidget {
         function: () => _deleteAccountFunction(context),
       ),
       const MyProfileOptionsHeader('Informacje'),
-      const MyProfileOptionItem(title: 'Kontakt', route: '/favourites'),
-      const MyProfileOptionItem(title: 'Regulamin', route: '/favourites'),
-      const MyProfileOptionItem(
-          title: 'Polityka prywatności', route: '/favourites'),
-      const MyProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
+      const MyProfileOptionItem(title: 'Kontakt', route: ContactScreen.routeName),
+      const MyProfileOptionItem(title: 'Regulamin', route: RegulationsScreen.routeName),
+      const MyProfileOptionItem(title: 'Polityka prywatności', route: PrivacyPolicyScreen.routeName),
+      const MyProfileOptionItem(title: 'O aplikacji', route: AboutAppScreen.routeName),
       const LogoutButton(),
     ];
     return Flexible(

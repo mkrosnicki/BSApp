@@ -1,3 +1,7 @@
+import 'package:BSApp/screens/profile/about_app_screen.dart';
+import 'package:BSApp/screens/profile/contact_screen.dart';
+import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
+import 'package:BSApp/screens/profile/regulations_screen.dart';
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
@@ -10,11 +14,10 @@ import 'auth_screen_provider.dart';
 class MainAuthScreen extends StatelessWidget {
   final menuOptions = [
     const MyProfileOptionsHeader('Informacje'),
-    const MyProfileOptionItem(title: 'Kontakt', route: '/favourites'),
-    const MyProfileOptionItem(title: 'Regulamin', route: '/favourites'),
-    const MyProfileOptionItem(
-        title: 'Polityka prywatności', route: '/favourites'),
-    const MyProfileOptionItem(title: 'O aplikacji', route: '/favourites'),
+    const MyProfileOptionItem(title: 'Kontakt', route: ContactScreen.routeName),
+    const MyProfileOptionItem(title: 'Regulamin', route: RegulationsScreen.routeName),
+    const MyProfileOptionItem(title: 'Polityka prywatności', route: PrivacyPolicyScreen.routeName),
+    const MyProfileOptionItem(title: 'O aplikacji', route: AboutAppScreen.routeName),
   ];
 
   @override
@@ -25,8 +28,7 @@ class MainAuthScreen extends StatelessWidget {
         elevation: 0.0,
         brightness: Brightness.light,
         backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.white),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -43,8 +45,7 @@ class MainAuthScreen extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: PrimaryButton('Zaloguj się lub załóż konto',
-                  () => AuthScreenProvider.showLoginScreen(context)),
+              child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
             ),
             Flexible(
               child: ListView.builder(

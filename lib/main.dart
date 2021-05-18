@@ -28,6 +28,10 @@ import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
+import 'package:BSApp/screens/profile/about_app_screen.dart';
+import 'package:BSApp/screens/profile/contact_screen.dart';
+import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
+import 'package:BSApp/screens/profile/regulations_screen.dart';
 import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/profile/your_deals_screen.dart';
 import 'package:BSApp/screens/profile/your_profile_screen.dart';
@@ -163,6 +167,10 @@ class MyApp extends StatelessWidget {
           AddDealScreen.routeName: (ctx) => AddDealScreen(),
           NewTopicScreen.routeName: (ctx) => NewTopicScreen(),
           CommentScreen.routeName: (ctx) => CommentScreen(),
+          AboutAppScreen.routeName: (ctx) => AboutAppScreen(),
+          PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
+          RegulationsScreen.routeName: (ctx) => RegulationsScreen(),
+          ContactScreen.routeName: (ctx) => ContactScreen(),
         },
       ),
     );
