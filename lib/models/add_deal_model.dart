@@ -31,6 +31,7 @@ class AddDealModel {
   double _currentPrice;
   double _shippingPrice;
   File _image;
+  String _imageUrl;
 
   DateTime get validFrom => _validFrom;
 
@@ -61,6 +62,8 @@ class AddDealModel {
   DiscountType get discountType => _discountType;
 
   File get image => _image;
+
+  String get imageUrl => _imageUrl;
 
   set image(File value) {
     _image = value;
@@ -142,6 +145,10 @@ class AddDealModel {
     _voivodeshipReadable = value;
   }
 
+  set imageUrl(String value) {
+    _imageUrl = value;
+  }
+
   void clearLocation() {
     _voivodeship = null;
     _city = null;
@@ -166,6 +173,8 @@ class AddDealModel {
     _regularPrice = null;
     _currentPrice = null;
     _shippingPrice = null;
+    _image = null;
+    _imageUrl = null;
   }
 
   Map<String, dynamic> toDto() {
@@ -189,11 +198,12 @@ class AddDealModel {
       'regularPrice': _regularPrice,
       'shippingPrice': _shippingPrice,
       'image': _image == null ? null : base64Encode(_image.readAsBytesSync()),
+      'imageUrl': _imageUrl,
     };
   }
 
   @override
   String toString() {
-    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_categories, _ageType: $_ageTypes, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice}';
+    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_categories, _ageType: $_ageTypes, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice, _imageUrl: $imageUrl}';
   }
 }
