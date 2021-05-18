@@ -96,8 +96,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           Expanded(
             child: TextField(
               controller: _searchTextController,
-              onSubmitted: (phrase) {},
-              // todo
+              onSubmitted: (phrase) {
+                filterSettings.phrase = phrase;
+                _updateFilterSettings(filterSettings);
+              },
               keyboardType: TextInputType.text,
               style: const TextStyle(fontSize: 12),
               decoration: MyStylingProvider.TEXT_FIELD_DECORATION.copyWith(
