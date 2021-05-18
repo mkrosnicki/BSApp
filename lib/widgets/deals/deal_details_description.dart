@@ -106,9 +106,21 @@ class DealDetailsDescription extends StatelessWidget {
             InkWell(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: deal.code));
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   CustomSnackBar('Skopiowano do schowka') as SnackBar,
-                // );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: const Duration(seconds: 1),
+                    backgroundColor: MyColorsProvider.BLUE,
+                    content: SizedBox(
+                      height: 22.0,
+                      child: Stack(
+                        children: const [
+                          Icon(Icons.check, color: Colors.white),
+                          Center(child: Text('Skopiowano do schowka')),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 8.0),
