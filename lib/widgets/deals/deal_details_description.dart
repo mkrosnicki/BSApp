@@ -1,14 +1,15 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/common/custom_snackbar.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DealDetailsDescription extends StatelessWidget {
   static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
-  static const activeMenuItemStyle =
-      TextStyle(fontSize: 11, color: Colors.black);
+  static const activeMenuItemStyle = TextStyle(fontSize: 11, color: Colors.black);
 
   final DealModel deal;
 
@@ -59,17 +60,11 @@ class DealDetailsDescription extends StatelessWidget {
             children: [
               Text(
                 '${deal.currentPrice.toString()} zł ',
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                style: const TextStyle(color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
                 '${deal.regularPrice} zł',
-                style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.black54,
-                    decoration: TextDecoration.lineThrough),
+                style: const TextStyle(fontSize: 15, color: Colors.black54, decoration: TextDecoration.lineThrough),
               ),
             ],
           ),
@@ -104,27 +99,33 @@ class DealDetailsDescription extends StatelessWidget {
               margin: const EdgeInsets.only(top: 16.0),
               child: const Text(
                 'Kod rabatowy',
-                style:
-                    const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
           if (deal.code != null)
-            Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              width: double.infinity,
-              child: DottedBorder(
-                color: MyColorsProvider.LIGHT_GRAY,
-                // color: Colors.deepOrange,
-                strokeWidth: 2,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                dashPattern: const [5, 5],
-                child: Container(
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      deal.code,
-                      style: const TextStyle(fontSize: 14),
+            InkWell(
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: deal.code));
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   CustomSnackBar('Skopiowano do schowka') as SnackBar,
+                // );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 8.0),
+                width: double.infinity,
+                child: DottedBorder(
+                  color: MyColorsProvider.LIGHT_GRAY,
+                  // color: Colors.deepOrange,
+                  strokeWidth: 2,
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                  dashPattern: const [5, 5],
+                  child: Container(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        deal.code,
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -150,8 +151,7 @@ class DealDetailsDescription extends StatelessWidget {
     );
   }
 
-  Widget _infoTile(
-      String title, String text, bool borderLeft, bool borderRight) {
+  Widget _infoTile(String title, String text, bool borderLeft, bool borderRight) {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(right: 8.0),
