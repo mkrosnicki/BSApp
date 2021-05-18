@@ -28,25 +28,15 @@ class _MainScreenState extends State<MainScreen> {
   static final List<Widget> _widgetOptions = <Widget>[
     DealsScreen(),
     ForumScreen(),
-    AddDealScreen(),
-    NotificationsScreen(),
     FavouritesScreen(),
+    NotificationsScreen(),
     YourProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
-    final addDealScreenIndex = 2;
-    if (!_isAuthenticated() && index == addDealScreenIndex) {
-      AuthScreenProvider.showLoginScreen(context);
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
-  bool _isAuthenticated() {
-    return Provider.of<Auth>(context, listen: false).isAuthenticated;
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   Future<void> init(BuildContext context) async {
@@ -96,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   const BottomNavigationBarItem(
                     label: '',
-                    icon: Icon(CupertinoIcons.add, size: 20),
+                    icon: Icon(CupertinoIcons.suit_heart, size: 20),
                   ),
                   BottomNavigationBarItem(
                     label: '',
@@ -117,10 +107,6 @@ class _MainScreenState extends State<MainScreen> {
                         ],
                       ),
                     ),
-                  ),
-                  const BottomNavigationBarItem(
-                    label: '',
-                    icon: Icon(CupertinoIcons.suit_heart, size: 20),
                   ),
                   const BottomNavigationBarItem(
                     label: '',

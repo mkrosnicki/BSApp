@@ -11,7 +11,7 @@ class ClearNotificationsButton extends StatelessWidget {
       onPressed: () => _clearNotifications(context),
       child: const Text(
         'Wyczyść',
-        style: TextStyle(color: MyColorsProvider.BLUE),
+        style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 13),
       ),
     );
   }
