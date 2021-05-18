@@ -36,4 +36,17 @@ class ConjugationHelper {
     }
   }
 
+  static String categoriesConjugation(int numberOfCategories) {
+    final int lastDigit = numberOfCategories % 10;
+    if (numberOfCategories == 1) {
+      return 'kategoria';
+    } else if (numberOfCategories >= 11 && numberOfCategories <= 14) {
+      return 'kategorii';
+    } else if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {
+      return 'kategorie';
+    } else {
+      return 'kategorii';
+    }
+  }
+
 }

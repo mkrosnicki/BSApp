@@ -11,7 +11,7 @@ class AppBarCloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => Navigator.of(context).pop(),
-      child: Icon(CupertinoIcons.clear, color: color,),
+      child: Icon(CupertinoIcons.clear, color: color, size: 20),
     );
   }
 }

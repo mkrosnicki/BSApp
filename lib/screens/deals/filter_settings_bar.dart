@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
+import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,23 +23,27 @@ class FilterSettingsBar extends StatelessWidget {
         children: [
           Flexible(
             // flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-              child: Column(
-                children: [
-                  const Text(
-                    'Kategoria',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 11, color: Colors.grey),
-                  ),
-                  Text(
-                    filterSettings.categoriesString,
-                    // overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 12, color: MyColorsProvider.DEEP_BLUE),
-                  ),
-                ],
+            child: GestureDetector(
+              onTap: () => _openCategorySelector(context),
+              behavior: HitTestBehavior.translucent,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Kategoria',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 11, color: Colors.grey),
+                    ),
+                    Text(
+                      filterSettings.categoriesString,
+                      // overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 12, color: MyColorsProvider.DEEP_BLUE),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -46,6 +51,7 @@ class FilterSettingsBar extends StatelessWidget {
             // flex: 1,
             child: GestureDetector(
               onTap: () => _showFilterSelectionDialog(context),
+              behavior: HitTestBehavior.translucent,
               child: Container(
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
@@ -70,6 +76,7 @@ class FilterSettingsBar extends StatelessWidget {
             // flex: 1,
             child: GestureDetector(
               onTap: () => _showSortingTypeSelector(context),
+              behavior: HitTestBehavior.translucent,
               child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -101,6 +108,14 @@ class FilterSettingsBar extends StatelessWidget {
         settings: RouteSettings(arguments: filterSettings),
         fullscreenDialog: true));
     updateFunction(newFilterSettings);
+  }
+
+  Future _openCategorySelector(BuildContext context) async {
+    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    if (selectedCategories != null) {
+      filterSettings.categories = selectedCategories;
+      updateFunction(filterSettings);
+    }
   }
 
   void _showSortingTypeSelector(BuildContext context) {

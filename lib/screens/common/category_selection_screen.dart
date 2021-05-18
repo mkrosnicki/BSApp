@@ -44,8 +44,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           icon: MyIconsProvider.BACK_BLACK_ICON,
           onPress: () => _goUp(),
         ),
-        actions: [
-          const AppBarCloseButton(Colors.black),
+        actions: const [
+          AppBarCloseButton(Colors.black),
         ],
       ),
       body: _selectedCategories.isEmpty
@@ -53,7 +53,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
               future: _initCategories(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: const LoadingIndicator());
+                  return const Center(child: LoadingIndicator());
                 } else {
                   if (snapshot.error != null) {
                     return const Center(
@@ -128,19 +128,6 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
         ),
       ],
     );
-  }
-
-  String _getCategoriesSuffix(int numOfCategories) {
-    int lastDigit = numOfCategories % 10;
-    if (numOfCategories == 1) {
-      return 'kategoria';
-    } else if (numOfCategories >= 11 && numOfCategories <= 14) {
-      return 'kategorii';
-    } else if (lastDigit == 2 || lastDigit == 3 || lastDigit == 4) {
-      return 'kategorie';
-    } else {
-      return 'kategorii';
-    }
   }
 
   void _selectCategory(CategoryModel category) {
