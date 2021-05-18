@@ -20,14 +20,14 @@ class ForumCategoryItem extends StatelessWidget {
         child: ListTile(
           tileColor: Colors.white,
           leading: SizedBox(
-            height: 40,
-            width: 40,
+            height: 37,
+            width: 37,
             child: Image.asset(
               'assets/images/car.png',
               fit: BoxFit.fitHeight,
             ),
           ),
-          title: Text(topicCategory.name, style: const TextStyle(fontSize: 14),),
+          title: Text(topicCategory.name, style: const TextStyle(fontSize: 13),),
           subtitle: Text(topicCategory.description, style: const TextStyle(fontSize: 12),),
           trailing: MyIconsProvider.FORWARD_ICON,
           focusColor: Colors.grey,
