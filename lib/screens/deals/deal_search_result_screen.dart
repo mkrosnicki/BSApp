@@ -1,16 +1,13 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/deals/filter_selection_screen.dart';
-import 'package:BSApp/screens/deals/filter_settings_bar.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_to_observed_searches_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/selected_filter_chip.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
+import 'package:BSApp/widgets/deals/filter_settings_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

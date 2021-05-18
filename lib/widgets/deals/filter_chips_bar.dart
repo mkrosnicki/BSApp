@@ -1,12 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
-import 'package:BSApp/models/sorting_type.dart';
-import 'package:BSApp/screens/common/category_selection_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/selected_filter_chip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'filter_selection_screen.dart';
 
 class FilterSettingsBar extends StatelessWidget {
   final FilterSettings filterSettings;
@@ -16,15 +11,17 @@ class FilterSettingsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !filterSettings.areDefaults() ? Container(
-      color: Colors.white,
-      width: double.infinity,
-      padding: const EdgeInsets.all(8.0),
-      child: Wrap(
-        // direction: Axis.vertical,
-        children: _buildFilterChips(),
-      ),
-    ) : Container();
+    return !filterSettings.areDefaults()
+        ? Container(
+            color: Colors.white,
+            width: double.infinity,
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              // direction: Axis.vertical,
+              children: _buildFilterChips(),
+            ),
+          )
+        : Container();
   }
 
   List<Widget> _buildFilterChips() {
@@ -82,12 +79,12 @@ class FilterSettingsBar extends StatelessWidget {
 
   void _clearFilterSettings(
       {bool clearInternetOnly = false,
-        bool clearActiveOnly = false,
-        bool clearLocation = false,
-        bool clearSorting = false,
-        bool clearPhrase = false,
-        bool clearCategories = false,
-        bool clearAgeTypes = false}) {
+      bool clearActiveOnly = false,
+      bool clearLocation = false,
+      bool clearSorting = false,
+      bool clearPhrase = false,
+      bool clearCategories = false,
+      bool clearAgeTypes = false}) {
     filterSettings.clear(
         clearInternetOnly: clearInternetOnly,
         clearActiveOnly: clearActiveOnly,

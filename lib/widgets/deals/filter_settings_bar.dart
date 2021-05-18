@@ -1,11 +1,10 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/screens/deals/filter_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'filter_selection_screen.dart';
 
 class FilterSettingsBar extends StatelessWidget {
   final FilterSettings filterSettings;

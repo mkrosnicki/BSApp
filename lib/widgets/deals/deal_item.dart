@@ -1,7 +1,7 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/screens/deals/deal_item_image_section.dart';
-import 'package:BSApp/screens/deals/deal_item_info_section.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/widgets/deals/deal_item_image_section.dart';
+import 'package:BSApp/widgets/deals/deal_item_info_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,7 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'deal_details_screen.dart';
 
 class DealItemImageSection extends StatelessWidget {
   final DealModel deal;
