@@ -10,8 +10,7 @@ class LoginRegistrationScreen extends StatefulWidget {
   static const routeName = '/auth';
 
   @override
-  _LoginRegistrationScreenState createState() =>
-      _LoginRegistrationScreenState();
+  _LoginRegistrationScreenState createState() => _LoginRegistrationScreenState();
 }
 
 class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
@@ -27,14 +26,12 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
           elevation: 0.0,
           brightness: Brightness.light,
           backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: MyColorsProvider.DEEP_BLUE),
+          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.DEEP_BLUE),
           leading: const AppBarCloseButton(Colors.white),
           backgroundColor: MyColorsProvider.BLUE,
           bottom: const TabBar(
             indicatorWeight: 3.0,
-            unselectedLabelStyle:
-                TextStyle(fontSize: 13),
+            unselectedLabelStyle: TextStyle(fontSize: 13),
             indicatorColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
             labelColor: Colors.white,
