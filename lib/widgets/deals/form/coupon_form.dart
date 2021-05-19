@@ -7,7 +7,6 @@ import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
-import 'package:BSApp/services/html_dom_service.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
@@ -213,7 +212,7 @@ class _CouponFormState extends State<CouponForm> {
                             ),
                             onPressed: _isImageButtonDisabled
                                 ? null
-                                : () => buildImagePickerDialog(context)),
+                                : () => _buildImagePickerDialog(context)),
                       ],
                     ),
                     const SizedBox(
@@ -227,7 +226,7 @@ class _CouponFormState extends State<CouponForm> {
                         decoration: BoxDecoration(
                             border: Border.all(width: 1, color: Colors.grey)),
                         alignment: Alignment.center,
-                        child: getImage(),
+                        child: _getImage(),
                       ),
                     ),
                     const SizedBox(
@@ -399,7 +398,7 @@ class _CouponFormState extends State<CouponForm> {
           );
   }
 
-  Widget getImage() {
+  Widget _getImage() {
     if (_newDeal.image != null) {
       return Image.file(
         _newDeal.image,
@@ -420,7 +419,7 @@ class _CouponFormState extends State<CouponForm> {
     }
   }
 
-  Future<String> buildImagePickerDialog(BuildContext context) async {
+  Future<String> _buildImagePickerDialog(BuildContext context) async {
     return showDialog(
       context: context,
       builder: (context) {
