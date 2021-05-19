@@ -13,7 +13,6 @@ class AppBarAddToObservedSearchesButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('rebuildrebuildrebuildrebuildrebuild');
     return Consumer<CurrentUser>(
       builder: (context, currentUser, child) {
         final bool isObservedSearch = currentUser.observesFilterSettings(filterSettings);

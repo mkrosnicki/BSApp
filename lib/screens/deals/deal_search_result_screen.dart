@@ -21,9 +21,24 @@ class DealSearchResultScreen extends StatefulWidget {
 }
 
 class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
+  final TextEditingController _searchTextController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 0;
   FilterSettings filterSettings;
 
-  final _searchTextController = TextEditingController();
+  @override
+  void initState() {
+    _currentPage = 0;
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        final dealsProvider = Provider.of<Deals>(context, listen: false);
+        if (dealsProvider.canLoadPage(_currentPage + 1)) {
+          dealsProvider.fetchDealsPaged(pageNo: ++_currentPage, requestParams: filterSettings.toParamsMap());
+        }
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +65,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         children: <Widget>[
           FilterSettingsBar(filterSettings, _updateFilterSettings),
           FutureBuilder(
-            future: Provider.of<Deals>(context, listen: false).fetchDeals(requestParams: filterSettings.toParamsMap()),
+            future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap()),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: LoadingIndicator());
@@ -63,6 +78,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   return Flexible(
                     child: Consumer<Deals>(
                       builder: (context, dealsData, child) => ListView.builder(
+                        controller: _scrollController,
                         itemBuilder: (context, index) => DealItem(dealsData.deals[index]),
                         itemCount: dealsData.deals.length,
                       ),
@@ -127,6 +143,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
   void _updateFilterSettings(FilterSettings newFilterSettings) {
     if (newFilterSettings != null) {
       setState(() {
+        _currentPage = 0;
         filterSettings = newFilterSettings;
       });
       if (filterSettings.phrase != null) {

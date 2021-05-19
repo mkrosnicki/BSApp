@@ -28,11 +28,11 @@ class Deals with ChangeNotifier {
       final logger = Logger();
       logger.e('No Deals Found!');
     }
-    _deals = DealModel.fromJsonList(responseBody['content']);
+    _deals = DealModel.fromJsonList(responseBody['content'] as List);
     notifyListeners();
   }
 
-  Future<void> fetchDealsPaged({int pageNo = 0, int pageSize = 4, Map<String, dynamic> requestParams}) async {
+  Future<void> fetchDealsPaged({int pageNo = 0, int pageSize = 7, Map<String, dynamic> requestParams}) async {
     if (canLoadPage(pageNo)) {
       requestParams ??= {};
       requestParams.putIfAbsent('pageNo', () => pageNo.toString());
