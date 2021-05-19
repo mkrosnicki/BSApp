@@ -25,6 +25,8 @@ class FilterSettings {
 
   FilterSettings.categories(this.categories);
 
+  FilterSettings.sortBy(this.sortBy);
+
   CategoryModel get lastCategory {
     return categories.isNotEmpty ? categories[categories.length - 1] : null;
   }

@@ -90,10 +90,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
                 );
               } else {
                 return FlatButton(
-                  onPressed: () => _selectCity(cities[index]),
+                  onPressed: () => _selectCity(cities[index - 1]),
                   child: ListTile(
                     title: Text(
-                      cities[index].name,
+                      cities[index - 1].name,
                       style: const TextStyle(fontSize: 14),
                     ),
                     focusColor: Colors.grey,

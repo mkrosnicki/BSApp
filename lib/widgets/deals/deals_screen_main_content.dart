@@ -1,3 +1,5 @@
+import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -15,6 +17,7 @@ class DealsScreenMainContent extends StatefulWidget {
 class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
+  final FilterSettings filterSettings = FilterSettings.sortBy(SortingType.NEWEST);
 
   @override
   void initState() {
@@ -22,7 +25,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         final dealsProvider = Provider.of<Deals>(context, listen: false);
         if (dealsProvider.canLoadPage(_currentPage + 1)) {
-          dealsProvider.fetchDealsPaged(pageNo: ++_currentPage);
+          dealsProvider.fetchDealsPaged(requestParams: filterSettings.toParamsMap(), pageNo: ++_currentPage);
         }
       }
     });
@@ -32,7 +35,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(),
+      future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -74,6 +77,6 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
 
   Future<void> _refreshDeals(BuildContext context) async {
     _currentPage = 0;
-    await Provider.of<Deals>(context, listen: false).fetchDealsPaged(pageNo: _currentPage);
+    await Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap(), pageNo: _currentPage);
   }
 }
