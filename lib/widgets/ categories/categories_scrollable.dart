@@ -1,12 +1,19 @@
 import 'package:BSApp/models/category_model.dart';
+import 'package:BSApp/providers/categories.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'category_scrollable_item.dart';
 
-class CategoriesScrollable extends StatelessWidget {
-  final List<CategoryModel> allCategories;
+class CategoriesScrollable extends StatefulWidget {
+  const CategoriesScrollable();
 
-  const CategoriesScrollable(this.allCategories);
+  @override
+  _CategoriesScrollableState createState() => _CategoriesScrollableState();
+}
+
+class _CategoriesScrollableState extends State<CategoriesScrollable> {
+  List<CategoryModel> _allCategories = [];
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +21,30 @@ class CategoriesScrollable extends StatelessWidget {
       color: Colors.white,
       padding: const EdgeInsets.only(top: 4.0),
       child: SizedBox(
-          height: 95,
-          width: double.infinity,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemBuilder: (context, index) =>
-                CategoryScrollableItem(allCategories[index]),
-            itemCount: allCategories.length,
-          )),
+        height: 95,
+        width: double.infinity,
+        child: _allCategories.isNotEmpty
+            ? ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => CategoryScrollableItem(_allCategories[index]),
+                itemCount: _allCategories.length,
+              )
+            : Container(),
+      ),
     );
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final categoriesProvider = Provider.of<Categories>(context, listen: false);
+      categoriesProvider.fetchCategories().then((_) {
+        setState(() {
+          _allCategories = categoriesProvider.categories;
+        });
+      });
+    });
+    super.initState();
   }
 }

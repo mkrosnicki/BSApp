@@ -1,5 +1,3 @@
-import 'package:BSApp/models/category_model.dart';
-import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -10,16 +8,13 @@ import 'package:provider/provider.dart';
 import 'deal_item.dart';
 
 class DealsScreenMainContent extends StatefulWidget {
-
   @override
   _DealsScreenMainContentState createState() => _DealsScreenMainContentState();
 }
 
 class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
-  List<CategoryModel> _allCategories;
   final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
-
 
   @override
   void initState() {
@@ -36,7 +31,6 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
 
   @override
   Widget build(BuildContext context) {
-    _initCategories(context);
     return FutureBuilder(
       future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(),
       builder: (context, snapshot) {
@@ -52,17 +46,23 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
           } else {
             return RefreshIndicator(
               onRefresh: () => _refreshDeals(context),
-              child: Consumer<Deals>(
-                builder: (context, dealsData, child) => ListView.builder(
-                  controller: _scrollController,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return CategoriesScrollable(_allCategories);
-                    } else {
-                      return DealItem(dealsData.deals[index - 1]);
-                    }
-                  },
-                  itemCount: dealsData.deals.length + 1,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Flex(
+                  direction: Axis.vertical,
+                  children: [
+                    const CategoriesScrollable(),
+                    Consumer<Deals>(
+                      builder: (context, dealsData, child) => ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return DealItem(dealsData.deals[index]);
+                        },
+                        itemCount: dealsData.deals.length,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -70,17 +70,6 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
         }
       },
     );
-  }
-
-  Future<void> _initCategories(BuildContext context) async {
-    if (_allCategories == null) {
-      await Provider.of<Categories>(context, listen: false)
-          .fetchCategories()
-          .then((_) {
-        _allCategories =
-            Provider.of<Categories>(context, listen: false).categories;
-      });
-    }
   }
 
   Future<void> _refreshDeals(BuildContext context) async {
