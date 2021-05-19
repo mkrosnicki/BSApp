@@ -16,7 +16,7 @@ class DealsScreenMainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     _initCategories(context);
     return FutureBuilder(
-      future: Provider.of<Deals>(context, listen: false).fetchDeals(),
+      future: Provider.of<Deals>(context, listen: false).fetchDealsPageableTest(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -61,6 +61,6 @@ class DealsScreenMainContent extends StatelessWidget {
   }
 
   Future<void> _refreshDeals(BuildContext context) async {
-    await Provider.of<Deals>(context, listen: false).fetchDeals();
+    await Provider.of<Deals>(context, listen: false).fetchDealsPageableTest();
   }
 }

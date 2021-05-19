@@ -29,6 +29,19 @@ class Deals with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> fetchDealsPageableTest({int pageNo = 0, int pageSize = 4, Map<String, dynamic> requestParams}) async {
+    requestParams ??= {};
+    requestParams.putIfAbsent('pageNo', () => pageNo.toString());
+    requestParams.putIfAbsent('pageSize', () => pageSize.toString());
+    final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.e('No Deals Found!');
+    }
+    _deals = DealModel.fromJsonList(responseBody);
+    notifyListeners();
+  }
+
   Future<void> fetchMyObservedDeals() async {
     final responseBody = await _apiProvider.get('/users/me/deals/observed', token: _token) as List;
     if (responseBody == null) {
