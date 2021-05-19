@@ -9,6 +9,9 @@ class Deals with ChangeNotifier {
 
   final ApiProvider _apiProvider = ApiProvider();
 
+  int _totalPages = 0;
+  int _totalElements = 0;
+
   List<DealModel> _deals = [];
 
   String _token;
@@ -20,26 +23,41 @@ class Deals with ChangeNotifier {
   }
 
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
-    final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
+    final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as Map;
     if (responseBody == null) {
       final logger = Logger();
       logger.e('No Deals Found!');
     }
-    _deals = DealModel.fromJsonList(responseBody);
+    _deals = DealModel.fromJsonList(responseBody['content']);
     notifyListeners();
   }
 
-  Future<void> fetchDealsPageableTest({int pageNo = 0, int pageSize = 4, Map<String, dynamic> requestParams}) async {
-    requestParams ??= {};
-    requestParams.putIfAbsent('pageNo', () => pageNo.toString());
-    requestParams.putIfAbsent('pageSize', () => pageSize.toString());
-    final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as List;
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.e('No Deals Found!');
+  Future<void> fetchDealsPaged({int pageNo = 0, int pageSize = 4, Map<String, dynamic> requestParams}) async {
+    if (canLoadPage(pageNo)) {
+      requestParams ??= {};
+      requestParams.putIfAbsent('pageNo', () => pageNo.toString());
+      requestParams.putIfAbsent('pageSize', () => pageSize.toString());
+      print(requestParams);
+      final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as Map;
+      if (responseBody == null) {
+        final logger = Logger();
+        logger.e('No Deals Found!');
+      }
+      _totalPages = responseBody['totalPages'] as int;
+      _totalElements = responseBody['totalElements'] as int;
+      final responseContent = responseBody['content'] as List;
+      final List<DealModel> fetchedDeals = DealModel.fromJsonList(responseContent);
+      if (pageNo == 0) {
+        _deals = fetchedDeals;
+      } else {
+        _deals.addAll(fetchedDeals);
+      }
+      notifyListeners();
     }
-    _deals = DealModel.fromJsonList(responseBody);
-    notifyListeners();
+  }
+
+  bool canLoadPage(int pageNo) {
+    return _totalPages >= pageNo;
   }
 
   Future<void> fetchMyObservedDeals() async {

@@ -9,14 +9,36 @@ import 'package:provider/provider.dart';
 
 import 'deal_item.dart';
 
-class DealsScreenMainContent extends StatelessWidget {
+class DealsScreenMainContent extends StatefulWidget {
+
+  @override
+  _DealsScreenMainContentState createState() => _DealsScreenMainContentState();
+}
+
+class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   List<CategoryModel> _allCategories;
+  final ScrollController _scrollController = ScrollController();
+  int _currentPage = 0;
+
+
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        final dealsProvider = Provider.of<Deals>(context, listen: false);
+        if (dealsProvider.canLoadPage(_currentPage + 1)) {
+          dealsProvider.fetchDealsPaged(pageNo: ++_currentPage);
+        }
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     _initCategories(context);
     return FutureBuilder(
-      future: Provider.of<Deals>(context, listen: false).fetchDealsPageableTest(),
+      future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -32,6 +54,7 @@ class DealsScreenMainContent extends StatelessWidget {
               onRefresh: () => _refreshDeals(context),
               child: Consumer<Deals>(
                 builder: (context, dealsData, child) => ListView.builder(
+                  controller: _scrollController,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CategoriesScrollable(_allCategories);
@@ -61,6 +84,7 @@ class DealsScreenMainContent extends StatelessWidget {
   }
 
   Future<void> _refreshDeals(BuildContext context) async {
-    await Provider.of<Deals>(context, listen: false).fetchDealsPageableTest();
+    _currentPage = 0;
+    await Provider.of<Deals>(context, listen: false).fetchDealsPaged(pageNo: _currentPage);
   }
 }
