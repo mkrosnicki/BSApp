@@ -29,8 +29,6 @@ class DealModel {
   final DateTime startDate;
   final DateTime endDate;
   final int numberOfComments;
-  final int numberOfPositiveVotes;
-  final int numberOfNegativeVotes;
   final List<String> positiveVoters;
   final List<String> negativeVoters;
   final Image image;
@@ -59,8 +57,6 @@ class DealModel {
     @required this.startDate,
     @required this.endDate,
     @required this.numberOfComments,
-    @required this.numberOfPositiveVotes,
-    @required this.numberOfNegativeVotes,
     @required this.positiveVoters,
     @required this.negativeVoters,
     @required this.image,
@@ -104,8 +100,6 @@ class DealModel {
       startDate: DateTime.parse(dealSnapshot['startDate']),
       endDate: DateTime.parse(dealSnapshot['endDate']),
       numberOfComments: dealSnapshot['numberOfComments'],
-      numberOfPositiveVotes: dealSnapshot['numberOfPositiveVotes'],
-      numberOfNegativeVotes: dealSnapshot['numberOfNegativeVotes'],
       positiveVoters: [...dealSnapshot['positiveVoters'] as List],
       negativeVoters: [...dealSnapshot['negativeVoters'] as List],
       image: _getImage(dealSnapshot),
