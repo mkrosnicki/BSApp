@@ -19,7 +19,7 @@ class PostItem extends StatelessWidget {
       alignment: Alignment.topLeft,
       color: Colors.white,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      margin: const EdgeInsets.only(top: 6.0),
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
