@@ -54,6 +54,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
               onRefresh: () => _refreshDeals(context),
               child: SingleChildScrollView(
                 controller: _scrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Flex(
                   direction: Axis.vertical,
                   children: [
@@ -70,7 +71,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
                             itemCount: dealsData.deals.length,
                           );
                         } else {
-                          return DealsNotFound();
+                          return const DealsNotFound();
                         }
                       },
                     ),
