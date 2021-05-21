@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:BSApp/models/user_role.dart';
 import 'package:flutter/material.dart';
 
 class UserModel {
   final String id;
   final String username;
+  final UserRole userRole;
   final DateTime registeredAt;
   final DateTime lastLoginAt;
   final DateTime notificationsSeenAt;
@@ -14,6 +16,7 @@ class UserModel {
   UserModel(
       {this.id,
         this.username,
+        this.userRole,
         this.registeredAt,
         this.lastLoginAt,
         this.notificationsSeenAt,
@@ -26,6 +29,7 @@ class UserModel {
     return UserModel(
         id: userSnapshot['id'] as String,
         username: userSnapshot['username'] as String,
+        userRole: UserRoleHelper.fromString(userSnapshot['userRole']),
         registeredAt:
         registeredAt != null ? DateTime.parse(registeredAt) : null,
         lastLoginAt: lastLoginAt != null ? DateTime.parse(lastLoginAt) : null,
@@ -58,6 +62,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel{id: $id, username: $username, registeredAt: $registeredAt, lastLoginAt: $lastLoginAt, notificationsSeenAt: $notificationsSeenAt, avatar: $avatar}';
+    return 'UserModel{id: $id, username: $username, userRole: $userRole, registeredAt: $registeredAt, lastLoginAt: $lastLoginAt, notificationsSeenAt: $notificationsSeenAt, avatar: $avatar}';
   }
 }

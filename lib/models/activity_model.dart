@@ -41,8 +41,7 @@ class ActivityModel {
       issuedById: activitySnapshot['issuedById'],
       issuedByUsername: activitySnapshot['issuedByUsername'],
       issuedAt: DateTime.parse(activitySnapshot['issuedAt']),
-      activityType:
-          ActivityTypeHelper.fromString(activitySnapshot['activityType']),
+      activityType: ActivityTypeHelper.fromString(activitySnapshot['activityType']),
       relatedTopic: TopicModel.fromJson(activitySnapshot['relatedTopic']),
       relatedDeal: DealModel.fromJson(activitySnapshot['relatedDeal']),
       relatedPost: PostModel.fromJson(activitySnapshot['relatedPost']),
@@ -52,10 +51,7 @@ class ActivityModel {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ActivityModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+      identical(this, other) || other is ActivityModel && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;

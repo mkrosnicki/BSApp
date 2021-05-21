@@ -37,7 +37,6 @@ class Deals with ChangeNotifier {
       requestParams ??= {};
       requestParams.putIfAbsent('pageNo', () => pageNo.toString());
       requestParams.putIfAbsent('pageSize', () => pageSize.toString());
-      print(requestParams);
       final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as Map;
       if (responseBody == null) {
         final logger = Logger();
