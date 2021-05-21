@@ -9,19 +9,22 @@ class UserProfileScrollableMenu extends StatefulWidget {
   const UserProfileScrollableMenu(this.contentIdSubject);
 
   @override
-  _UserProfileScrollableMenuState createState() =>
-      _UserProfileScrollableMenuState();
+  _UserProfileScrollableMenuState createState() => _UserProfileScrollableMenuState();
 }
 
 class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
-
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 38,
-      color: Colors.white,
+      height: 36,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
+        ),
+      ),
       width: double.infinity,
       alignment: Alignment.bottomCenter,
       child: Flex(

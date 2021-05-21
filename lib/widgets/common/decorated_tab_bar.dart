@@ -16,9 +16,12 @@ class DecoratedTabBar extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Positioned.fill(
             child: Container(
-          decoration: decoration ?? const BoxDecoration(
-            border: Border(bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),),
-          ),
+              decoration: decoration ??
+              const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
+                ),
+              ),
         )),
         tabBar,
       ],
