@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
@@ -12,6 +11,7 @@ class DealRateBar extends StatelessWidget {
   final String dealId;
 
   const DealRateBar(this.dealId);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
@@ -19,13 +19,17 @@ class DealRateBar extends StatelessWidget {
         return Consumer<Deals>(
           builder: (context, dealsData, child) {
             final DealModel deal = dealsData.findById(dealId);
+            final int positiveVotes = deal.positiveVoters.length;
+            final int negativeVotes = deal.negativeVoters.length;
+            final bool hasPositiveVote = deal.hasPositiveVoteFrom(authData.userId);
+            final bool hasNegativeVote = deal.hasNegativeVoteFrom(authData.userId);
             return RateBar(
-              dealsData.findById(dealId).numberOfPositiveVotes,
-              dealsData.findById(dealId).numberOfNegativeVotes,
-              deal.hasPositiveVoteFrom(authData.userId),
-              deal.hasNegativeVoteFrom(authData.userId),
-                  () => _vote(context, authData.isAuthenticated, true),
-                  () => _vote(context, authData.isAuthenticated, false),
+              positiveVotes,
+              negativeVotes,
+              hasPositiveVote,
+              hasNegativeVote,
+              hasPositiveVote ? () {} : () => _vote(context, authData.isAuthenticated, true),
+              hasNegativeVote ? () {} : () => _vote(context, authData.isAuthenticated, false),
             );
           },
         );
