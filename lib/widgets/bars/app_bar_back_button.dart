@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 class AppBarBackButton extends StatelessWidget {
 
   final Color color;
+  final Function() function;
 
-  const AppBarBackButton(this.color);
+  const AppBarBackButton(this.color, {this.function});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.of(context).pop();
+        function != null ? function() : Navigator.of(context).pop();
       },
       child: Icon(CupertinoIcons.back, color: color,),
     );

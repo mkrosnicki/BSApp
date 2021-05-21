@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_to_observed_searches_button.dart';
@@ -54,7 +55,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           backwardsCompatibility: false,
           systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
           automaticallyImplyLeading: false,
-          leading: const AppBarBackButton(Colors.black87),
+          leading: AppBarBackButton(
+            Colors.black87,
+            function: () => Navigator.of(context).pushReplacementNamed(DealsScreen.routeName),
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
         ),
@@ -65,7 +69,9 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
         children: <Widget>[
           FilterSettingsBar(filterSettings, _updateFilterSettings),
           FutureBuilder(
-            future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap()),
+            future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(
+              requestParams: filterSettings.toParamsMap(),
+            ),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: LoadingIndicator());
