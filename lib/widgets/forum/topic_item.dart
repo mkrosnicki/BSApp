@@ -20,7 +20,7 @@ class TopicItem extends StatelessWidget {
         // color: topic.pinned ? Colors.blue.shade50 : Colors.white,
         color: Colors.white,
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
+        margin: const EdgeInsets.only(top: 8.0),
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Row(
           children: [
