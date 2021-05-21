@@ -2,6 +2,7 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/widgets/%20categories/categories_scrollable.dart';
+import 'package:BSApp/widgets/common/deals_not_found.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
@@ -58,14 +59,20 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
                   children: [
                     const CategoriesScrollable(),
                     Consumer<Deals>(
-                      builder: (context, dealsData, child) => ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return DealItem(dealsData.deals[index]);
-                        },
-                        itemCount: dealsData.deals.length,
-                      ),
+                      builder: (context, dealsData, child) {
+                        if (dealsData.deals.isNotEmpty) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return DealItem(dealsData.deals[index]);
+                            },
+                            itemCount: dealsData.deals.length,
+                          );
+                        } else {
+                          return DealsNotFound();
+                        }
+                      },
                     ),
                   ],
                 ),
