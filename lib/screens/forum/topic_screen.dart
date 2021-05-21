@@ -6,6 +6,7 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
+import 'package:BSApp/widgets/forum/topic_screen_admin_actions_button.dart';
 import 'package:BSApp/widgets/forum/topic_screen_heart_button.dart';
 import 'package:BSApp/widgets/forum/topic_screen_input_bar.dart';
 import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
@@ -40,6 +41,7 @@ class _TopicScreenState extends State<TopicScreen> {
         leading: const AppBarBackButton(Colors.black),
         actions: [
           TopicScreenHeartButton(topic),
+          TopicScreenAdminActionsButton(topic),
         ],
       ),
       body: Container(
