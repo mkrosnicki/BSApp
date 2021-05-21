@@ -48,7 +48,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
-          titleSpacing: 6,
+          titleSpacing: 0,
           title: _createSearchBox(context),
           leadingWidth: 40.0,
           brightness: Brightness.light,
@@ -114,7 +114,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
     return Container(
       width: double.infinity,
       alignment: Alignment.centerLeft,
-      // color: Colors.white,
       child: Row(
         children: [
           Expanded(

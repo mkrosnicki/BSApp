@@ -20,7 +20,7 @@ class AppBarAddToObservedSearchesButton extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: () => _saveSearch(context, filterSettings, currentUser.isAuthenticated, isObservedSearch),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            padding: const EdgeInsets.only(left: 10.0, right: 8.0),
             child: Icon(CupertinoIcons.heart_fill,
                 size: 20, color: isObservedSearch ? MyColorsProvider.RED_SHADY : MyColorsProvider.LIGHT_GRAY),
           ),
