@@ -8,7 +8,7 @@ class Init {
   static Future initialize(BuildContext context) async {
     await _tryLogin(context);
     await _fetchCategories(context);
-    await _fetchDeals(context);
+    // await _fetchDeals(context);
     await _justWait();
   }
 

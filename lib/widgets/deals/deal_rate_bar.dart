@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/deals.dart';
@@ -18,8 +20,8 @@ class DealRateBar extends StatelessWidget {
           builder: (context, dealsData, child) {
             final DealModel deal = dealsData.findById(dealId);
             return RateBar(
-              dealsData.findById(dealId).numberOfPositiveVotes + 30,
-              dealsData.findById(dealId).numberOfNegativeVotes + 7,
+              dealsData.findById(dealId).numberOfPositiveVotes,
+              dealsData.findById(dealId).numberOfNegativeVotes,
               deal.hasPositiveVoteFrom(authData.userId),
               deal.hasNegativeVoteFrom(authData.userId),
                   () => _vote(context, authData.isAuthenticated, true),
