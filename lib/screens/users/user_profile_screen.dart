@@ -1,5 +1,4 @@
 import 'package:BSApp/models/user_model.dart';
-import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -9,6 +8,7 @@ import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
 import 'package:BSApp/widgets/user/user_profile_scrollable_menu.dart';
 import 'package:BSApp/widgets/user/user_profile_statistics_info.dart';
+import 'package:BSApp/widgets/user/user_screen_admin_actions_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +59,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       height: 35,
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: const AppBarBackButton(Colors.black),
-                    )
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        // color: Colors.green,
+                        width: 70,
+                        height: 35,
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: UserScreenAdminActionsButton(_user),
+                      ),
+                    ),
                   ],
                 );
               }

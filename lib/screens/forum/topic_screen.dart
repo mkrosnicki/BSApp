@@ -40,8 +40,8 @@ class _TopicScreenState extends State<TopicScreen> {
         title: topic.title,
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          TopicScreenHeartButton(topic),
           TopicScreenAdminActionsButton(topic),
+          TopicScreenHeartButton(topic),
         ],
       ),
       body: Container(

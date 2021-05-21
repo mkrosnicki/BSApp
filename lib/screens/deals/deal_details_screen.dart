@@ -8,6 +8,7 @@ import 'package:BSApp/widgets/deals/deal_details_author.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
 import 'package:BSApp/widgets/deals/deal_details_image.dart';
+import 'package:BSApp/widgets/deals/deal_screen_admin_actions_button.dart';
 import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                           height: 0.5,
                         ),
                       ),
+                      actions: [
+                        DealScreenAdminActionsButton(null),
+                      ],
                       title: Text(
                         deal.title,
                         style: TextStyle(color: _titleColorTween.value, fontWeight: FontWeight.bold, fontSize: 16),

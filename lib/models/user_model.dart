@@ -52,6 +52,10 @@ class UserModel {
     return avatar != null ? Image.memory(avatar) : null;
   }
 
+  bool isAdmin() {
+    return userRole == UserRole.ROLE_ADMIN;
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
