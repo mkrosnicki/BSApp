@@ -43,8 +43,10 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
           );
         } else {
           if (snapshot.error != null) {
-            return const Center(
-              child: ServerErrorSplash(),
+            return const Expanded(
+              child: Center(
+                child: ServerErrorSplash(),
+              ),
             );
           } else {
             return RefreshIndicator(

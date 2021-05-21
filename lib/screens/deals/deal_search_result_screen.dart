@@ -71,8 +71,10 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                 return const Center(child: LoadingIndicator());
               } else {
                 if (snapshot.error != null) {
-                  return const Center(
-                    child: ServerErrorSplash(),
+                  return const Expanded(
+                    child: Center(
+                      child: ServerErrorSplash(),
+                    ),
                   );
                 } else {
                   return Flexible(
