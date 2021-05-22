@@ -106,7 +106,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                         ),
                       ),
                       actions: [
-                        DealScreenAdminActionsButton(null),
+                        DealScreenAdminActionsButton(null, color: _iconColorTween.value),
                       ],
                       title: Text(
                         deal.title,

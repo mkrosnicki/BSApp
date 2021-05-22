@@ -1,23 +1,25 @@
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/providers/current_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DealScreenAdminActionsButton extends StatelessWidget {
   final DealModel deal;
+  final Color color;
 
-  const DealScreenAdminActionsButton(this.deal);
+  const DealScreenAdminActionsButton(this.deal, {this.color});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => _openAdminActions(context),
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Icon(CupertinoIcons.ellipsis_vertical, size: 22, color: Colors.black),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(
+          CupertinoIcons.ellipsis_vertical,
+          size: 22,
+          color: color ?? Colors.black,
+        ),
       ),
     );
   }
@@ -43,11 +45,17 @@ class DealScreenAdminActionsButton extends StatelessWidget {
     );
   }
 
-  _buildListTile(String title, IconData icon, Function() function) {
+  Widget _buildListTile(String title, IconData icon, Function() function) {
     return ListTile(
-      leading: Icon(icon, size: 18,),
+      leading: Icon(
+        icon,
+        size: 18,
+      ),
       onTap: function,
-      title: Text(title, style: TextStyle(fontSize: 13),),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 13),
+      ),
     );
   }
 }
