@@ -20,9 +20,12 @@ class InitializationScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Ładowanie aplikacji',
-                style: TextStyle(fontSize: 24, color: Colors.white),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Image.asset(
+                  'assets/images/logo2.png',
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               const SizedBox(height: 10),
               JumpingDotsProgressIndicator(

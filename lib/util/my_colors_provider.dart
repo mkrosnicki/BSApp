@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class MyColorsProvider {
 
-  static const BLUE = Color.fromRGBO(47, 183, 237, 1.0);
-  static const DEEP_BLUE = Color.fromRGBO(0, 152, 211, 1.0);
+  static const BLUE = Color.fromRGBO(45, 180, 235, 1.0); //45 180 235
+  static const DEEP_BLUE = Color.fromRGBO(0, 150, 210, 1.0);
 
   static const GREEN = Color.fromRGBO(40, 167, 69, 1.0);
 
