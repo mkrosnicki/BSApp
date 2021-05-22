@@ -18,7 +18,7 @@ class DealsScreenMainContent extends StatefulWidget {
 class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
-  final FilterSettings filterSettings = FilterSettings.sortBy(SortingType.NEWEST);
+  final FilterSettings filterSettings = FilterSettings.sort(SortingType.NEWEST);
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
                 child: Flex(
                   direction: Axis.vertical,
                   children: [
-                    const CategoriesScrollable(),
+                    CategoriesScrollable(_refreshDeals),
                     Consumer<Deals>(
                       builder: (context, dealsData, child) {
                         if (dealsData.deals.isNotEmpty) {

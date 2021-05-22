@@ -4,17 +4,17 @@ import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScrollableItem extends StatelessWidget {
-
   final CategoryModel categoryModel;
+  final Function refreshFunction;
 
-  const CategoryScrollableItem(this.categoryModel);
+  const CategoryScrollableItem(this.categoryModel, this.refreshFunction);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Navigator.of(context).pushNamed(DealSearchResultScreen.routeName,
-              arguments: FilterSettings.categories([categoryModel])),
+      onTap: () {
+        _navigateToResults(context);
+      },
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -26,8 +26,7 @@ class CategoryScrollableItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Image.asset(
-                  'assets/images/${CategoryModelHelper.assetNameFor(
-                      categoryModel)}',
+                  'assets/images/${CategoryModelHelper.assetNameFor(categoryModel)}',
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -35,7 +34,11 @@ class CategoryScrollableItem extends StatelessWidget {
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(top: 2.0),
-                child: Text(_getShrinked(categoryModel.name), style: const TextStyle(fontSize: 12), textAlign: TextAlign.center,),
+                child: Text(
+                  _getShrinked(categoryModel.name),
+                  style: const TextStyle(fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
               ),
             )
           ],
@@ -52,5 +55,14 @@ class CategoryScrollableItem extends StatelessWidget {
       return name.replaceFirst(' ', ' \n ');
     }
     return name;
+  }
+
+  Future _navigateToResults(BuildContext context) async {
+    var result = await Navigator.of(context).pushNamed(
+        DealSearchResultScreen.routeName,
+        arguments: FilterSettings.categories([categoryModel]));
+    if (result != null && result == true) {
+      refreshFunction(context);
+    }
   }
 }

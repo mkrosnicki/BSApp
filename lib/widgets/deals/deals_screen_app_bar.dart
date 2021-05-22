@@ -141,9 +141,11 @@ class DealsScreenAppBar extends StatelessWidget {
     );
   }
 
-  void _navigateToResultsScreen(BuildContext context, String phrase) {
-    Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings.phrase(phrase));
-    _showLastSearchesPanel(false);
+  void _navigateToResultsScreen(BuildContext context, String phrase) async {
+    var result = await Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: FilterSettings.phrase(phrase));
+    if (result != null && result == true) {
+      _showLastSearchesPanel(false);
+    }
   }
 
   void _navigateToAddDealScreen(BuildContext context) {

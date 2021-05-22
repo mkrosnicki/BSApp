@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 import 'category_scrollable_item.dart';
 
 class CategoriesScrollable extends StatefulWidget {
-  const CategoriesScrollable();
+
+  final Function refreshFunction;
+
+  const CategoriesScrollable(this.refreshFunction);
 
   @override
   _CategoriesScrollableState createState() => _CategoriesScrollableState();
@@ -27,7 +30,7 @@ class _CategoriesScrollableState extends State<CategoriesScrollable> {
             ? ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemBuilder: (context, index) => CategoryScrollableItem(_allCategories[index]),
+                itemBuilder: (context, index) => CategoryScrollableItem(_allCategories[index], widget.refreshFunction),
                 itemCount: _allCategories.length,
               )
             : Container(),

@@ -58,7 +58,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           automaticallyImplyLeading: false,
           leading: AppBarBackButton(
             Colors.black87,
-            function: () => Navigator.of(context).pushReplacementNamed(DealsScreen.routeName),
+            function: () => Navigator.of(context).pop(true),
           ),
           backgroundColor: Colors.white,
           elevation: 0,
