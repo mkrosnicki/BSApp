@@ -2,6 +2,7 @@ import 'package:BSApp/screens/profile/about_app_screen.dart';
 import 'package:BSApp/screens/profile/contact_screen.dart';
 import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
 import 'package:BSApp/screens/profile/regulations_screen.dart';
+import 'package:BSApp/widgets/authentication/app_logo_header.dart';
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
@@ -34,7 +35,7 @@ class MainAuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const MainAuthScreenHeader(),
+            const AppLogoHeader(),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20.0),
               child: Text(
