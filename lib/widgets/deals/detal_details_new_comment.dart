@@ -22,8 +22,8 @@ class DealDetailsNewComment extends StatefulWidget {
 }
 
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
-  TextEditingController textEditingController = TextEditingController();
-  FocusNode textFocusNode = FocusNode();
+  final TextEditingController _textEditingController = TextEditingController();
+  final FocusNode _textFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
           stream: widget._commentToReplyStream,
           builder: (context, AsyncSnapshot<CommentModel> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              textFocusNode.requestFocus();
+              _textFocusNode.requestFocus();
               return Container(
                 color: MyColorsProvider.SUPER_LIGHT_GREY,
                 padding: const EdgeInsets.only(left: 14.0, right: 10.0),
@@ -87,15 +87,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             child: Flex(
               direction: Axis.horizontal,
               children: [
-                // Icon(CupertinoIcons.person),
                 Flexible(
                   child: Stack(
                     children: [
                       TextField(
                         minLines: 1,
                         maxLines: 3,
-                        controller: textEditingController,
-                        focusNode: textFocusNode,
+                        controller: _textEditingController,
+                        focusNode: _textFocusNode,
                         style: const TextStyle(fontSize: 13),
                         decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
                             .copyWith(hintText: 'Twój komentarz...'),
@@ -136,7 +135,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   }
 
   Future<void> _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
-    if (textEditingController.text.trim().isEmpty) {
+    if (_textEditingController.text.trim().isEmpty) {
       return;
     }
     if (!isUserLoggedIn) {
@@ -152,18 +151,18 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
 
   Future<void> _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false)
-        .addReplyToComment(widget.dealId, commentToReply.id, textEditingController.text);
+        .addReplyToComment(widget.dealId, commentToReply.id, _textEditingController.text);
     _clearTextBox();
     widget.commentToReplySubject.add(null);
   }
 
   Future<void> _addCommentToDeal() async {
-    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, textEditingController.text);
+    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _textEditingController.text);
     _clearTextBox();
   }
 
   void _clearTextBox() {
-    textEditingController.clear();
-    textFocusNode.unfocus();
+    _textEditingController.clear();
+    _textFocusNode.unfocus();
   }
 }

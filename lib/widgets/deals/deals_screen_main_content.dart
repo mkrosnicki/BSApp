@@ -24,7 +24,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        final dealsProvider = Provider.of<Deals>(context, listen: false);
+        final Deals dealsProvider = Provider.of<Deals>(context, listen: false);
         if (dealsProvider.canLoadPage(_currentPage + 1)) {
           dealsProvider.fetchDealsPaged(requestParams: filterSettings.toParamsMap(), pageNo: ++_currentPage);
         }
