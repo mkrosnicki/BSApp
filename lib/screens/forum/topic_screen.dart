@@ -1,6 +1,7 @@
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -40,7 +41,11 @@ class _TopicScreenState extends State<TopicScreen> {
         title: topic.title,
         leading: const AppBarBackButton(Colors.black),
         actions: [
-          TopicScreenAdminActionsButton(topic),
+          Consumer<CurrentUser>(
+            builder: (context, currentUser, child) {
+              return currentUser.isAdmin ? TopicScreenAdminActionsButton(topic) : Container();
+            },
+          ),
           TopicScreenHeartButton(topic),
         ],
       ),

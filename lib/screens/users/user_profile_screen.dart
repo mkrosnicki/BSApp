@@ -60,7 +60,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: const AppBarBackButton(Colors.black),
                     ),
-                    Positioned(
+                    if (_user != null && _user.isAdmin()) Positioned(
                       right: 0,
                       child: Container(
                         // color: Colors.green,

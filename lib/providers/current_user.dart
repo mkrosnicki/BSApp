@@ -24,6 +24,10 @@ class CurrentUser with ChangeNotifier {
     return _token != null;
   }
 
+  bool get isAdmin {
+    return _me != null && _me.isAdmin();
+  }
+
   UserModel get me {
     return _me;
   }

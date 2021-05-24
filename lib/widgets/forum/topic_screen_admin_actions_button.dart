@@ -1,5 +1,6 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/providers/topics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,14 @@ class TopicScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Przypnij wątek', CupertinoIcons.lock_fill, () {}),
+              if (!topic.pinned) _buildListTile('Przypnij wątek', CupertinoIcons.lock_fill, () {
+                Provider.of<Topics>(context, listen: false).updatetopic(topic.id, true);
+                Navigator.of(context).pop();
+              }),
+              if (topic.pinned) _buildListTile('Odepnij wątek', CupertinoIcons.lock, () {
+                Provider.of<Topics>(context, listen: false).updatetopic(topic.id, false);
+                Navigator.of(context).pop();
+              }),
               _buildListTile('Usuń wątek', CupertinoIcons.clear, () {}),
             ],
           ),
@@ -48,7 +56,7 @@ class TopicScreenAdminActionsButton extends StatelessWidget {
     );
   }
 
-  _buildListTile(String title, IconData icon, Function() function) {
+  Widget _buildListTile(String title, IconData icon, Function() function) {
     return ListTile(
       leading: Icon(icon, size: 18,),
       onTap: function,

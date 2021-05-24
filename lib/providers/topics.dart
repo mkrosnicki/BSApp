@@ -106,6 +106,16 @@ class Topics with ChangeNotifier {
     return newTopic;
   }
 
+  Future<TopicModel> updatetopic(String topicId, bool isPinned) async {
+    final topicSnapshot = await _apiProvider.patch('/topics/$topicId',
+        {'isPinned': isPinned},
+        token: _token);
+    final TopicModel updatedTopic = TopicModel.fromJson(topicSnapshot);
+    _topics[_topics.indexWhere((element) => element.id == updatedTopic.id)] = updatedTopic;
+    notifyListeners();
+    return updatedTopic;
+  }
+
   Future<void> voteForTopic(String topicId, bool isPositive) async {
     final responseBody = await _apiProvider.post(
         '/topics/$topicId/votes', {'isPositive': isPositive},
