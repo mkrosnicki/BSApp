@@ -49,7 +49,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       direction: Axis.vertical,
                       children: [
                         UserProfileMainInfo(_user),
-                        UserProfileStatisticsInfo(),
+                        UserProfileStatisticsInfo(_user),
                         UserProfileScrollableMenu(_contentIdSubject),
                         UserProfileContent(userId, _contentIdSubject),
                       ],
