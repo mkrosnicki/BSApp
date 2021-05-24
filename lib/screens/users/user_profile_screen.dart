@@ -1,4 +1,5 @@
 import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -60,15 +61,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: const AppBarBackButton(Colors.black),
                     ),
-                    if (_user != null && _user.isAdmin()) Positioned(
-                      right: 0,
-                      child: Container(
-                        // color: Colors.green,
-                        width: 70,
-                        height: 35,
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: UserScreenAdminActionsButton(_user),
-                      ),
+                    Consumer<CurrentUser>(
+                      builder: (context, currentUser, child) {
+                        print(currentUser.me);
+                        return currentUser.isAdmin
+                            ? Positioned(
+                                right: 0,
+                                child: Container(
+                                  // color: Colors.green,
+                                  width: 70,
+                                  height: 35,
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: UserScreenAdminActionsButton(_user),
+                                ),
+                              )
+                            : Container();
+                      },
                     ),
                   ],
                 );

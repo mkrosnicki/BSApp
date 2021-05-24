@@ -126,6 +126,7 @@ class CurrentUser with ChangeNotifier {
   Future<void> update(String token, String userId) async {
     _token = token;
     if (!isAuthenticated) {
+      _me = null;
       _observedDeals = [];
       _observedTopics = [];
       _observedSearches = [];

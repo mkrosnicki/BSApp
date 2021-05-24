@@ -1,10 +1,6 @@
-import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/user_model.dart';
-import 'package:BSApp/providers/current_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class UserScreenAdminActionsButton extends StatelessWidget {
   final UserModel user;
@@ -44,11 +40,17 @@ class UserScreenAdminActionsButton extends StatelessWidget {
     );
   }
 
-  _buildListTile(String title, IconData icon, Function() function) {
+  Widget _buildListTile(String title, IconData icon, Function() function) {
     return ListTile(
-      leading: Icon(icon, size: 18,),
+      leading: Icon(
+        icon,
+        size: 18,
+      ),
       onTap: function,
-      title: Text(title, style: TextStyle(fontSize: 13),),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 13),
+      ),
     );
   }
 }
