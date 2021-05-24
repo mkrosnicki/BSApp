@@ -42,16 +42,28 @@ class Deals with ChangeNotifier {
         final logger = Logger();
         logger.e('No Deals Found!');
       }
-      _totalPages = responseBody['totalPages'] as int;
-      _totalElements = responseBody['totalElements'] as int;
-      final responseContent = responseBody['content'] as List;
-      final List<DealModel> fetchedDeals = DealModel.fromJsonList(responseContent);
-      if (pageNo == 0) {
-        _deals = fetchedDeals;
-      } else {
-        _deals.addAll(fetchedDeals);
-      }
+      _handlePagedResponse(responseBody, pageNo);
       notifyListeners();
+    }
+  }
+
+  void _handlePagedResponse(final Map<dynamic, dynamic> responseBody, final int pageNo) {
+    _totalPages = responseBody['totalPages'] as int;
+    _totalElements = responseBody['totalElements'] as int;
+    final responseContent = responseBody['content'] as List;
+    final List<DealModel> fetchedDeals = DealModel.fromJsonList(responseContent);
+    _addPaged(fetchedDeals, pageNo);
+  }
+
+  void _addPaged(List<DealModel> fetchedDeals, int pageNo) {
+    if (pageNo == 0) {
+      _deals = fetchedDeals;
+    } else {
+      for (final DealModel deal in fetchedDeals) {
+        if (!_deals.contains(deal)) {
+          _deals.add(deal);
+        }
+      }
     }
   }
 
