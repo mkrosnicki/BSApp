@@ -96,9 +96,7 @@ class Notifications with ChangeNotifier {
     // do nothing for the moment
   }
 
-  Future<void> update(String token, String userId, DateTime notificationsSeenAt) async {
-    print('notificationsSeenAt');
-    print(notificationsSeenAt);
+  Future<void> update(String token, UserModel user, String userId, DateTime notificationsSeenAt) async {
     if (token == null || userId == null) {
       _disconnectFromNotificationsSocket(userId);
       _token = null;
@@ -108,6 +106,7 @@ class Notifications with ChangeNotifier {
       _notificationsSeenAt = notificationsSeenAt;
       _connectToNotificationsSocket(userId);
       await fetchMyNotifications();
+      _lastNotificationDate = _notifications.isNotEmpty ? _notifications.first.issuedAt : null;
       notifyListeners();
     }
   }

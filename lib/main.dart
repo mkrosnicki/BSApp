@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
           create: (context) => Notifications.empty(),
           lazy: false,
           update: (context, currentUser, previousNotifications) =>
-          previousNotifications..update(currentUser.token, currentUser.me?.id, currentUser.me?.notificationsSeenAt),
+          previousNotifications..update(currentUser.token, currentUser.me, currentUser.me?.id, currentUser.me?.notificationsSeenAt),
         ),
         ChangeNotifierProxyProvider<Auth, Activities>(
           create: (context) => Activities.empty(),
