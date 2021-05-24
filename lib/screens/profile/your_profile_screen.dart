@@ -48,7 +48,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ProfileUserInfo(currentUserData.me),
-                                MyProfileStatisticsInfo(),
+                                MyProfileStatisticsInfo(currentUserData.me),
                                 const MyProfileOptionsList(),
                               ],
                             ),

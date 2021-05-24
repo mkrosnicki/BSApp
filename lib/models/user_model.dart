@@ -12,6 +12,9 @@ class UserModel {
   final DateTime lastLoginAt;
   final DateTime notificationsSeenAt;
   final Uint8List avatar;
+  final int pointsForDeals;
+  final int likesCount;
+  final double activityPerDay;
 
   UserModel(
       {this.id,
@@ -20,7 +23,10 @@ class UserModel {
         this.registeredAt,
         this.lastLoginAt,
         this.notificationsSeenAt,
-        this.avatar});
+        this.avatar,
+        this.pointsForDeals,
+        this.likesCount,
+        this.activityPerDay});
 
   static UserModel fromJson(dynamic userSnapshot) {
     final registeredAt = userSnapshot['registeredAt'] as String;
@@ -36,7 +42,11 @@ class UserModel {
         notificationsSeenAt: notificationsSeenAt != null
             ? DateTime.parse(notificationsSeenAt)
             : null,
-        avatar: _getAvatar(userSnapshot));
+        avatar: _getAvatar(userSnapshot),
+      pointsForDeals: userSnapshot['pointsForDeals'],
+      likesCount: userSnapshot['likesCount'],
+      activityPerDay: userSnapshot['activityPerDay'],
+    );
   }
 
   static Uint8List _getAvatar(userSnapshot) {

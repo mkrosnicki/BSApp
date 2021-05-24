@@ -1,16 +1,20 @@
+import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class MyProfileStatisticsInfo extends StatefulWidget {
+
+  final UserModel user;
+
+  const MyProfileStatisticsInfo(this.user);
+
   @override
-  _MyProfileStatisticsInfoState createState() =>
-      _MyProfileStatisticsInfoState();
+  _MyProfileStatisticsInfoState createState() => _MyProfileStatisticsInfoState();
 }
 
 class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
-  static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
-  static const activeMenuItemStyle =
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey,);
+  static const countStyle = TextStyle(fontSize: 13, fontWeight: FontWeight.w600, height: 1.2);
 
   int selectedIndex = 1;
 
@@ -25,15 +29,15 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatisticTile('Okazje', 1, false, true),
-          _buildStatisticTile('Komentarze', 2, false, true),
-          _buildStatisticTile('Posty', 3, false, false),
+          _buildStatisticTile('punkty \nza okazje', widget.user.pointsForDeals.toString(), 1, false, true),
+          _buildStatisticTile('polubione \nwypowiedzi', widget.user.likesCount.toString(), 2, false, true),
+          _buildStatisticTile('wypowiedzi \ndziennie', widget.user.activityPerDay.toStringAsFixed(2), 3, false, false),
         ],
       ),
     );
   }
 
-  Widget _buildStatisticTile(String label, int index, bool borderLeft, bool borderRight) {
+  Widget _buildStatisticTile(String label, String count, int index, bool borderLeft, bool borderRight) {
     return Flexible(
       child: GestureDetector(
         onTap: () => _setIndex(index),
@@ -43,22 +47,24 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             border: Border(
-              left: borderLeft ? const BorderSide(
-                  color: MyColorsProvider.GREY_BORDER_COLOR) : const BorderSide(style: BorderStyle.none),
-              right: borderRight ? const BorderSide(
-                  color: MyColorsProvider.GREY_BORDER_COLOR) : const BorderSide(style: BorderStyle.none)
-            ),
+                left: borderLeft
+                    ? const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR)
+                    : const BorderSide(style: BorderStyle.none),
+                right: borderRight
+                    ? const BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR)
+                    : const BorderSide(style: BorderStyle.none)),
           ),
           child: Wrap(
             direction: Axis.vertical,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              const Text(
-                '99',
-                style: activeMenuItemStyle,
+              Text(
+                count,
+                style: countStyle,
               ),
               Text(
                 label,
+                textAlign: TextAlign.center,
                 style: statNameStyle,
               ),
             ],
