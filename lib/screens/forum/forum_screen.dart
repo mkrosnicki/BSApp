@@ -1,6 +1,7 @@
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
+import 'package:BSApp/widgets/bars/app_bar_search_topic_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
 import 'package:BSApp/widgets/forum/forum_categories_view.dart';
@@ -25,6 +26,7 @@ class _ForumScreenState extends State<ForumScreen> {
           preferredSize: Size.fromHeight(85.0),
           child: BaseAppBar(
             title: 'Forum',
+            leading: AppBarSearchTopicButton(),
             bottom: DecoratedTabBar(
               tabBar: TabBar(
                 labelPadding: EdgeInsets.all(10.0),
