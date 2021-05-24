@@ -96,11 +96,12 @@ class Notifications with ChangeNotifier {
     // do nothing for the moment
   }
 
-  Future<void> update(String token, UserModel user, String userId, DateTime notificationsSeenAt) async {
+  Future<void> update(String token, String userId, DateTime notificationsSeenAt) async {
     if (token == null || userId == null) {
       _disconnectFromNotificationsSocket(userId);
       _token = null;
       _notificationsSeenAt = null;
+      _lastNotificationDate = null;
     } else {
       _token = token;
       _notificationsSeenAt = notificationsSeenAt;
