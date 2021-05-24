@@ -11,7 +11,7 @@ class AppBarSearchTopicButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName,),
-      child: const Icon(CupertinoIcons.search, color: Colors.black,),
+      child: const Icon(CupertinoIcons.search, color: Colors.black, size: 22,),
     );
   }
 }
