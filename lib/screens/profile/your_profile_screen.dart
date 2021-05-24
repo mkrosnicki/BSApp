@@ -26,8 +26,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
-                future:
-                    Provider.of<CurrentUser>(context, listen: false).fetchMe(),
+                future: Provider.of<CurrentUser>(context, listen: false).fetchMe(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -43,14 +42,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         builder: (context, currentUserData, child) {
                           return Container(
                             padding: const EdgeInsets.only(top: 8.0),
-                            child: Flex(
-                              direction: Axis.vertical,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ProfileUserInfo(currentUserData.me),
-                                MyProfileStatisticsInfo(currentUserData.me),
-                                const MyProfileOptionsList(),
-                              ],
+                            child: Expanded(
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  ProfileUserInfo(currentUserData.me),
+                                  MyProfileStatisticsInfo(currentUserData.me),
+                                  const Expanded(
+                                    child: MyProfileOptionsList(),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

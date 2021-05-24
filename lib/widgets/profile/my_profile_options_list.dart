@@ -45,6 +45,8 @@ class MyProfileOptionsList extends StatelessWidget {
       child: ListView.builder(
         itemBuilder: (context, index) => menuOptions[index],
         itemCount: menuOptions.length,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
       ),
     );
   }
