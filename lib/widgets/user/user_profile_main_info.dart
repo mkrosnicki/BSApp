@@ -32,7 +32,7 @@ class UserProfileMainInfo extends StatelessWidget {
                   child: UserAvatar(
                     username: user.username,
                     imagePath: FakeDataProvider.USER_AVATAR_PATH,
-                    radius: 35,
+                    radius: 45,
                   ),
                 ),
                 Flex(
