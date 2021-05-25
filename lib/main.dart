@@ -26,6 +26,7 @@ import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/screens/forum/forum_screen.dart';
 import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
+import 'package:BSApp/screens/forum/topic_search_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/about_app_screen.dart';
@@ -146,6 +147,7 @@ class MyApp extends StatelessWidget {
         ),
         home: MainScreen(),
         routes: {
+          MainScreen.routeName: (ctx) => MainScreen(),
           LoginRegistrationScreen.routeName: (ctx) => LoginRegistrationScreen(),
           YourProfileScreen.routeName: (ctx) => YourProfileScreen(),
           YourDealsScreen.routeName: (ctx) => YourDealsScreen(),
@@ -171,6 +173,7 @@ class MyApp extends StatelessWidget {
           PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
           RegulationsScreen.routeName: (ctx) => RegulationsScreen(),
           ContactScreen.routeName: (ctx) => ContactScreen(),
+          TopicSearchScreen.routeName: (ctx) => TopicSearchScreen(),
         },
       ),
     );

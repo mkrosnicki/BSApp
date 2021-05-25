@@ -120,6 +120,12 @@ class Deals with ChangeNotifier {
     return _apiProvider.post('/deals', newDeal.toDto(), token: _token);
   }
 
+  Future<void> deleteDeal(String dealId) async {
+    await _apiProvider.delete('/deals/$dealId', token: _token);
+    _deals.removeWhere((deal) => deal.id == dealId);
+    notifyListeners();
+  }
+
   DealModel findById(String dealId) {
     return _deals.firstWhere((deal) => deal.id == dealId);
   }

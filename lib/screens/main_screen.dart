@@ -17,6 +17,8 @@ import 'forum/forum_screen.dart';
 import 'initialization/initialization_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  static const routeName = '/main-screen';
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -39,18 +41,35 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  Future<void> init(BuildContext context) async {
+  Future<void> _init(BuildContext context) async {
     if (!_isInitialized) {
-      await Init.initialize(context);
-      setState(() {
-        _isInitialized = true;
-      });
+      final bool wasInitializedBefore = ModalRoute.of(context).settings.arguments as bool;
+      if (wasInitializedBefore == null || !wasInitializedBefore) {
+        await _initAppAndDisplayFirstPage();
+      } else {
+        await _justDisplayFirstPage();
+      }
     }
+  }
+
+  Future<void> _initAppAndDisplayFirstPage() async {
+    await Init.initialize(context);
+    setState(() {
+      _isInitialized = true;
+    });
+  }
+
+  Future<void> _justDisplayFirstPage() async {
+    await Init.initialize(context);
+    setState(() {
+      _selectedIndex = 0;
+      _isInitialized = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    init(context);
+    _init(context);
     return _isInitialized
         ? Scaffold(
             body: Center(

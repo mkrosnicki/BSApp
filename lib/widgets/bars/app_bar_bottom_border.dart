@@ -13,7 +13,7 @@ class AppBarBottomBorder extends StatelessWidget
       preferredSize: aPreferredSize,
       child: Container(
         color: MyColorsProvider.GREY_BORDER_COLOR,
-        height: 0.5,
+        height: 0.8,
       ),
     );
   }
