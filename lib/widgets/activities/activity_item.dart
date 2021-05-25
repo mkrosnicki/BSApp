@@ -1,5 +1,13 @@
 import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
+import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/models/topic_screen_arguments.dart';
+import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/topics.dart';
+import 'package:BSApp/screens/comments/comment_screen.dart';
+import 'package:BSApp/screens/deals/deal_details_screen.dart';
+import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/activities/comment_added_activity_content.dart';
@@ -12,6 +20,7 @@ import 'package:BSApp/widgets/activities/topic_added_icon.dart';
 import 'package:BSApp/widgets/activities/topic_created_activity_content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ActivityItem extends StatelessWidget {
   final ActivityModel activity;
@@ -20,44 +29,47 @@ class ActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 8.0),
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
-      width: double.infinity,
-      color: Colors.white,
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            child: _buildActivityIcon(),
-          ),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildActivityContent(),
-                Container(
-                  padding:
-                      const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
-                  child: Text(
-                    DateUtil.timeAgoString(activity.issuedAt),
-                    style: const TextStyle(
-                        fontSize: 11, color: Colors.black54, height: 1.1),
-                  ),
-                )
-              ],
+    return GestureDetector(
+      onTap: () => _navigateToSource(context),
+      child: Container(
+        margin: const EdgeInsets.only(top: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
+        width: double.infinity,
+        color: Colors.white,
+        child: Flex(
+          direction: Axis.horizontal,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+              child: _buildActivityIcon(),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 4.0),
-            child: const Icon(
-              CupertinoIcons.chevron_right,
-              color: MyColorsProvider.DEEP_BLUE,
-              size: 18,
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildActivityContent(),
+                  Container(
+                    padding:
+                        const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
+                    child: Text(
+                      DateUtil.timeAgoString(activity.issuedAt),
+                      style: const TextStyle(
+                          fontSize: 11, color: Colors.black54, height: 1.1),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: const Icon(
+                CupertinoIcons.chevron_right,
+                color: MyColorsProvider.DEEP_BLUE,
+                size: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -106,5 +118,45 @@ class ActivityItem extends StatelessWidget {
         icon = null;
     }
     return icon;
+  }
+
+  void _navigateToSource(BuildContext context) {
+    switch (activity.activityType) {
+      case ActivityType.POST_ADDED:
+      case ActivityType.TOPIC_CREATED:
+        _navigateToTopic(context);
+        break;
+      case ActivityType.DEAL_CREATED:
+        _navigateToDeal(context);
+        break;
+      case ActivityType.COMMENT_ADDED:
+      case ActivityType.COMMENT_ADDED:
+        _navigateToComment(context);
+        break;
+      default:
+      // do noting
+    }
+  }
+
+  void _navigateToTopic(BuildContext context) {
+    final topicsProvider = Provider.of<Topics>(context, listen: false);
+    topicsProvider.fetchTopic(activity.relatedTopic.id).then((_) {
+      final TopicModel topic = topicsProvider.findById(activity.relatedTopic.id);
+      Navigator.of(context).pushNamed(TopicScreen.routeName,
+          arguments: TopicScreenArguments(topic, postToScrollId: activity.relatedPost != null ? activity.relatedPost.id : null));
+    });
+  }
+
+  void _navigateToDeal(BuildContext context) {
+    final dealsProvider = Provider.of<Deals>(context, listen: false);
+    dealsProvider.fetchDeal(activity.relatedDeal.id).then((_) {
+      final DealModel deal = dealsProvider.findById(activity.relatedDeal.id);
+      Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+    });
+  }
+
+  void _navigateToComment(BuildContext context) {
+    // todo
+    // Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: notification);
   }
 }

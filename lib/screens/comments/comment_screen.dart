@@ -1,6 +1,7 @@
+import 'package:BSApp/models/activity_type.dart';
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/models/comment_screen_arguments.dart';
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/notification_type.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/deals.dart';
@@ -19,21 +20,27 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class CommentScreen extends StatelessWidget {
+class CommentScreen extends StatefulWidget {
   static const routeName = '/comment-screen';
 
+  @override
+  _CommentScreenState createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
   final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
+  CommentModel _comment;
 
   @override
   Widget build(BuildContext context) {
-    final NotificationModel notification = ModalRoute.of(context).settings.arguments as NotificationModel;
-    final String dealId = notification.relatedDealId;
-    final String commentToScrollId = notification.relatedCommentId;
-    final String parentCommentId = notification.relatedParentCommentId;
+    final CommentScreenArguments arguments = ModalRoute.of(context).settings.arguments as CommentScreenArguments;
+    final String dealId = arguments.dealId;
+    final String commentToScrollId = arguments.commentToScrollId;
+    final String parentCommentId = arguments.parentCommentId;
 
     return Scaffold(
       appBar: BaseAppBar(
-        title: _screenTitle(notification),
+        title: _screenTitle(arguments),
         leading: const AppBarBackButton(Colors.black),
       ),
       body: Container(
@@ -53,19 +60,19 @@ class CommentScreen extends StatelessWidget {
               } else {
                 return Column(
                   children: [
-                    _buildDealNavigationPanel(context, notification),
+                    _buildDealNavigationPanel(context, arguments),
                     Expanded(
                       child: Consumer<Comments>(
                         builder: (context, commentsData, child) {
-                          final CommentModel comment = commentsData.findById(parentCommentId);
+                          _comment = _comment ?? commentsData.findById(parentCommentId);
                           return ScrollablePositionedList.builder(
-                            itemCount: comment.subComments.length + 1,
-                            initialScrollIndex: _determineInitialIndex(commentToScrollId, comment),
+                            itemCount: _comment.subComments.length + 1,
+                            initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment),
                             itemBuilder: (context, index) {
                               if (index == 0) {
-                                return CommentItem(comment, dealId, _commentToReplySubject);
+                                return CommentItem(_comment, dealId, _commentToReplySubject);
                               } else {
-                                return CommentItem(comment.subComments[index - 1], dealId, _commentToReplySubject);
+                                return CommentItem(_comment.subComments[index - 1], dealId, _commentToReplySubject);
                               }
                             },
                           );
@@ -92,7 +99,7 @@ class CommentScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildDealNavigationPanel(BuildContext context, NotificationModel notification) {
+  Widget _buildDealNavigationPanel(BuildContext context, CommentScreenArguments screenArguments) {
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -107,11 +114,11 @@ class CommentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _notificationString(notification),
+                  _notificationString(screenArguments),
                   style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.2),
                 ),
                 Text(
-                  notification.relatedDealTitle,
+                  screenArguments.dealTitle,
                   style: const TextStyle(
                     fontSize: 12,
                     height: 1.5,
@@ -124,7 +131,7 @@ class CommentScreen extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.centerRight,
-              child: _buildNavigationButton(context, notification.relatedDealId),
+              child: _buildNavigationButton(context, screenArguments.dealId),
             ),
           ),
         ],
@@ -132,8 +139,27 @@ class CommentScreen extends StatelessWidget {
     );
   }
 
-  String _notificationString(NotificationModel notification) {
-    switch (notification.notificationType) {
+  String _notificationString(CommentScreenArguments screenArguments) {
+    if (screenArguments.activityType != null) {
+      return _notificationStringByActivityType(screenArguments.activityType);
+    } else {
+      return _notificationStringByNotificationType(screenArguments.notificationType);
+    }
+  }
+
+  String _notificationStringByActivityType(ActivityType activityType) {
+    switch (activityType) {
+      case ActivityType.COMMENT_ADDED:
+        return 'Komentarz do okazji';
+      case ActivityType.COMMENT_REPLIED:
+        return 'Odpowiedź na komentarz';
+      default:
+        return '';
+    }
+  }
+
+  String _notificationStringByNotificationType(NotificationType notificationType) {
+    switch (notificationType) {
       case NotificationType.YOUR_DEAL_COMMENTED:
         return 'Komentarz do Twojej okazji';
       case NotificationType.YOUR_COMMENT_RATED:
@@ -145,11 +171,18 @@ class CommentScreen extends StatelessWidget {
     }
   }
 
-  String _screenTitle(NotificationModel notification) {
-    switch (notification.notificationType) {
+  String _screenTitle(CommentScreenArguments screenArguments) {
+    if (screenArguments.activityType != null) {
+      return _screenTitleByActivityType(screenArguments.activityType);
+    } else {
+      return _screenTitleByNotificationType(screenArguments.notificationType);
+    }
+  }
+
+  String _screenTitleByNotificationType(NotificationType notificationType) {
+    switch (notificationType) {
       case NotificationType.YOUR_DEAL_COMMENTED:
       case NotificationType.YOUR_COMMENT_REPLIED:
-      case NotificationType.YOUR_COMMENT_RATED:
         return 'Nowy komentarz';
       case NotificationType.YOUR_COMMENT_RATED:
         return 'Polubiony komentarz';
@@ -158,6 +191,15 @@ class CommentScreen extends StatelessWidget {
     }
   }
 
+  String _screenTitleByActivityType(ActivityType activityType) {
+    switch (activityType) {
+      case ActivityType.COMMENT_ADDED:
+      case ActivityType.COMMENT_REPLIED:
+        return 'Nowy komentarz';
+      default:
+        return '';
+    }
+  }
 
   Widget _buildNavigationButton(BuildContext context, String dealId) {
     return GestureDetector(
@@ -166,14 +208,14 @@ class CommentScreen extends StatelessWidget {
         padding: const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 2.0),
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            const Text(
+          children: const [
+            Text(
               'Zobacz okazję',
               style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 12),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 2.0),
-              child: const Icon(CupertinoIcons.forward, size: 18, color: MyColorsProvider.DEEP_BLUE),
+              padding: EdgeInsets.only(left: 2.0),
+              child: Icon(CupertinoIcons.forward, size: 18, color: MyColorsProvider.DEEP_BLUE),
             )
           ],
         ),
@@ -185,7 +227,7 @@ class CommentScreen extends StatelessWidget {
     final dealsProvider = Provider.of<Deals>(context, listen: false);
     dealsProvider.fetchDeal(dealId).then((_) {
       final DealModel deal = dealsProvider.findById(dealId);
-      Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+      Navigator.of(context).pushReplacementNamed(DealDetailsScreen.routeName, arguments: deal);
     });
   }
 }

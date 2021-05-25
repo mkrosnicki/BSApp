@@ -1,11 +1,11 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/screens/comments/comment_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class CommentItemContent extends StatelessWidget {
-
   final CommentModel comment;
-
 
   const CommentItemContent(this.comment);
 
@@ -22,14 +22,13 @@ class CommentItemContent extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 2.0),
               child: GestureDetector(
-                onTap: () => _navigateToUserProfileScreen(
-                    context, comment.adderInfo.id),
+                onTap: () => _navigateToUserProfileScreen(context, comment.adderInfo.id),
                 child: Text(
                   comment.adderInfo.username,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    color: MyColorsProvider.DEEP_BLUE,
                   ),
                 ),
               ),
@@ -70,8 +69,11 @@ class CommentItemContent extends StatelessWidget {
   }
 
   void _navigateToUserProfileScreen(BuildContext context, String userId) {
-    Navigator.of(context)
-        .pushNamed(UserProfileScreen.routeName, arguments: userId);
+    if (ModalRoute.of(context).settings.name == CommentScreen.routeName) {
+      Navigator.of(context).pushReplacementNamed(UserProfileScreen.routeName, arguments: userId);
+    } else {
+      Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
+    }
   }
 
   String longer(String text) {
