@@ -72,6 +72,6 @@ class TopicScreenAdminActionsButton extends StatelessWidget {
     final navigator = Navigator.of(context);
     navigator.pop();
     navigator.pop();
-    // await Provider.of<Topics>(context, listen: false).deleteTopic(topicId);
+    await Provider.of<Topics>(context, listen: false).deleteTopic(topicId);
   }
 }

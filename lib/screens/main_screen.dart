@@ -60,7 +60,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _justDisplayFirstPage() async {
-    await Init.initialize(context);
     setState(() {
       _selectedIndex = 0;
       _isInitialized = true;
