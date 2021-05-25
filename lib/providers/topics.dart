@@ -36,9 +36,9 @@ class Topics with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchDiscussionEntriesByPhrase({Map<String, dynamic> requestParams}) async {
+  Future<void> fetchDiscussionEntriesByPhrase(String phrase) async {
     final responseBody =
-    await _apiProvider.get('/discussions', requestParams: requestParams) as List;
+    await _apiProvider.get('/discussions', requestParams: {'phrase': phrase}) as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Topics Found!');

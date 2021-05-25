@@ -1,5 +1,5 @@
-import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/notifications.dart';
+import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/start_search_topic_button.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -7,6 +7,7 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
+import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,9 @@ class TopicSearchScreen extends StatefulWidget {
 
 class _TopicSearchScreenState extends State<TopicSearchScreen> {
   final TextEditingController _searchTopicTextController = TextEditingController();
+
+  bool _loaded = false;
+  bool _waiting = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +48,57 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
           StartSearchTopicButton(),
         ],
       ),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: Provider.of<Categories>(context, listen: false).fetchCategories(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: LoadingIndicator());
+      body: _loaded ? _resultsView(context) : _buildNoTopicsFoundSplashView(),
+    );
+  }
+
+  Widget _resultsView(BuildContext context) {
+    if (_waiting) {
+      return const Center(child: LoadingIndicator());
+    } else {
+      return Consumer<Topics>(
+        builder: (context, topicsData, child) {
+          if (topicsData.topics.isEmpty) {
+            return _buildNoTopicsFoundSplashView();
+          } else {
+            return ListView.builder(
+              itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
+              itemCount: topicsData.topics.length,
+            );
+          }
+        },
+      );
+    }
+    return SafeArea(
+      child: FutureBuilder(
+        future: Provider.of<Topics>(context, listen: false).fetchDiscussionEntriesByPhrase('ciek'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: LoadingIndicator());
+          } else {
+            if (snapshot.error != null) {
+              return const Center(
+                child: ServerErrorSplash(),
+              );
             } else {
-              if (snapshot.error != null) {
-                return const Center(
-                  child: ServerErrorSplash(),
-                );
-              } else {
-                return RefreshIndicator(
-                  onRefresh: () => _refreshNotifications(context),
-                  child: Consumer<Categories>(
-                    builder: (context, categoriesData, child) {
-                      if (categoriesData.categories.isNotEmpty) {
-                        return _buildNoTopicsFoundSplashView();
-                      } else {
-                        return null;
-                        // return ListView.builder(
-                        //   itemBuilder: (context, index) =>
-                        //       NotificationItem(categoriesData.myNotifications[index]),
-                        //   itemCount: categoriesData.myNotifications.length,
-                        // );
-                      }
-                    },
-                  ),
-                );
-              }
+              return RefreshIndicator(
+                onRefresh: () => _refreshNotifications(context),
+                child: Consumer<Topics>(
+                  builder: (context, topicsData, child) {
+                    if (!topicsData.topics.isNotEmpty) {
+                      return _buildNoTopicsFoundSplashView();
+                    } else {
+                      return ListView.builder(
+                        itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
+                        itemCount: topicsData.topics.length,
+                      );
+                    }
+                  },
+                ),
+              );
             }
-          },
-        ),
+          }
+        },
       ),
     );
   }
@@ -108,6 +130,7 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
             child: TextField(
               controller: _searchTopicTextController,
               onSubmitted: (phrase) {
+                _searchForPhrase(phrase);
               },
               keyboardType: TextInputType.text,
               style: const TextStyle(fontSize: 12),
@@ -130,5 +153,16 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _searchForPhrase(String phrase) async {
+    setState(() {
+      _waiting = true;
+    });
+    await Provider.of<Topics>(context, listen: false).fetchDiscussionEntriesByPhrase(phrase);
+    setState(() {
+      _waiting = false;
+      _loaded = true;
+    });
   }
 }
