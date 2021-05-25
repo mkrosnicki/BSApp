@@ -1,6 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/deal_screen_arguments.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_actions.dart';
@@ -106,7 +105,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                         ),
                       ),
                       actions: [
-                        DealScreenAdminActionsButton(null, color: _iconColorTween.value),
+                        DealScreenAdminActionsButton(deal, color: _iconColorTween.value),
                       ],
                       title: Text(
                         deal.title,

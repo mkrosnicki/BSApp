@@ -1,6 +1,9 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealScreenAdminActionsButton extends StatelessWidget {
   final DealModel deal;
@@ -37,7 +40,9 @@ class DealScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Usuń okazję', CupertinoIcons.clear, () {}),
+              _buildListTile('Usuń okazję', CupertinoIcons.clear, () {
+                _deleteDeal(context, deal.id);
+              }),
             ],
           ),
         );
@@ -47,15 +52,17 @@ class DealScreenAdminActionsButton extends StatelessWidget {
 
   Widget _buildListTile(String title, IconData icon, Function() function) {
     return ListTile(
-      leading: Icon(
-        icon,
-        size: 18,
-      ),
+      leading: Icon(icon, size: 18),
       onTap: function,
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 13),
-      ),
+      title: Text(title, style: const TextStyle(fontSize: 13)),
     );
+  }
+
+  Future<void> _deleteDeal(BuildContext context, String dealId) async {
+    Navigator.of(context).popUntil((route) {
+      return route.isFirst;
+    });
+    Navigator.of(context).pushReplacementNamed(MainScreen.routeName, arguments: true);
+    await Provider.of<Deals>(context, listen: false).deleteDeal(deal.id);
   }
 }
