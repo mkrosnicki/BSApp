@@ -8,10 +8,14 @@ class Topics with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<TopicModel> _topics = [];
-  List<TopicSearchResultModel> _results = [];
+  List<TopicSearchResultModel> _searchResults = [];
   String _token;
 
   Topics.empty();
+
+  List<TopicSearchResultModel> get searchResults {
+    return [..._searchResults];
+  }
 
   List<TopicModel> get topics {
     return [..._topics];
@@ -43,8 +47,8 @@ class Topics with ChangeNotifier {
       final logger = Logger();
       logger.i('No Topics Found!');
     }
-    _results = TopicSearchResultModel.fromJsonList(responseBody);
-    _topics = _results.map((e) => e.topic).toList();
+    _searchResults = TopicSearchResultModel.fromJsonList(responseBody);
+    _topics = _searchResults.map((e) => e.topic).toList();
     notifyListeners();
   }
 

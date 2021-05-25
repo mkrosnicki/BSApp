@@ -6,7 +6,6 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_bottom_border.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
-import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/forum/topic_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,49 +57,36 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
     } else {
       return Consumer<Topics>(
         builder: (context, topicsData, child) {
-          if (topicsData.topics.isEmpty) {
+          if (topicsData.searchResults.isEmpty) {
             return _buildNoTopicsFoundSplashView();
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 8.0),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                        child: Row(
+                          children: [
+                            Text(_mentionedString(topicsData.searchResults[index].matchingPosts.length), style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                            // Text('  ...zobacz', style: TextStyle(fontSize: 12, color: Colors.blue)),
+                          ],
+                        ),
+                      ),
+                      TopicItem(topicsData.searchResults[index].topic),
+                    ],
+                  ),
+                );
+              },
               itemCount: topicsData.topics.length,
             );
           }
         },
       );
     }
-    return SafeArea(
-      child: FutureBuilder(
-        future: Provider.of<Topics>(context, listen: false).fetchDiscussionEntriesByPhrase('ciek'),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
-          } else {
-            if (snapshot.error != null) {
-              return const Center(
-                child: ServerErrorSplash(),
-              );
-            } else {
-              return RefreshIndicator(
-                onRefresh: () => _refreshNotifications(context),
-                child: Consumer<Topics>(
-                  builder: (context, topicsData, child) {
-                    if (!topicsData.topics.isNotEmpty) {
-                      return _buildNoTopicsFoundSplashView();
-                    } else {
-                      return ListView.builder(
-                        itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
-                        itemCount: topicsData.topics.length,
-                      );
-                    }
-                  },
-                ),
-              );
-            }
-          }
-        },
-      ),
-    );
   }
 
   Widget _buildNoTopicsFoundSplashView() {
@@ -153,6 +139,14 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         ],
       ),
     );
+  }
+
+  String _mentionedString(int relatedPosts) {
+    return relatedPosts > 0 ? 'Fraza została wspomniana ${_timesConjugation(relatedPosts)}' : 'Fraza została wspomniana przez autora';
+  }
+
+  String _timesConjugation(int relatedPosts) {
+    return relatedPosts == 1 ? 'raz' : '$relatedPosts razy';
   }
 
   Future<void> _searchForPhrase(String phrase) async {
