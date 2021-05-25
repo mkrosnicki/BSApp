@@ -40,15 +40,19 @@ class TopicScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              if (!topic.pinned) _buildListTile('Przypnij wątek', CupertinoIcons.lock_fill, () {
-                Provider.of<Topics>(context, listen: false).updatetopic(topic.id, true);
-                Navigator.of(context).pop();
+              if (!topic.pinned)
+                _buildListTile('Przypnij wątek', CupertinoIcons.lock_fill, () {
+                  Provider.of<Topics>(context, listen: false).updatetopic(topic.id, true);
+                  Navigator.of(context).pop();
+                }),
+              if (topic.pinned)
+                _buildListTile('Odepnij wątek', CupertinoIcons.lock, () {
+                  Provider.of<Topics>(context, listen: false).updatetopic(topic.id, false);
+                  Navigator.of(context).pop();
+                }),
+              _buildListTile('Usuń wątek', CupertinoIcons.clear, () {
+                _deleteTopic(context, topic.id);
               }),
-              if (topic.pinned) _buildListTile('Odepnij wątek', CupertinoIcons.lock, () {
-                Provider.of<Topics>(context, listen: false).updatetopic(topic.id, false);
-                Navigator.of(context).pop();
-              }),
-              _buildListTile('Usuń wątek', CupertinoIcons.clear, () {}),
             ],
           ),
         );
@@ -58,9 +62,16 @@ class TopicScreenAdminActionsButton extends StatelessWidget {
 
   Widget _buildListTile(String title, IconData icon, Function() function) {
     return ListTile(
-      leading: Icon(icon, size: 18,),
+      leading: Icon(icon, size: 18),
       onTap: function,
-      title: Text(title, style: TextStyle(fontSize: 13),),
+      title: Text(title, style: const TextStyle(fontSize: 13)),
     );
+  }
+
+  Future<void> _deleteTopic(BuildContext context, String topicId) async {
+    final navigator = Navigator.of(context);
+    navigator.pop();
+    navigator.pop();
+    // await Provider.of<Topics>(context, listen: false).deleteTopic(topicId);
   }
 }

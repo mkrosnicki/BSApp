@@ -116,6 +116,12 @@ class Topics with ChangeNotifier {
     return updatedTopic;
   }
 
+  Future<void> deleteTopic(String topicId) async {
+    await _apiProvider.delete('/topics/$topicId', token: _token);
+    _topics.removeWhere((deal) => deal.id == topicId);
+    notifyListeners();
+  }
+
   Future<void> voteForTopic(String topicId, bool isPositive) async {
     final responseBody = await _apiProvider.post(
         '/topics/$topicId/votes', {'isPositive': isPositive},

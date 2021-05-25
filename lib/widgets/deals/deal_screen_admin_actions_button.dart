@@ -60,7 +60,6 @@ class DealScreenAdminActionsButton extends StatelessWidget {
 
   Future<void> _deleteDeal(BuildContext context, String dealId) async {
     Navigator.of(context).popUntil((route) {
-      print(route.settings.name == MainScreen.routeName);
       return route.isFirst;
     });
     Navigator.of(context).pushReplacementNamed(MainScreen.routeName, arguments: true);

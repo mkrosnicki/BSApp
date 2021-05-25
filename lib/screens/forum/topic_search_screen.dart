@@ -20,7 +20,7 @@ class TopicSearchScreen extends StatefulWidget {
 }
 
 class _TopicSearchScreenState extends State<TopicSearchScreen> {
-  final TextEditingController _searchTextController = TextEditingController();
+  final TextEditingController _searchTopicTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
                   child: Consumer<Categories>(
                     builder: (context, categoriesData, child) {
                       if (categoriesData.categories.isNotEmpty) {
-                        return _buildNoNotificationsSplashView();
+                        return _buildNoTopicsFoundSplashView();
                       } else {
                         return null;
                         // return ListView.builder(
@@ -81,7 +81,7 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
     );
   }
 
-  Widget _buildNoNotificationsSplashView() {
+  Widget _buildNoTopicsFoundSplashView() {
     return Container(
       color: Colors.white,
       child: const Center(
@@ -106,10 +106,8 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         children: [
           Expanded(
             child: TextField(
-              controller: _searchTextController,
+              controller: _searchTopicTextController,
               onSubmitted: (phrase) {
-                // filterSettings.phrase = phrase;
-                // _updateFilterSettings(filterSettings);
               },
               keyboardType: TextInputType.text,
               style: const TextStyle(fontSize: 12),
