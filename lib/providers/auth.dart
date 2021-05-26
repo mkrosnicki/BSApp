@@ -115,7 +115,8 @@ class Auth with ChangeNotifier {
       'userId': _userId,
       'currentPassword': currentPassword,
       'newPassword': newPassword,
-    });
+    },
+    token: _token);
   }
 
   Future<void> fetchMe() async {
@@ -135,7 +136,7 @@ class Auth with ChangeNotifier {
   }
 
   void _handleAuthenticationResponse(dynamic authenticationResponse) {
-    _token = authenticationResponse['token'];
+    _token = authenticationResponse['token'] as String;
     final decoded = _decodeToken(_token);
     _userId = _extractUserId(decoded);
     _expiryDate = _extractExpiryDate(decoded);
