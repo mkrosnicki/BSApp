@@ -13,9 +13,7 @@ class LastSearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final filtersString = _getFiltersString();
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed(
-          DealSearchResultScreen.routeName,
-          arguments: filterSettings),
+      onTap: () => Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: filterSettings),
       child: Container(
         color: Colors.white,
         alignment: Alignment.center,
@@ -39,8 +37,7 @@ class LastSearchItem extends StatelessWidget {
                       if (filterSettings.phrase != null)
                         Text(
                           filterSettings.phrase,
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w600),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       if (filterSettings.phrase == null)
                         const Text(
@@ -87,6 +84,7 @@ class LastSearchItem extends StatelessWidget {
   }
 
   List<String> _getFiltersSet() {
+    print(filterSettings);
     final List<String> filtersSet = [];
     if (filterSettings.categories.isNotEmpty) {
       filtersSet.add(filterSettings.lastCategoryString);
@@ -97,17 +95,16 @@ class LastSearchItem extends StatelessWidget {
     if (filterSettings.ageTypes.isNotEmpty) {
       filtersSet.add(filterSettings.ageTypesShortString);
     }
-    if (filterSettings.showInternetOnly !=
-        FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
+    if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
       filtersSet.add('Tylko Internetowe');
     }
-    if (filterSettings.showActiveOnly !=
-        FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
+    if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
       filtersSet.add('Tylko Aktywne');
     }
     if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
       filtersSet.add(filterSettings.sortingString);
     }
+    print(filtersSet);
     return filtersSet;
   }
 }

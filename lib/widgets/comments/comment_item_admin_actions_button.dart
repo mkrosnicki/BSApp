@@ -1,11 +1,11 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/comment_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UserScreenAdminActionsButton extends StatelessWidget {
-  final UserModel user;
+class CommentItemAdminActionsButton extends StatelessWidget {
+  final CommentModel comment;
 
-  const UserScreenAdminActionsButton(this.user);
+  const CommentItemAdminActionsButton(this.comment);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,8 @@ class UserScreenAdminActionsButton extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: () => _openAdminActions(context),
       child: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Icon(CupertinoIcons.ellipsis_vertical, size: 22, color: Colors.black),
+        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+        child: Icon(CupertinoIcons.ellipsis_vertical, size: 16, color: Colors.grey),
       ),
     );
   }
@@ -32,7 +32,7 @@ class UserScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Zablokuj użytkownika', CupertinoIcons.clear, () {}),
+              _buildListTile('Usuń komentarz', CupertinoIcons.clear, () {}),
             ],
           ),
         );
