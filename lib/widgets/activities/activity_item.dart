@@ -24,6 +24,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'comment_replied_activity_content.dart';
+import 'comment_replied_icon.dart';
+
 class ActivityItem extends StatelessWidget {
   final ActivityModel activity;
 
@@ -89,6 +92,9 @@ class ActivityItem extends StatelessWidget {
       case ActivityType.COMMENT_ADDED:
         content = CommentAddedActivityContent(activity.issuedByUsername, activity.relatedDeal);
         break;
+      case ActivityType.COMMENT_REPLIED:
+        content = CommentRepliedActivityContent(activity.issuedByUsername, activity.relatedDeal);
+        break;
       default:
         content = null;
     }
@@ -109,6 +115,9 @@ class ActivityItem extends StatelessWidget {
         break;
       case ActivityType.COMMENT_ADDED:
         icon = const CommentAddedIcon();
+        break;
+      case ActivityType.COMMENT_REPLIED:
+        icon = const CommentRepliedIcon();
         break;
       default:
         icon = null;
