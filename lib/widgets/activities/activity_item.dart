@@ -1,5 +1,7 @@
 import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/activity_type.dart';
+import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/models/comment_screen_arguments.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
@@ -49,12 +51,10 @@ class ActivityItem extends StatelessWidget {
                 children: [
                   _buildActivityContent(),
                   Container(
-                    padding:
-                        const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 6.0),
                     child: Text(
                       DateUtil.timeAgoString(activity.issuedAt),
-                      style: const TextStyle(
-                          fontSize: 11, color: Colors.black54, height: 1.1),
+                      style: const TextStyle(fontSize: 11, color: Colors.black54, height: 1.1),
                     ),
                   )
                 ],
@@ -78,20 +78,16 @@ class ActivityItem extends StatelessWidget {
     Widget content;
     switch (activity.activityType) {
       case ActivityType.TOPIC_CREATED:
-        content = TopicCreatedActivityContent(
-            activity.issuedByUsername, activity.relatedTopic);
+        content = TopicCreatedActivityContent(activity.issuedByUsername, activity.relatedTopic);
         break;
       case ActivityType.DEAL_CREATED:
-        content = DealCreatedActivityContent(
-            activity.issuedByUsername, activity.relatedDeal);
+        content = DealCreatedActivityContent(activity.issuedByUsername, activity.relatedDeal);
         break;
       case ActivityType.POST_ADDED:
-        content = PostAddedActivityContent(
-            activity.issuedByUsername, activity.relatedTopic);
+        content = PostAddedActivityContent(activity.issuedByUsername, activity.relatedTopic);
         break;
       case ActivityType.COMMENT_ADDED:
-        content = CommentAddedActivityContent(
-            activity.issuedByUsername, activity.relatedDeal);
+        content = CommentAddedActivityContent(activity.issuedByUsername, activity.relatedDeal);
         break;
       default:
         content = null;
@@ -143,7 +139,8 @@ class ActivityItem extends StatelessWidget {
     topicsProvider.fetchTopic(activity.relatedTopic.id).then((_) {
       final TopicModel topic = topicsProvider.findById(activity.relatedTopic.id);
       Navigator.of(context).pushNamed(TopicScreen.routeName,
-          arguments: TopicScreenArguments(topic, postToScrollId: activity.relatedPost != null ? activity.relatedPost.id : null));
+          arguments: TopicScreenArguments(topic,
+              postToScrollId: activity.relatedPost != null ? activity.relatedPost.id : null));
     });
   }
 
@@ -156,7 +153,17 @@ class ActivityItem extends StatelessWidget {
   }
 
   void _navigateToComment(BuildContext context) {
-    // todo
-    // Navigator.of(context).pushNamed(CommentScreen.routeName, arguments: notification);
+    final CommentModel relatedComment = activity.relatedComment;
+    Navigator.of(context).pushNamed(
+      CommentScreen.routeName,
+      arguments: CommentScreenArguments(
+        activity.relatedDeal.id,
+        activity.relatedDeal.title,
+        relatedComment.isParent() ? null : relatedComment.id,
+        relatedComment.isParent() ? relatedComment.id : relatedComment.parentId,
+        null,
+        activity.activityType,
+      ),
+    );
   }
 }
