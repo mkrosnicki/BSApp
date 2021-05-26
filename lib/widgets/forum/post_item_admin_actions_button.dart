@@ -1,6 +1,8 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/posts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostItemAdminActionsButton extends StatelessWidget {
   final PostModel post;
@@ -32,7 +34,9 @@ class PostItemAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Usuń post', CupertinoIcons.clear, () {}),
+              _buildListTile('Usuń post', CupertinoIcons.clear, () {
+                _deletePost(context);
+              }),
             ],
           ),
         );
@@ -52,5 +56,10 @@ class PostItemAdminActionsButton extends StatelessWidget {
         style: const TextStyle(fontSize: 13),
       ),
     );
+  }
+
+  Future<void> _deletePost(BuildContext context) async {
+    await Provider.of<Posts>(context, listen: false).deletePost(post.id);
+    Navigator.of(context).pop();
   }
 }

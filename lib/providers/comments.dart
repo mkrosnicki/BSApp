@@ -35,12 +35,24 @@ class Comments with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteComment(CommentModel comment) async {
+    await _apiProvider.delete('/comments/${comment.id}', token: _token);
+    if (!comment.isParent()) {
+      final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
+      if (parent != null) {
+        parent.subComments.removeWhere((c) => c.id == comment.id);
+      }
+    }
+    _comments.removeWhere((c) => c.id == comment.id);
+    notifyListeners();
+  }
+
   Future<void> fetchComment(String commentId) async {
     final responseBody =
     await _apiProvider.get('/comments/$commentId');
     if (responseBody == null) {
       final logger = Logger();
-      logger.i('No Topics Found!');
+      logger.i('No Comments Found!');
     }
     final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();

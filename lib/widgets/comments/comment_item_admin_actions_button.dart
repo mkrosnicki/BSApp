@@ -1,6 +1,8 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CommentItemAdminActionsButton extends StatelessWidget {
   final CommentModel comment;
@@ -32,7 +34,9 @@ class CommentItemAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Usuń komentarz', CupertinoIcons.clear, () {}),
+              _buildListTile('Usuń komentarz', CupertinoIcons.clear, () {
+                _deleteComment(context);
+              }),
             ],
           ),
         );
@@ -52,5 +56,10 @@ class CommentItemAdminActionsButton extends StatelessWidget {
         style: const TextStyle(fontSize: 13),
       ),
     );
+  }
+
+  Future<void> _deleteComment(BuildContext context) async {
+    await Provider.of<Comments>(context, listen: false).deleteComment(comment);
+    Navigator.of(context).pop();
   }
 }
