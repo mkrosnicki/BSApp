@@ -84,7 +84,6 @@ class LastSearchItem extends StatelessWidget {
   }
 
   List<String> _getFiltersSet() {
-    print(filterSettings);
     final List<String> filtersSet = [];
     if (filterSettings.categories.isNotEmpty) {
       filtersSet.add(filterSettings.lastCategoryString);
@@ -96,15 +95,14 @@ class LastSearchItem extends StatelessWidget {
       filtersSet.add(filterSettings.ageTypesShortString);
     }
     if (filterSettings.showInternetOnly != FilterSettings.DEFAULT_SHOW_INTERNET_ONLY) {
-      filtersSet.add('Tylko Internetowe');
+      filtersSet.add('Tylko internetowe');
     }
     if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY) {
-      filtersSet.add('Tylko Aktywne');
+      filtersSet.add('Tylko aktywne');
     }
     if (filterSettings.sortBy != FilterSettings.DEFAULT_SORTING_TYPE) {
       filtersSet.add(filterSettings.sortingString);
     }
-    print(filtersSet);
     return filtersSet;
   }
 }
