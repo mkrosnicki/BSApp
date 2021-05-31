@@ -2,6 +2,7 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/custom_snackbar.dart';
+import 'package:BSApp/widgets/deals/deal_details_info_tile.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -68,31 +69,20 @@ class DealDetailsDescription extends StatelessWidget {
               ),
             ],
           ),
-          // Container(
-          //   margin: const EdgeInsets.symmetric(vertical: 8.0),
-          //   child: Column(
-          //     children: [
-          //       _simpleTile('Intenetowa', CupertinoIcons.location_solid),
-          //       _simpleTile('Intenetowa', CupertinoIcons.location_solid),
-          //       _simpleTile('Intenetowa', CupertinoIcons.location_solid),
-          //     ],
-          //   ),
-          // ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    'Opis',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Text(deal.description),
-              ],
+          Container(
+            margin: const EdgeInsets.only(top: 16.0, bottom: 14.0),
+            child: const Text(
+              'Dodatkowe informacje',
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
+          ),
+          Wrap(
+            direction: Axis.horizontal,
+            children: [
+              const DealDetailsInfoTile('Ważna od:', '12.02.2012', 'assets/images/car.png'),
+              const DealDetailsInfoTile('Ważna od:', '12.02.2012', 'assets/images/car.png'),
+              const DealDetailsInfoTile('Ważna od:', '12.02.2012', 'assets/images/car.png'),
+            ],
           ),
           if (deal.code != null)
             Container(
@@ -143,21 +133,22 @@ class DealDetailsDescription extends StatelessWidget {
                 ),
               ),
             ),
-          Container(
-            margin: const EdgeInsets.only(top: 16.0, bottom: 14.0),
-            child: const Text(
-              'Dodatkowe informacje',
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(
+                    'Opis',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Text(deal.description),
+              ],
             ),
-          ),
-          Wrap(
-            direction: Axis.horizontal,
-            children: [
-              _buildTile(),
-              _buildTile(),
-              _buildTile(),
-            ],
-          ),
+          )
         ],
       ),
     );
@@ -188,60 +179,6 @@ class DealDetailsDescription extends StatelessWidget {
           Text(
             text,
             style: activeMenuItemStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTile() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 3.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: const Icon(CupertinoIcons.clock),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Ważna od',
-                style: const TextStyle(fontSize: 10, color: Colors.grey),
-              ),
-              const Text(
-                '12.02.2020 14.02.2020',
-                style: const TextStyle(
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _simpleTile(String text, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 1.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: Icon(
-              icon,
-              size: 14,
-            ),
-          ),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 12,
-            ),
           ),
         ],
       ),
