@@ -6,6 +6,7 @@ import 'package:BSApp/widgets/deals/deal_details_description_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'deal_details_actions.dart';
 import 'deal_details_title_price_section.dart';
 
 class DealDetailsDescription extends StatelessWidget {
@@ -27,9 +28,11 @@ class DealDetailsDescription extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DealDetailsTitlePriceSection(deal),
+          // DealDetailsActions(deal),
           DealDetailsAdditionalInfoSection(deal),
           DealDetailsDealCodeSection(deal.code),
-          DealDetailsDescriptionSection(deal.description)
+          DealDetailsDescriptionSection(deal.description),
+          DealDetailsActions(deal),
         ],
       ),
     );
