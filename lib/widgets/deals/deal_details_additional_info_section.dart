@@ -1,3 +1,4 @@
+import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +25,8 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
         Wrap(
           direction: Axis.horizontal,
           children: [
-            const DealDetailsInfoTile(
-                'Lokalizacja', '12.02.2012', 'assets/images/car.png'),
+            DealDetailsInfoTile(
+                'Kategoria', dealModel.categories[0], CategoryModelHelper.imagePathForCategoryName(dealModel.categories[0])),
             const DealDetailsInfoTile(
                 'Ważna od:', '12.02.2012', 'assets/images/car.png'),
             const DealDetailsInfoTile(

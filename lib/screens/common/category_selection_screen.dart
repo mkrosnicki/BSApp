@@ -109,7 +109,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   height: 40,
                   width: 40,
                   child: Image.asset(
-                    'assets/images/${CategoryModelHelper.assetNameFor(categories[index])}',
+                    CategoryModelHelper.imagePathForCategory(categories[index]),
                     fit: BoxFit.fitHeight,
                   ),
                 ),

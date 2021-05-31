@@ -43,38 +43,46 @@ class CategoryModel {
 }
 
 class CategoryModelHelper {
+  
+  static const String assetsLocation = 'assets/images/';
+  
 
-  static String assetNameFor(CategoryModel category) {
-    if (category.name.contains('Ubranka')) {
-      return 'pijama.png';
+  static String imagePathForCategory(CategoryModel category) {
+    return imagePathForCategoryName(category.name);
+  }
+
+  static String imagePathForCategoryName(String categoryName) {
+    String retVal = '';
+    if (categoryName.contains('Ubranka')) {
+      retVal = '${assetsLocation}pijama.png';
     }
-    if (category.name.contains('Buty')) {
-      return 'footprint.png';
+    if (categoryName.contains('Buty')) {
+      retVal = '${assetsLocation}footprint.png';
     }
-    if (category.name.contains('Pielęgnacja')) {
-      return 'bathtub.png';
+    if (categoryName.contains('Pielęgnacja')) {
+      retVal = '${assetsLocation}bathtub.png';
     }
-    if (category.name.contains('Karmienie')) {
-      return 'feeding.png';
+    if (categoryName.contains('Karmienie')) {
+      retVal = '${assetsLocation}feeding.png';
     }
-    if (category.name.contains('Wózki')) {
-      return 'stroller.png';
+    if (categoryName.contains('Wózki')) {
+      retVal = '${assetsLocation}stroller.png';
     }
-    if (category.name.contains('Foteliki')) {
-      return 'car.png';
+    if (categoryName.contains('Foteliki')) {
+      retVal = '${assetsLocation}car.png';
     }
-    if (category.name.contains('Pokój')) {
-      return 'cradle.png';
+    if (categoryName.contains('Pokój')) {
+      retVal = '${assetsLocation}cradle.png';
     }
-    if (category.name.contains('Moda')) {
-      return 'dress.png';
+    if (categoryName.contains('Moda')) {
+      retVal = '${assetsLocation}dress.png';
     }
-    if (category.name.contains('Zabawki')) {
-      return 'horse.png';
+    if (categoryName.contains('Zabawki')) {
+      retVal = '${assetsLocation}horse.png';
     }
-    if (category.name.contains('Inne')) {
-      return 'pacifier.png';
+    if (categoryName.contains('Inne')) {
+      retVal = '${assetsLocation}pacifier.png';
     }
-    return '';
+    return retVal;
   }
 }

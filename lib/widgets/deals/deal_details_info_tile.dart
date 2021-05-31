@@ -17,7 +17,7 @@ class DealDetailsInfoTile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0, right: 8.0),
             child: SizedBox(
-              width: 25.0,
+              width: 28.0,
               child: Image.asset(
                 assetPath,
                 fit: BoxFit.fitWidth,
@@ -35,7 +35,7 @@ class DealDetailsInfoTile extends StatelessWidget {
               Text(
                 subtitle,
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: 12,
                 ),
               ),
             ],

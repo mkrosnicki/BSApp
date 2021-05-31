@@ -26,7 +26,7 @@ class CategoryScrollableItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Image.asset(
-                  'assets/images/${CategoryModelHelper.assetNameFor(categoryModel)}',
+                  CategoryModelHelper.imagePathForCategory(categoryModel),
                   fit: BoxFit.fitHeight,
                 ),
               ),
