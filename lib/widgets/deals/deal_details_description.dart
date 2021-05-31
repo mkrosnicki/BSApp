@@ -28,10 +28,9 @@ class DealDetailsDescription extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DealDetailsTitlePriceSection(deal),
-          // DealDetailsActions(deal),
           DealDetailsAdditionalInfoSection(deal),
-          DealDetailsDealCodeSection(deal.code),
           DealDetailsDescriptionSection(deal.description),
+          DealDetailsDealCodeSection(deal.code),
           DealDetailsActions(deal),
         ],
       ),

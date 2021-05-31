@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class DealRateBar extends StatelessWidget {
   final String dealId;
+  final bool isBig;
 
-  const DealRateBar(this.dealId);
+  const DealRateBar(this.dealId, this.isBig);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class DealRateBar extends StatelessWidget {
               hasNegativeVote,
               hasPositiveVote ? () {} : () => _vote(context, authData.isAuthenticated, true),
               hasNegativeVote ? () {} : () => _vote(context, authData.isAuthenticated, false),
+              isBig
             );
           },
         );

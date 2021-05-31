@@ -13,6 +13,7 @@ class RateBar extends StatelessWidget {
   bool wasVotedNegatively;
   Function() negativeVoteFunction;
   Function() positiveVoteFunction;
+  bool isBig;
 
   RateBar(
       this.positiveVotes,
@@ -20,10 +21,11 @@ class RateBar extends StatelessWidget {
       this.wasVotedPositively,
       this.wasVotedNegatively,
       this.positiveVoteFunction,
-      this.negativeVoteFunction);
+      this.negativeVoteFunction,
+      this.isBig);
 
   void _initDimensions() {
-    maxHeight = 22.0;
+    maxHeight = isBig ? 30 : 22.0;
     barHeight = maxHeight * 0.7;
   }
 
@@ -42,7 +44,7 @@ class RateBar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
-                size: 18,
+                size: isBig ? 22 : 18,
                 color: wasVotedPositively ? Colors.black : Colors.black38,
               ),
             ),
@@ -129,7 +131,7 @@ class RateBar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsdown,
-                size: 18,
+                size: isBig ? 22 : 18,
                 color: wasVotedNegatively ? Colors.black : Colors.black38,
               ),
             ),
