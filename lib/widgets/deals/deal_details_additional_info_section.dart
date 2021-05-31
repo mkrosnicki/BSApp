@@ -1,6 +1,6 @@
-import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'deal_details_info_tile.dart';
@@ -32,12 +32,14 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
                 child: DealDetailsInfoTile(
                     'Kategoria',
                     dealModel.categories[0],
-                    CategoryModelHelper.imagePathForCategoryName(
+                    ImageAssetsHelper.productCategoryPath(
                         dealModel.categories[0])),
               ),
               Flexible(
-                child: DealDetailsInfoTile('Lokalizacja',
-                    dealModel.locationString, 'assets/images/car.png'),
+                child: DealDetailsInfoTile(
+                    'Lokalizacja',
+                    dealModel.locationString,
+                    ImageAssetsHelper.locationTypePath(dealModel.locationType)),
               ),
             ],
           ),
@@ -47,11 +49,15 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
             children: [
               Flexible(
                 child: DealDetailsInfoTile(
-                    'Ważna od:', DateUtil.getFormatted(dealModel.startDate), 'assets/images/car.png'),
+                    'Ważna od:',
+                    DateUtil.getFormatted(dealModel.startDate),
+                    ImageAssetsHelper.validFromImagePath()),
               ),
               Flexible(
                 child: DealDetailsInfoTile(
-                    'Ważna do:', DateUtil.getFormatted(dealModel.endDate), 'assets/images/car.png'),
+                    'Ważna do:',
+                    DateUtil.getFormatted(dealModel.endDate),
+                    ImageAssetsHelper.validToImagePath()),
               ),
             ],
           ),

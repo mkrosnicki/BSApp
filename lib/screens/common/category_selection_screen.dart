@@ -1,5 +1,6 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/providers/categories.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
@@ -109,7 +110,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                   height: 40,
                   width: 40,
                   child: Image.asset(
-                    CategoryModelHelper.imagePathForCategory(categories[index]),
+                    ImageAssetsHelper.productCategoryPath(categories[index].name),
                     fit: BoxFit.fitHeight,
                   ),
                 ),

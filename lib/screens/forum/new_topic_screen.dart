@@ -3,6 +3,7 @@ import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
@@ -90,8 +91,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                       context: context,
                       builder: (context) {
                         return FutureBuilder(
-                          future:
-                          Provider.of<TopicCategories>(context, listen: false)
+                          future: Provider.of<TopicCategories>(context,
+                                  listen: false)
                               .fetchTopicCategories(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
@@ -104,7 +105,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                 );
                               } else {
                                 return Consumer<TopicCategories>(
-                                  builder: (context, topicCategoriesData, child) {
+                                  builder:
+                                      (context, topicCategoriesData, child) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 8.0),
@@ -118,24 +120,27 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                           ...topicCategoriesData.topicCategories
                                               .map(
                                                 (e) => GestureDetector(
-                                              onTap: () => _chooseCategory(e),
-                                              child: ListTile(
-                                                leading: SizedBox(
-                                                  height: 35,
-                                                  width: 35,
-                                                  child: Image.asset(
-                                                    'assets/images/car.png',
-                                                    fit: BoxFit.fitHeight,
+                                                  onTap: () =>
+                                                      _chooseCategory(e),
+                                                  child: ListTile(
+                                                    leading: SizedBox(
+                                                      height: 35,
+                                                      width: 35,
+                                                      child: Image.asset(
+                                                        ImageAssetsHelper
+                                                            .topicCategoryPath(
+                                                                e.name),
+                                                        fit: BoxFit.fitHeight,
+                                                      ),
+                                                    ),
+                                                    title: Text(
+                                                      e.name,
+                                                      style: TextStyle(
+                                                          fontSize: 12),
+                                                    ),
                                                   ),
                                                 ),
-                                                title: Text(
-                                                  e.name,
-                                                  style:
-                                                  TextStyle(fontSize: 12),
-                                                ),
-                                              ),
-                                            ),
-                                          )
+                                              )
                                               .toList(),
                                         ],
                                       ),
@@ -157,8 +162,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       border: Border(
-                        bottom:
-                        BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
+                        bottom: BorderSide(
+                            color: MyColorsProvider.GREY_BORDER_COLOR),
                       ),
                     ),
                     child: Row(
@@ -167,14 +172,15 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            if (topicCategory != null) SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: Image.asset(
-                                'assets/images/car.png',
-                                fit: BoxFit.fitHeight,
+                            if (topicCategory != null)
+                              SizedBox(
+                                height: 25,
+                                width: 25,
+                                child: Image.asset(
+                                  ImageAssetsHelper.topicCategoryPath(topicCategory.name),
+                                  fit: BoxFit.fitHeight,
+                                ),
                               ),
-                            ),
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
@@ -200,8 +206,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   cursorColor: Colors.black,
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 13),
-                  decoration: textFieldDecoration.copyWith(
-                      hintText: 'Tytuł'),
+                  decoration: textFieldDecoration.copyWith(hintText: 'Tytuł'),
                   controller: _topicTitleController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
@@ -225,7 +230,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   style: const TextStyle(fontSize: 13),
                   onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                   decoration:
-                  textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
+                      textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
                   controller: _topicContentController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 20) {
@@ -251,8 +256,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
         .addNewTopic(_topicTitleController.text, _topicContentController.text,
             topicCategory.id)
         .then((topic) {
-      Navigator.of(context)
-          .popAndPushNamed(TopicScreen.routeName, arguments: TopicScreenArguments(topic));
+      Navigator.of(context).popAndPushNamed(TopicScreen.routeName,
+          arguments: TopicScreenArguments(topic));
     });
   }
 

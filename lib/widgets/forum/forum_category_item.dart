@@ -1,5 +1,6 @@
 import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/screens/forum/forum_category_screen.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class ForumCategoryItem extends StatelessWidget {
             height: 37,
             width: 37,
             child: Image.asset(
-              TopicCategoryModelHelper.imagePathForCategory(topicCategory),
+              ImageAssetsHelper.topicCategoryPath(topicCategory.name),
               fit: BoxFit.fitHeight,
             ),
           ),
