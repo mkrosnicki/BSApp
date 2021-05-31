@@ -21,21 +21,52 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
-        Wrap(
+        Flex(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          direction: Axis.horizontal,
           children: [
-            DealDetailsInfoTile(
-                'Kategoria',
-                dealModel.categories[0],
-                CategoryModelHelper.imagePathForCategoryName(
-                    dealModel.categories[0])),
-            DealDetailsInfoTile(
-                'Lokalizacja', dealModel.locationString, 'assets/images/car.png'),
-            const DealDetailsInfoTile(
-                'Ważna od:', '12.02.2012', 'assets/images/car.png'),
-            const DealDetailsInfoTile(
-                'Ważna do:', '12.02.2012', 'assets/images/car.png'),
+            Flexible(
+              child: DealDetailsInfoTile(
+                  'Kategoria',
+                  dealModel.categories[0],
+                  CategoryModelHelper.imagePathForCategoryName(
+                      dealModel.categories[0])),
+            ),
+            Flexible(
+              child: DealDetailsInfoTile('Lokalizacja',
+                  dealModel.locationString, 'assets/images/car.png'),
+            ),
           ],
         ),
+        Flex(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          direction: Axis.horizontal,
+          children: [
+            Flexible(
+              child: const DealDetailsInfoTile(
+                  'Ważna od:', '12.02.2012', 'assets/images/car.png'),
+            ),
+            Flexible(
+              child: const DealDetailsInfoTile(
+                  'Ważna do:', '12.02.2012', 'assets/images/car.png'),
+            ),
+          ],
+        ),
+        // Wrap(
+        //   children: [
+        //     DealDetailsInfoTile(
+        //         'Kategoria',
+        //         dealModel.categories[0],
+        //         CategoryModelHelper.imagePathForCategoryName(
+        //             dealModel.categories[0])),
+        //     DealDetailsInfoTile('Lokalizacja', dealModel.locationString,
+        //         'assets/images/car.png'),
+        //     const DealDetailsInfoTile(
+        //         'Ważna od:', '12.02.2012', 'assets/images/car.png'),
+        //     const DealDetailsInfoTile(
+        //         'Ważna do:', '12.02.2012', 'assets/images/car.png'),
+        //   ],
+        // ),
       ],
     );
   }
