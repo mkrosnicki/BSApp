@@ -23,7 +23,7 @@ class ForumCategoryItem extends StatelessWidget {
             height: 37,
             width: 37,
             child: Image.asset(
-              'assets/images/car.png',
+              TopicCategoryModelHelper.imagePathForCategory(topicCategory),
               fit: BoxFit.fitHeight,
             ),
           ),
