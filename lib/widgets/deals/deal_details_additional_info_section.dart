@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'deal_details_info_tile.dart';
 
 class DealDetailsAdditionalInfoSection extends StatelessWidget {
-
   final DealModel dealModel;
 
   const DealDetailsAdditionalInfoSection(this.dealModel);
@@ -23,14 +22,18 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
           ),
         ),
         Wrap(
-          direction: Axis.horizontal,
           children: [
             DealDetailsInfoTile(
-                'Kategoria', dealModel.categories[0], CategoryModelHelper.imagePathForCategoryName(dealModel.categories[0])),
+                'Kategoria',
+                dealModel.categories[0],
+                CategoryModelHelper.imagePathForCategoryName(
+                    dealModel.categories[0])),
+            DealDetailsInfoTile(
+                'Lokalizacja', dealModel.locationString, 'assets/images/car.png'),
             const DealDetailsInfoTile(
                 'Ważna od:', '12.02.2012', 'assets/images/car.png'),
             const DealDetailsInfoTile(
-                'Kategoria', 'Bodziaki', 'assets/images/car.png'),
+                'Ważna do:', '12.02.2012', 'assets/images/car.png'),
           ],
         ),
       ],
