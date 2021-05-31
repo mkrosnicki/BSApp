@@ -1,5 +1,6 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 import 'deal_details_info_tile.dart';
@@ -43,12 +44,12 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
           direction: Axis.horizontal,
           children: [
             Flexible(
-              child: const DealDetailsInfoTile(
-                  'Ważna od:', '12.02.2012', 'assets/images/car.png'),
+              child: DealDetailsInfoTile(
+                  'Ważna od:', DateUtil.getFormatted(dealModel.startDate), 'assets/images/car.png'),
             ),
             Flexible(
-              child: const DealDetailsInfoTile(
-                  'Ważna do:', '12.02.2012', 'assets/images/car.png'),
+              child: DealDetailsInfoTile(
+                  'Ważna do:', DateUtil.getFormatted(dealModel.endDate), 'assets/images/car.png'),
             ),
           ],
         ),
