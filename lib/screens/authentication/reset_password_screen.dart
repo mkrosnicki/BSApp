@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +47,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return Scaffold(
       appBar: const BaseAppBar(
         title: 'Resetowanie hasła',
+        leading: AppBarBackButton(Colors.black),
       ),
       body: SingleChildScrollView(
         child: Column(
