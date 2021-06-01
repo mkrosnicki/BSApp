@@ -1,8 +1,8 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,11 @@ class RegistrationForm extends StatefulWidget {
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final Map<String, String> _authData = {'email': '', 'password': '', 'username': ''};
+  final Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+    'username': ''
+  };
   bool _isLoading = false;
 
   final _emailController = TextEditingController();
@@ -70,23 +74,23 @@ class _RegistrationFormState extends State<RegistrationForm> {
           .contains('must be a well-formed email address')) {
         errorMessage = 'Email został podany w złym formacie!';
       }
-      await showInformationDialog(context, const Text('Błąd rejestracji'), Text(errorMessage), const Text('Ok'));
+      await infoDialog(context, title: 'Błąd', textContent: errorMessage);
     } catch (error) {
       const errorMessage =
           'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
-      await showInformationDialog(context, const Text('Błąd rejestracji'), const Text(errorMessage), const Text('Ok'));
+      await infoDialog(context, title: 'Błąd', textContent: errorMessage);
     }
 
     setState(() {
       _isLoading = false;
     });
     if (signUpSuccessful) {
-      await showInformationDialog(
-          context,
-          const Text('Konto zostało utworzone.'),
-          const Text(
-              'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.'),
-          const Text('Ok'));
+      await infoDialog(
+        context,
+        title: 'Konto zostało utworzone',
+        textContent:
+            'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.',
+      );
       Navigator.of(context).pop();
     }
   }
@@ -107,8 +111,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   children: [
                     const FormTitle('Zarejestruj się'),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
@@ -127,8 +130,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _nameController,
                         cursorColor: Colors.black,
@@ -147,8 +149,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
@@ -167,8 +168,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _confirmPasswordController,
                         cursorColor: Colors.black,

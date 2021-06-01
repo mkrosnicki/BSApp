@@ -45,7 +45,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   }
 
   Future<void> _showDialog(String title, String message) async {
-    await confirmInfo(
+    await infoDialog(
       context,
       title: title,
       textContent: message,

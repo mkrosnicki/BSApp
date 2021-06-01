@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> _showErrorDialog(String message) async {
-    await confirmInfo(
+    await infoDialog(
       context,
       title: 'Błąd',
       textContent: 'Wystąpił błąd podczas próby logowania.',
@@ -95,11 +95,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> _showNotVerifiedDialog() async {
-    await confirmInfo(
+    await infoDialog(
       context,
       title: 'Błąd',
       textContent:
-          'Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n Jeśli nie otrzymałeś linku aktywacyjnego możemy wysłać go ponownie.',
+          'Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n\n Jeśli nie otrzymałeś linku aktywacyjnego możemy wysłać go ponownie.',
       additionalAction: () {
         _resendActivationToken(context);
       },

@@ -2,7 +2,7 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 
-Future<void> confirmInfo(
+Future<void> infoDialog(
   BuildContext context, {
   String title,
   String textContent,

@@ -23,7 +23,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
     _formKey.currentState.save();
     Provider.of<Auth>(context, listen: false).resetUserPassword(_email);
-    await confirmInfo(
+    await infoDialog(
       context,
       title: 'Sukces',
       textContent: 'Hasło zostało zresetowane',
