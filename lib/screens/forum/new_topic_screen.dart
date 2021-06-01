@@ -127,7 +127,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                               ),
                                               title: Text(
                                                 topic.name,
-                                                style: TextStyle(fontSize: 12),
+                                                style: const TextStyle(fontSize: 12),
                                               ),
                                             ),
                                           );
@@ -160,20 +160,20 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             if (topicCategory != null)
-                              SizedBox(
-                                height: 25,
-                                width: 25,
-                                child: Image.asset(
-                                  ImageAssetsHelper.topicCategoryPath(topicCategory.name),
-                                  fit: BoxFit.fitHeight,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: SizedBox(
+                                  height: 25,
+                                  width: 25,
+                                  child: Image.asset(
+                                    ImageAssetsHelper.topicCategoryPath(topicCategory.name),
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                topicCategory != null ? topicCategory.name : 'Wybierz temat',
-                                style: const TextStyle(fontSize: 13, color: Colors.black87),
-                              ),
+                            Text(
+                              topicCategory != null ? topicCategory.name : 'Wybierz temat',
+                              style: const TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                           ],
                         ),
