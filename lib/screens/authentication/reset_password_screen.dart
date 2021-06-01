@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const BaseAppBar(
         title: 'Resetowanie hasła',
         leading: AppBarBackButton(Colors.black),
@@ -57,35 +59,29 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50.0),
-                    child: Text(
-                      'Resetowanie',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 40),
-                    ),
-                  ),
-                  const Text(
-                    'Hasła',
-                    style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    'W celu zresetowania hasła podaj adres email na jaki zostało zarejestrowane konto.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black38,
+                  Container(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'W celu zresetowania hasła podaj przypisany do konta adres email.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                      ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         TextFormField(
-                          decoration: const InputDecoration(labelText: 'Email'),
+                          decoration: MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: 'Email'),
                           keyboardType: TextInputType.emailAddress,
                           cursorColor: Colors.black,
                           validator: (value) {
