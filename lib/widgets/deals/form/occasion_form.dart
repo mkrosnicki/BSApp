@@ -11,6 +11,7 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -378,12 +379,9 @@ class _OccasionFormState extends State<OccasionForm> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: TextButton(
-                        onPressed: _submit,
-                        child: const Text(
-                          'Dodaj ogłoszenie',
-                          style: MyStylingProvider.TEXT_BLACK,
-                        ),
+                      child: PrimaryButton(
+                        'Dodaj ogłoszenie',
+                        _submit
                       ),
                     ),
                   ],

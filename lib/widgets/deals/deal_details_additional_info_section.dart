@@ -12,6 +12,7 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(dealModel);
     return Container(
       margin: const EdgeInsets.only(top: 14.0, bottom: 8.0),
       child: Column(
@@ -64,21 +65,6 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
               ),
             ],
           ),
-          // Wrap(
-          //   children: [
-          //     DealDetailsInfoTile(
-          //         'Kategoria',
-          //         dealModel.categories[0],
-          //         CategoryModelHelper.imagePathForCategoryName(
-          //             dealModel.categories[0])),
-          //     DealDetailsInfoTile('Lokalizacja', dealModel.locationString,
-          //         'assets/images/car.png'),
-          //     const DealDetailsInfoTile(
-          //         'Ważna od:', '12.02.2012', 'assets/images/car.png'),
-          //     const DealDetailsInfoTile(
-          //         'Ważna do:', '12.02.2012', 'assets/images/car.png'),
-          //   ],
-          // ),
         ],
       ),
     );

@@ -152,9 +152,10 @@ class DealModel {
     return endDate != null && DateTime.now().isAfter(endDate);
   }
 
+
   @override
   String toString() {
-    return 'DealModel{id: $id, title: $title, dealType: $dealType}';
+    return 'DealModel{id: $id, title: $title, dealType: $dealType, categories: $categories}';
   }
 
   @override

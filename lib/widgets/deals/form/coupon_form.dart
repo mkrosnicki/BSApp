@@ -11,6 +11,7 @@ import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/form/image_picker_dialog.dart';
 import 'package:BSApp/widgets/deals/form/localisation_selector.dart';
 import 'package:flutter/cupertino.dart';
@@ -380,12 +381,9 @@ class _CouponFormState extends State<CouponForm> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: TextButton(
-                        onPressed: _submit,
-                        child: const Text(
+                      child: PrimaryButton(
                           'Dodaj kupon',
-                          style: MyStylingProvider.TEXT_BLACK,
-                        ),
+                          _submit
                       ),
                     ),
                   ],
