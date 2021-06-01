@@ -405,9 +405,30 @@ class _OccasionFormState extends State<OccasionForm> {
         width: double.infinity,
       );
     } else {
-      return const Text(
-        'Dodaj obrazek',
-        textAlign: TextAlign.center,
+      return Container(
+        color: Colors.yellow.shade50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 40.0,
+              child: Image.asset(
+                'assets/images/image-upload-pngrepo-com.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              // height: 40.0,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 10.0),
+              child: const Text(
+                'Dodaj obrazek',
+                // textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
       );
     }
   }
