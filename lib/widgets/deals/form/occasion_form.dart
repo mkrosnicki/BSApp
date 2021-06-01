@@ -6,6 +6,7 @@ import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/information_dialog.dart';
@@ -63,11 +64,10 @@ class _OccasionFormState extends State<OccasionForm> {
       setState(() {
         _isLoading = false;
       });
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Sukces!'),
-        const Text('Ogłoszenie zostało dodane'),
-        const Text('Ok'),
+        title: 'Sukces!',
+        textContent: 'Ogłoszenie zostało dodane',
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
@@ -75,19 +75,17 @@ class _OccasionFormState extends State<OccasionForm> {
       if (error.toString().contains('Unauthorized')) {
         errorMessage = 'W celu dodania ogłoszenia zaloguj się!';
       }
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania ogłoszenia'),
-        Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd podczas dodawania ogłoszenia',
+        textContent: errorMessage,
       );
     } catch (error) {
       const errorMessage = 'Coś poszło nie tak. Spróbuj później!';
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania ogłoszenia'),
-        const Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd podczas dodawania ogłoszenia',
+        textContent: errorMessage,
       );
     }
     setState(() {

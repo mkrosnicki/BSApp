@@ -7,9 +7,9 @@ import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/deals/form/image_picker_dialog.dart';
 import 'package:BSApp/widgets/deals/form/localisation_selector.dart';
@@ -63,11 +63,10 @@ class _CouponFormState extends State<CouponForm> {
       setState(() {
         _isLoading = false;
       });
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Sukces!'),
-        const Text('Kupon został dodany'),
-        const Text('Ok'),
+        title: 'Sukces!',
+        textContent: 'Kupon został dodany',
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
@@ -75,19 +74,17 @@ class _CouponFormState extends State<CouponForm> {
       if (error.toString().contains('Unauthorized')) {
         errorMessage = 'W celu dodania kuponu zaloguj się!';
       }
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania kuponu'),
-        Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd podczas dodawania kuponu',
+        textContent: errorMessage,
       );
     } catch (error) {
       const errorMessage = 'Coś poszło nie tak. Spróbuj później!';
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania ogłoszenia'),
-        const Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd',
+        textContent: errorMessage,
       );
     }
     setState(() {
