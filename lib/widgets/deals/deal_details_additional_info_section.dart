@@ -24,24 +24,27 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
           ),
-          Flex(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            direction: Axis.horizontal,
-            children: [
-              Flexible(
-                child: DealDetailsInfoTile(
-                    'Kategoria',
-                    dealModel.categories[0],
-                    ImageAssetsHelper.productCategoryPath(
-                        dealModel.categories[0])),
-              ),
-              Flexible(
-                child: DealDetailsInfoTile(
-                    'Lokalizacja',
-                    dealModel.locationString,
-                    ImageAssetsHelper.locationTypePath(dealModel.locationType)),
-              ),
-            ],
+          Container(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Flex(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              direction: Axis.horizontal,
+              children: [
+                Flexible(
+                  child: DealDetailsInfoTile(
+                      'Kategoria',
+                      dealModel.categories[0],
+                      ImageAssetsHelper.productCategoryPath(
+                          dealModel.categories[0])),
+                ),
+                Flexible(
+                  child: DealDetailsInfoTile(
+                      'Lokalizacja',
+                      dealModel.locationString,
+                      ImageAssetsHelper.locationTypePath(dealModel.locationType)),
+                ),
+              ],
+            ),
           ),
           Flex(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
