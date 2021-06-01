@@ -1,4 +1,5 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,52 +12,53 @@ class DealDetailsAuthor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-      child: Flex(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Wrap(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: UserAvatar(
-                  username: deal.addedByUsername,
-                  radius: 22,
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: deal.addedById),
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        margin: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  child: SizedBox(
+                    width: 38.0,
+                    child: UserAvatar(
+                      username: deal.addedByUsername,
+                      radius: 24,
+                    ),
+                  ),
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2.0),
-                    child: Text(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Okazja dodana przez',
+                      style: TextStyle(fontSize: 12, color: Colors.grey, height: 1.5),
+                    ),
+                    Text(
                       deal.addedByUsername,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  Text(
-                    deal.addedByUsername,
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Icon(
-            CupertinoIcons.chevron_right,
-            color: MyColorsProvider.DEEP_BLUE,
-          )
-        ],
+                  ],
+                ),
+              ],
+            ),
+            const Icon(
+              CupertinoIcons.chevron_right,
+              color: MyColorsProvider.DEEP_BLUE,
+            ),
+          ],
+        ),
       ),
     );
   }
