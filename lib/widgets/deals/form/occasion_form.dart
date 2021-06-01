@@ -7,6 +7,7 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/services/custom_info.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -286,65 +287,78 @@ class _OccasionFormState extends State<OccasionForm> {
                       child: AgeTypeChips(_newDeal),
                     ),
                     const FormFieldDivider(),
-                    GestureDetector(
-                      onTap: () => _selectDate(DealDateType.VALID_FROM),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                width: 25.0,
-                                child: Image.asset(
-                                  ImageAssetsHelper.validFromImagePath(),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            // IconButton(
-                            //   icon: const Icon(Icons.calendar_today),
-                            //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                            //   color: MyColorsProvider.BLUE,
-                            // ),
-                            const Text('Okazja ważna od: '),
-                            Text(
-                              "${_newDeal.validFrom.toLocal()}".split(' ')[0],
-                            ),
-                          ],
+                    Flex(
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child:
+                              _buildDateSelectionTile(DealDateType.VALID_FROM),
                         ),
-                      ),
-                    ),
-                    const FormFieldDivider(),
-                    GestureDetector(
-                      onTap: () => _selectDate(DealDateType.VALID_TO),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                width: 25.0,
-                                child: Image.asset(
-                                  ImageAssetsHelper.validToImagePath(),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            // IconButton(
-                            //   icon: const Icon(Icons.calendar_today),
-                            //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                            //   color: MyColorsProvider.BLUE,
-                            // ),
-                            const Text('Okazja ważna do: '),
-                            Text(
-                              "${_newDeal.validTo.toLocal()}".split(' ')[0],
-                            ),
-                          ],
+                        Flexible(
+                          child: _buildDateSelectionTile(DealDateType.VALID_TO),
                         ),
-                      ),
+                      ],
                     ),
+                    // GestureDetector(
+                    //   onTap: () => _selectDate(DealDateType.VALID_FROM),
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    //     child: Row(
+                    //       children: <Widget>[
+                    //         Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: SizedBox(
+                    //             width: 25.0,
+                    //             child: Image.asset(
+                    //               ImageAssetsHelper.validFromImagePath(),
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         // IconButton(
+                    //         //   icon: const Icon(Icons.calendar_today),
+                    //         //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
+                    //         //   color: MyColorsProvider.BLUE,
+                    //         // ),
+                    //         const Text('Okazja ważna od: '),
+                    //         Text(
+                    //           "${_newDeal.validFrom.toLocal()}".split(' ')[0],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // const FormFieldDivider(),
+                    // GestureDetector(
+                    //   onTap: () => _selectDate(DealDateType.VALID_TO),
+                    //   child: Container(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    //     child: Row(
+                    //       children: <Widget>[
+                    //         Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: SizedBox(
+                    //             width: 25.0,
+                    //             child: Image.asset(
+                    //               ImageAssetsHelper.validToImagePath(),
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         // IconButton(
+                    //         //   icon: const Icon(Icons.calendar_today),
+                    //         //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
+                    //         //   color: MyColorsProvider.BLUE,
+                    //         // ),
+                    //         const Text('Okazja ważna do: '),
+                    //         Text(
+                    //           "${_newDeal.validTo.toLocal()}".split(' ')[0],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     const FormFieldDivider(),
                     TextFormField(
                       validator: (value) {
@@ -531,5 +545,51 @@ class _OccasionFormState extends State<OccasionForm> {
 
   bool _isUrl(String value) {
     return Uri.parse(value).isAbsolute;
+  }
+
+  Widget _buildDateSelectionTile(DealDateType dateType) {
+    return GestureDetector(
+      onTap: () => _selectDate(dateType),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: SizedBox(
+                width: 27.0,
+                child: Image.asset(
+                  dateType == DealDateType.VALID_FROM
+                      ? ImageAssetsHelper.validFromImagePath()
+                      : ImageAssetsHelper.validToImagePath(),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  dateType == DealDateType.VALID_FROM
+                      ? 'Okazja ważna od'
+                      : 'Okazja ważna do',
+                  style: const TextStyle(
+                      fontSize: 11, color: Colors.grey, height: 1.5),
+                ),
+                Text(
+                  DateUtil.getFormatted(dateType == DealDateType.VALID_FROM
+                      ? _newDeal.validFrom
+                      : _newDeal.validTo),
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
