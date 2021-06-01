@@ -4,6 +4,13 @@ class ImageAssetsHelper {
 
   static const String assetsLocation = 'assets/images/';
 
+  static String imageDownloadPath() {
+    return '${assetsLocation}image-download-pngrepo-com.png';
+  }
+
+  static String imageUploadPath() {
+    return '${assetsLocation}image-upload-pngrepo-com.png';
+  }
 
   static String topicCategoryPath(String categoryName) {
     String retVal = '';

@@ -7,11 +7,12 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/services/custom_info.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/common/information_dialog.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
+import 'package:BSApp/widgets/deals/form/form_field_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,7 +46,6 @@ class _OccasionFormState extends State<OccasionForm> {
     _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
     _newDeal.discountType = null;
   }
-
 
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
@@ -139,9 +139,7 @@ class _OccasionFormState extends State<OccasionForm> {
                           .textFormFiledDecorationWithLabelText(
                               'Tytuł ogłoszenia'),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     TextFormField(
                       initialValue: _newDeal.description,
                       validator: (value) {
@@ -159,11 +157,8 @@ class _OccasionFormState extends State<OccasionForm> {
                       decoration: MyStylingProvider
                           .textFormFiledDecorationWithLabelText('Opis'),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Flexible(
                           child: TextFormField(
@@ -182,36 +177,48 @@ class _OccasionFormState extends State<OccasionForm> {
                             },
                             decoration: MyStylingProvider
                                 .textFormFiledDecorationWithLabelText(
-                                'Link do okazji'),
+                                    'Link do okazji'),
                           ),
                         ),
-                        IconButton(
-                            splashRadius: 25,
-                            icon: const Icon(
-                              CupertinoIcons.photo,
+                        GestureDetector(
+                          // TODO stack transparent?
+                          onTap: _isImageButtonDisabled
+                              ? null
+                              : () => _buildImagePickerDialog(context),
+                          behavior: HitTestBehavior.translucent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 30.0,
+                              child: Image.asset(
+                                ImageAssetsHelper.imageDownloadPath(),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            onPressed: _isImageButtonDisabled
-                                ? null
-                                : () => _buildImagePickerDialog(context)),
+                          ),
+                        ),
+                        // IconButton(
+                        //   splashRadius: 25,
+                        //   icon: const Icon(
+                        //     CupertinoIcons.photo,
+                        //   ),
+                        //   onPressed: _isImageButtonDisabled
+                        //       ? null
+                        //       : () => _buildImagePickerDialog(context),
+                        // ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     GestureDetector(
                       onTap: _takePicture,
                       child: Container(
                         width: double.infinity,
                         height: 120,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
                         alignment: Alignment.center,
                         child: _getImage(),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     Container(
                       margin: const EdgeInsets.only(left: 16),
                       child: Row(
@@ -228,9 +235,7 @@ class _OccasionFormState extends State<OccasionForm> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     if (!_showInternetOnly)
                       ListTile(
                         title: const Text('Lokalizacja'),
@@ -244,9 +249,7 @@ class _OccasionFormState extends State<OccasionForm> {
                         onTap: () => _openLocationSelector(),
                         enabled: !_showInternetOnly,
                       ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     if (!_showInternetOnly)
                       Column(
                         children: [
@@ -282,41 +285,67 @@ class _OccasionFormState extends State<OccasionForm> {
                       width: double.infinity,
                       child: AgeTypeChips(_newDeal),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                          color: MyColorsProvider.BLUE,
+                    const FormFieldDivider(),
+                    GestureDetector(
+                      onTap: () => _selectDate(DealDateType.VALID_FROM),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 25.0,
+                                child: Image.asset(
+                                  ImageAssetsHelper.validFromImagePath(),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            // IconButton(
+                            //   icon: const Icon(Icons.calendar_today),
+                            //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
+                            //   color: MyColorsProvider.BLUE,
+                            // ),
+                            const Text('Okazja ważna od: '),
+                            Text(
+                              "${_newDeal.validFrom.toLocal()}".split(' ')[0],
+                            ),
+                          ],
                         ),
-                        const Text('Okazja zaczyna się: '),
-                        Text(
-                          "${_newDeal.validFrom.toLocal()}".split(' ')[0],
+                      ),
+                    ),
+                    const FormFieldDivider(),
+                    GestureDetector(
+                      onTap: () => _selectDate(DealDateType.VALID_TO),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 25.0,
+                                child: Image.asset(
+                                  ImageAssetsHelper.validToImagePath(),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            // IconButton(
+                            //   icon: const Icon(Icons.calendar_today),
+                            //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
+                            //   color: MyColorsProvider.BLUE,
+                            // ),
+                            const Text('Okazja ważna do: '),
+                            Text(
+                              "${_newDeal.validTo.toLocal()}".split(' ')[0],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(DealDateType.VALID_TO),
-                          color: MyColorsProvider.BLUE,
-                        ),
-                        const Text('Okazja kończy się: '),
-                        Text(
-                          "${_newDeal.validTo.toLocal()}".split(' ')[0],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -335,9 +364,7 @@ class _OccasionFormState extends State<OccasionForm> {
                           .textFormFiledDecorationWithLabelText(
                               'Regularna cena'),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -356,9 +383,7 @@ class _OccasionFormState extends State<OccasionForm> {
                           .textFormFiledDecorationWithLabelText(
                               'Aktualna cena'),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
                     TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
@@ -379,10 +404,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: PrimaryButton(
-                        'Dodaj ogłoszenie',
-                        _submit
-                      ),
+                      child: PrimaryButton('Dodaj ogłoszenie', _submit),
                     ),
                   ],
                 ),
@@ -411,9 +433,9 @@ class _OccasionFormState extends State<OccasionForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 40.0,
+              height: 30.0,
               child: Image.asset(
-                'assets/images/image-upload-pngrepo-com.png',
+                ImageAssetsHelper.imageUploadPath(),
                 fit: BoxFit.cover,
               ),
             ),
@@ -424,7 +446,8 @@ class _OccasionFormState extends State<OccasionForm> {
               child: const Text(
                 'Dodaj obrazek',
                 // textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.w600, height: 1.6),
               ),
             ),
           ],
