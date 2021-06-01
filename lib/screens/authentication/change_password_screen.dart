@@ -1,5 +1,6 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -26,35 +27,28 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     }
     _formKey.currentState.save();
     try {
-      await Provider.of<Auth>(context, listen: false).changeUserPassword(_currentPassword, _newPassword);
-      await _showDialog('Zmiana hasła', 'Hasło zostało zmienione.');
+      await Provider.of<Auth>(context, listen: false)
+          .changeUserPassword(_currentPassword, _newPassword);
+      await _showDialog('Sukces', 'Hasło zostało zmienione.');
       Navigator.of(context).pop();
     } on CustomException catch (error) {
       if (error.toString().contains('Old password does not match')) {
         //
-        await _showDialog('Błąd podczas zmieniania hasła', 'Podane hasło nie jest obecnym hasłem!');
+        await _showDialog(
+            'Błąd podczas zmiany hasła', 'Nieprawidłowe stare hasło!');
       }
     } catch (error) {
-      const errorMessage = 'Zmiana hasła zakończyła się niepowodzeniem. Spróbuj później.';
+      const errorMessage =
+          'Zmiana hasła zakończyła się niepowodzeniem. Spróbuj później.';
       await _showDialog('Błąd podczas zmieniania hasła', errorMessage);
     }
   }
 
   Future<void> _showDialog(String title, String message) async {
-    await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: const Text('Ok'),
-          )
-        ],
-      ),
+    await confirmInfo(
+      context,
+      title: title,
+      textContent: message,
     );
   }
 
@@ -98,7 +92,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: TextFormField(
-                            decoration: MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: 'Obecne hasło'),
+                            decoration: MyStylingProvider
+                                .TEXT_FORM_FIELD_DECORATION
+                                .copyWith(hintText: 'Obecne hasło'),
                             obscureText: true,
                             cursorColor: Colors.black,
                             validator: (value) {
@@ -116,7 +112,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: TextFormField(
-                            decoration: MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: 'Nowe hasło'),
+                            decoration: MyStylingProvider
+                                .TEXT_FORM_FIELD_DECORATION
+                                .copyWith(hintText: 'Nowe hasło'),
                             obscureText: true,
                             cursorColor: Colors.black,
                             controller: _newPasswordController,
@@ -135,8 +133,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: TextFormField(
-                            decoration:
-                                MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: 'Potwierdź hasło'),
+                            decoration: MyStylingProvider
+                                .TEXT_FORM_FIELD_DECORATION
+                                .copyWith(hintText: 'Potwierdź hasło'),
                             obscureText: true,
                             cursorColor: Colors.black,
                             validator: (value) {

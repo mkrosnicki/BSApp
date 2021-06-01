@@ -1,4 +1,5 @@
 import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -22,24 +23,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
     _formKey.currentState.save();
     Provider.of<Auth>(context, listen: false).resetUserPassword(_email);
-    await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-              title: const Text('Hasło zostało zresetowane'),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                      },
-                      child: const Text('Ok'),
-                    )
-                  ],
-                )
-              ],
-            ));
+    await confirmInfo(
+      context,
+      title: 'Sukces',
+      textContent: 'Hasło zostało zresetowane',
+    );
     Navigator.of(context).pop();
   }
 
@@ -81,7 +69,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: Column(
                       children: [
                         TextFormField(
-                          decoration: MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: 'Email'),
+                          decoration: MyStylingProvider
+                              .TEXT_FORM_FIELD_DECORATION
+                              .copyWith(hintText: 'Email'),
                           keyboardType: TextInputType.emailAddress,
                           cursorColor: Colors.black,
                           validator: (value) {
