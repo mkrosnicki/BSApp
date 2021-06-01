@@ -32,6 +32,7 @@ class DealModel {
   final List<String> positiveVoters;
   final List<String> negativeVoters;
   final Image image;
+  final String imagePath;
 
   DealModel({
     @required this.id,
@@ -60,6 +61,7 @@ class DealModel {
     @required this.positiveVoters,
     @required this.negativeVoters,
     @required this.image,
+    @required this.imagePath,
   });
 
   static List<DealModel> fromJsonList(List<dynamic> dealsSnapshot) {
@@ -103,6 +105,7 @@ class DealModel {
       positiveVoters: [...dealSnapshot['positiveVoters'] as List],
       negativeVoters: [...dealSnapshot['negativeVoters'] as List],
       image: _getImage(dealSnapshot),
+      imagePath: dealSnapshot['imagePath'] != null ? dealSnapshot['imagePath'] : null,
       // image: null,
     );
   }
@@ -165,6 +168,6 @@ class DealModel {
     }
     // var image = File('test.png');
     // return image.writeAsBytesSync(base64Image);
-    return Image.memory(base64Image);
+    return Image.memory(base64Image, fit: BoxFit.cover,);
   }
 }

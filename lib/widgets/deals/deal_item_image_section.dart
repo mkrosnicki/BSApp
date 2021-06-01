@@ -10,13 +10,13 @@ class DealItemImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     const double imageHeight = 130.0;
     const double minIndicatorHeight = 22.0;
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+        Navigator.of(context)
+            .pushNamed(DealDetailsScreen.routeName, arguments: deal);
       },
       child: Stack(
         children: [
@@ -33,29 +33,42 @@ class DealItemImageSection extends StatelessWidget {
                 bottomLeft: Radius.circular(4.0),
               ),
               child: deal.image ??
-                  Image.network(
-                    'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
-                    fit: BoxFit.cover,
+                  (deal.imagePath != null
+                      ? Image.network(
+                          deal.imagePath,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
+                          fit: BoxFit.cover,
+                        )),
+            ),
+          ),
+          if (!_willBeValidLongerThanOneDay())
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(4.0),
+                bottomLeft: Radius.circular(4.0),
+              ),
+              child: Container(
+                margin: const EdgeInsets.only(
+                    top: imageHeight - minIndicatorHeight),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                color: Colors.black26,
+                constraints: const BoxConstraints(
+                  minHeight: minIndicatorHeight,
+                ),
+                child: Center(
+                  child: Text(
+                    _isExpired()
+                        ? 'Wygasła'
+                        : 'Wygasa za ${_expiresInHours()}h',
+                    style: const TextStyle(fontSize: 11, color: Colors.white),
                   ),
-            ),
-          ),
-          if (!_willBeValidLongerThanOneDay()) ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(4.0),
-              bottomLeft: Radius.circular(4.0),
-            ),
-            child: Container(
-              margin: const EdgeInsets.only(top: imageHeight - minIndicatorHeight),
-              padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
-              color: Colors.black26,
-              constraints: const BoxConstraints(
-                minHeight: minIndicatorHeight,
-              ),
-              child: Center(
-                child: Text(_isExpired() ? 'Wygasła' : 'Wygasa za ${_expiresInHours()}h', style: const TextStyle(fontSize: 11, color: Colors.white),),
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -75,6 +88,7 @@ class DealItemImageSection extends StatelessWidget {
   }
 
   bool _isNearExpiry() {
-    return deal.endDate != null && DateTime.now().difference(deal.endDate).inHours <= 24;
+    return deal.endDate != null &&
+        DateTime.now().difference(deal.endDate).inHours <= 24;
   }
 }
