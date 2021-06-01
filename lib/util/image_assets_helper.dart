@@ -76,7 +76,7 @@ class ImageAssetsHelper {
   }
 
   static String internetPath() {
-    return '${assetsLocation}worldwide-planer-earth-pngrepo-com.png';
+    return '${assetsLocation}worldwide-planet-earth-pngrepo-com.png';
   }
 
   static String localPath() {
