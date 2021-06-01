@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,12 +20,30 @@ class CommentWithRepliesItem extends StatefulWidget {
 class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   bool showAnswers;
-
+  StreamSubscription subscription;
 
   @override
   void initState() {
     showAnswers = false;
+    subscription = widget.commentToReplySubject.listen((value) {
+      if (value != null && value.id == widget.comment.id) {
+        _showAnswers(true);
+      }
+    });
     super.initState();
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    // widget.dep
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    subscription = null;
+    super.dispose();
   }
 
   @override

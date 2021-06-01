@@ -31,8 +31,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
     hintStyle: TextStyle(fontSize: 13),
     border: InputBorder.none,
     isDense: true,
-    contentPadding:
-        EdgeInsets.only(left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
+    contentPadding: EdgeInsets.only(left: 12.0, right: 12.0, bottom: 8.0, top: 8.0),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: MyColorsProvider.BLUE),
     ),
@@ -91,12 +90,9 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                       context: context,
                       builder: (context) {
                         return FutureBuilder(
-                          future: Provider.of<TopicCategories>(context,
-                                  listen: false)
-                              .fetchTopicCategories(),
+                          future: Provider.of<TopicCategories>(context, listen: false).fetchTopicCategories(),
                           builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(child: LoadingIndicator());
                             } else {
                               if (snapshot.error != null) {
@@ -105,45 +101,38 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                                 );
                               } else {
                                 return Consumer<TopicCategories>(
-                                  builder:
-                                      (context, topicCategoriesData, child) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text('Wybierz temat'),
-                                          ),
-                                          ...topicCategoriesData.topicCategories
-                                              .map(
-                                                (e) => GestureDetector(
-                                                  onTap: () =>
-                                                      _chooseCategory(e),
-                                                  child: ListTile(
-                                                    leading: SizedBox(
-                                                      height: 35,
-                                                      width: 35,
-                                                      child: Image.asset(
-                                                        ImageAssetsHelper
-                                                            .topicCategoryPath(
-                                                                e.name),
-                                                        fit: BoxFit.fitHeight,
-                                                      ),
-                                                    ),
-                                                    title: Text(
-                                                      e.name,
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    ),
-                                                  ),
+                                  builder: (context, topicCategoriesData, child) {
+                                    return ListView.builder(
+                                      itemCount: topicCategoriesData.topicCategories.length + 1,
+                                      itemBuilder: (context, index) {
+                                        if (index == 0) {
+                                          return Container(
+                                            alignment: Alignment.center,
+                                            padding: const EdgeInsets.only(bottom: 8.0, top: 14.0),
+                                            child: const Text('Wybierz temat'),
+                                          );
+                                        } else {
+                                          final TopicCategoryModel topic =
+                                              topicCategoriesData.topicCategories[index - 1];
+                                          return GestureDetector(
+                                            onTap: () => _chooseCategory(topic),
+                                            child: ListTile(
+                                              leading: SizedBox(
+                                                height: 35,
+                                                width: 35,
+                                                child: Image.asset(
+                                                  ImageAssetsHelper.topicCategoryPath(topic.name),
+                                                  fit: BoxFit.fitHeight,
                                                 ),
-                                              )
-                                              .toList(),
-                                        ],
-                                      ),
+                                              ),
+                                              title: Text(
+                                                topic.name,
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
                                     );
                                   },
                                 );
@@ -156,14 +145,12 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   },
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                     margin: const EdgeInsets.only(bottom: 14.0, top: 6.0),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       border: Border(
-                        bottom: BorderSide(
-                            color: MyColorsProvider.GREY_BORDER_COLOR),
+                        bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
                       ),
                     ),
                     child: Row(
@@ -184,11 +171,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                topicCategory != null
-                                    ? topicCategory.name
-                                    : 'Wybierz temat',
-                                style: const TextStyle(
-                                    fontSize: 13, color: Colors.black87),
+                                topicCategory != null ? topicCategory.name : 'Wybierz temat',
+                                style: const TextStyle(fontSize: 13, color: Colors.black87),
                               ),
                             ),
                           ],
@@ -229,8 +213,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 13),
                   onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-                  decoration:
-                      textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
+                  decoration: textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
                   controller: _topicContentController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 20) {
@@ -253,11 +236,9 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
 
   void _postNewTopic(TopicCategoryModel topicCategory) {
     Provider.of<Topics>(context, listen: false)
-        .addNewTopic(_topicTitleController.text, _topicContentController.text,
-            topicCategory.id)
+        .addNewTopic(_topicTitleController.text, _topicContentController.text, topicCategory.id)
         .then((topic) {
-      Navigator.of(context).popAndPushNamed(TopicScreen.routeName,
-          arguments: TopicScreenArguments(topic));
+      Navigator.of(context).popAndPushNamed(TopicScreen.routeName, arguments: TopicScreenArguments(topic));
     });
   }
 
