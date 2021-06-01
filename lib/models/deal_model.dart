@@ -148,6 +148,10 @@ class DealModel {
     }
   }
 
+  bool get isExpired {
+    return endDate != null && DateTime.now().isAfter(endDate);
+  }
+
   @override
   String toString() {
     return 'DealModel{id: $id, title: $title, dealType: $dealType}';
