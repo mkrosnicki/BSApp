@@ -50,9 +50,10 @@ class MyStylingProvider {
   static InputDecoration textFormFiledDecorationWithLabelText(String labelText) {
     return InputDecoration(
       hintText: labelText,
-      hintStyle: TextStyle(fontSize: 14, color: Colors.black87),
-      contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      hintStyle: const TextStyle(fontSize: 14, color: Colors.black87),
+      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       border: InputBorder.none,
+      suffixIconConstraints: const BoxConstraints(maxHeight: 20.0, minWidth: 25.0),
       filled: true,
       isDense: true,
       fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
@@ -61,8 +62,8 @@ class MyStylingProvider {
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(style: BorderStyle.none),
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
+        borderSide: BorderSide(style: BorderStyle.none),
       ),
     );
   }

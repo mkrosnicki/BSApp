@@ -21,7 +21,7 @@ class LocationTypeSelector extends StatelessWidget {
       onTap: onTap,
       child: Container(
         // margin: const EdgeInsets.only(left: 16),
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -29,7 +29,7 @@ class LocationTypeSelector extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
+                  padding: const EdgeInsets.only(right: 8.0),
                   child: SizedBox(
                     height: 30.0,
                     child: Image.asset(
@@ -45,7 +45,7 @@ class LocationTypeSelector extends StatelessWidget {
                     Text(
                       'Rodzaj oferty',
                       style: const TextStyle(
-                          fontSize: 12, color: Colors.grey, height: 1.3),
+                          fontSize: 11, color: Colors.grey, height: 1.3),
                     ),
                     Text(
                       isInternet ? 'Internetowa' : 'Lokalna',

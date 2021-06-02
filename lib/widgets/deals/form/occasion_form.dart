@@ -9,6 +9,7 @@ import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
@@ -34,9 +35,13 @@ class OccasionForm extends StatefulWidget {
 }
 
 class _OccasionFormState extends State<OccasionForm> {
+
+  static const _formFieldTextStyle = TextStyle(fontSize: 14, color: Colors.black87);
+
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
   AddDealModel _newDeal;
+  final TextEditingController _locationTextController = TextEditingController();
 
   // bool _showInternetOnly;
   bool _isImageButtonDisabled = true;
@@ -47,6 +52,7 @@ class _OccasionFormState extends State<OccasionForm> {
     _newDeal = widget.newDeal;
     // _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
     _newDeal.discountType = null;
+    _locationTextController.text = _newDeal.voivodeship != null ? locationString(_newDeal) : 'Cała polska';
   }
 
   Future<void> _submit() async {
@@ -241,23 +247,26 @@ class _OccasionFormState extends State<OccasionForm> {
                     // ),
                     const FormFieldDivider(),
                     if (!_newDeal.isInternetType)
-                      ListTile(
-                        title: const Text('Lokalizacja'),
-                        subtitle: _newDeal.voivodeship != null
-                            ? Text(
-                                locationString(_newDeal),
-                                style: const TextStyle(color: Colors.blue),
-                              )
-                            : const Text('Cała Polska'),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => _openLocationSelector(),
-                        enabled: !_newDeal.isInternetType,
-                      ),
-                    const FormFieldDivider(),
-                    if (!_newDeal.isInternetType)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          _formFieldTitle('Lokalizacja*'),
+                          GestureDetector(
+                            onTap: () => _openLocationSelector(),
+                            child: TextFormField(
+                              enabled: false,
+                              controller: _locationTextController,
+                              style: _formFieldTextStyle,
+                              decoration:
+                                  MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*').copyWith(
+                                suffixIcon: const Icon(
+                                  CupertinoIcons.forward,
+                                  color: MyColorsProvider.DEEP_BLUE,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const FormFieldDivider(),
                           _formFieldTitle('Opis lokalizacji (opcjonalnie)'),
                           TextFormField(
                             initialValue: _newDeal.locationDescription,
@@ -265,7 +274,8 @@ class _OccasionFormState extends State<OccasionForm> {
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
-                            decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('np. koło stacji benzynowej'),
+                            decoration:
+                                MyStylingProvider.textFormFiledDecorationWithLabelText('np. koło stacji benzynowej'),
                           ),
                         ],
                       ),
@@ -544,6 +554,7 @@ class _OccasionFormState extends State<OccasionForm> {
   Future<void> _openLocationSelector() async {
     FocusScope.of(context).unfocus();
     await openLocationSelector(context, _newDeal);
+    _locationTextController.text = _newDeal.voivodeship != null ? locationString(_newDeal) : 'Cała Polska';
     setState(() {});
   }
 
