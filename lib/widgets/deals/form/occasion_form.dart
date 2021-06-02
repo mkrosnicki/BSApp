@@ -14,6 +14,7 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/form/form_field_divider.dart';
+import 'package:BSApp/widgets/deals/form/location_type_selector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,14 +38,14 @@ class _OccasionFormState extends State<OccasionForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool _isLoading = false;
   AddDealModel _newDeal;
-  bool _showInternetOnly;
+  // bool _showInternetOnly;
   bool _isImageButtonDisabled = true;
 
   @override
   void initState() {
     super.initState();
     _newDeal = widget.newDeal;
-    _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
+    // _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
     _newDeal.discountType = null;
   }
 
@@ -220,24 +221,25 @@ class _OccasionFormState extends State<OccasionForm> {
                       ),
                     ),
                     const FormFieldDivider(),
-                    Container(
-                      margin: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Okazja internetowa'),
-                          Switch.adaptive(
-                              activeColor: MyColorsProvider.BLUE,
-                              value: _newDeal.locationType ==
-                                  LocationType.INTERNET,
-                              onChanged: (value) {
-                                _changeLocation(value);
-                              }),
-                        ],
-                      ),
-                    ),
+                    LocationTypeSelector(_newDeal.locationType, _changeLocation),
+                    // Container(
+                    //   margin: const EdgeInsets.only(left: 16),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       const Text('Okazja internetowa'),
+                    //       Switch.adaptive(
+                    //           activeColor: MyColorsProvider.BLUE,
+                    //           value: _newDeal.locationType ==
+                    //               LocationType.INTERNET,
+                    //           onChanged: (value) {
+                    //             _changeLocationOld(value);
+                    //           }),
+                    //     ],
+                    //   ),
+                    // ),
                     const FormFieldDivider(),
-                    if (!_showInternetOnly)
+                    if (!_newDeal.isInternetType)
                       ListTile(
                         title: const Text('Lokalizacja'),
                         subtitle: _newDeal.voivodeship != null
@@ -248,15 +250,15 @@ class _OccasionFormState extends State<OccasionForm> {
                             : const Text('Cała Polska'),
                         trailing: const Icon(Icons.chevron_right),
                         onTap: () => _openLocationSelector(),
-                        enabled: !_showInternetOnly,
+                        enabled: !_newDeal.isInternetType,
                       ),
                     const FormFieldDivider(),
-                    if (!_showInternetOnly)
+                    if (!_newDeal.isInternetType)
                       Column(
                         children: [
                           TextFormField(
                             initialValue: _newDeal.locationDescription,
-                            enabled: !_showInternetOnly,
+                            enabled: !_newDeal.isInternetType,
                             onChanged: (value) {
                               _newDeal.locationDescription = value;
                             },
@@ -525,15 +527,21 @@ class _OccasionFormState extends State<OccasionForm> {
     }
   }
 
-  void _changeLocation(bool value) {
+  // void _changeLocationOld(bool value) {
+  //   setState(() {
+  //     _showInternetOnly = value;
+  //     if (_showInternetOnly) {
+  //       _newDeal.locationType = LocationType.INTERNET;
+  //       _newDeal.clearLocation();
+  //     } else {
+  //       _newDeal.locationType = LocationType.LOCAL;
+  //     }
+  //   });
+  // }
+
+  void _changeLocation() {
     setState(() {
-      _showInternetOnly = value;
-      if (_showInternetOnly) {
-        _newDeal.locationType = LocationType.INTERNET;
-        _newDeal.clearLocation();
-      } else {
-        _newDeal.locationType = LocationType.LOCAL;
-      }
+      _newDeal.locationType = _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
     });
   }
 

@@ -65,6 +65,10 @@ class AddDealModel {
 
   String get imageUrl => _imageUrl;
 
+  bool get isInternetType {
+    return locationType == LocationType.INTERNET;
+  }
+
   set image(File value) {
     _image = value;
   }
