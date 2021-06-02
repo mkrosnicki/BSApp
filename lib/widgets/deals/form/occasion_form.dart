@@ -217,48 +217,52 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   Widget _linkSection() {
-    return Row(
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _formFieldTitle('Link do okazji'),
-              TextFormField(
-                initialValue: _newDeal.urlLocation,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Wprowadź link do okazji';
-                  } else if (!_isUrl(value)) {
-                    return 'Podany ciąg znaków nie jest adresem URL';
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  _updateUrl(value);
-                },
-                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
-              ),
-            ],
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _formFieldTitle('Link do okazji'),
+                TextFormField(
+                  initialValue: _newDeal.urlLocation,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź link do okazji';
+                    } else if (!_isUrl(value)) {
+                      return 'Podany ciąg znaków nie jest adresem URL';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    _updateUrl(value);
+                  },
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
+                ),
+              ],
+            ),
           ),
-        ),
-        GestureDetector(
-          // TODO stack transparent?
-          onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
-          behavior: HitTestBehavior.translucent,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 30.0,
-              child: Image.asset(
-                ImageAssetsHelper.imageDownloadPath(),
-                fit: BoxFit.cover,
+          GestureDetector(
+            // TODO stack transparent?
+            onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
+            behavior: HitTestBehavior.translucent,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              alignment: Alignment.bottomRight,
+              child: SizedBox(
+                width: 30.0,
+                child: Image.asset(
+                  ImageAssetsHelper.imageDownloadPath(),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
