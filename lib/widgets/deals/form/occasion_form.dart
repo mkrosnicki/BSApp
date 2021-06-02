@@ -226,8 +226,12 @@ class _OccasionFormState extends State<OccasionForm> {
               const FormFieldDivider(),
               _ageTypesSelectionSection(),
               const FormFieldDivider(),
-              _dateSelectionButtons(),
               _priceInfoSection(),
+              const FormFieldDivider(),
+              const FormFieldDivider(),
+              _dateSelectionButtons(),
+              const FormFieldDivider(),
+              const FormFieldDivider(),
               SizedBox(
                 width: double.infinity,
                 child: PrimaryButton('Dodaj ogłoszenie', _submit),
@@ -505,7 +509,7 @@ class _OccasionFormState extends State<OccasionForm> {
     return GestureDetector(
       onTap: () => _selectDate(dateType),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
         child: Row(
           children: [
             Padding(
