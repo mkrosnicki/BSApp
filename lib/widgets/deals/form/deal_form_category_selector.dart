@@ -29,7 +29,7 @@ class DealsFormCategorySelector extends StatelessWidget {
                     child: Image.asset(
                       categories != null && categories.isNotEmpty
                           ? ImageAssetsHelper.productCategoryPath(categories[0].name)
-                          : ImageAssetsHelper.localPath(),
+                          : ImageAssetsHelper.categoryPlaceholderPath(),
                       fit: BoxFit.cover,
                     ),
                   ),

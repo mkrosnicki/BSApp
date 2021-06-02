@@ -93,4 +93,8 @@ class ImageAssetsHelper {
   static String ageTypePath() {
     return '${assetsLocation}baby-age-pngrepo-com.png';
   }
+
+  static String categoryPlaceholderPath() {
+    return '${assetsLocation}category-pngrepo-com.png';
+  }
 }
