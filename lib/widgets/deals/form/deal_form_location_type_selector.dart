@@ -4,12 +4,12 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LocationTypeSelector extends StatelessWidget {
+class DealsFormLocationTypeSelector extends StatelessWidget {
 
   final LocationType locationType;
   final GestureTapCallback onTap;
 
-  const LocationTypeSelector(this.locationType, this.onTap);
+  const DealsFormLocationTypeSelector(this.locationType, this.onTap);
 
   bool get isInternet {
     return locationType == LocationType.INTERNET;
@@ -21,7 +21,7 @@ class LocationTypeSelector extends StatelessWidget {
       onTap: onTap,
       child: Container(
         // margin: const EdgeInsets.only(left: 16),
-        padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 12.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

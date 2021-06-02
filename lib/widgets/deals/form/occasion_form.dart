@@ -13,8 +13,8 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
+import 'package:BSApp/widgets/deals/form/deal_form_location_type_selector.dart';
 import 'package:BSApp/widgets/deals/form/form_field_divider.dart';
-import 'package:BSApp/widgets/deals/form/location_type_selector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +22,7 @@ import 'package:provider/provider.dart';
 
 import 'age_type_chips.dart';
 import 'deal_date.dart';
+import 'deal_form_category_selector.dart';
 import 'image_picker_dialog.dart';
 import 'localisation_selector.dart';
 
@@ -35,7 +36,6 @@ class OccasionForm extends StatefulWidget {
 }
 
 class _OccasionFormState extends State<OccasionForm> {
-
   static const _formFieldTextStyle = TextStyle(fontSize: 14, color: Colors.black87);
 
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -228,7 +228,7 @@ class _OccasionFormState extends State<OccasionForm> {
                       ),
                     ),
                     const FormFieldDivider(),
-                    LocationTypeSelector(_newDeal.locationType, _changeLocation),
+                    DealsFormLocationTypeSelector(_newDeal.locationType, _changeLocation),
                     // Container(
                     //   margin: const EdgeInsets.only(left: 16),
                     //   child: Row(
@@ -257,8 +257,8 @@ class _OccasionFormState extends State<OccasionForm> {
                               enabled: false,
                               controller: _locationTextController,
                               style: _formFieldTextStyle,
-                              decoration:
-                                  MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*').copyWith(
+                              decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*')
+                                  .copyWith(
                                 suffixIcon: const Icon(
                                   CupertinoIcons.forward,
                                   color: MyColorsProvider.DEEP_BLUE,
@@ -279,16 +279,10 @@ class _OccasionFormState extends State<OccasionForm> {
                           ),
                         ],
                       ),
-                    ListTile(
-                      title: const Text('Kategoria'),
-                      subtitle: _newDeal.categories.isNotEmpty
-                          ? Text(
-                              categoriesString,
-                              style: const TextStyle(color: Colors.blue),
-                            )
-                          : const Text('Wszystkie kategorie'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => _openCategorySelector(context),
+                    const FormFieldDivider(),
+                    DealsFormCategorySelector(
+                      _newDeal.categories,
+                      () => _openCategorySelector(context),
                     ),
                     Container(
                         margin: const EdgeInsets.only(
