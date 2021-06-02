@@ -135,15 +135,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     _linkSection(),
                     const FormFieldDivider(),
                     const FormFieldDivider(),
-                    GestureDetector(
-                      onTap: _takePicture,
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        alignment: Alignment.center,
-                        child: _getImage(),
-                      ),
-                    ),
+                    _pictureSection(),
                     const FormFieldDivider(),
                     _priceInfoSection(),
                     const FormFieldDivider(),
@@ -184,6 +176,18 @@ class _OccasionFormState extends State<OccasionForm> {
     return DealsFormCategorySelector(
       _newDeal.categories,
       () => _openCategorySelector(context),
+    );
+  }
+
+  Widget _pictureSection() {
+    return GestureDetector(
+      onTap: _takePicture,
+      child: Container(
+        width: double.infinity,
+        height: 120,
+        alignment: Alignment.center,
+        child: _getImage(),
+      ),
     );
   }
 
