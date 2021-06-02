@@ -90,6 +90,7 @@ class ImageAssetsHelper {
     return '${assetsLocation}placeholder-map-location-pngrepo-com.png';
   }
 
-
-
+  static String ageTypePath() {
+    return '${assetsLocation}baby-age-pngrepo-com.png';
+  }
 }

@@ -101,6 +101,10 @@ class AddDealModel {
     _categories = value;
   }
 
+  set ageTypes(List<AgeType> value) {
+    _ageTypes = value;
+  }
+
   set locationType(LocationType value) {
     _locationType = value;
   }

@@ -87,6 +87,7 @@ flutter:
     - assets/images/coffee-pngrepo-com.png
     - assets/images/image-upload-pngrepo-com.png
     - assets/images/image-download-pngrepo-com.png
+    - assets/images/baby-age-pngrepo-com.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

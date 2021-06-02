@@ -5,7 +5,6 @@ import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
-import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
@@ -28,11 +27,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
 
   _initFilterSettings(BuildContext context) {
     if (filtersSettings == null) {
-      FilterSettings passedFilterSettings =
-          ModalRoute.of(context).settings.arguments as FilterSettings;
-      filtersSettings = passedFilterSettings != null
-          ? passedFilterSettings
-          : FilterSettings();
+      FilterSettings passedFilterSettings = ModalRoute.of(context).settings.arguments as FilterSettings;
+      filtersSettings = passedFilterSettings != null ? passedFilterSettings : FilterSettings();
     }
   }
 
@@ -63,8 +59,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SwitchListTile(
-                      title: const Text('Pokaż tylko aktywne',
-                          style: headerTextStyle),
+                      title: const Text('Pokaż tylko aktywne', style: headerTextStyle),
                       value: filtersSettings.showActiveOnly,
                       onChanged: (value) {
                         setState(() {
@@ -79,13 +74,15 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                               filtersSettings.categoriesString,
                               style: valueTextStyle,
                             )
-                          : const Text('Wszystkie kategorie', style: noValueTextStyle,),
+                          : const Text(
+                              'Wszystkie kategorie',
+                              style: noValueTextStyle,
+                            ),
                       trailing: MyIconsProvider.FORWARD_ICON,
                       onTap: () => _openCategorySelector(context),
                     ),
                     SwitchListTile(
-                      title: const Text('Tylko internetowe okazje',
-                          style: headerTextStyle),
+                      title: const Text('Tylko internetowe okazje', style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
                       onChanged: (value) {
                         setState(() {
@@ -130,8 +127,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 10.0),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                       child: const Text('Sortuj po', style: headerTextStyle),
                     ),
                     Container(
@@ -153,8 +149,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
               margin: EdgeInsets.zero,
               child: Container(
                 width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                 child: PrimaryButton(
                   'Pokaż wyniki',
                   () => _acceptFilters(context),
@@ -214,8 +209,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openCategorySelector(BuildContext context) async {
-    final selectedCategories = await Navigator.of(context)
-        .pushNamed(CategorySelectionScreen.routeName);
+    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
         filtersSettings.categories = selectedCategories;
@@ -224,8 +218,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   _openLocationSelector(BuildContext context) async {
-    var locations = await Navigator.of(context)
-        .pushNamed(LocationSelectionScreen.routeName);
+    var locations = await Navigator.of(context).pushNamed(LocationSelectionScreen.routeName);
     if (locations != null) {
       setState(() {
         filtersSettings.voivodeship = (locations as List)[0];

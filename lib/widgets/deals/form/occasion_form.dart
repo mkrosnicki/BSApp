@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:BSApp/models/add_deal_model.dart';
+import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
@@ -22,6 +23,7 @@ import 'package:provider/provider.dart';
 
 import 'age_type_chips.dart';
 import 'deal_date.dart';
+import 'deal_form_age_types_selector.dart';
 import 'deal_form_category_selector.dart';
 import 'image_picker_dialog.dart';
 import 'localisation_selector.dart';
@@ -50,9 +52,8 @@ class _OccasionFormState extends State<OccasionForm> {
   void initState() {
     super.initState();
     _newDeal = widget.newDeal;
-    // _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
     _newDeal.discountType = null;
-    _locationTextController.text = _newDeal.voivodeship != null ? locationString(_newDeal) : 'Cała polska';
+    _locationTextController.text = _newDeal.voivodeship != null ? locationString(_newDeal) : 'Cała Polska';
   }
 
   Future<void> _submit() async {
@@ -119,315 +120,257 @@ class _OccasionFormState extends State<OccasionForm> {
   Widget build(BuildContext context) {
     return _isLoading
         ? const Center(
-            child: LoadingIndicator(),
-          )
+      child: LoadingIndicator(),
+    )
         : SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _formFieldTitle('Tytuł ogłoszenia*'),
-                    TextFormField(
-                      initialValue: _newDeal.title,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź tytuł';
-                        } else if (value.length < 5) {
-                          return 'Tytuł musi mieć co najmniej 5 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.title = value;
-                      },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
-                    ),
-                    const FormFieldDivider(),
-                    _formFieldTitle('Opis'),
-                    TextFormField(
-                      initialValue: _newDeal.description,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź opis';
-                        } else if (value.length < 10) {
-                          return 'Opis powinien mieć conajmniej 10 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.description = value;
-                      },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Opis'),
-                    ),
-                    const FormFieldDivider(),
-                    Row(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _formFieldTitle('Tytuł ogłoszenia*'),
+              TextFormField(
+                initialValue: _newDeal.title,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Wprowadź tytuł';
+                  } else if (value.length < 5) {
+                    return 'Tytuł musi mieć co najmniej 5 znaków';
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (value) {
+                  _newDeal.title = value;
+                },
+                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
+              ),
+              const FormFieldDivider(),
+              _formFieldTitle('Opis'),
+              TextFormField(
+                initialValue: _newDeal.description,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Wprowadź opis';
+                  } else if (value.length < 10) {
+                    return 'Opis powinien mieć conajmniej 10 znaków';
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (value) {
+                  _newDeal.description = value;
+                },
+                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Opis'),
+              ),
+              const FormFieldDivider(),
+              Row(
+                children: [
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _formFieldTitle('Link do okazji'),
-                              TextFormField(
-                                initialValue: _newDeal.urlLocation,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Wprowadź link do okazji';
-                                  } else if (!_isUrl(value)) {
-                                    return 'Podany ciąg znaków nie jest adresem URL';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (value) {
-                                  _updateUrl(value);
-                                },
-                                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          // TODO stack transparent?
-                          onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
-                          behavior: HitTestBehavior.translucent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 30.0,
-                              child: Image.asset(
-                                ImageAssetsHelper.imageDownloadPath(),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // IconButton(
-                        //   splashRadius: 25,
-                        //   icon: const Icon(
-                        //     CupertinoIcons.photo,
-                        //   ),
-                        //   onPressed: _isImageButtonDisabled
-                        //       ? null
-                        //       : () => _buildImagePickerDialog(context),
-                        // ),
-                      ],
-                    ),
-                    const FormFieldDivider(),
-                    GestureDetector(
-                      onTap: _takePicture,
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        alignment: Alignment.center,
-                        child: _getImage(),
-                      ),
-                    ),
-                    const FormFieldDivider(),
-                    DealsFormLocationTypeSelector(_newDeal.locationType, _changeLocation),
-                    // Container(
-                    //   margin: const EdgeInsets.only(left: 16),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       const Text('Okazja internetowa'),
-                    //       Switch.adaptive(
-                    //           activeColor: MyColorsProvider.BLUE,
-                    //           value: _newDeal.locationType ==
-                    //               LocationType.INTERNET,
-                    //           onChanged: (value) {
-                    //             _changeLocationOld(value);
-                    //           }),
-                    //     ],
-                    //   ),
-                    // ),
-                    const FormFieldDivider(),
-                    if (!_newDeal.isInternetType)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _formFieldTitle('Lokalizacja*'),
-                          GestureDetector(
-                            onTap: () => _openLocationSelector(),
-                            child: TextFormField(
-                              enabled: false,
-                              controller: _locationTextController,
-                              style: _formFieldTextStyle,
-                              decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*')
-                                  .copyWith(
-                                suffixIcon: const Icon(
-                                  CupertinoIcons.forward,
-                                  color: MyColorsProvider.DEEP_BLUE,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const FormFieldDivider(),
-                          _formFieldTitle('Opis lokalizacji (opcjonalnie)'),
-                          TextFormField(
-                            initialValue: _newDeal.locationDescription,
-                            enabled: !_newDeal.isInternetType,
-                            onChanged: (value) {
-                              _newDeal.locationDescription = value;
-                            },
-                            decoration:
-                                MyStylingProvider.textFormFiledDecorationWithLabelText('np. koło stacji benzynowej'),
-                          ),
-                        ],
-                      ),
-                    const FormFieldDivider(),
-                    DealsFormCategorySelector(
-                      _newDeal.categories,
-                      () => _openCategorySelector(context),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(
-                          left: 16,
-                        ),
-                        child: const Text('Wiek dziecka')),
-                    SizedBox(
-                      width: double.infinity,
-                      child: AgeTypeChips(_newDeal),
-                    ),
-                    const FormFieldDivider(),
-                    Flex(
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: _buildDateSelectionTile(DealDateType.VALID_FROM),
-                        ),
-                        Flexible(
-                          child: _buildDateSelectionTile(DealDateType.VALID_TO),
+                        _formFieldTitle('Link do okazji'),
+                        TextFormField(
+                          initialValue: _newDeal.urlLocation,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Wprowadź link do okazji';
+                            } else if (!_isUrl(value)) {
+                              return 'Podany ciąg znaków nie jest adresem URL';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            _updateUrl(value);
+                          },
+                          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
                         ),
                       ],
                     ),
-                    // GestureDetector(
-                    //   onTap: () => _selectDate(DealDateType.VALID_FROM),
-                    //   child: Container(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    //     child: Row(
-                    //       children: <Widget>[
-                    //         Padding(
-                    //           padding: const EdgeInsets.all(8.0),
-                    //           child: SizedBox(
-                    //             width: 25.0,
-                    //             child: Image.asset(
-                    //               ImageAssetsHelper.validFromImagePath(),
-                    //               fit: BoxFit.cover,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         // IconButton(
-                    //         //   icon: const Icon(Icons.calendar_today),
-                    //         //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                    //         //   color: MyColorsProvider.BLUE,
-                    //         // ),
-                    //         const Text('Okazja ważna od: '),
-                    //         Text(
-                    //           "${_newDeal.validFrom.toLocal()}".split(' ')[0],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // const FormFieldDivider(),
-                    // GestureDetector(
-                    //   onTap: () => _selectDate(DealDateType.VALID_TO),
-                    //   child: Container(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    //     child: Row(
-                    //       children: <Widget>[
-                    //         Padding(
-                    //           padding: const EdgeInsets.all(8.0),
-                    //           child: SizedBox(
-                    //             width: 25.0,
-                    //             child: Image.asset(
-                    //               ImageAssetsHelper.validToImagePath(),
-                    //               fit: BoxFit.cover,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         // IconButton(
-                    //         //   icon: const Icon(Icons.calendar_today),
-                    //         //   onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                    //         //   color: MyColorsProvider.BLUE,
-                    //         // ),
-                    //         const Text('Okazja ważna do: '),
-                    //         Text(
-                    //           "${_newDeal.validTo.toLocal()}".split(' ')[0],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    const FormFieldDivider(),
-                    _formFieldTitle('Regularna cena*'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.regularPrice = double.parse(value);
-                      },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Regularna cena'),
+                  ),
+                  GestureDetector(
+                    // TODO stack transparent?
+                    onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
+                    behavior: HitTestBehavior.translucent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 30.0,
+                        child: Image.asset(
+                          ImageAssetsHelper.imageDownloadPath(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    const FormFieldDivider(),
-                    _formFieldTitle('Aktualna cena*'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.currentPrice = double.parse(value);
-                      },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Aktualna cena'),
-                    ),
-                    const FormFieldDivider(),
-                    _formFieldTitle('Koszt dostawy (opcjonalnie)'),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Wprowadź kwotę";
-                        } else if (double.parse(value) < 0) {
-                          return "Kwota nie może być ujemna";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.number,
-                      onSaved: (value) {
-                        _newDeal.shippingPrice = double.parse(value);
-                      },
-                      decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Koszt dostawy'),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PrimaryButton('Dodaj ogłoszenie', _submit),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              const FormFieldDivider(),
+              GestureDetector(
+                onTap: _takePicture,
+                child: Container(
+                  width: double.infinity,
+                  height: 120,
+                  alignment: Alignment.center,
+                  child: _getImage(),
                 ),
               ),
-            ),
-          );
+              const FormFieldDivider(),
+              _locationSelectionSection(),
+              const FormFieldDivider(),
+              _categorySelectionSection(),
+              const FormFieldDivider(),
+              _ageTypesSelectionSection(),
+              const FormFieldDivider(),
+              _dateSelectionButtons(),
+              _priceInfoSection(),
+              SizedBox(
+                width: double.infinity,
+                child: PrimaryButton('Dodaj ogłoszenie', _submit),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _ageTypesSelectionSection() {
+    return DealsFormAgeTypesSelector(_newDeal, _selectAgeTypes);
+  }
+
+  void _selectAgeTypes(final List<AgeType> ageTypes) {
+    setState(() {
+      _newDeal.ageTypes = ageTypes;
+    });
+  }
+
+  Widget _categorySelectionSection() {
+    return DealsFormCategorySelector(
+      _newDeal.categories,
+          () => _openCategorySelector(context),
+    );
+  }
+
+  Widget _locationSelectionSection() {
+    return Column(
+      children: [
+        DealsFormLocationTypeSelector(_newDeal.locationType, _changeLocation),
+        if (!_newDeal.isInternetType)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const FormFieldDivider(),
+              _formFieldTitle('Lokalizacja*'),
+              GestureDetector(
+                onTap: () => _openLocationSelector(),
+                child: TextFormField(
+                  enabled: false,
+                  controller: _locationTextController,
+                  style: _formFieldTextStyle,
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*').copyWith(
+                    suffixIcon: const Icon(
+                      CupertinoIcons.forward,
+                      color: MyColorsProvider.DEEP_BLUE,
+                    ),
+                  ),
+                ),
+              ),
+              const FormFieldDivider(),
+              _formFieldTitle('Opis lokalizacji (opcjonalnie)'),
+              TextFormField(
+                initialValue: _newDeal.locationDescription,
+                enabled: !_newDeal.isInternetType,
+                onChanged: (value) {
+                  _newDeal.locationDescription = value;
+                },
+                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('np. koło stacji benzynowej'),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _dateSelectionButtons() {
+    return Flex(
+      direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: _buildDateSelectionTile(DealDateType.VALID_FROM),
+        ),
+        Flexible(
+          child: _buildDateSelectionTile(DealDateType.VALID_TO),
+        ),
+      ],
+    );
+  }
+
+  Widget _priceInfoSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldDivider(),
+        _formFieldTitle('Regularna cena*'),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Wprowadź kwotę";
+            } else if (double.parse(value) < 0) {
+              return "Kwota nie może być ujemna";
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.number,
+          onSaved: (value) {
+            _newDeal.regularPrice = double.parse(value);
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Regularna cena'),
+        ),
+        const FormFieldDivider(),
+        _formFieldTitle('Aktualna cena*'),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Wprowadź kwotę";
+            } else if (double.parse(value) < 0) {
+              return "Kwota nie może być ujemna";
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.number,
+          onSaved: (value) {
+            _newDeal.currentPrice = double.parse(value);
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Aktualna cena'),
+        ),
+        const FormFieldDivider(),
+        _formFieldTitle('Koszt dostawy (opcjonalnie)'),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return "Wprowadź kwotę";
+            } else if (double.parse(value) < 0) {
+              return "Kwota nie może być ujemna";
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.number,
+          onSaved: (value) {
+            _newDeal.shippingPrice = double.parse(value);
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Koszt dostawy'),
+        ),
+      ],
+    );
   }
 
   Widget _getImage() {
@@ -541,7 +484,7 @@ class _OccasionFormState extends State<OccasionForm> {
   void _changeLocation() {
     setState(() {
       _newDeal.locationType =
-          _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
+      _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
     });
   }
 
@@ -553,7 +496,9 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   bool _isUrl(String value) {
-    return Uri.parse(value).isAbsolute;
+    return Uri
+        .parse(value)
+        .isAbsolute;
   }
 
   Widget _buildDateSelectionTile(DealDateType dateType) {
