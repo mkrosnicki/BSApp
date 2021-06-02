@@ -21,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import 'age_type_chips.dart';
 import 'deal_date.dart';
 import 'deal_form_age_types_selector.dart';
 import 'deal_form_category_selector.dart';
@@ -120,127 +119,97 @@ class _OccasionFormState extends State<OccasionForm> {
   Widget build(BuildContext context) {
     return _isLoading
         ? const Center(
-      child: LoadingIndicator(),
-    )
+            child: LoadingIndicator(),
+          )
         : SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _formFieldTitle('Tytuł ogłoszenia*'),
-              TextFormField(
-                initialValue: _newDeal.title,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Wprowadź tytuł';
-                  } else if (value.length < 5) {
-                    return 'Tytuł musi mieć co najmniej 5 znaków';
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  _newDeal.title = value;
-                },
-                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
-              ),
-              const FormFieldDivider(),
-              _formFieldTitle('Opis'),
-              TextFormField(
-                initialValue: _newDeal.description,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Wprowadź opis';
-                  } else if (value.length < 10) {
-                    return 'Opis powinien mieć conajmniej 10 znaków';
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (value) {
-                  _newDeal.description = value;
-                },
-                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Opis'),
-              ),
-              const FormFieldDivider(),
-              Row(
-                children: [
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const FormFieldDivider(),
+                    _titleSection(),
+                    const FormFieldDivider(),
+                    Row(
                       children: [
-                        _formFieldTitle('Link do okazji'),
-                        TextFormField(
-                          initialValue: _newDeal.urlLocation,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Wprowadź link do okazji';
-                            } else if (!_isUrl(value)) {
-                              return 'Podany ciąg znaków nie jest adresem URL';
-                            } else {
-                              return null;
-                            }
-                          },
-                          onChanged: (value) {
-                            _updateUrl(value);
-                          },
-                          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _formFieldTitle('Link do okazji'),
+                              TextFormField(
+                                initialValue: _newDeal.urlLocation,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Wprowadź link do okazji';
+                                  } else if (!_isUrl(value)) {
+                                    return 'Podany ciąg znaków nie jest adresem URL';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (value) {
+                                  _updateUrl(value);
+                                },
+                                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          // TODO stack transparent?
+                          onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
+                          behavior: HitTestBehavior.translucent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 30.0,
+                              child: Image.asset(
+                                ImageAssetsHelper.imageDownloadPath(),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  GestureDetector(
-                    // TODO stack transparent?
-                    onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
-                    behavior: HitTestBehavior.translucent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 30.0,
-                        child: Image.asset(
-                          ImageAssetsHelper.imageDownloadPath(),
-                          fit: BoxFit.cover,
-                        ),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    GestureDetector(
+                      onTap: _takePicture,
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        alignment: Alignment.center,
+                        child: _getImage(),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const FormFieldDivider(),
-              GestureDetector(
-                onTap: _takePicture,
-                child: Container(
-                  width: double.infinity,
-                  height: 120,
-                  alignment: Alignment.center,
-                  child: _getImage(),
+                    const FormFieldDivider(),
+                    _priceInfoSection(),
+                    const FormFieldDivider(),
+                    _locationSelectionSection(),
+                    const FormFieldDivider(),
+                    _categorySelectionSection(),
+                    const FormFieldDivider(),
+                    _ageTypesSelectionSection(),
+                    const FormFieldDivider(),
+                    _descriptionSection(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    _dateSelectionButtons(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrimaryButton('Dodaj ogłoszenie', _submit),
+                    ),
+                  ],
                 ),
               ),
-              const FormFieldDivider(),
-              _locationSelectionSection(),
-              const FormFieldDivider(),
-              _categorySelectionSection(),
-              const FormFieldDivider(),
-              _ageTypesSelectionSection(),
-              const FormFieldDivider(),
-              _priceInfoSection(),
-              const FormFieldDivider(),
-              const FormFieldDivider(),
-              _dateSelectionButtons(),
-              const FormFieldDivider(),
-              const FormFieldDivider(),
-              SizedBox(
-                width: double.infinity,
-                child: PrimaryButton('Dodaj ogłoszenie', _submit),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 
   Widget _ageTypesSelectionSection() {
@@ -256,7 +225,60 @@ class _OccasionFormState extends State<OccasionForm> {
   Widget _categorySelectionSection() {
     return DealsFormCategorySelector(
       _newDeal.categories,
-          () => _openCategorySelector(context),
+      () => _openCategorySelector(context),
+    );
+  }
+
+  Widget _titleSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _formFieldTitle('Tytuł ogłoszenia*'),
+        TextFormField(
+          initialValue: _newDeal.title,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź tytuł';
+            } else if (value.length < 5) {
+              return 'Tytuł musi mieć co najmniej 5 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.title = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
+        ),
+      ],
+    );
+  }
+
+  Widget _descriptionSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _formFieldTitle('Opis'),
+        TextFormField(
+          initialValue: _newDeal.description,
+          minLines: 4,
+          maxLines: 4,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź opis';
+            } else if (value.length < 10) {
+              return 'Opis powinien mieć conajmniej 10 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.description = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText(
+              'Krótko opisz okazję i napisz, dlaczego jest atrakcyjna 🙂'),
+        ),
+      ],
     );
   }
 
@@ -408,7 +430,7 @@ class _OccasionFormState extends State<OccasionForm> {
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 10.0),
               child: const Text(
-                'Dodaj obrazek',
+                'Dodaj zdjęcie',
                 // textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, height: 1.6),
               ),
@@ -488,7 +510,7 @@ class _OccasionFormState extends State<OccasionForm> {
   void _changeLocation() {
     setState(() {
       _newDeal.locationType =
-      _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
+          _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
     });
   }
 
@@ -500,9 +522,7 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   bool _isUrl(String value) {
-    return Uri
-        .parse(value)
-        .isAbsolute;
+    return Uri.parse(value).isAbsolute;
   }
 
   Widget _buildDateSelectionTile(DealDateType dateType) {
@@ -529,7 +549,7 @@ class _OccasionFormState extends State<OccasionForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  dateType == DealDateType.VALID_FROM ? 'Okazja ważna od' : 'Okazja ważna do',
+                  dateType == DealDateType.VALID_FROM ? 'Ważna od' : 'Ważna do',
                   style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
                 ),
                 Text(
