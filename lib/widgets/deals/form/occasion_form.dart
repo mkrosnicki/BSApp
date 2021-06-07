@@ -246,19 +246,19 @@ class _OccasionFormState extends State<OccasionForm> {
             ),
           ),
           GestureDetector(
-            // TODO stack transparent?
             onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
             behavior: HitTestBehavior.translucent,
             child: Container(
               padding: const EdgeInsets.all(8.0),
               alignment: Alignment.bottomRight,
-              child: SizedBox(
-                width: 30.0,
-                child: Image.asset(
-                  ImageAssetsHelper.imageDownloadPath(),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: Icon(Icons.image_outlined, color: _isImageButtonDisabled ? Colors.grey : MyColorsProvider.DEEP_BLUE,),
+              // child: SizedBox(
+              //   width: 30.0,
+              //   child: Image.asset(
+              //     ImageAssetsHelper.imageDownloadPath(),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
             ),
           ),
         ],
