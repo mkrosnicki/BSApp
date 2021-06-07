@@ -41,7 +41,6 @@ class NotificationModel {
     for (final notificationSnapshot in notificationsSnapshot) {
       notifications.add(fromJson(notificationSnapshot));
     }
-    print(notifications[0].issuedAt.timeZoneOffset);
     return notifications;
   }
 

@@ -203,8 +203,6 @@ class FilterSettings {
     newFilterSettings.showActiveOnly = json['showActiveOnly'] as bool;
     newFilterSettings.showInternetOnly = json['showInternetOnly'] as bool;
     newFilterSettings.sortBy = SortingTypeHelper.fromString(json['sortBy']);
-    print('read');
-    print(newFilterSettings);
     return newFilterSettings;
   }
 

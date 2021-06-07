@@ -9,25 +9,15 @@ class DateUtil {
   }
 
   static DateTime parseFromStringToUtc(String date) {
-    print('datedatedatedatedatedate');
-    print(date);
     DateTime parsed = DateTime.parse(date);
-    print(parsed);
     parsed = parsed.add(parsed.timeZoneOffset);
-    print(parsed);
     parsed = parsed.toUtc();
-    print(parsed);
     return parsed;
   }
 
   static String timeAgoString(DateTime dateTime) {
     final DateTime now = DateTime.now().toUtc();
-    print(now);
-    print(now.timeZoneOffset);
-    print(dateTime);
-    print(dateTime.timeZoneOffset);
     var diff = now.difference(dateTime.toUtc());
-    print(diff);
     // if (now.day - dateTime.day == 0) {
     //   return 'Dzisiaj, ${_timeFormat.format(dateTime)}';
     // }

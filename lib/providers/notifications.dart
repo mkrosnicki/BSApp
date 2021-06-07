@@ -53,7 +53,7 @@ class Notifications with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateNotificationsTimestamp() async {
+  void updateNotificationsTimestamp() {
     _notificationsSeenAt = DateTime.now();
     // todo exception after notification
     notifyListeners();
