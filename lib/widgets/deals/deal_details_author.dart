@@ -40,7 +40,7 @@ class DealDetailsAuthor extends StatelessWidget {
                   children: [
                     const Text(
                       'Okazja dodana przez',
-                      style: TextStyle(fontSize: 12, color: Colors.grey, height: 1.5),
+                      style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
                     ),
                     Text(
                       deal.addedByUsername,

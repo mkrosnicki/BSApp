@@ -1,3 +1,5 @@
+import 'package:BSApp/util/date_util.dart';
+
 import 'notification_type.dart';
 
 class NotificationModel {
@@ -39,6 +41,7 @@ class NotificationModel {
     for (final notificationSnapshot in notificationsSnapshot) {
       notifications.add(fromJson(notificationSnapshot));
     }
+    print(notifications[0].issuedAt.timeZoneOffset);
     return notifications;
   }
 
@@ -48,7 +51,7 @@ class NotificationModel {
       mainIssuerId: notificationSnapshot['mainIssuerId'],
       mainIssuerUsername: notificationSnapshot['mainIssuerUsername'],
       totalNumberOfIssuers: notificationSnapshot['totalNumberOfIssuers'],
-      issuedAt: DateTime.parse(notificationSnapshot['issuedAt']),
+      issuedAt: DateUtil.parseFromStringToUtc(notificationSnapshot['issuedAt']),
       notificationType: NotificationTypeHelper.fromString(
           notificationSnapshot['notificationType']),
       relatedTopicId: notificationSnapshot['relatedTopicId'],

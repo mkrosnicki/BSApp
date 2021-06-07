@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:BSApp/models/user_role.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 class UserModel {
@@ -37,10 +38,10 @@ class UserModel {
         username: userSnapshot['username'] as String,
         userRole: UserRoleHelper.fromString(userSnapshot['userRole']),
         registeredAt:
-        registeredAt != null ? DateTime.parse(registeredAt) : null,
-        lastLoginAt: lastLoginAt != null ? DateTime.parse(lastLoginAt) : null,
+        registeredAt != null ? DateUtil.parseFromStringToUtc(registeredAt) : null,
+        lastLoginAt: lastLoginAt != null ? DateUtil.parseFromStringToUtc(lastLoginAt) : null,
         notificationsSeenAt: notificationsSeenAt != null
-            ? DateTime.parse(notificationsSeenAt)
+            ? DateUtil.parseFromStringToUtc(notificationsSeenAt)
             : null,
         avatar: _getAvatar(userSnapshot),
       pointsForDeals: userSnapshot['pointsForDeals'],

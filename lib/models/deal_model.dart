@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 class DealModel {
@@ -78,7 +79,7 @@ class DealModel {
     }
     return DealModel(
       id: dealSnapshot['id'],
-      addedAt: DateTime.parse(dealSnapshot['addedAt']),
+      addedAt: DateUtil.parseFromStringToUtc(dealSnapshot['addedAt']),
       addedById: dealSnapshot['addedById'],
       addedByUsername: dealSnapshot['addedByUsername'],
       addedByAvatarPath: dealSnapshot['addedByAvatarPath'],
@@ -99,8 +100,8 @@ class DealModel {
       shippingPrice: dealSnapshot['shippingPrice'],
       discountType: DiscountTypeHelper.fromString(dealSnapshot['discountType']),
       discountValue: dealSnapshot['discountValue'],
-      startDate: DateTime.parse(dealSnapshot['startDate']),
-      endDate: DateTime.parse(dealSnapshot['endDate']),
+      startDate: DateUtil.parseFromStringToUtc(dealSnapshot['startDate']),
+      endDate: DateUtil.parseFromStringToUtc(dealSnapshot['endDate']),
       numberOfComments: dealSnapshot['numberOfComments'],
       positiveVoters: [...dealSnapshot['positiveVoters'] as List],
       negativeVoters: [...dealSnapshot['negativeVoters'] as List],

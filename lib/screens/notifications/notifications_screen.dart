@@ -19,6 +19,9 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<CurrentUser>(builder: (context, currentUser, child) {
@@ -87,8 +90,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   void deactivate() {
-    Provider.of<Notifications>(context, listen: false).updateNotificationsTimestamp();
-    Provider.of<CurrentUser>(context, listen: false).updateNotificationsTimestamp();
     super.deactivate();
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      Provider.of<Notifications>(context, listen: false).updateNotificationsTimestamp();
+      Provider.of<CurrentUser>(context, listen: false).updateNotificationsTimestamp();
+    });
+    super.initState();
   }
 }

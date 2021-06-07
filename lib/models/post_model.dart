@@ -1,3 +1,4 @@
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 import 'adder_info_model.dart';
@@ -43,7 +44,7 @@ class PostModel {
     return PostModel(
       id: postSnapshot['id'],
       topicId: postSnapshot['topicId'],
-      addedAt: DateTime.parse(postSnapshot['addedAt']),
+      addedAt: DateUtil.parseFromStringToUtc(postSnapshot['addedAt']),
       adderInfo: AdderInfoModel.fromJson(postSnapshot['adderInfo']),
       content: postSnapshot['content'],
       quote: postSnapshot['quote'],
