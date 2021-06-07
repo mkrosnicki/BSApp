@@ -29,6 +29,9 @@ class NotificationItem extends StatelessWidget {
       builder: (context, currentUser, child) {
         final bool wasSeen =
             currentUser.isAuthenticated && notification.issuedAt.isBefore(currentUser.me.notificationsSeenAt);
+        print(currentUser.me.notificationsSeenAt);
+        print(notification.issuedAt);
+        print(wasSeen);
         return Stack(
           children: [
             GestureDetector(
@@ -73,19 +76,19 @@ class NotificationItem extends StatelessWidget {
                 ),
               ),
             ),
-            if (!wasSeen)
-              Positioned(
-                left: 4.0,
-                top: 8.0,
-                child: Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
-              ),
+            // if (!wasSeen)
+            //   Positioned(
+            //     left: 4.0,
+            //     top: 8.0,
+            //     child: Container(
+            //       width: 10,
+            //       height: 10,
+            //       decoration: BoxDecoration(
+            //         color: Colors.blue,
+            //         borderRadius: BorderRadius.circular(5.0),
+            //       ),
+            //     ),
+            //   ),
           ],
         );
       },
