@@ -4,6 +4,8 @@ import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,19 +29,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     }
     _formKey.currentState.save();
     try {
-      await Provider.of<Auth>(context, listen: false)
-          .changeUserPassword(_currentPassword, _newPassword);
+      await Provider.of<Auth>(context, listen: false).changeUserPassword(_currentPassword, _newPassword);
       await _showDialog('Sukces', 'Hasło zostało zmienione.');
       Navigator.of(context).pop();
     } on CustomException catch (error) {
       if (error.toString().contains('Old password does not match')) {
         //
-        await _showDialog(
-            'Błąd podczas zmiany hasła', 'Nieprawidłowe stare hasło!');
+        await _showDialog('Błąd podczas zmiany hasła', 'Nieprawidłowe stare hasło!');
       }
     } catch (error) {
-      const errorMessage =
-          'Zmiana hasła zakończyła się niepowodzeniem. Spróbuj później.';
+      const errorMessage = 'Zmiana hasła zakończyła się niepowodzeniem. Spróbuj później.';
       await _showDialog('Błąd podczas zmieniania hasła', errorMessage);
     }
   }
@@ -82,72 +81,83 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const FormFieldDivider(),
+                  const FormFieldDivider(),
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: TextFormField(
-                            decoration: MyStylingProvider
-                                .TEXT_FORM_FIELD_DECORATION
-                                .copyWith(hintText: 'Obecne hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 3) {
-                                return 'Zbyt krótkie hasło';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _currentPassword = value;
-                            },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const FormFieldTitle('Obecne hasło'),
+                              TextFormField(
+                                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Obecne hasło'),
+                                obscureText: true,
+                                cursorColor: Colors.black,
+                                validator: (value) {
+                                  if (value.isEmpty || value.length < 3) {
+                                    return 'Zbyt krótkie hasło';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onSaved: (value) {
+                                  _currentPassword = value;
+                                },
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: TextFormField(
-                            decoration: MyStylingProvider
-                                .TEXT_FORM_FIELD_DECORATION
-                                .copyWith(hintText: 'Nowe hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            controller: _newPasswordController,
-                            validator: (value) {
-                              if (value.isEmpty || value.length < 3) {
-                                return 'Zbyt krótkie hasło';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _newPassword = value;
-                            },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const FormFieldTitle('Nowe hasło'),
+                              TextFormField(
+                                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Nowe hasło'),
+                                obscureText: true,
+                                cursorColor: Colors.black,
+                                controller: _newPasswordController,
+                                validator: (value) {
+                                  if (value.isEmpty || value.length < 3) {
+                                    return 'Zbyt krótkie hasło';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onSaved: (value) {
+                                  _newPassword = value;
+                                },
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: TextFormField(
-                            decoration: MyStylingProvider
-                                .TEXT_FORM_FIELD_DECORATION
-                                .copyWith(hintText: 'Potwierdź hasło'),
-                            obscureText: true,
-                            cursorColor: Colors.black,
-                            validator: (value) {
-                              if (value != _newPasswordController.text) {
-                                return 'Hasła nie są takie same!';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (value) {
-                              _newPassword = value;
-                            },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const FormFieldTitle('Potwierdź hasło'),
+                              TextFormField(
+                                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Potwierdź hasło'),
+                                obscureText: true,
+                                cursorColor: Colors.black,
+                                validator: (value) {
+                                  if (value != _newPasswordController.text) {
+                                    return 'Hasła nie są takie same!';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onSaved: (value) {
+                                  _newPassword = value;
+                                },
+                              ),
+                            ],
                           ),
                         ),
                         Container(
