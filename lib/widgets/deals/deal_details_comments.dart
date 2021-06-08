@@ -19,23 +19,12 @@ class DealDetailsComments extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          color: Colors.white,
-          width: double.infinity,
-          padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
-          margin: EdgeInsets.zero,
-          alignment: Alignment.centerLeft,
-          child: const Text(
-            'Komentarze',
-            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-        ),
         FutureBuilder(
           future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                height: 200,
+                height: 300,
                 color: Colors.white,
                 child: const Center(child: LoadingIndicator()),
               );
@@ -52,11 +41,26 @@ class DealDetailsComments extends StatelessWidget {
                     } else {
                       return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: commentsData.parentComments.length,
-                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: commentsData.parentComments.length + 1,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return CommentWithRepliesItem(
-                              deal.id, commentsData.parentComments[index], commentToReplySubject);
+                          if (index == 0) {
+                            return Container(
+                              color: Colors.white,
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
+                              margin: EdgeInsets.zero,
+                              alignment: Alignment.centerLeft,
+                              child: const Text(
+                                'Komentarze',
+                                style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
+                              ),
+                            );
+                          } else {
+                            return CommentWithRepliesItem(
+                                deal.id, commentsData.parentComments[index - 1], commentToReplySubject);
+                          }
                         },
                       );
                     }

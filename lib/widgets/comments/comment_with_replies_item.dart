@@ -48,27 +48,30 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
-        if (!showAnswers && widget.comment.subComments.isNotEmpty) GestureDetector(
-          onTap: () => showAnswers ? _showAnswers(false) : _showAnswers(true),
-          child: Container(
-            padding: const EdgeInsets.only(left: 50.0, top: 4.0, bottom: 6.0),
-            width: double.infinity,
-            color: Colors.white,
-            child: Text(
-              showAnswers ? '' : 'Pokaż odpowiedzi (${widget.comment.subComments.length})',
-              style: const TextStyle(fontSize: 11, color: Colors.blueAccent),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8.0),
+      child: Column(
+        children: [
+          CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
+          if (!showAnswers && widget.comment.subComments.isNotEmpty) GestureDetector(
+            onTap: () => showAnswers ? _showAnswers(false) : _showAnswers(true),
+            child: Container(
+              padding: const EdgeInsets.only(left: 50.0, top: 4.0, bottom: 6.0),
+              width: double.infinity,
+              color: Colors.white,
+              child: Text(
+                showAnswers ? '' : 'Pokaż odpowiedzi (${widget.comment.subComments.length})',
+                style: const TextStyle(fontSize: 11, color: Colors.blueAccent),
+              ),
             ),
           ),
-        ),
-        if (showAnswers) Column(
-          children: widget.comment.subComments
-              .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
-              .toList(),
-        ),
-      ],
+          if (showAnswers) Column(
+            children: widget.comment.subComments
+                .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 
