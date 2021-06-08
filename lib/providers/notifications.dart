@@ -112,4 +112,10 @@ class Notifications with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> updateClickedAt(List<String> ids, DateTime clickedAt) async {
+    await _apiProvider.patch('/users/me/notifications', {'ids': ids, 'clickedAt': clickedAt.toIso8601String()}, token: _token);
+    await fetchMyNotifications();
+    notifyListeners();
+  }
 }

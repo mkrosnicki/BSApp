@@ -8,6 +8,7 @@ class NotificationModel {
   final String mainIssuerUsername;
   final int totalNumberOfIssuers;
   final DateTime issuedAt;
+  final bool wasClicked;
   final NotificationType notificationType;
   final String relatedTopicId;
   final String relatedTopicTitle;
@@ -25,6 +26,7 @@ class NotificationModel {
       this.mainIssuerUsername,
       this.totalNumberOfIssuers,
       this.issuedAt,
+      this.wasClicked,
       this.notificationType,
       this.relatedTopicId,
       this.relatedTopicTitle,
@@ -51,8 +53,8 @@ class NotificationModel {
       mainIssuerUsername: notificationSnapshot['mainIssuerUsername'],
       totalNumberOfIssuers: notificationSnapshot['totalNumberOfIssuers'],
       issuedAt: DateUtil.parseFromStringToUtc(notificationSnapshot['issuedAt']),
-      notificationType: NotificationTypeHelper.fromString(
-          notificationSnapshot['notificationType']),
+      wasClicked: notificationSnapshot['clickedAt'] != null,
+      notificationType: NotificationTypeHelper.fromString(notificationSnapshot['notificationType']),
       relatedTopicId: notificationSnapshot['relatedTopicId'],
       relatedTopicTitle: notificationSnapshot['relatedTopicTitle'],
       relatedDealId: notificationSnapshot['relatedDealId'],
@@ -65,13 +67,9 @@ class NotificationModel {
     );
   }
 
-
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationModel &&
-          runtimeType == other.runtimeType &&
-          ids == other.ids;
+      identical(this, other) || other is NotificationModel && runtimeType == other.runtimeType && ids == other.ids;
 
   @override
   int get hashCode => ids.hashCode;

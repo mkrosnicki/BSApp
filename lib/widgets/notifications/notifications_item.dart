@@ -6,6 +6,7 @@ import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/screens/comments/comment_screen.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
@@ -27,20 +28,19 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CurrentUser>(
       builder: (context, currentUser, child) {
-        final bool wasSeen =
-            currentUser.isAuthenticated && notification.issuedAt.isBefore(currentUser.me.notificationsSeenAt);
-        print(currentUser.me.notificationsSeenAt);
-        print(notification.issuedAt);
-        print(wasSeen);
+        final bool wasClicked = notification.wasClicked;
         return Stack(
           children: [
             GestureDetector(
-              onTap: () => _navigateToSource(context),
+              onTap: () {
+                _updateClickedAt(context);
+                _navigateToSource(context);
+              },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4.0),
                 padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
                 width: double.infinity,
-                color: wasSeen ? Colors.white : Colors.blue.shade50,
+                color: wasClicked ? Colors.white : Colors.blue.shade50,
                 // color: Colors.white,
                 child: Flex(
                   direction: Axis.horizontal,
@@ -134,7 +134,11 @@ class NotificationItem extends StatelessWidget {
 
   void _navigateToComment(BuildContext context) {
     Navigator.of(context).pushNamed(CommentScreen.routeName,
-        arguments: CommentScreenArguments(
-            notification.relatedDealId, notification.relatedDealTitle, notification.relatedCommentId, notification.relatedParentCommentId, notification.notificationType, null));
+        arguments: CommentScreenArguments(notification.relatedDealId, notification.relatedDealTitle,
+            notification.relatedCommentId, notification.relatedParentCommentId, notification.notificationType, null));
+  }
+
+  void _updateClickedAt(BuildContext context) {
+    Provider.of<Notifications>(context, listen: false).updateClickedAt(notification.ids, DateTime.now().toUtc());
   }
 }
