@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'deal_details_actions.dart';
+import 'deal_details_link_section.dart';
 import 'deal_details_title_price_section.dart';
 
 class DealDetailsDescription extends StatelessWidget {
@@ -30,6 +31,7 @@ class DealDetailsDescription extends StatelessWidget {
           DealDetailsTitlePriceSection(deal),
           DealDetailsAdditionalInfoSection(deal),
           DealDetailsDescriptionSection(deal.description),
+          DealDetailsLinkSection(deal.description),
           DealDetailsDealCodeSection(deal.code),
           DealDetailsActions(deal),
         ],
