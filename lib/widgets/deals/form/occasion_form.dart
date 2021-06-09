@@ -508,18 +508,6 @@ class _OccasionFormState extends State<OccasionForm> {
     }
   }
 
-  // void _changeLocationOld(bool value) {
-  //   setState(() {
-  //     _showInternetOnly = value;
-  //     if (_showInternetOnly) {
-  //       _newDeal.locationType = LocationType.INTERNET;
-  //       _newDeal.clearLocation();
-  //     } else {
-  //       _newDeal.locationType = LocationType.LOCAL;
-  //     }
-  //   });
-  // }
-
   void _changeLocation() {
     setState(() {
       _newDeal.locationType =
