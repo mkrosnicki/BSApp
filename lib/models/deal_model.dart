@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/discount_type.dart';
@@ -6,12 +7,15 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
+import 'adder_info_model.dart';
+
 class DealModel {
   final String id;
   final DateTime addedAt;
   final String addedById;
   final String addedByUsername;
   final String addedByAvatarPath;
+  final AdderInfoModel adderInfo;
   final String title;
   final String description;
   final String link;
@@ -41,6 +45,7 @@ class DealModel {
     @required this.addedById,
     @required this.addedByUsername,
     @required this.addedByAvatarPath,
+    @required this.adderInfo,
     @required this.title,
     @required this.description,
     @required this.link,
@@ -83,6 +88,7 @@ class DealModel {
       addedById: dealSnapshot['addedById'],
       addedByUsername: dealSnapshot['addedByUsername'],
       addedByAvatarPath: dealSnapshot['addedByAvatarPath'],
+      adderInfo: AdderInfoModel.fromJson(dealSnapshot['adderInfo']),
       title: dealSnapshot['title'],
       description: dealSnapshot['description'],
       link: dealSnapshot['link'],
@@ -151,6 +157,14 @@ class DealModel {
 
   bool get isExpired {
     return endDate != null && DateTime.now().isAfter(endDate);
+  }
+
+  String get adderName {
+    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+  }
+
+  Uint8List get userAvatar {
+    return adderInfo != null ? adderInfo.avatar : null;
   }
 
 

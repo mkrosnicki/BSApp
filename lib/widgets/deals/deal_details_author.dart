@@ -29,7 +29,8 @@ class DealDetailsAuthor extends StatelessWidget {
                   child: SizedBox(
                     width: 38.0,
                     child: UserAvatar(
-                      username: deal.addedByUsername,
+                      username: deal.adderName,
+                      image: deal.userAvatar,
                       radius: 24,
                     ),
                   ),
@@ -43,7 +44,7 @@ class DealDetailsAuthor extends StatelessWidget {
                       style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
                     ),
                     Text(
-                      deal.addedByUsername,
+                      deal.adderName,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
