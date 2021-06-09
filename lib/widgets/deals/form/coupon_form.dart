@@ -8,8 +8,11 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/services/custom_info.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/form/image_picker_dialog.dart';
@@ -121,115 +124,18 @@ class _CouponFormState extends State<CouponForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      initialValue: _newDeal.title,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź tytuł';
-                        } else if (value.length < 5) {
-                          return 'Tytuł musi mieć conajmniej 5 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.title = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Tytuł kuponu'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      initialValue: _newDeal.description,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź opis';
-                        } else if (value.length < 10) {
-                          return 'Opis powinien mieć conajmniej 10 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.description = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Opis'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź kod kuponu';
-                        } else if (value.length < 3) {
-                          return 'Kod powinien mieć co najmniej 3 znaki.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _newDeal.dealCode = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Kod kuponu'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: TextFormField(
-                            initialValue: _newDeal.urlLocation,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Wprowadź link do kuponu';
-                              } else if (!_isUrl(value)) {
-                                return 'Podany ciąg znaków nie jest adresem URL';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onChanged: (value) {
-                              _updateUrl(value);
-                            },
-                            decoration: MyStylingProvider
-                                .textFormFiledDecorationWithLabelText(
-                                    'Link do kuponu'),
-                          ),
-                        ),
-                        IconButton(
-                            splashRadius: 25,
-                            icon: const Icon(
-                              CupertinoIcons.photo,
-                            ),
-                            onPressed: _isImageButtonDisabled
-                                ? null
-                                : () => _buildImagePickerDialog(context)),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: _takePicture,
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey)),
-                        alignment: Alignment.center,
-                        child: _getImage(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const FormFieldDivider(),
+                    _titleSection(),
+                    const FormFieldDivider(),
+                    _descriptionSection(),
+                    const FormFieldDivider(),
+                    _codeSection(),
+                    const FormFieldDivider(),
+                    _linkSection(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    _pictureSection(),
+                    const FormFieldDivider(),
                     Container(
                       margin: const EdgeInsets.only(left: 16),
                       child: Row(
@@ -381,10 +287,7 @@ class _CouponFormState extends State<CouponForm> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: PrimaryButton(
-                          'Dodaj kupon',
-                          _submit
-                      ),
+                      child: PrimaryButton('Dodaj kupon', _submit),
                     ),
                   ],
                 ),
@@ -392,6 +295,150 @@ class _CouponFormState extends State<CouponForm> {
             ),
           );
   }
+
+  Widget _titleSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Tytuł ogłoszenia*'),
+        TextFormField(
+          initialValue: _newDeal.title,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź tytuł';
+            } else if (value.length < 5) {
+              return 'Tytuł musi mieć co najmniej 5 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.title = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
+        ),
+      ],
+    );
+  }
+
+  Widget _linkSection() {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const FormFieldTitle('Link do kuponu'),
+                TextFormField(
+                  initialValue: _newDeal.urlLocation,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź link do kuponu';
+                    } else if (!_isUrl(value)) {
+                      return 'Podany ciąg znaków nie jest adresem URL';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    _updateUrl(value);
+                  },
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do kuponu'),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
+            behavior: HitTestBehavior.translucent,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              alignment: Alignment.bottomRight,
+              child: Icon(Icons.image_outlined, color: _isImageButtonDisabled ? Colors.grey : MyColorsProvider.DEEP_BLUE,),
+              // child: SizedBox(
+              //   width: 30.0,
+              //   child: Image.asset(
+              //     ImageAssetsHelper.imageDownloadPath(),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _pictureSection() {
+    return GestureDetector(
+      onTap: _takePicture,
+      child: Container(
+        width: double.infinity,
+        height: 120,
+        alignment: Alignment.center,
+        child: _getImage(),
+      ),
+    );
+  }
+
+
+
+  Widget _codeSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Kod kuponu*'),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź kod kuponu';
+            } else if (value.length < 3) {
+              return 'Kod powinien mieć co najmniej 3 znaki.';
+            } else {
+              return null;
+            }
+          },
+          onSaved: (value) {
+            _newDeal.dealCode = value;
+          },
+          decoration: MyStylingProvider
+              .textFormFiledDecorationWithLabelText('Kod kuponu'),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _descriptionSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Opis*'),
+        TextFormField(
+          minLines: 4,
+          maxLines: 4,
+          initialValue: _newDeal.description,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź opis';
+            } else if (value.length < 10) {
+              return 'Opis powinien mieć conajmniej 10 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.description = value;
+          },
+          decoration: MyStylingProvider
+              .textFormFiledDecorationWithLabelText('Opis'),
+        ),
+      ],
+    );
+  }
+
 
   Widget _getImage() {
     if (_newDeal.image != null) {
@@ -407,9 +454,30 @@ class _CouponFormState extends State<CouponForm> {
         width: double.infinity,
       );
     } else {
-      return const Text(
-        'Dodaj obrazek',
-        textAlign: TextAlign.center,
+      return Container(
+        color: Colors.yellow.shade50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 30.0,
+              child: Image.asset(
+                ImageAssetsHelper.imageUploadPath(),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              // height: 40.0,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 10.0),
+              child: const Text(
+                'Dodaj zdjęcie',
+                // textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, height: 1.6),
+              ),
+            ),
+          ],
+        ),
       );
     }
   }
