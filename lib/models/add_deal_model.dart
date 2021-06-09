@@ -22,8 +22,8 @@ class AddDealModel {
   String _voivodeshipReadable;
   String _city;
   String _cityReadable;
-  DateTime _validFrom = DateTime.now();
-  DateTime _validTo = DateTime.now();
+  DateTime _validFrom;
+  DateTime _validTo;
   String _dealCode;
   DiscountType _discountType;
   double _discountValue;

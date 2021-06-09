@@ -10,10 +10,10 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(MyColorsProvider.BLUE),
-      ),
+    return RaisedButton(
+      color: MyColorsProvider.BLUE,
+      textColor: Colors.white,
+      disabledColor: MyColorsProvider.LIGHT_GRAY,
       onPressed: function,
       child: Text(
         label,

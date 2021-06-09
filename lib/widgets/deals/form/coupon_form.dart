@@ -155,7 +155,7 @@ class _CouponFormState extends State<CouponForm> {
                     const FormFieldDivider(),
                     SizedBox(
                       width: double.infinity,
-                      child: PrimaryButton('Dodaj kupon', _submit),
+                      child: PrimaryButton('Dodaj kupon', _newDeal.categories.isNotEmpty ? _submit : null),
                     ),
                   ],
                 ),
@@ -471,6 +471,7 @@ class _CouponFormState extends State<CouponForm> {
   }
 
   Widget _buildDateSelectionTile(DealDateType dateType) {
+    final DateTime date = dateType == DealDateType.VALID_FROM ? _newDeal.validFrom : _newDeal.validTo;
     return GestureDetector(
       onTap: () => _selectDate(dateType),
       child: Container(
@@ -498,7 +499,7 @@ class _CouponFormState extends State<CouponForm> {
                   style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
                 ),
                 Text(
-                  DateUtil.getFormatted(dateType == DealDateType.VALID_FROM ? _newDeal.validFrom : _newDeal.validTo),
+                  date != null ? DateUtil.getFormatted(date) : 'Nie wybrano',
                   style: const TextStyle(
                     fontSize: 12,
                   ),
