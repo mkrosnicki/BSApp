@@ -113,9 +113,16 @@ class Notifications with ChangeNotifier {
     }
   }
 
+  Future<void> updateAllClickedAt() async {
+    final List<String> allIds = _notifications.where((element) => !element.wasClicked).expand((e) => e.ids).toList();
+    await updateClickedAt(allIds, DateTime.now().toUtc());
+  }
+
   Future<void> updateClickedAt(List<String> ids, DateTime clickedAt) async {
-    await _apiProvider.patch('/users/me/notifications', {'ids': ids, 'clickedAt': clickedAt.toIso8601String()}, token: _token);
-    await fetchMyNotifications();
-    notifyListeners();
+    if (ids.isNotEmpty) {
+      await _apiProvider.patch('/users/me/notifications', {'ids': ids, 'clickedAt': clickedAt.toIso8601String()}, token: _token);
+      await fetchMyNotifications();
+      notifyListeners();
+    }
   }
 }
