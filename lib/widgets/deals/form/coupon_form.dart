@@ -211,40 +211,46 @@ class _CouponFormState extends State<CouponForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const FormFieldTitle('Wartość kuponu*'),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flexible(
-              child: TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Wprowadź wartość";
-                  } else if (double.parse(value) < 0) {
-                    return "Wartość nie może być ujemna";
-                  } else {
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.number,
-                onSaved: (value) {
-                  _newDeal.discountValue = double.parse(value);
-                },
-                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wartość kuponu'),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Wprowadź wartość";
+                    } else if (double.parse(value) < 0) {
+                      return "Wartość nie może być ujemna";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    _newDeal.discountValue = double.parse(value);
+                  },
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wartość kuponu'),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  if (_newDeal.discountType == DiscountType.ABSOLUTE) {
-                    _newDeal.discountType = DiscountType.PERCENTAGE;
-                  } else {
-                    _newDeal.discountType = DiscountType.ABSOLUTE;
-                  }
-                });
-              },
-              child: _newDeal.discountType == DiscountType.ABSOLUTE ? const Text('zł') : const Text('%'),
-            ),
-          ],
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    if (_newDeal.discountType == DiscountType.ABSOLUTE) {
+                      _newDeal.discountType = DiscountType.PERCENTAGE;
+                    } else {
+                      _newDeal.discountType = DiscountType.ABSOLUTE;
+                    }
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(left: 15.0, right: 8.0, bottom: 4.0, top: 4.0),
+                  child: Text(_newDeal.discountType == DiscountType.ABSOLUTE ? 'zł' : '%', style: const TextStyle(fontSize: 18, color: MyColorsProvider.DEEP_BLUE),),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
