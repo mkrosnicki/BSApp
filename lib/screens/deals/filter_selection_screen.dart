@@ -6,10 +6,12 @@ import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/filters/filters_selection_age_types_selector.dart';
 import 'package:BSApp/widgets/deals/filters/filters_selection_category_selector.dart';
 import 'package:BSApp/widgets/deals/filters/filters_selection_location_type_selector.dart';
+import 'package:BSApp/widgets/deals/filters/filters_selection_sort_type_selector.dart';
 import 'package:BSApp/widgets/filters/age_type_chip.dart';
 import 'package:BSApp/widgets/filters/sorting_type_chip.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,6 +71,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
+                    const FormFieldDivider(),
                     FiltersSelectionCategorySelector(filtersSettings.categories, () => _openCategorySelector(context)),
                     // ListTile(
                     //   title: const Text('Kategoria', style: headerTextStyle),
@@ -84,6 +87,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //   trailing: MyIconsProvider.FORWARD_ICON,
                     //   onTap: () => _openCategorySelector(context),
                     // ),
+                    const FormFieldDivider(),
                     SwitchListTile(
                       title: const Text('Tylko internetowe okazje', style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
@@ -95,6 +99,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
+                    const FormFieldDivider(),
                     FiltersSelectionLocationTypeSelector(filtersSettings, () => _openLocationSelector(context)),
                     // ListTile(
                     //   title: const Text('Lokalizacja', style: headerTextStyle),
@@ -111,6 +116,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //   onTap: () => _openLocationSelector(context),
                     //   enabled: !filtersSettings.showInternetOnly,
                     // ),
+                    const FormFieldDivider(),
                     FiltersSelectionAgeTypesSelector(filtersSettings, _selectAgeTypes),
                     // ListTile(
                     //   title: const Text('Wiek dziecka', style: headerTextStyle),
@@ -130,27 +136,28 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //     children: _buildAgeTypeChips(),
                     //   ),
                     // ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: const Text('Sortuj po', style: headerTextStyle),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Flex(
-                        direction: Axis.horizontal,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: _buildSortingTypeChips(),
-                      ),
-                    ),
+                    const FormFieldDivider(),
+                    FiltersSelectionSortTypeSelector(filtersSettings, _selectSortingType),
+                    // Container(
+                    //   margin: const EdgeInsets.only(top: 10.0),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    //   child: const Text('Sortuj po', style: headerTextStyle),
+                    // ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   alignment: Alignment.center,
+                    //   child: Flex(
+                    //     direction: Axis.horizontal,
+                    //     mainAxisSize: MainAxisSize.max,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: _buildSortingTypeChips(),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             ),
-            Card(
-              elevation: 10,
+            Container(
               margin: EdgeInsets.zero,
               child: Container(
                 width: double.infinity,
@@ -195,6 +202,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     });
   }
 
+  void _selectSortingType(final SortingType sortingType) {
+    setState(() {
+      filtersSettings.sortBy = sortingType;
+    });
+  }
+
   List<Widget> _buildSortingTypeChips() {
     List<Widget> list = [
       SortingTypeChip(
@@ -219,7 +232,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     return list;
   }
 
-  _openCategorySelector(BuildContext context) async {
+  Future<void> _openCategorySelector(BuildContext context) async {
     final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
@@ -228,7 +241,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     }
   }
 
-  _openLocationSelector(BuildContext context) async {
+  Future<void> _openLocationSelector(BuildContext context) async {
     var locations = await Navigator.of(context).pushNamed(LocationSelectionScreen.routeName);
     if (locations != null) {
       setState(() {
@@ -238,13 +251,13 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
     }
   }
 
-  _clearFilters() {
+  void _clearFilters() {
     setState(() {
       filtersSettings.clearAll();
     });
   }
 
-  _acceptFilters(BuildContext context) {
+  void _acceptFilters(BuildContext context) {
     Navigator.pop(context, filtersSettings);
   }
 }

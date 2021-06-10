@@ -8,7 +8,7 @@ import 'package:BSApp/widgets/common/deals_not_found.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
-import 'package:BSApp/widgets/deals/filters/filter_chips_bar.dart';
+import 'package:BSApp/widgets/deals/filters/filter_settings_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -97,4 +97,8 @@ class ImageAssetsHelper {
   static String categoryPlaceholderPath() {
     return '${assetsLocation}category-pngrepo-com.png';
   }
+
+  static String sortingIconPath() {
+    return '${assetsLocation}sort-switch-pngrepo-com.png';
+  }
 }

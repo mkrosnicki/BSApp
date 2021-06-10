@@ -1,19 +1,21 @@
+import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FiltersSelectionLocationTypeSelector extends StatelessWidget {
+class FiltersSelectionSortTypeSelector extends StatelessWidget {
   final FilterSettings filterSettings;
-  final GestureTapCallback onTap;
+  final Function(SortingType) onTap;
 
-  const FiltersSelectionLocationTypeSelector(this.filterSettings, this.onTap);
+  const FiltersSelectionSortTypeSelector(this.filterSettings, this.onTap);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => _changeSortType(),
       child: Container(
         // margin: const EdgeInsets.only(left: 16),
         padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 12.0),
@@ -28,7 +30,7 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
                   child: SizedBox(
                     height: 30.0,
                     child: Image.asset(
-                      ImageAssetsHelper.localPath(),
+                      ImageAssetsHelper.sortingIconPath(),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -37,12 +39,12 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Lokalizacja',
-                      style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.3),
+                    const Text(
+                      'Sortowanie',
+                      style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.3),
                     ),
                     Text(
-                      filterSettings.voivodeship == null ? 'Dowolna' : filterSettings.locationString,
+                      SortingTypeHelper.getReadableC(filterSettings.sortBy),
                       style: const TextStyle(
                         fontSize: 13,
                       ),
@@ -52,7 +54,7 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
               ],
             ),
             const Icon(
-              CupertinoIcons.chevron_right,
+              CupertinoIcons.arrow_2_circlepath,
               color: MyColorsProvider.DEEP_BLUE,
             )
           ],
@@ -61,10 +63,8 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
     );
   }
 
-// void _switchLocationType() {
-//   setState(() {
-//     locationType = isInternetSelected ? LocationType.LOCAL : LocationType.INTERNET;
-//   });
-// }
+  void _changeSortType() {
+    onTap(filterSettings.sortBy == SortingType.NEWEST ? SortingType.MOST_POPULAR : SortingType.NEWEST);
+  }
 
 }

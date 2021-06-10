@@ -3,11 +3,11 @@ import 'package:BSApp/widgets/common/selected_filter_chip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class FilterSettingsBar extends StatelessWidget {
+class FilterChipsBar extends StatelessWidget {
   final FilterSettings filterSettings;
   final Function(FilterSettings filterSettings) updateFunction;
 
-  const FilterSettingsBar(this.filterSettings, this.updateFunction);
+  const FilterChipsBar(this.filterSettings, this.updateFunction);
 
   @override
   Widget build(BuildContext context) {
