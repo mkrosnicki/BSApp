@@ -193,14 +193,15 @@ class FilterSettings {
   }
 
   static FilterSettings fromJson(Map<String, dynamic> json) {
+    print(json);
     final FilterSettings newFilterSettings = FilterSettings();
     newFilterSettings.phrase = json['phrase'];
     newFilterSettings.categories = (json['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList();
     newFilterSettings.ageTypes = (json['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList();
     newFilterSettings.voivodeship = Voivodeship.fromJson(json['voivodeship']);
     newFilterSettings.city = City.fromJson(json['city']);
-    newFilterSettings.showActiveOnly = bool.fromEnvironment(json['showActiveOnly']);
-    newFilterSettings.showInternetOnly = bool.fromEnvironment(json['showInternetOnly']);
+    newFilterSettings.showActiveOnly = json['showActiveOnly'] as bool;
+    newFilterSettings.showInternetOnly = json['showInternetOnly'] as bool;
     newFilterSettings.sortBy = SortingTypeHelper.fromString(json['sortBy']);
     return newFilterSettings;
   }
@@ -210,8 +211,8 @@ class FilterSettings {
       'phrase': phrase,
       'categories': categories.map((e) => e.toJson()).toList(),
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
-      'showActiveOnly': showActiveOnly.toString(),
-      'showInternetOnly': showInternetOnly.toString(),
+      'showActiveOnly': showActiveOnly,
+      'showInternetOnly': showInternetOnly,
       'voivodeship': voivodeship?.toJson(),
       'city': city?.toJson(),
       'sortBy': sortBy != null ? SortingTypeHelper.asString(sortBy) : null,

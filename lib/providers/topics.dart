@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/models/topic_search_result_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -7,9 +8,14 @@ class Topics with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<TopicModel> _topics = [];
+  List<TopicSearchResultModel> _searchResults = [];
   String _token;
 
   Topics.empty();
+
+  List<TopicSearchResultModel> get searchResults {
+    return [..._searchResults];
+  }
 
   List<TopicModel> get topics {
     return [..._topics];
@@ -31,6 +37,18 @@ class Topics with ChangeNotifier {
       logger.i('No Topics Found!');
     }
     _topics = TopicModel.fromJsonList(responseBody);
+    notifyListeners();
+  }
+
+  Future<void> fetchDiscussionEntriesByPhrase(String phrase) async {
+    final responseBody =
+    await _apiProvider.get('/discussions', requestParams: {'phrase': phrase}) as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Topics Found!');
+    }
+    _searchResults = TopicSearchResultModel.fromJsonList(responseBody);
+    _topics = _searchResults.map((e) => e.topic).toList();
     notifyListeners();
   }
 

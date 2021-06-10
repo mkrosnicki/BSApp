@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
+
+import 'adder_info_model.dart';
 
 class DealModel {
   final String id;
@@ -11,6 +15,7 @@ class DealModel {
   final String addedById;
   final String addedByUsername;
   final String addedByAvatarPath;
+  final AdderInfoModel adderInfo;
   final String title;
   final String description;
   final String link;
@@ -32,6 +37,7 @@ class DealModel {
   final List<String> positiveVoters;
   final List<String> negativeVoters;
   final Image image;
+  final String imagePath;
 
   DealModel({
     @required this.id,
@@ -39,6 +45,7 @@ class DealModel {
     @required this.addedById,
     @required this.addedByUsername,
     @required this.addedByAvatarPath,
+    @required this.adderInfo,
     @required this.title,
     @required this.description,
     @required this.link,
@@ -60,6 +67,7 @@ class DealModel {
     @required this.positiveVoters,
     @required this.negativeVoters,
     @required this.image,
+    @required this.imagePath,
   });
 
   static List<DealModel> fromJsonList(List<dynamic> dealsSnapshot) {
@@ -76,10 +84,11 @@ class DealModel {
     }
     return DealModel(
       id: dealSnapshot['id'],
-      addedAt: DateTime.parse(dealSnapshot['addedAt']),
+      addedAt: DateUtil.parseFromStringToUtc(dealSnapshot['addedAt']),
       addedById: dealSnapshot['addedById'],
       addedByUsername: dealSnapshot['addedByUsername'],
       addedByAvatarPath: dealSnapshot['addedByAvatarPath'],
+      adderInfo: AdderInfoModel.fromJson(dealSnapshot['adderInfo']),
       title: dealSnapshot['title'],
       description: dealSnapshot['description'],
       link: dealSnapshot['link'],
@@ -97,12 +106,13 @@ class DealModel {
       shippingPrice: dealSnapshot['shippingPrice'],
       discountType: DiscountTypeHelper.fromString(dealSnapshot['discountType']),
       discountValue: dealSnapshot['discountValue'],
-      startDate: DateTime.parse(dealSnapshot['startDate']),
-      endDate: DateTime.parse(dealSnapshot['endDate']),
+      startDate: DateUtil.parseFromStringToUtc(dealSnapshot['startDate']),
+      endDate: DateUtil.parseFromStringToUtc(dealSnapshot['endDate']),
       numberOfComments: dealSnapshot['numberOfComments'],
       positiveVoters: [...dealSnapshot['positiveVoters'] as List],
       negativeVoters: [...dealSnapshot['negativeVoters'] as List],
       image: _getImage(dealSnapshot),
+      imagePath: dealSnapshot['imagePath'] != null ? dealSnapshot['imagePath'] : null,
       // image: null,
     );
   }
@@ -145,9 +155,22 @@ class DealModel {
     }
   }
 
+  bool get isExpired {
+    return endDate != null && DateTime.now().isAfter(endDate);
+  }
+
+  String get adderName {
+    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+  }
+
+  Uint8List get userAvatar {
+    return adderInfo != null ? adderInfo.avatar : null;
+  }
+
+
   @override
   String toString() {
-    return 'DealModel{id: $id, title: $title, dealType: $dealType}';
+    return 'DealModel{id: $id, title: $title, dealType: $dealType, categories: $categories}';
   }
 
   @override
@@ -165,6 +188,6 @@ class DealModel {
     }
     // var image = File('test.png');
     // return image.writeAsBytesSync(base64Image);
-    return Image.memory(base64Image);
+    return Image.memory(base64Image, fit: BoxFit.cover,);
   }
 }

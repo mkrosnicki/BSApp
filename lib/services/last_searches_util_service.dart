@@ -5,6 +5,7 @@ import 'cookies_util_service.dart';
 
 class LastSearchesUtilService {
   static const FILTER_SETTINGS_COOKIE = 'filterSettings';
+  static const MAX_SIZE = 10;
 
   static Future<List<FilterSettings>> getCachedFilterSettings() async {
     List<Map<String, dynamic>> cookieValues;
@@ -32,6 +33,9 @@ class LastSearchesUtilService {
           .then((_) {
         if (!cachedFilterSettings.contains(filterSettings)) {
           cachedFilterSettings.insert(0, filterSettings);
+          if (cachedFilterSettings.length > MAX_SIZE) {
+            cachedFilterSettings.removeLast();
+          }
           CookiesUtilService.setCookieListValue(FILTER_SETTINGS_COOKIE,
               cachedFilterSettings.map((e) => e.toJson()).toList());
         }

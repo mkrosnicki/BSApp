@@ -41,13 +41,11 @@ class MyProfileOptionsList extends StatelessWidget {
       const MyProfileOptionItem(title: 'O aplikacji', route: AboutAppScreen.routeName),
       const LogoutButton(),
     ];
-    return Flexible(
-      child: ListView.builder(
-        itemBuilder: (context, index) => menuOptions[index],
-        itemCount: menuOptions.length,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-      ),
+    return ListView.builder(
+      itemBuilder: (context, index) => menuOptions[index],
+      itemCount: menuOptions.length,
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
     );
   }
 

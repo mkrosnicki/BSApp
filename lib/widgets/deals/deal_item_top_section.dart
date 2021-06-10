@@ -12,7 +12,7 @@ class DealItemTopSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isExpired = _isExpired();
+    final bool isExpired = deal.isExpired;
     return Flex(
       direction: Axis.vertical,
       children: [
@@ -59,12 +59,8 @@ class DealItemTopSection extends StatelessWidget {
                 style: const TextStyle(fontSize: 14, color: Colors.grey, decoration: TextDecoration.lineThrough),
               ),
           ],
-        )
+        ),
       ],
     );
-  }
-
-  bool _isExpired() {
-    return deal.endDate != null && DateTime.now().isAfter(deal.endDate);
   }
 }

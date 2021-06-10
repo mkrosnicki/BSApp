@@ -49,7 +49,7 @@ class UserScreenAdminActionsButton extends StatelessWidget {
       onTap: function,
       title: Text(
         title,
-        style: TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 13),
       ),
     );
   }

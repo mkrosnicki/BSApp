@@ -81,7 +81,7 @@ class ApiProvider {
   }
 
   Uri _buildUri(String endpoint, Map<String, dynamic> requestParams) {
-    return _protocolType == _ProtocolType.HTTP ? Uri.http(_domain, endpoint, requestParams) : Uri.https(_domain, endpoint, requestParams);
+    return _protocolType == _ProtocolType.HTTP ? Uri.http(domain, endpoint, requestParams) : Uri.https(domain, endpoint, requestParams);
   }
 
   dynamic _response(http.Response response) {

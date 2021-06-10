@@ -63,7 +63,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     Consumer<CurrentUser>(
                       builder: (context, currentUser, child) {
-                        print(currentUser.me);
                         return currentUser.isAdmin
                             ? Positioned(
                                 right: 0,

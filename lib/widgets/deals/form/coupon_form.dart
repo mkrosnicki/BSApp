@@ -1,16 +1,22 @@
 import 'dart:io';
 
 import 'package:BSApp/models/add_deal_model.dart';
+import 'package:BSApp/models/age_type.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/discount_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/services/custom_info.dart';
+import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
-import 'package:BSApp/widgets/common/information_dialog.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
+import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/form/image_picker_dialog.dart';
 import 'package:BSApp/widgets/deals/form/localisation_selector.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +26,9 @@ import 'package:provider/provider.dart';
 
 import 'age_type_chips.dart';
 import 'deal_date.dart';
+import 'deal_form_age_types_selector.dart';
+import 'deal_form_category_selector.dart';
+import 'deal_form_location_type_selector.dart';
 
 class CouponForm extends StatefulWidget {
   final AddDealModel newDeal;
@@ -32,17 +41,18 @@ class CouponForm extends StatefulWidget {
 
 class _CouponFormState extends State<CouponForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  static const _formFieldTextStyle = TextStyle(fontSize: 14, color: Colors.black87);
+  final TextEditingController _locationTextController = TextEditingController();
   bool _isLoading = false;
   AddDealModel _newDeal;
-  bool _showInternetOnly;
   bool _isImageButtonDisabled = true;
 
   @override
   void initState() {
     super.initState();
     _newDeal = widget.newDeal;
-    _showInternetOnly = _newDeal.locationType == LocationType.INTERNET;
     _newDeal.discountType = DiscountType.PERCENTAGE;
+    _locationTextController.text = _newDeal.voivodeship != null ? locationString(_newDeal) : 'Cała Polska';
   }
 
   Future<void> _submit() async {
@@ -63,11 +73,10 @@ class _CouponFormState extends State<CouponForm> {
       setState(() {
         _isLoading = false;
       });
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Sukces!'),
-        const Text('Kupon został dodany'),
-        const Text('Ok'),
+        title: 'Sukces!',
+        textContent: 'Kupon został dodany',
       );
       // Navigator.of(context).pushReplacementNamed(DealsScreen.routeName);
     } on CustomException catch (error) {
@@ -75,19 +84,17 @@ class _CouponFormState extends State<CouponForm> {
       if (error.toString().contains('Unauthorized')) {
         errorMessage = 'W celu dodania kuponu zaloguj się!';
       }
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania kuponu'),
-        Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd podczas dodawania kuponu',
+        textContent: errorMessage,
       );
     } catch (error) {
       const errorMessage = 'Coś poszło nie tak. Spróbuj później!';
-      await showInformationDialog(
+      await infoDialog(
         context,
-        const Text('Błąd podczas dodawania ogłoszenia'),
-        const Text(errorMessage),
-        const Text('Ok'),
+        title: 'Błąd',
+        textContent: errorMessage,
       );
     }
     setState(() {
@@ -123,279 +130,287 @@ class _CouponFormState extends State<CouponForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      initialValue: _newDeal.title,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź tytuł';
-                        } else if (value.length < 5) {
-                          return 'Tytuł musi mieć conajmniej 5 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.title = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Tytuł kuponu'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      initialValue: _newDeal.description,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź opis';
-                        } else if (value.length < 10) {
-                          return 'Opis powinien mieć conajmniej 10 znaków';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        _newDeal.description = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Opis'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Wprowadź kod kuponu';
-                        } else if (value.length < 3) {
-                          return 'Kod powinien mieć co najmniej 3 znaki.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        _newDeal.dealCode = value;
-                      },
-                      decoration: MyStylingProvider
-                          .textFormFiledDecorationWithLabelText('Kod kuponu'),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: TextFormField(
-                            initialValue: _newDeal.urlLocation,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Wprowadź link do kuponu';
-                              } else if (!_isUrl(value)) {
-                                return 'Podany ciąg znaków nie jest adresem URL';
-                              } else {
-                                return null;
-                              }
-                            },
-                            onChanged: (value) {
-                              _updateUrl(value);
-                            },
-                            decoration: MyStylingProvider
-                                .textFormFiledDecorationWithLabelText(
-                                    'Link do kuponu'),
-                          ),
-                        ),
-                        IconButton(
-                            splashRadius: 25,
-                            icon: const Icon(
-                              CupertinoIcons.photo,
-                            ),
-                            onPressed: _isImageButtonDisabled
-                                ? null
-                                : () => _buildImagePickerDialog(context)),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: _takePicture,
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey)),
-                        alignment: Alignment.center,
-                        child: _getImage(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Kupon internetowy'),
-                          Switch.adaptive(
-                              activeColor: MyColorsProvider.BLUE,
-                              value: _newDeal.locationType ==
-                                  LocationType.INTERNET,
-                              onChanged: (value) {
-                                _changeLocation(value);
-                              }),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    if (!_showInternetOnly)
-                      ListTile(
-                        title: const Text('Lokalizacja'),
-                        subtitle: _newDeal.voivodeship != null
-                            ? Text(
-                                locationString(_newDeal),
-                                style: const TextStyle(color: Colors.blue),
-                              )
-                            : const Text('Cała Polska'),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => _openLocationSelector(),
-                        enabled: !_showInternetOnly,
-                      ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    if (!_showInternetOnly)
-                      Column(
-                        children: [
-                          TextFormField(
-                            initialValue: _newDeal.locationDescription,
-                            enabled: !_showInternetOnly,
-                            onChanged: (value) {
-                              _newDeal.locationDescription = value;
-                            },
-                            decoration: MyStylingProvider
-                                .textFormFiledDecorationWithLabelText(
-                                    'Opis lokalizacji'),
-                          ),
-                        ],
-                      ),
-                    ListTile(
-                      title: const Text('Kategoria'),
-                      subtitle: _newDeal.categories.isNotEmpty
-                          ? Text(
-                              categoriesString,
-                              style: const TextStyle(color: Colors.blue),
-                            )
-                          : const Text('Wszystkie kategorie'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => _openCategorySelector(context),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(
-                          left: 16,
-                        ),
-                        child: const Text('Wiek dziecka')),
+                    const FormFieldDivider(),
+                    _titleSection(),
+                    const FormFieldDivider(),
+                    _linkSection(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    _pictureSection(),
+                    const FormFieldDivider(),
+                    _codeSection(),
+                    const FormFieldDivider(),
+                    _discountSection(),
+                    const FormFieldDivider(),
+                    _locationSelectionSection(),
+                    const FormFieldDivider(),
+                    _categorySelectionSection(),
+                    const FormFieldDivider(),
+                    _ageTypesSelectionSection(),
+                    const FormFieldDivider(),
+                    _descriptionSection(),
+                    const FormFieldDivider(),
+                    _dateSelectionButtons(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
                     SizedBox(
                       width: double.infinity,
-                      child: AgeTypeChips(_newDeal),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(DealDateType.VALID_FROM),
-                          color: MyColorsProvider.BLUE,
-                        ),
-                        const Text('Kupon ważny od: '),
-                        Text(
-                          "${_newDeal.validFrom.toLocal()}".split(' ')[0],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(DealDateType.VALID_TO),
-                          color: MyColorsProvider.BLUE,
-                        ),
-                        const Text('Kupon ważny do: '),
-                        Text(
-                          "${_newDeal.validTo.toLocal()}".split(' ')[0],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Wprowadź wartość";
-                              } else if (double.parse(value) < 0) {
-                                return "Wartość nie może być ujemna";
-                              } else {
-                                return null;
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            onSaved: (value) {
-                              _newDeal.discountValue = double.parse(value);
-                            },
-                            decoration: MyStylingProvider
-                                .textFormFiledDecorationWithLabelText(
-                                    'Wartość kuponu'),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              if (_newDeal.discountType ==
-                                  DiscountType.ABSOLUTE) {
-                                _newDeal.discountType = DiscountType.PERCENTAGE;
-                              } else {
-                                _newDeal.discountType = DiscountType.ABSOLUTE;
-                              }
-                            });
-                          },
-                          child: _newDeal.discountType == DiscountType.ABSOLUTE
-                              ? const Text('zł')
-                              : const Text('%'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: _submit,
-                        child: const Text(
-                          'Dodaj kupon',
-                          style: MyStylingProvider.TEXT_BLACK,
-                        ),
-                      ),
+                      child: PrimaryButton('Dodaj kupon', _newDeal.categories.isNotEmpty ? _submit : null),
                     ),
                   ],
                 ),
               ),
             ),
           );
+  }
+
+  Widget _titleSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Tytuł ogłoszenia*'),
+        TextFormField(
+          initialValue: _newDeal.title,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź tytuł';
+            } else if (value.length < 5) {
+              return 'Tytuł musi mieć co najmniej 5 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.title = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
+        ),
+      ],
+    );
+  }
+
+  Widget _categorySelectionSection() {
+    return DealsFormCategorySelector(
+      _newDeal.categories,
+      () => _openCategorySelector(context),
+    );
+  }
+
+  Widget _ageTypesSelectionSection() {
+    return DealsFormAgeTypesSelector(_newDeal, _selectAgeTypes);
+  }
+
+  void _selectAgeTypes(final List<AgeType> ageTypes) {
+    setState(() {
+      _newDeal.ageTypes = ageTypes;
+    });
+  }
+
+  Widget _discountSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Wartość kuponu*'),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Wprowadź wartość";
+                    } else if (double.parse(value) < 0) {
+                      return "Wartość nie może być ujemna";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    _newDeal.discountValue = double.parse(value);
+                  },
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wartość kuponu'),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    if (_newDeal.discountType == DiscountType.ABSOLUTE) {
+                      _newDeal.discountType = DiscountType.PERCENTAGE;
+                    } else {
+                      _newDeal.discountType = DiscountType.ABSOLUTE;
+                    }
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(left: 15.0, right: 8.0, bottom: 4.0, top: 4.0),
+                  child: Text(_newDeal.discountType == DiscountType.ABSOLUTE ? 'zł' : '%', style: const TextStyle(fontSize: 18, color: MyColorsProvider.DEEP_BLUE),),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _linkSection() {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const FormFieldTitle('Link do kuponu'),
+                TextFormField(
+                  initialValue: _newDeal.urlLocation,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Wprowadź link do kuponu';
+                    } else if (!_isUrl(value)) {
+                      return 'Podany ciąg znaków nie jest adresem URL';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    _updateUrl(value);
+                  },
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do kuponu'),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
+            behavior: HitTestBehavior.translucent,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              alignment: Alignment.bottomRight,
+              child: Icon(
+                Icons.image_outlined,
+                color: _isImageButtonDisabled ? Colors.grey : MyColorsProvider.DEEP_BLUE,
+              ),
+              // child: SizedBox(
+              //   width: 30.0,
+              //   child: Image.asset(
+              //     ImageAssetsHelper.imageDownloadPath(),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _pictureSection() {
+    return GestureDetector(
+      onTap: _takePicture,
+      child: Container(
+        width: double.infinity,
+        height: 120,
+        alignment: Alignment.center,
+        child: _getImage(),
+      ),
+    );
+  }
+
+  Widget _codeSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Kod kuponu*'),
+        TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź kod kuponu';
+            } else if (value.length < 3) {
+              return 'Kod powinien mieć co najmniej 3 znaki.';
+            } else {
+              return null;
+            }
+          },
+          onSaved: (value) {
+            _newDeal.dealCode = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Kod kuponu'),
+        ),
+      ],
+    );
+  }
+
+  Widget _locationSelectionSection() {
+    return Column(
+      children: [
+        DealsFormLocationTypeSelector(_newDeal.locationType, _changeLocation),
+        if (!_newDeal.isInternetType)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const FormFieldDivider(),
+              const FormFieldTitle('Lokalizacja*'),
+              GestureDetector(
+                onTap: () => _openLocationSelector(),
+                child: TextFormField(
+                  enabled: false,
+                  controller: _locationTextController,
+                  style: _formFieldTextStyle,
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wybierz lokalizację*').copyWith(
+                    suffixIcon: const Icon(
+                      CupertinoIcons.forward,
+                      color: MyColorsProvider.DEEP_BLUE,
+                    ),
+                  ),
+                ),
+              ),
+              const FormFieldDivider(),
+              const FormFieldTitle('Opis lokalizacji (opcjonalnie)'),
+              TextFormField(
+                initialValue: _newDeal.locationDescription,
+                enabled: !_newDeal.isInternetType,
+                onChanged: (value) {
+                  _newDeal.locationDescription = value;
+                },
+                decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('np. koło stacji benzynowej'),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _descriptionSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Opis*'),
+        TextFormField(
+          minLines: 4,
+          maxLines: 4,
+          initialValue: _newDeal.description,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Wprowadź opis';
+            } else if (value.length < 10) {
+              return 'Opis powinien mieć conajmniej 10 znaków';
+            } else {
+              return null;
+            }
+          },
+          onChanged: (value) {
+            _newDeal.description = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText(
+              'Krótko opisz kupon i sposób, w jaki można go zrealizować 🙂'),
+        ),
+      ],
+    );
   }
 
   Widget _getImage() {
@@ -412,11 +427,89 @@ class _CouponFormState extends State<CouponForm> {
         width: double.infinity,
       );
     } else {
-      return const Text(
-        'Dodaj obrazek',
-        textAlign: TextAlign.center,
+      return Container(
+        color: Colors.yellow.shade50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 30.0,
+              child: Image.asset(
+                ImageAssetsHelper.imageUploadPath(),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              // height: 40.0,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 10.0),
+              child: const Text(
+                'Dodaj zdjęcie',
+                // textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, height: 1.6),
+              ),
+            ),
+          ],
+        ),
       );
     }
+  }
+
+  Widget _dateSelectionButtons() {
+    return Flex(
+      direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: _buildDateSelectionTile(DealDateType.VALID_FROM),
+        ),
+        Flexible(
+          child: _buildDateSelectionTile(DealDateType.VALID_TO),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateSelectionTile(DealDateType dateType) {
+    final DateTime date = dateType == DealDateType.VALID_FROM ? _newDeal.validFrom : _newDeal.validTo;
+    return GestureDetector(
+      onTap: () => _selectDate(dateType),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: SizedBox(
+                width: 27.0,
+                child: Image.asset(
+                  dateType == DealDateType.VALID_FROM
+                      ? ImageAssetsHelper.validFromImagePath()
+                      : ImageAssetsHelper.validToImagePath(),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  dateType == DealDateType.VALID_FROM ? 'Ważny od' : 'Ważny do',
+                  style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
+                ),
+                Text(
+                  date != null ? DateUtil.getFormatted(date) : 'Nie wybrano',
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<String> _buildImagePickerDialog(BuildContext context) async {
@@ -465,8 +558,7 @@ class _CouponFormState extends State<CouponForm> {
 
   Future<void> _openCategorySelector(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    final selectedCategories = await Navigator.of(context)
-        .pushNamed(CategorySelectionScreen.routeName);
+    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
     if (selectedCategories != null) {
       setState(() {
         _newDeal.categories = selectedCategories;
@@ -474,15 +566,10 @@ class _CouponFormState extends State<CouponForm> {
     }
   }
 
-  void _changeLocation(bool value) {
+  void _changeLocation() {
     setState(() {
-      _showInternetOnly = value;
-      if (_showInternetOnly) {
-        _newDeal.locationType = LocationType.INTERNET;
-        _newDeal.clearLocation();
-      } else {
-        _newDeal.locationType = LocationType.LOCAL;
-      }
+      _newDeal.locationType =
+          _newDeal.locationType == LocationType.INTERNET ? LocationType.LOCAL : LocationType.INTERNET;
     });
   }
 

@@ -8,9 +8,16 @@ class DateUtil {
     return _dateFormat.format(dateTime);
   }
 
+  static DateTime parseFromStringToUtc(String date) {
+    DateTime parsed = DateTime.parse(date);
+    parsed = parsed.add(parsed.timeZoneOffset);
+    parsed = parsed.toUtc();
+    return parsed;
+  }
+
   static String timeAgoString(DateTime dateTime) {
-    final DateTime now = DateTime.now();
-    var diff = now.difference(dateTime);
+    final DateTime now = DateTime.now().toUtc();
+    var diff = now.difference(dateTime.toUtc());
     // if (now.day - dateTime.day == 0) {
     //   return 'Dzisiaj, ${_timeFormat.format(dateTime)}';
     // }

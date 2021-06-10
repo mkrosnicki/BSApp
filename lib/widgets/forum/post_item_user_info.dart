@@ -1,11 +1,14 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
+import 'package:BSApp/widgets/forum/post_item_admin_actions_button.dart';
 import 'package:BSApp/widgets/forum/post_item_heart_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostItemUserInfo extends StatelessWidget {
   final PostModel post;
@@ -14,8 +17,7 @@ class PostItemUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle =
-        TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
@@ -44,8 +46,7 @@ class PostItemUserInfo extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.zero,
                             child: GestureDetector(
-                              onTap: () => _navigateToUserProfileScreen(
-                                  context, post.adderInfo.id),
+                              onTap: () => _navigateToUserProfileScreen(context, post.adderInfo.id),
                               child: Text(
                                 post.adderInfo.username,
                                 style: const TextStyle(
@@ -62,7 +63,18 @@ class PostItemUserInfo extends StatelessWidget {
                           ),
                         ],
                       ),
-                      PostItemHeartButton(post),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Consumer<CurrentUser>(
+                            builder: (context, currentUser, child) {
+                              return currentUser.isAdmin ? PostItemAdminActionsButton(post) : Container();
+                            },
+                          ),
+                          PostItemHeartButton(post),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -75,7 +87,6 @@ class PostItemUserInfo extends StatelessWidget {
   }
 
   void _navigateToUserProfileScreen(BuildContext context, String userId) {
-    Navigator.of(context)
-        .pushNamed(UserProfileScreen.routeName, arguments: userId);
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
   }
 }

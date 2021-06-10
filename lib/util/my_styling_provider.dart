@@ -49,18 +49,21 @@ class MyStylingProvider {
 
   static InputDecoration textFormFiledDecorationWithLabelText(String labelText) {
     return InputDecoration(
-      labelText: labelText,
+      hintText: labelText,
+      hintStyle: const TextStyle(fontSize: 14, color: Colors.black87),
+      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       border: InputBorder.none,
+      suffixIconConstraints: const BoxConstraints(maxHeight: 20.0, minWidth: 25.0),
       filled: true,
       isDense: true,
       fillColor: MyColorsProvider.SUPER_LIGHT_GREY,
       enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: MyColorsProvider.SUPER_LIGHT_GREY),
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
       focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
         borderSide: BorderSide(style: BorderStyle.none),
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),
     );
   }

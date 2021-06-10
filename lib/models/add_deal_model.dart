@@ -22,8 +22,8 @@ class AddDealModel {
   String _voivodeshipReadable;
   String _city;
   String _cityReadable;
-  DateTime _validFrom = DateTime.now();
-  DateTime _validTo = DateTime.now();
+  DateTime _validFrom;
+  DateTime _validTo;
   String _dealCode;
   DiscountType _discountType;
   double _discountValue;
@@ -65,6 +65,10 @@ class AddDealModel {
 
   String get imageUrl => _imageUrl;
 
+  bool get isInternetType {
+    return locationType == LocationType.INTERNET;
+  }
+
   set image(File value) {
     _image = value;
   }
@@ -95,6 +99,10 @@ class AddDealModel {
 
   set categories(List<CategoryModel> value) {
     _categories = value;
+  }
+
+  set ageTypes(List<AgeType> value) {
+    _ageTypes = value;
   }
 
   set locationType(LocationType value) {

@@ -35,6 +35,6 @@ class DealDateSelector {
     } else if (dateType == DealDateType.VALID_FROM) {
       initialDate = deal.validFrom;
     }
-    return initialDate;
+    return initialDate ?? DateTime.now().toUtc();
   }
 }

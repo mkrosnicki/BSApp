@@ -19,8 +19,14 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+
+  Notifications _notifications;
+  CurrentUser _currentUser;
+
   @override
   Widget build(BuildContext context) {
+    _notifications = Provider.of<Notifications>(context, listen: false);
+    _currentUser = Provider.of<CurrentUser>(context, listen: false);
     return Consumer<CurrentUser>(builder: (context, currentUser, child) {
       return Scaffold(
         appBar: BaseAppBar(
@@ -32,7 +38,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         body: SafeArea(
           child: currentUser.isAuthenticated
               ? FutureBuilder(
-                  future: Provider.of<Notifications>(context, listen: false).fetchMyNotifications(),
+                  future: _notifications.fetchMyNotifications(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: LoadingIndicator());
@@ -82,13 +88,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Future<void> _refreshNotifications(BuildContext context) async {
-    await Provider.of<Notifications>(context, listen: false).fetchMyNotifications();
+    await _notifications.fetchMyNotifications();
   }
 
   @override
   void deactivate() {
-    Provider.of<Notifications>(context, listen: false).updateNotificationsTimestamp();
-    Provider.of<CurrentUser>(context, listen: false).updateNotificationsTimestamp();
+    Future.delayed(Duration.zero, () {
+      _currentUser.updateNotificationsTimestamp();
+      _notifications.updateNotificationsTimestamp();
+    });
     super.deactivate();
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+    });
+    super.initState();
   }
 }

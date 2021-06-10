@@ -75,6 +75,21 @@ flutter:
     - assets/images/stroller.png
     - assets/images/logo1.png
     - assets/images/logo2.png
+    - assets/images/worldwide-planet-earth-pngrepo-com.png
+    - assets/images/baby-pngrepo-com.png
+    - assets/images/baby-feeding-eat-pngrepo-com.png
+    - assets/images/calendar1-pngrepo-com.png
+    - assets/images/calendar2-pngrepo-com.png
+    - assets/images/placeholder-map-location-pngrepo-com.png
+    - assets/images/footprint-foot-pngrepo-com.png
+    - assets/images/chat-pngrepo-com.png
+    - assets/images/diaper-pngrepo-com.png
+    - assets/images/coffee-pngrepo-com.png
+    - assets/images/image-upload-pngrepo-com.png
+    - assets/images/image-download-pngrepo-com.png
+    - assets/images/baby-age-pngrepo-com.png
+    - assets/images/category-pngrepo-com.png
+    - assets/images/sort-switch-pngrepo-com.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

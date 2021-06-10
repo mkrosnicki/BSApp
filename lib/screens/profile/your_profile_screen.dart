@@ -42,17 +42,13 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         builder: (context, currentUserData, child) {
                           return Container(
                             padding: const EdgeInsets.only(top: 8.0),
-                            child: Expanded(
-                              child: ListView(
-                                shrinkWrap: true,
-                                children: [
-                                  ProfileUserInfo(currentUserData.me),
-                                  MyProfileStatisticsInfo(currentUserData.me),
-                                  const Expanded(
-                                    child: MyProfileOptionsList(),
-                                  ),
-                                ],
-                              ),
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: [
+                                ProfileUserInfo(currentUserData.me),
+                                MyProfileStatisticsInfo(currentUserData.me),
+                                const MyProfileOptionsList(),
+                              ],
                             ),
                           );
                         },

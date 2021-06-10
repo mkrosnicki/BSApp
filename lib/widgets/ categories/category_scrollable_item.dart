@@ -1,6 +1,7 @@
 import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
+import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScrollableItem extends StatelessWidget {
@@ -26,7 +27,7 @@ class CategoryScrollableItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Image.asset(
-                  'assets/images/${CategoryModelHelper.assetNameFor(categoryModel)}',
+                  ImageAssetsHelper.productCategoryPath(categoryModel.name),
                   fit: BoxFit.fitHeight,
                 ),
               ),

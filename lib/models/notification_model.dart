@@ -1,3 +1,5 @@
+import 'package:BSApp/util/date_util.dart';
+
 import 'notification_type.dart';
 
 class NotificationModel {
@@ -6,6 +8,7 @@ class NotificationModel {
   final String mainIssuerUsername;
   final int totalNumberOfIssuers;
   final DateTime issuedAt;
+  final bool wasClicked;
   final NotificationType notificationType;
   final String relatedTopicId;
   final String relatedTopicTitle;
@@ -23,6 +26,7 @@ class NotificationModel {
       this.mainIssuerUsername,
       this.totalNumberOfIssuers,
       this.issuedAt,
+      this.wasClicked,
       this.notificationType,
       this.relatedTopicId,
       this.relatedTopicTitle,
@@ -48,9 +52,9 @@ class NotificationModel {
       mainIssuerId: notificationSnapshot['mainIssuerId'],
       mainIssuerUsername: notificationSnapshot['mainIssuerUsername'],
       totalNumberOfIssuers: notificationSnapshot['totalNumberOfIssuers'],
-      issuedAt: DateTime.parse(notificationSnapshot['issuedAt']),
-      notificationType: NotificationTypeHelper.fromString(
-          notificationSnapshot['notificationType']),
+      issuedAt: DateUtil.parseFromStringToUtc(notificationSnapshot['issuedAt']),
+      wasClicked: notificationSnapshot['clickedAt'] != null,
+      notificationType: NotificationTypeHelper.fromString(notificationSnapshot['notificationType']),
       relatedTopicId: notificationSnapshot['relatedTopicId'],
       relatedTopicTitle: notificationSnapshot['relatedTopicTitle'],
       relatedDealId: notificationSnapshot['relatedDealId'],
@@ -63,13 +67,9 @@ class NotificationModel {
     );
   }
 
-
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationModel &&
-          runtimeType == other.runtimeType &&
-          ids == other.ids;
+      identical(this, other) || other is NotificationModel && runtimeType == other.runtimeType && ids == other.ids;
 
   @override
   int get hashCode => ids.hashCode;

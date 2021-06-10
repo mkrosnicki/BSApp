@@ -12,20 +12,19 @@ class DealDetailsActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0, bottom: 10.0),
+      padding: const EdgeInsets.only(top: 2.0, bottom: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const Divider(),
           Container(
             margin: const EdgeInsets.only(top: 16.0, bottom: 10.0),
             child: const Text(
               'Ocena',
               style:
-              const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
           ),
-          DealRateBar(deal.id),
+          DealRateBar(deal.id, true),
         ],
       ),
     );

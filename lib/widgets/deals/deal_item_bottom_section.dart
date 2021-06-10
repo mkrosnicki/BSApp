@@ -19,7 +19,7 @@ class DealItemBottomSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: DealRateBar(deal.id),
+            child: DealRateBar(deal.id, false),
           ),
           Flexible(
             child: (deal.link != null)

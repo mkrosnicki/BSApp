@@ -34,7 +34,7 @@ class SortingTypeChip extends StatelessWidget {
             ),
             Text(
               sortingType == SortingType.MOST_POPULAR
-                  ? 'Najpopularniejsze'
+                  ? 'Najwyżej ocenione'
                   : 'Najnowsze',
               style: TextStyle(
                 fontSize: 12,

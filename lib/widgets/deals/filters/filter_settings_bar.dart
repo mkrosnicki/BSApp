@@ -163,7 +163,7 @@ class FilterSettingsBar extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     const Align(
-                      child: Text('Najpopularniejsze', style: tileTextStyle),
+                      child: Text('Najwyżej ocenione', style: tileTextStyle),
                     ),
                     if (filterSettings.sortBy == SortingType.MOST_POPULAR) paddedIcon else Container(),
                   ],

@@ -1,6 +1,7 @@
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
+import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/facebook_button.dart';
 import 'package:BSApp/widgets/common/google_button.dart';
@@ -24,7 +25,8 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordController = TextEditingController();
 
   InputDecoration _getFormFieldDecoration(String hintText) {
-    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION.copyWith(hintText: hintText);
+    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
+        .copyWith(hintText: hintText);
   }
 
   Future<void> _submit() async {
@@ -51,17 +53,21 @@ class _LoginFormState extends State<LoginForm> {
         //
         await _showNotVerifiedDialog();
       } else {
-        var errorMessage = 'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
+        var errorMessage =
+            'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
         if (error.toString().contains('must be a well-formed email address')) {
           errorMessage = 'Email w złym w formacie.';
-        } else if (error.toString().contains('There is no user witch such email.')) {
+        } else if (error
+            .toString()
+            .contains('There is no user witch such email.')) {
           errorMessage = 'Nieprawidłowe hasło i / lub login.';
         }
         await _showErrorDialog(errorMessage);
       }
     } catch (error) {
       wasError = true;
-      const errorMessage = 'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
+      const errorMessage =
+          'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
       await _showErrorDialog(errorMessage);
     } finally {
       if (wasError) {
@@ -75,61 +81,29 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _resendActivationToken(BuildContext context) {
-    Provider.of<Auth>(context, listen: false).resendVerificationToken(_emailController.text);
+    Provider.of<Auth>(context, listen: false)
+        .resendVerificationToken(_emailController.text);
     Navigator.of(context).pop();
   }
 
   Future<void> _showErrorDialog(String message) async {
-    await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Błąd logowania'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: const Text('Ok'),
-          )
-        ],
-      ),
+    await infoDialog(
+      context,
+      title: 'Błąd',
+      textContent: 'Wystąpił błąd podczas próby logowania.',
     );
   }
 
   Future<void> _showNotVerifiedDialog() async {
-    await showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Błąd logowania'),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Text(
-              "Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n Nie otrzymałeś linku aktywacyjnego? Wyślij go ponownie.",
-            ),
-            Column(children: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    'Ok',
-                    textAlign: TextAlign.center,
-                  )),
-              TextButton(
-                  onPressed: () {
-                    _resendActivationToken(context);
-                  },
-                  child: const Text(
-                    'Wyślij link aktywacyjny ponownie',
-                    textAlign: TextAlign.center,
-                  )),
-            ]),
-          ],
-        ),
-      ),
+    await infoDialog(
+      context,
+      title: 'Błąd',
+      textContent:
+          'Konto nie zostało zweryfikowane. Sprawdź skrzynkę i aktywuj konto!\n\n Jeśli nie otrzymałeś linku aktywacyjnego możemy wysłać go ponownie.',
+      additionalAction: () {
+        _resendActivationToken(context);
+      },
+      additionalActionText: 'Wyślij link aktywacyjny',
     );
   }
 
@@ -141,7 +115,8 @@ class _LoginFormState extends State<LoginForm> {
           )
         : SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -150,7 +125,10 @@ class _LoginFormState extends State<LoginForm> {
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: const Text(
                         'Zaloguj się',
-                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 18),
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
                       ),
                     ),
                     Padding(
@@ -200,12 +178,16 @@ class _LoginFormState extends State<LoginForm> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
                           padding: MaterialStateProperty.all(EdgeInsets.zero),
                         ),
-                        onPressed: () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName),
-                        child: GreyTextButton('Nie pamiętasz hasła?',
-                            () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName)),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName),
+                        child: GreyTextButton(
+                            'Nie pamiętasz hasła?',
+                            () => Navigator.of(context)
+                                .pushNamed(ResetPasswordScreen.routeName)),
                       ),
                     ),
                     Container(

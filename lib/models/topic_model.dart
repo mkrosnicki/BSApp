@@ -1,4 +1,5 @@
 import 'package:BSApp/models/adder_info_model.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 class TopicModel {
@@ -40,7 +41,7 @@ class TopicModel {
     }
     return TopicModel(
       id: topicSnapshot['id'],
-      addedAt: DateTime.parse(topicSnapshot['addedAt']),
+      addedAt: DateUtil.parseFromStringToUtc(topicSnapshot['addedAt']),
       adderInfo: AdderInfoModel.fromJson(topicSnapshot['adderInfo']),
       title: topicSnapshot['title'],
       content: topicSnapshot['content'],

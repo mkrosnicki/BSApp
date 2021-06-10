@@ -2,6 +2,7 @@ import 'package:BSApp/models/notification_model.dart';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:BSApp/services/custom_stomp' as customStomp;
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:stomp/stomp.dart';
 
@@ -52,7 +53,7 @@ class Notifications with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateNotificationsTimestamp() async {
+  void updateNotificationsTimestamp() {
     _notificationsSeenAt = DateTime.now();
     // todo exception after notification
     notifyListeners();
@@ -60,7 +61,7 @@ class Notifications with ChangeNotifier {
 
   Future<void> _connectToNotificationsSocket(String userId) async {
     await customStomp.connect(
-      'ws://192.168.162.241:8080/ws',
+      'ws://${ApiProvider.domain}/ws',
       onConnect: (StompClient client, Map<String, String> headers) {
         _client = client;
         _client.subscribeJson(
@@ -85,7 +86,7 @@ class Notifications with ChangeNotifier {
 
   void _acceptNotification(Map<String, String> headers, dynamic message) {
     try {
-      _lastNotificationDate = DateTime.tryParse(message);
+      _lastNotificationDate = DateUtil.parseFromStringToUtc(message);
       notifyListeners();
     } catch (e) {
       // do nothing
@@ -108,6 +109,19 @@ class Notifications with ChangeNotifier {
       _connectToNotificationsSocket(userId);
       await fetchMyNotifications();
       _lastNotificationDate = _notifications.isNotEmpty ? _notifications.first.issuedAt : null;
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateAllClickedAt() async {
+    final List<String> allIds = _notifications.where((element) => !element.wasClicked).expand((e) => e.ids).toList();
+    await updateClickedAt(allIds, DateTime.now().toUtc());
+  }
+
+  Future<void> updateClickedAt(List<String> ids, DateTime clickedAt) async {
+    if (ids.isNotEmpty) {
+      await _apiProvider.patch('/users/me/notifications', {'ids': ids, 'clickedAt': clickedAt.toIso8601String()}, token: _token);
+      await fetchMyNotifications();
       notifyListeners();
     }
   }

@@ -37,6 +37,12 @@ class Posts with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deletePost(String postId) async {
+    await _apiProvider.delete('/posts/$postId', token: _token);
+    _posts.removeWhere((post) => post.id == postId);
+    notifyListeners();
+  }
+
   Future<void> addPostToTopic(String topicId, String content) async {
     final addPostToTopicDto = {
       'topicId': topicId,

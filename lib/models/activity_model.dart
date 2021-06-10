@@ -2,6 +2,7 @@ import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/util/date_util.dart';
 
 import 'activity_type.dart';
 
@@ -40,7 +41,7 @@ class ActivityModel {
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],
       issuedByUsername: activitySnapshot['issuedByUsername'],
-      issuedAt: DateTime.parse(activitySnapshot['issuedAt']),
+      issuedAt: DateUtil.parseFromStringToUtc(activitySnapshot['issuedAt']),
       activityType: ActivityTypeHelper.fromString(activitySnapshot['activityType']),
       relatedTopic: TopicModel.fromJson(activitySnapshot['relatedTopic']),
       relatedDeal: DealModel.fromJson(activitySnapshot['relatedDeal']),

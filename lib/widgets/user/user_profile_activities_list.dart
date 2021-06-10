@@ -1,4 +1,3 @@
-import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/providers/activities.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/activities/activity_item.dart';
@@ -30,10 +29,9 @@ class UserProfileActivitiesList extends StatelessWidget {
                 builder: (context, activitiesData, child) {
                   return activitiesData.activities.isNotEmpty
                       ? ListView.builder(
-                    itemBuilder: (context, index) =>
-                        ActivityItem(activitiesData.activities[index]),
-                    itemCount: activitiesData.activities.length,
-                  )
+                          itemBuilder: (context, index) => ActivityItem(activitiesData.activities[index]),
+                          itemCount: activitiesData.activities.length,
+                        )
                       : _buildNoAddedDealsSplashView();
                 },
               );
@@ -51,11 +49,7 @@ class UserProfileActivitiesList extends StatelessWidget {
         child: Text(
           'Brak aktywności',
           textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 18,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-              color: MyColorsProvider.LIGHT_GRAY),
+          style: TextStyle(fontSize: 18, height: 1.5, fontWeight: FontWeight.w600, color: MyColorsProvider.LIGHT_GRAY),
         ),
       ),
     );

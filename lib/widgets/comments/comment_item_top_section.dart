@@ -1,9 +1,12 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/widgets/comments/comment_item_admin_actions_button.dart';
 import 'package:BSApp/widgets/comments/comment_item_content.dart';
 import 'package:BSApp/widgets/comments/comment_item_heart_button.dart';
 import 'package:BSApp/widgets/comments/comment_item_user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CommentItemTopSection extends StatelessWidget {
   final CommentModel comment;
@@ -20,7 +23,16 @@ class CommentItemTopSection extends StatelessWidget {
         children: [
           CommentItemUserAvatar(comment.adderInfo),
           CommentItemContent(comment),
-          CommentItemHeartButton(dealId, comment.id),
+          Column(
+            children: [
+              Consumer<CurrentUser>(
+                builder: (context, currentUser, child) {
+                  return currentUser.isAdmin ? CommentItemAdminActionsButton(comment) : Container();
+                },
+              ),
+              CommentItemHeartButton(dealId, comment.id),
+            ],
+          ),
         ],
       ),
     );

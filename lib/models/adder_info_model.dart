@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
 class AdderInfoModel {
@@ -27,7 +28,7 @@ class AdderInfoModel {
     return AdderInfoModel(
       id: adderInfoSnapshot['id'],
       username: adderInfoSnapshot['username'],
-      registeredAt: DateTime.parse(adderInfoSnapshot['registeredAt']),
+      registeredAt: DateUtil.parseFromStringToUtc(adderInfoSnapshot['registeredAt']),
       addedDeals: adderInfoSnapshot['addedDeals'],
       addedComments: adderInfoSnapshot['addedComments'],
       addedPosts: adderInfoSnapshot['addedPosts'],

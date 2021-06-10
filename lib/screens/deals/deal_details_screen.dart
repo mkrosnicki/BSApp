@@ -72,7 +72,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                         children: [
                           DealDetailsImage(deal),
                           DealDetailsDescription(deal),
-                          DealDetailsActions(deal),
                           DealDetailsAuthor(deal),
                           DealDetailsComments(deal, _commentToReplySubject),
                         ],
