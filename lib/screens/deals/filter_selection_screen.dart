@@ -4,9 +4,11 @@ import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/form_field_divider.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/deals/filters/filters_selection_age_types_selector.dart';
 import 'package:BSApp/widgets/deals/filters/filters_selection_category_selector.dart';
@@ -62,6 +64,8 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // const FormFieldDivider(),
+                    // _phraseSection(),
                     SwitchListTile(
                       title: const Text('Pokaż tylko aktywne', style: headerTextStyle),
                       value: filtersSettings.showActiveOnly,
@@ -71,8 +75,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
-                    const FormFieldDivider(),
-                    FiltersSelectionCategorySelector(filtersSettings.categories, () => _openCategorySelector(context)),
+                    // const FormFieldDivider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FiltersSelectionCategorySelector(filtersSettings.categories, () => _openCategorySelector(context)),
+                    ),
                     // ListTile(
                     //   title: const Text('Kategoria', style: headerTextStyle),
                     //   subtitle: filtersSettings.categories.isNotEmpty
@@ -87,7 +94,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //   trailing: MyIconsProvider.FORWARD_ICON,
                     //   onTap: () => _openCategorySelector(context),
                     // ),
-                    const FormFieldDivider(),
+                    // const FormFieldDivider(),
                     SwitchListTile(
                       title: const Text('Tylko internetowe okazje', style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
@@ -99,8 +106,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
-                    const FormFieldDivider(),
-                    FiltersSelectionLocationTypeSelector(filtersSettings, () => _openLocationSelector(context)),
+                    // const FormFieldDivider(),
+                    if (!filtersSettings.showInternetOnly) Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FiltersSelectionLocationTypeSelector(filtersSettings, () => _openLocationSelector(context), !filtersSettings.showInternetOnly),
+                    ),
                     // ListTile(
                     //   title: const Text('Lokalizacja', style: headerTextStyle),
                     //   subtitle: filtersSettings.voivodeship != null
@@ -117,7 +127,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //   enabled: !filtersSettings.showInternetOnly,
                     // ),
                     const FormFieldDivider(),
-                    FiltersSelectionAgeTypesSelector(filtersSettings, _selectAgeTypes),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FiltersSelectionAgeTypesSelector(filtersSettings, _selectAgeTypes),
+                    ),
                     // ListTile(
                     //   title: const Text('Wiek dziecka', style: headerTextStyle),
                     //   subtitle: filtersSettings.ageTypes.isEmpty
@@ -137,7 +150,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     //   ),
                     // ),
                     const FormFieldDivider(),
-                    FiltersSelectionSortTypeSelector(filtersSettings, _selectSortingType),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FiltersSelectionSortTypeSelector(filtersSettings, _selectSortingType),
+                    ),
                     // Container(
                     //   margin: const EdgeInsets.only(top: 10.0),
                     //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -242,7 +258,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   Future<void> _openLocationSelector(BuildContext context) async {
-    var locations = await Navigator.of(context).pushNamed(LocationSelectionScreen.routeName);
+    final locations = await Navigator.of(context).pushNamed(LocationSelectionScreen.routeName);
     if (locations != null) {
       setState(() {
         filtersSettings.voivodeship = (locations as List)[0];
@@ -260,4 +276,21 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   void _acceptFilters(BuildContext context) {
     Navigator.pop(context, filtersSettings);
   }
+
+  Widget _phraseSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FormFieldTitle('Wyszukiwana fraza'),
+        TextFormField(
+          initialValue: filtersSettings.phrase,
+          onChanged: (value) {
+            filtersSettings.phrase = value;
+          },
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wyszukiwana fraza'),
+        ),
+      ],
+    );
+  }
+
 }

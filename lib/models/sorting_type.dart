@@ -37,7 +37,7 @@ class SortingTypeHelper {
         return 'Sortuj po najnowszych';
         break;
       case SortingType.MOST_POPULAR:
-        return 'Sortuj po ocenie';
+        return 'Sortuj po najwyżej ocenionych';
         break;
       default:
         return null;

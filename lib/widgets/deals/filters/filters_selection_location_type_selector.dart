@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
 class FiltersSelectionLocationTypeSelector extends StatelessWidget {
   final FilterSettings filterSettings;
   final GestureTapCallback onTap;
+  final bool enabled;
 
-  const FiltersSelectionLocationTypeSelector(this.filterSettings, this.onTap);
+  const FiltersSelectionLocationTypeSelector(this.filterSettings, this.onTap, this.enabled);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: enabled ? onTap : null,
       child: Container(
         // margin: const EdgeInsets.only(left: 16),
         padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 12.0),
@@ -37,12 +38,12 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Lokalizacja',
-                      style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.3),
+                      style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.3),
                     ),
                     Text(
-                      filterSettings.voivodeship == null ? 'Dowolna' : filterSettings.locationString,
+                      filterSettings.voivodeship == null ? 'Cała Polska' : filterSettings.locationString,
                       style: const TextStyle(
                         fontSize: 13,
                       ),
@@ -51,9 +52,9 @@ class FiltersSelectionLocationTypeSelector extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(
+            Icon(
               CupertinoIcons.chevron_right,
-              color: MyColorsProvider.DEEP_BLUE,
+              color: enabled ? MyColorsProvider.DEEP_BLUE : Colors.grey,
             )
           ],
         ),
