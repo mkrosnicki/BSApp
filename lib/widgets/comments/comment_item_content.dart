@@ -33,26 +33,28 @@ class CommentItemContent extends StatelessWidget {
                 ),
               ),
             ),
-            Wrap(
-              children: [
-                if (_displayRepliedUsername(comment))
+            Expanded(
+              child: Row(
+                children: [
+                  if (_displayRepliedUsername(comment))
+                    Text(
+                      '@${comment.replyForUsername} ',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.blue,
+                        height: 1.3,
+                      ),
+                    ),
                   Text(
-                    '@${comment.replyForUsername} ',
+                    comment.content,
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.blue,
+                      color: Colors.black87,
                       height: 1.3,
                     ),
                   ),
-                Text(
-                  longer(comment.content),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black87,
-                    height: 1.3,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -74,13 +76,5 @@ class CommentItemContent extends StatelessWidget {
     } else {
       Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
     }
-  }
-
-  String longer(String text) {
-    String ret = '';
-    for (int i = 0; i < 15; i++) {
-      ret = ret + text + ' ';
-    }
-    return ret;
   }
 }

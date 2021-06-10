@@ -116,8 +116,8 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                 ),
                 // subtitle: Text(
                 //     '${categories[index].subCategories.length} pod${_getCategoriesSuffix(categories[index].subCategories.length)}'),
-                subtitle: Text(categories[index].description,
-                    style: const TextStyle(fontSize: 13)),
+                // subtitle: Text(categories[index].description,
+                //     style: const TextStyle(fontSize: 13)),
                 trailing: categories[index].subCategories.isEmpty
                     ? MyIconsProvider.NONE
                     : MyIconsProvider.FORWARD_ICON,
