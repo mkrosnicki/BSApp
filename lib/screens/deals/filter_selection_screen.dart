@@ -4,10 +4,12 @@ import 'package:BSApp/models/sorting_type.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
 import 'package:BSApp/screens/common/location_selection_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
-import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
+import 'package:BSApp/widgets/deals/filters/filters_selection_age_types_selector.dart';
+import 'package:BSApp/widgets/deals/filters/filters_selection_category_selector.dart';
+import 'package:BSApp/widgets/deals/filters/filters_selection_location_type_selector.dart';
 import 'package:BSApp/widgets/filters/age_type_chip.dart';
 import 'package:BSApp/widgets/filters/sorting_type_chip.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +21,7 @@ class FilterSelectionScreen extends StatefulWidget {
 }
 
 class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
-  static const TextStyle headerTextStyle = const TextStyle(fontSize: 14);
+  static const TextStyle headerTextStyle = const TextStyle(fontSize: 13);
   static const TextStyle noValueTextStyle = const TextStyle(fontSize: 13);
   static const TextStyle valueTextStyle = const TextStyle(fontSize: 13, color: MyColorsProvider.DEEP_BLUE);
 
@@ -67,20 +69,21 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
-                    ListTile(
-                      title: const Text('Kategoria', style: headerTextStyle),
-                      subtitle: filtersSettings.categories.isNotEmpty
-                          ? Text(
-                              filtersSettings.categoriesString,
-                              style: valueTextStyle,
-                            )
-                          : const Text(
-                              'Wszystkie kategorie',
-                              style: noValueTextStyle,
-                            ),
-                      trailing: MyIconsProvider.FORWARD_ICON,
-                      onTap: () => _openCategorySelector(context),
-                    ),
+                    FiltersSelectionCategorySelector(filtersSettings.categories, () => _openCategorySelector(context)),
+                    // ListTile(
+                    //   title: const Text('Kategoria', style: headerTextStyle),
+                    //   subtitle: filtersSettings.categories.isNotEmpty
+                    //       ? Text(
+                    //           filtersSettings.categoriesString,
+                    //           style: valueTextStyle,
+                    //         )
+                    //       : const Text(
+                    //           'Wszystkie kategorie',
+                    //           style: noValueTextStyle,
+                    //         ),
+                    //   trailing: MyIconsProvider.FORWARD_ICON,
+                    //   onTap: () => _openCategorySelector(context),
+                    // ),
                     SwitchListTile(
                       title: const Text('Tylko internetowe okazje', style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
@@ -92,39 +95,41 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                         });
                       },
                     ),
-                    ListTile(
-                      title: const Text('Lokalizacja', style: headerTextStyle),
-                      subtitle: filtersSettings.voivodeship != null
-                          ? Text(
-                              filtersSettings.locationString,
-                              style: valueTextStyle,
-                            )
-                          : const Text(
-                              'Cała Polska',
-                              style: noValueTextStyle,
-                            ),
-                      trailing: MyIconsProvider.FORWARD_ICON,
-                      onTap: () => _openLocationSelector(context),
-                      enabled: !filtersSettings.showInternetOnly,
-                    ),
-                    ListTile(
-                      title: const Text('Wiek dziecka', style: headerTextStyle),
-                      subtitle: filtersSettings.ageTypes.isEmpty
-                          ? const Text('Dowolny', style: noValueTextStyle)
-                          : Text(
-                              filtersSettings.ageTypesString,
-                              overflow: TextOverflow.ellipsis,
-                              style: valueTextStyle,
-                            ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        children: _buildAgeTypeChips(),
-                      ),
-                    ),
+                    FiltersSelectionLocationTypeSelector(filtersSettings, () => _openLocationSelector(context)),
+                    // ListTile(
+                    //   title: const Text('Lokalizacja', style: headerTextStyle),
+                    //   subtitle: filtersSettings.voivodeship != null
+                    //       ? Text(
+                    //           filtersSettings.locationString,
+                    //           style: valueTextStyle,
+                    //         )
+                    //       : const Text(
+                    //           'Cała Polska',
+                    //           style: noValueTextStyle,
+                    //         ),
+                    //   trailing: MyIconsProvider.FORWARD_ICON,
+                    //   onTap: () => _openLocationSelector(context),
+                    //   enabled: !filtersSettings.showInternetOnly,
+                    // ),
+                    FiltersSelectionAgeTypesSelector(filtersSettings, _selectAgeTypes),
+                    // ListTile(
+                    //   title: const Text('Wiek dziecka', style: headerTextStyle),
+                    //   subtitle: filtersSettings.ageTypes.isEmpty
+                    //       ? const Text('Dowolny', style: noValueTextStyle)
+                    //       : Text(
+                    //           filtersSettings.ageTypesString,
+                    //           overflow: TextOverflow.ellipsis,
+                    //           style: valueTextStyle,
+                    //         ),
+                    // ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: Wrap(
+                    //     alignment: WrapAlignment.spaceBetween,
+                    //     children: _buildAgeTypeChips(),
+                    //   ),
+                    // ),
                     Container(
                       margin: const EdgeInsets.only(top: 10.0),
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -182,6 +187,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
       ),
     );
     return list;
+  }
+
+  void _selectAgeTypes(final List<AgeType> ageTypes) {
+    setState(() {
+      filtersSettings.ageTypes = ageTypes;
+    });
   }
 
   List<Widget> _buildSortingTypeChips() {

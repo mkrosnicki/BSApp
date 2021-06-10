@@ -1,6 +1,5 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/providers/deals.dart';
-import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_to_observed_searches_button.dart';
@@ -9,7 +8,7 @@ import 'package:BSApp/widgets/common/deals_not_found.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/deals/deal_item.dart';
-import 'package:BSApp/widgets/deals/filter_settings_bar.dart';
+import 'package:BSApp/widgets/deals/filters/filter_chips_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
