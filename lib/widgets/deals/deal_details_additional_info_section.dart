@@ -41,7 +41,8 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
                   child: DealDetailsInfoTile(
                       'Lokalizacja',
                       dealModel.locationString,
-                      ImageAssetsHelper.locationTypePath(dealModel.locationType)),
+                      ImageAssetsHelper.locationTypePath(
+                          dealModel.locationType)),
                 ),
               ],
             ),
@@ -50,18 +51,20 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             direction: Axis.horizontal,
             children: [
-              Flexible(
-                child: DealDetailsInfoTile(
-                    'Ważna od:',
-                    DateUtil.getFormatted(dealModel.startDate),
-                    ImageAssetsHelper.validFromImagePath()),
-              ),
-              Flexible(
-                child: DealDetailsInfoTile(
-                    'Ważna do:',
-                    DateUtil.getFormatted(dealModel.endDate),
-                    ImageAssetsHelper.validToImagePath()),
-              ),
+              if (dealModel.startDate != null)
+                Flexible(
+                  child: DealDetailsInfoTile(
+                      'Ważna od:',
+                      DateUtil.getFormatted(dealModel.startDate),
+                      ImageAssetsHelper.validFromImagePath()),
+                ),
+              if (dealModel.endDate != null)
+                Flexible(
+                  child: DealDetailsInfoTile(
+                      'Ważna do:',
+                      DateUtil.getFormatted(dealModel.endDate),
+                      ImageAssetsHelper.validToImagePath()),
+                ),
             ],
           ),
         ],
