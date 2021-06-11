@@ -45,7 +45,6 @@ class _OccasionFormState extends State<OccasionForm> {
   AddDealModel _newDeal;
   final TextEditingController _locationTextController = TextEditingController();
 
-  // bool _showInternetOnly;
   bool _isImageButtonDisabled = true;
 
   @override
@@ -395,7 +394,7 @@ class _OccasionFormState extends State<OccasionForm> {
         TextFormField(
           keyboardType: TextInputType.number,
           onSaved: (value) {
-            _newDeal.shippingPrice = double.parse(value);
+            _newDeal.shippingPrice = value.isEmpty ? null : double.parse(value);
           },
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Koszt dostawy'),
         ),

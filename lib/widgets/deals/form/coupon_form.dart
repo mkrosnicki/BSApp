@@ -24,7 +24,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import 'age_type_chips.dart';
 import 'deal_date.dart';
 import 'deal_form_age_types_selector.dart';
 import 'deal_form_category_selector.dart';
