@@ -12,7 +12,6 @@ import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
-import 'package:BSApp/screens/authentication/facebook_login_screen.dart';
 import 'package:BSApp/screens/authentication/login_registration_screen.dart';
 import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/screens/comments/comment_screen.dart';
@@ -175,7 +174,6 @@ class MyApp extends StatelessWidget {
           RegulationsScreen.routeName: (ctx) => RegulationsScreen(),
           ContactScreen.routeName: (ctx) => ContactScreen(),
           TopicSearchScreen.routeName: (ctx) => TopicSearchScreen(),
-          FacebookLoginScreen.routeName: (ctx) => FacebookLoginScreen(),
         },
       ),
     );
