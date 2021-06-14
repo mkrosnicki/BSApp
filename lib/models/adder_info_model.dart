@@ -13,6 +13,7 @@ class AdderInfoModel {
   final int addedPosts;
   final int addedTopics;
   final Uint8List avatar;
+  final String imagePath;
 
   AdderInfoModel(
       {this.id,
@@ -22,7 +23,9 @@ class AdderInfoModel {
       this.addedComments,
       this.addedPosts,
       this.addedTopics,
-      this.avatar});
+      this.avatar,
+      this.imagePath,
+      });
 
   static AdderInfoModel fromJson(dynamic adderInfoSnapshot) {
     return AdderInfoModel(
@@ -34,6 +37,7 @@ class AdderInfoModel {
       addedPosts: adderInfoSnapshot['addedPosts'],
       addedTopics: adderInfoSnapshot['addedTopics'],
       avatar: _getAvatar(adderInfoSnapshot),
+      imagePath: adderInfoSnapshot['imagePath'],
     );
   }
 

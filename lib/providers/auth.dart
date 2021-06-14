@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Auth with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
@@ -48,13 +50,31 @@ class Auth with ChangeNotifier {
     // _connectToNotificationsSocket(_userId);
   }
 
+  Future<void> loginFB() async {
+    final FacebookLogin fbLogin = FacebookLogin();
+    final FacebookLoginResult result = await fbLogin.logIn(["email"]);
+    final String token = result.accessToken.token;
+
+    final response = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
+    final profile = json.decode(response.body);
+    print(profile);
+
+    final responseData = await _apiProvider.post('/auth/login-fb', {'email': profile['email'], 'userId': profile['id'], 'inputToken': token});
+    _handleAuthenticationResponse(responseData);
+    await fetchMe();
+    notifyListeners();
+    _scheduleAutoLogout();
+    _saveAuthCookie();
+    // _connectToNotificationsSocket(_userId);
+  }
+
   Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('authData')) {
       return false;
     }
     final extractedUserData =
-        json.decode(prefs.getString('authData')) as Map<String, Object>;
+    json.decode(prefs.getString('authData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
     if (expiryDate.isBefore(DateTime.now())) {
@@ -109,14 +129,13 @@ class Auth with ChangeNotifier {
     });
   }
 
-  Future<void> changeUserPassword(
-      String currentPassword, String newPassword) async {
+  Future<void> changeUserPassword(String currentPassword, String newPassword) async {
     await _apiProvider.post('/auth/change-password', {
       'userId': _userId,
       'currentPassword': currentPassword,
       'newPassword': newPassword,
     },
-    token: _token);
+        token: _token);
   }
 
   Future<void> fetchMe() async {
@@ -163,7 +182,9 @@ class Auth with ChangeNotifier {
     if (_authTimer != null) {
       _authTimer.cancel();
     }
-    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
+    final timeToExpiry = _expiryDate
+        .difference(DateTime.now())
+        .inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 
@@ -192,4 +213,9 @@ class Auth with ChangeNotifier {
   DateTime _extractExpiryDate(Map<String, dynamic> decoded) {
     return _parseToExpiryDate(_extractExpiresInMs(decoded));
   }
+
 }
+  // public static readonly OAUTH2_REDIRECT_URI = 'http://localhost:4200/oauth2/redirect'
+  //
+  // public static readonly GOOGLE_AUTH_URL = ApiProvider.domain + '/oauth2/authorize/google?redirect_uri=' + EndpointsUrls.OAUTH2_REDIRECT_URI;
+  // public static readonly FACEBOOK_AUTH_URL = ApiProvider.domain + '/oauth2/authorize/facebook?redirect_uri=' + EndpointsUrls.OAUTH2_REDIRECT_URI;}

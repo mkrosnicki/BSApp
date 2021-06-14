@@ -25,7 +25,7 @@ class TopicScreenUserInfo extends StatelessWidget {
           UserAvatar(
             username: adderInfo.username,
             image: adderInfo.avatar,
-            imagePath: FakeDataProvider.USER_AVATAR_PATH,
+            imagePath: adderInfo.imagePath,
             radius: 15,
           ),
           Flexible(

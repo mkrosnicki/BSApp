@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BBApp</string>
+    <string name="facebook_app_id">209613880709650</string>
+    <string name="fb_login_protocol_scheme">939893eb924c2ac7c5f1964a272903fe</string>
+</resources>

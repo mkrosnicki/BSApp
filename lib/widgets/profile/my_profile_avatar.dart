@@ -25,7 +25,7 @@ class MyProfileAvatar extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8.0, left: 4.0, right: 4.0),
           child: UserAvatar(
             username: user.username,
-            imagePath: FakeDataProvider.USER_AVATAR_PATH,
+            imagePath: user.imagePath,
             image: user.avatar,
             radius: 45,
           ),

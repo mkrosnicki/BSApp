@@ -31,7 +31,7 @@ class UserProfileMainInfo extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: UserAvatar(
                     username: user.username,
-                    imagePath: FakeDataProvider.USER_AVATAR_PATH,
+                    imagePath: user.imagePath,
                     radius: 45,
                   ),
                 ),

@@ -13,6 +13,7 @@ class UserModel {
   final DateTime lastLoginAt;
   final DateTime notificationsSeenAt;
   final Uint8List avatar;
+  final String imagePath;
   final int pointsForDeals;
   final int likesCount;
   final double activityPerDay;
@@ -25,6 +26,7 @@ class UserModel {
         this.lastLoginAt,
         this.notificationsSeenAt,
         this.avatar,
+        this.imagePath,
         this.pointsForDeals,
         this.likesCount,
         this.activityPerDay});
@@ -45,6 +47,7 @@ class UserModel {
             : null,
         avatar: _getAvatar(userSnapshot),
       pointsForDeals: userSnapshot['pointsForDeals'],
+      imagePath: userSnapshot['imagePath'],
       likesCount: userSnapshot['likesCount'],
       activityPerDay: userSnapshot['activityPerDay'],
     );

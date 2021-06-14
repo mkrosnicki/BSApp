@@ -26,7 +26,7 @@ class MyProfileOptionsList extends StatelessWidget {
       const MyProfileOptionItem(title: 'Twoje okazje', route: YourDealsScreen.routeName),
       const MyProfileOptionItem(title: 'Twoje tematy', route: YourTopicsScreen.routeName),
       const MyProfileOptionsHeader('Ustawienia'),
-      const MyProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
+      // const MyProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
       const MyProfileOptionItem(title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
       const MyProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
       MyProfileOptionItem(

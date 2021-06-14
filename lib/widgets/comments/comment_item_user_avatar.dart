@@ -14,7 +14,7 @@ class CommentItemUserAvatar extends StatelessWidget {
       padding: const EdgeInsets.only(right: 4.0, top: 4.0),
       child: UserAvatar(
         username: adderInfo.username,
-        imagePath: FakeDataProvider.USER_AVATAR_PATH,
+        imagePath: adderInfo.imagePath,
         image: adderInfo.avatar,
         radius: 16,
       ),
