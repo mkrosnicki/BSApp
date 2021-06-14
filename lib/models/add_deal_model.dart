@@ -174,8 +174,8 @@ class AddDealModel {
     _voivodeshipReadable = null;
     _city = null;
     _cityReadable = null;
-    _validFrom = DateTime.now();
-    _validTo = DateTime.now();
+    _validFrom = null;
+    _validTo = null;
     _dealCode = null;
     _discountValue = null;
     _regularPrice = null;
@@ -197,8 +197,8 @@ class AddDealModel {
       'locationType': _locationType.index,
       'city': _city,
       'voivodeship': _voivodeship,
-      'startDate': _validFrom.toIso8601String(),
-      'endDate': _validTo.toIso8601String(),
+      'startDate': _validFrom?.toIso8601String(),
+      'endDate': _validTo?.toIso8601String(),
       'code': _dealCode,
       'discountType': DiscountTypeHelper.asString(_discountType),
       'discountValue': _discountValue,
