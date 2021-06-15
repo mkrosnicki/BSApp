@@ -151,9 +151,11 @@ class _OccasionFormState extends State<OccasionForm> {
                     _dateSelectionButtons(),
                     const FormFieldDivider(),
                     const FormFieldDivider(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PrimaryButton('Dodaj okazję', _newDeal.categories.isNotEmpty ? _submit : null),
+                    SafeArea(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: PrimaryButton('Dodaj okazję', _newDeal.categories.isNotEmpty ? _submit : null),
+                      ),
                     ),
                   ],
                 ),
