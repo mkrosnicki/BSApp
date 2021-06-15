@@ -23,7 +23,7 @@ class DealDetailsLinkSection extends StatelessWidget {
               Container(
                 height: 30.0,
                 width: double.infinity,
-                margin: const EdgeInsets.only(top: 3.0),
+                margin: const EdgeInsets.only(top: 4.0),
                 child: PrimaryButton(
                   'Skorzystaj',
                       () {
