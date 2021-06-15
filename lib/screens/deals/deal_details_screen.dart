@@ -82,9 +82,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   DealDetailsNewComment(deal.id, _commentToReplySubject),
                 ],
               ),
-              Platform.isIOS ? SafeArea(
-                child: _buildTopBar(deal),
-              ) : _buildTopBar(deal),
+              _buildTopBar(deal),
             ],
           ),
         ),
