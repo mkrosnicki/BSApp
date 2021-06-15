@@ -71,7 +71,15 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
                             itemCount: dealsData.deals.length,
                           );
                         } else {
-                          return const DealsNotFound();
+                          return Container(
+                            color: Colors.white,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            child: Column(
+                              children: const [
+                                Expanded(child: DealsNotFound()),
+                              ],
+                            ),
+                          );
                         }
                       },
                     ),

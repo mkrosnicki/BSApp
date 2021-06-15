@@ -8,26 +8,24 @@ class DealsNotFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        color: Colors.white,
-        child: Center(
-          child: Wrap(
-            direction: Axis.vertical,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: const [
-              Icon(CupertinoIcons.clear, color: MyColorsProvider.LIGHT_GRAY, size: 60),
-              Text(
-                'Nie znaleziono żadnych okazji',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 18,
-                    height: 2,
-                    fontWeight: FontWeight.w600,
-                    color: MyColorsProvider.LIGHT_GRAY),
-              ),
-            ],
-          ),
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Wrap(
+          direction: Axis.vertical,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: const [
+            Icon(CupertinoIcons.clear, color: MyColorsProvider.LIGHT_GRAY, size: 60),
+            Text(
+              'Nie znaleziono żadnych okazji',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 18,
+                  height: 2,
+                  fontWeight: FontWeight.w600,
+                  color: MyColorsProvider.LIGHT_GRAY),
+            ),
+          ],
         ),
       ),
     );
