@@ -38,8 +38,8 @@ class MainAuthScreen extends StatelessWidget {
             const AppLogoHeader(),
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 25.0),
-              child: Text(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25.0),
+              child: const Text(
                 'Aby korzystać ze wszystkich funkcjonalności aplikacji zaloguj się lub załóż konto.',
                 style: TextStyle(fontSize: 12, height: 1.4),
                 textAlign: TextAlign.center,

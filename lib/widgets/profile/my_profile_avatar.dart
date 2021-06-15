@@ -63,7 +63,7 @@ class MyProfileAvatar extends StatelessWidget {
   Future<void> _takePicture(BuildContext context) async {
     final imageFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
-      maxWidth: 200,
+      maxWidth: 100,
     );
     if (imageFile == null) {
       return;
