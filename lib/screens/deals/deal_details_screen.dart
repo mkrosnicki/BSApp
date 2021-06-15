@@ -79,7 +79,10 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                       ),
                     ),
                   ),
-                  DealDetailsNewComment(deal.id, _commentToReplySubject),
+                  Padding(
+                    padding: Platform.isIOS ? const EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+                    child: DealDetailsNewComment(deal.id, _commentToReplySubject),
+                  ),
                 ],
               ),
               _buildTopBar(deal),
