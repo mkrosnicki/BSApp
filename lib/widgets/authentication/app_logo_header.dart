@@ -21,7 +21,7 @@ class AppLogoHeader extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0, top: 20.0),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: Image.asset(
                         'assets/images/logo1.png',
                         fit: BoxFit.fitWidth,
