@@ -15,7 +15,7 @@ class DealsNotFound extends StatelessWidget {
           direction: Axis.vertical,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: const [
-            Icon(CupertinoIcons.clear, color: MyColorsProvider.LIGHT_GRAY, size: 60),
+            // Icon(CupertinoIcons.clear, color: MyColorsProvider.LIGHT_GRAY, size: 60),
             Text(
               'Nie znaleziono żadnych okazji',
               textAlign: TextAlign.center,
