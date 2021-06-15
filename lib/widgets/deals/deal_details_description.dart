@@ -31,7 +31,7 @@ class DealDetailsDescription extends StatelessWidget {
           DealDetailsTitlePriceSection(deal),
           DealDetailsAdditionalInfoSection(deal),
           DealDetailsDescriptionSection(deal.description),
-          DealDetailsLinkSection(deal.description),
+          DealDetailsLinkSection(deal.link),
           DealDetailsDealCodeSection(deal.code),
           DealDetailsActions(deal),
         ],
