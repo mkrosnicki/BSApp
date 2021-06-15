@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +63,14 @@ class TopicModel {
 
   bool hasNegativeVoteFrom(String topicId, String userId) {
     return negativeVoters.any((element) => element == userId);
+  }
+
+  String get adderName {
+    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+  }
+
+  Uint8List get userAvatar {
+    return adderInfo != null ? adderInfo.avatar : null;
   }
 
 

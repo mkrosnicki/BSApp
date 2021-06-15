@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/util/date_util.dart';
 
@@ -78,6 +80,18 @@ class CommentModel {
 
   bool isParent() {
     return parentId == null;
+  }
+
+  String get adderName {
+    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+  }
+
+  Uint8List get userAvatar {
+    return adderInfo != null ? adderInfo.avatar : null;
+  }
+
+  String get userImagePath {
+    return adderInfo != null ? adderInfo.imagePath : null;
   }
 
   @override

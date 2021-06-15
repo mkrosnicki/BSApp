@@ -46,7 +46,7 @@ class TopicScreenInputBar extends StatelessWidget {
                           style: TextStyle(color: Colors.black54, fontSize: 11),
                         ),
                         Text(
-                          '${snapshot.data.adderInfo.username}',
+                          '${snapshot.data.adderName}',
                           style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
                         ),
                       ],

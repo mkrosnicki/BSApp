@@ -13,7 +13,11 @@ class DealDetailsAuthor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: deal.addedById),
+      onTap: () {
+        if (deal.adderInfo != null) {
+          Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: deal.adderInfo.id);
+        }
+      },
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
@@ -31,6 +35,7 @@ class DealDetailsAuthor extends StatelessWidget {
                     child: UserAvatar(
                       username: deal.adderName,
                       image: deal.userAvatar,
+                      imagePath: deal.userImagePath,
                       radius: 24,
                     ),
                   ),

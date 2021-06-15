@@ -22,9 +22,13 @@ class CommentItemContent extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 2.0),
               child: GestureDetector(
-                onTap: () => _navigateToUserProfileScreen(context, comment.adderInfo.id),
+                onTap: () {
+                  if (comment.adderInfo != null) {
+                    _navigateToUserProfileScreen(context, comment.adderInfo.id);
+                  }
+                },
                 child: Text(
-                  comment.adderInfo.username,
+                  comment.adderName,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,

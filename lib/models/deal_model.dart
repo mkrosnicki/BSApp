@@ -12,9 +12,6 @@ import 'adder_info_model.dart';
 class DealModel {
   final String id;
   final DateTime addedAt;
-  final String addedById;
-  final String addedByUsername;
-  final String addedByAvatarPath;
   final AdderInfoModel adderInfo;
   final String title;
   final String description;
@@ -42,9 +39,6 @@ class DealModel {
   DealModel({
     @required this.id,
     @required this.addedAt,
-    @required this.addedById,
-    @required this.addedByUsername,
-    @required this.addedByAvatarPath,
     @required this.adderInfo,
     @required this.title,
     @required this.description,
@@ -85,9 +79,6 @@ class DealModel {
     return DealModel(
       id: dealSnapshot['id'],
       addedAt: DateUtil.parseFromStringToUtc(dealSnapshot['addedAt']),
-      addedById: dealSnapshot['addedById'],
-      addedByUsername: dealSnapshot['addedByUsername'],
-      addedByAvatarPath: dealSnapshot['addedByAvatarPath'],
       adderInfo: AdderInfoModel.fromJson(dealSnapshot['adderInfo']),
       title: dealSnapshot['title'],
       description: dealSnapshot['description'],
@@ -165,6 +156,10 @@ class DealModel {
 
   Uint8List get userAvatar {
     return adderInfo != null ? adderInfo.avatar : null;
+  }
+
+  String get userImagePath {
+    return adderInfo != null ? adderInfo.imagePath : null;
   }
 
 

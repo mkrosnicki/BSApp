@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +59,18 @@ class PostModel {
 
   bool wasLikedBy(String userId) {
     return likers.any((element) => element == userId);
+  }
+
+  String get adderName {
+    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+  }
+
+  Uint8List get userAvatar {
+    return adderInfo != null ? adderInfo.avatar : null;
+  }
+
+  String get userImagePath {
+    return adderInfo != null ? adderInfo.imagePath : null;
   }
 
   @override

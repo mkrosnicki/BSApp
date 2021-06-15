@@ -33,7 +33,7 @@ class TopicItemTitleLines extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            topic.adderInfo.username,
+            topic.adderName,
             style: Theme.of(context).textTheme.bodyText2.copyWith(
                 fontSize: 11, color: Colors.blue, fontWeight: FontWeight.w600),
           ),

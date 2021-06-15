@@ -24,9 +24,9 @@ class PostItemUserInfo extends StatelessWidget {
         direction: Axis.horizontal,
         children: [
           UserAvatar(
-            username: post.adderInfo.username,
-            image: post.adderInfo.avatar,
-            imagePath: post.adderInfo.imagePath,
+            username: post.adderName,
+            image: post.userAvatar,
+            imagePath: post.userImagePath,
             radius: 15,
           ),
           Flexible(
@@ -46,9 +46,13 @@ class PostItemUserInfo extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.zero,
                             child: GestureDetector(
-                              onTap: () => _navigateToUserProfileScreen(context, post.adderInfo.id),
+                              onTap: () {
+                                if (post.adderInfo != null) {
+                                  _navigateToUserProfileScreen(context, post.adderInfo.id);
+                                }
+                              },
                               child: Text(
-                                post.adderInfo.username,
+                                post.adderName,
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -58,7 +62,7 @@ class PostItemUserInfo extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${post.adderInfo.addedPosts + post.adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(post.adderInfo.addedPosts + post.adderInfo.addedTopics)}',
+                              post.adderInfo != null ? '${post.adderInfo.addedPosts + post.adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(post.adderInfo.addedPosts + post.adderInfo.addedTopics)}' : '',
                             style: userInfoTextStyle,
                           ),
                         ],
