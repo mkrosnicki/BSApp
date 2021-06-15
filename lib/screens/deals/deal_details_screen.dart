@@ -79,7 +79,8 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                       ),
                     ),
                   ),
-                  Padding(
+                  Container(
+                    color: Colors.white,
                     padding: Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom) : EdgeInsets.zero,
                     child: DealDetailsNewComment(deal.id, _commentToReplySubject),
                   ),
