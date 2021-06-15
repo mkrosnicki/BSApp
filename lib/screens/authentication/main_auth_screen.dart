@@ -24,17 +24,13 @@ class MainAuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0.0,
-        elevation: 0.0,
-        brightness: Brightness.light,
-        backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
-      ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const AppLogoHeader(),
+          const Padding(
+            padding: EdgeInsets.only(top: 24.0),
+            child: AppLogoHeader(),
+          ),
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25.0),
