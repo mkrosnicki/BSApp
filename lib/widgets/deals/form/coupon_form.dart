@@ -152,9 +152,11 @@ class _CouponFormState extends State<CouponForm> {
                     _dateSelectionButtons(),
                     const FormFieldDivider(),
                     const FormFieldDivider(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PrimaryButton('Dodaj kupon', _newDeal.categories.isNotEmpty ? _submit : null),
+                    SafeArea(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: PrimaryButton('Dodaj kupon', _newDeal.categories.isNotEmpty ? _submit : null),
+                      ),
                     ),
                   ],
                 ),
