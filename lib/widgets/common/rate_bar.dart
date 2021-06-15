@@ -40,7 +40,7 @@ class RateBar extends StatelessWidget {
             onTap: positiveVoteFunction,
             behavior: HitTestBehavior.translucent,
             child: Container(
-              margin: const EdgeInsets.only(right: 4.0),
+              padding: const EdgeInsets.only(right: 4.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
