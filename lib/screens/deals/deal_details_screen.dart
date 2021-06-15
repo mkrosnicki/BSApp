@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
-import 'package:BSApp/widgets/deals/deal_details_actions.dart';
 import 'package:BSApp/widgets/deals/deal_details_author.dart';
 import 'package:BSApp/widgets/deals/deal_details_comments.dart';
 import 'package:BSApp/widgets/deals/deal_details_description.dart';
@@ -81,46 +82,53 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   DealDetailsNewComment(deal.id, _commentToReplySubject),
                 ],
               ),
-              AnimatedBuilder(
-                animation: _colorAnimationController,
-                builder: (context, child) {
-                  return Container(
-                    height: 70.0,
-                    child: AppBar(
-                      leading: AppBarBackButton(_iconColorTween.value),
-                      automaticallyImplyLeading: false,
-                      backgroundColor: _colorTween.value,
-                      elevation: 0,
-                      titleSpacing: 0.0,
-                      centerTitle: true,
-                      brightness: Brightness.light,
-                      backwardsCompatibility: false,
-                      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-                      bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(4.0),
-                        child: Container(
-                          color: _borderColorTween.value,
-                          height: 0.5,
-                        ),
-                      ),
-                      actions: [
-                        DealScreenAdminActionsButton(deal, color: _iconColorTween.value),
-                      ],
-                      title: Text(
-                        deal.title,
-                        style: TextStyle(color: _titleColorTween.value, fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      iconTheme: IconThemeData(
-                        color: _iconColorTween.value,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              Platform.isIOS ? SafeArea(
+                child: _buildTopBar(deal),
+              ) : _buildTopBar(deal),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTopBar(final DealModel deal) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    return AnimatedBuilder(
+      animation: _colorAnimationController,
+      builder: (context, child) {
+        return Container(
+          height: 50.0 + statusBarHeight,
+          child: AppBar(
+            leading: AppBarBackButton(_iconColorTween.value),
+            automaticallyImplyLeading: false,
+            backgroundColor: _colorTween.value,
+            elevation: 0,
+            titleSpacing: 0.0,
+            centerTitle: true,
+            brightness: Brightness.light,
+            backwardsCompatibility: false,
+            systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(4.0),
+              child: Container(
+                color: _borderColorTween.value,
+                height: 0.5,
+              ),
+            ),
+            actions: [
+              DealScreenAdminActionsButton(deal, color: _iconColorTween.value),
+            ],
+            title: Text(
+              deal.title,
+              style: TextStyle(color: _titleColorTween.value, fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            iconTheme: IconThemeData(
+              color: _iconColorTween.value,
+            ),
+          ),
+        );
+      },
     );
   }
 }
