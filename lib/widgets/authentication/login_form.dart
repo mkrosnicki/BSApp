@@ -182,6 +182,7 @@ class _LoginFormState extends State<LoginForm> {
                       child: PrimaryButton('Zaloguj się', _submit),
                     ),
                     Container(
+                      height: 30.0,
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         style: ButtonStyle(
@@ -191,21 +192,21 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         onPressed: () => Navigator.of(context)
                             .pushNamed(ResetPasswordScreen.routeName),
-                        child: GreyTextButton(
-                            'Nie pamiętasz hasła?',
-                            () => Navigator.of(context)
-                                .pushNamed(ResetPasswordScreen.routeName)),
+                        child: const Text('Nie pamiętasz hasła?', style: TextStyle(fontSize: 13, color: Colors.black54)),
                       ),
                     ),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
+                    const FormFieldDivider(),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(top: 2.0),
-                      child: FacebookButton(),
+                      child: const FacebookButton(),
                     ),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(top: 0.0),
-                      child: GoogleButton(),
+                      child: const GoogleButton(),
                     ),
                   ],
                 ),
