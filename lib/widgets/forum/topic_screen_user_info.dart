@@ -1,31 +1,28 @@
-import 'package:BSApp/models/adder_info_model.dart';
+import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
-import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopicScreenUserInfo extends StatelessWidget {
-  final AdderInfoModel adderInfo;
-  final DateTime addedAt;
+  final TopicModel topicModel;
 
-  const TopicScreenUserInfo(this.adderInfo, this.addedAt);
+  const TopicScreenUserInfo(this.topicModel);
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle =
-        TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
         direction: Axis.horizontal,
         children: [
           UserAvatar(
-            username: adderInfo.username,
-            image: adderInfo.avatar,
-            imagePath: adderInfo.imagePath,
+            username: topicModel.adderName,
+            image: topicModel.userAvatar,
+            imagePath: topicModel.userImagePath,
             radius: 15,
           ),
           Flexible(
@@ -45,10 +42,13 @@ class TopicScreenUserInfo extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.zero,
                             child: GestureDetector(
-                              onTap: () => _navigateToUserProfileScreen(
-                                  context, adderInfo.id),
+                              onTap: () {
+                                if (topicModel.adderInfo != null) {
+                                  _navigateToUserProfileScreen(context, topicModel.adderInfo.id);
+                                }
+                              },
                               child: Text(
-                                adderInfo.username,
+                                topicModel.adderName,
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -58,18 +58,17 @@ class TopicScreenUserInfo extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${adderInfo.addedPosts + adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(adderInfo.addedPosts + adderInfo.addedTopics)}',
+                            topicModel.adderInfo != null
+                                ? '${topicModel.adderInfo.addedPosts + topicModel.adderInfo.addedTopics} ${ConjugationHelper.postsConjugation(topicModel.adderInfo.addedPosts + topicModel.adderInfo.addedTopics)}'
+                                : '',
                             style: userInfoTextStyle,
                           ),
                         ],
                       ),
                       Text(
                         // '${_dateFormat.format(comment.addedAt)}',
-                        DateUtil.timeAgoString(addedAt),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            .copyWith(fontSize: 11, color: Colors.black38),
+                        DateUtil.timeAgoString(topicModel.addedAt),
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.black38),
                       ),
                     ],
                   ),
@@ -83,7 +82,6 @@ class TopicScreenUserInfo extends StatelessWidget {
   }
 
   void _navigateToUserProfileScreen(BuildContext context, String userId) {
-    Navigator.of(context)
-        .pushNamed(UserProfileScreen.routeName, arguments: userId);
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: userId);
   }
 }

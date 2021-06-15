@@ -73,6 +73,10 @@ class TopicModel {
     return adderInfo != null ? adderInfo.avatar : null;
   }
 
+  String get userImagePath {
+    return adderInfo != null ? adderInfo.imagePath : null;
+  }
+
 
   @override
   String toString() {

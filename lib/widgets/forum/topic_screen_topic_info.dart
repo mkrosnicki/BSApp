@@ -20,7 +20,7 @@ class TopicScreenTopicInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TopicScreenUserInfo(topic.adderInfo, topic.addedAt),
+          TopicScreenUserInfo(topic),
           TopicScreenTopicTitle(topic.title),
           TopicScreenTopicContent(topic.content),
           // TopicScreenTopicBottomBar(topic.id),

@@ -21,7 +21,7 @@ class CommentItemTopSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         direction: Axis.horizontal,
         children: [
-          CommentItemUserAvatar(comment.adderInfo),
+          CommentItemUserAvatar(comment),
           CommentItemContent(comment),
           Column(
             children: [
