@@ -1,4 +1,4 @@
-package com.example.BSApp
+package com.mk.bb
 
 import io.flutter.embedding.android.FlutterActivity
 

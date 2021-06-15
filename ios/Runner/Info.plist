@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>BSApp</string>
+	<string>BB</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -48,5 +48,18 @@
     </dict>
     <key>com.apple.security.network.client</key>
     <true/>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb209613880709650</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>209613880709650</string>
+    <key>FacebookDisplayName</key>
+    <string>BB</string>
 </dict>
 </plist>
