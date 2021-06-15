@@ -81,7 +81,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   ),
                   Container(
                     color: Colors.white,
-                    padding: Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom) : EdgeInsets.zero,
+                    padding: Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0) : EdgeInsets.zero,
                     child: DealDetailsNewComment(deal.id, _commentToReplySubject),
                   ),
                 ],
