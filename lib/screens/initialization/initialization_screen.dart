@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,13 +9,13 @@ class InitializationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: !Platform.isIOS ? AppBar(
         toolbarHeight: 0.0,
         brightness: Brightness.light,
         backwardsCompatibility: false,
         elevation: 0.0,
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.BLUE),
-      ),
+      ) : null,
       backgroundColor: MyColorsProvider.BLUE,
       body: Center(
         child: Column(
