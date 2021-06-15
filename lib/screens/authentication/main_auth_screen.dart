@@ -27,13 +27,13 @@ class MainAuthScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 24.0),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.05),
             child: AppLogoHeader(),
           ),
           Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
             child: const Text(
               'Aby korzystać ze wszystkich funkcjonalności aplikacji zaloguj się lub załóż konto.',
               style: TextStyle(fontSize: 12, height: 1.4),
