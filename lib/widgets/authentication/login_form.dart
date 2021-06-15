@@ -4,6 +4,8 @@ import 'package:BSApp/screens/authentication/reset_password_screen.dart';
 import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/facebook_button.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/google_button.dart';
 import 'package:BSApp/widgets/common/grey_text_button.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -120,6 +122,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -131,13 +134,15 @@ class _LoginFormState extends State<LoginForm> {
                             fontSize: 18),
                       ),
                     ),
+                    // const FormFieldDivider(),
+                    // const FormFieldDivider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: _getFormFieldDecoration('E-mail'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Email'),
                         validator: (value) {
                           if (value.isEmpty || !value.contains('@')) {
                             return 'Nieprawidłowy e-mail!';
@@ -150,13 +155,14 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                     ),
+                    // const FormFieldDivider(),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
                         obscureText: true,
-                        decoration: _getFormFieldDecoration('Hasło'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Hasło'),
                         validator: (value) {
                           if (value.length < 3) {
                             return 'Za krótkie hasło!';
@@ -169,6 +175,7 @@ class _LoginFormState extends State<LoginForm> {
                         },
                       ),
                     ),
+                    const FormFieldDivider(),
                     Container(
                       width: double.infinity,
                       margin: const EdgeInsets.only(top: 2.0),

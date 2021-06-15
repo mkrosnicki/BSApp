@@ -17,10 +17,7 @@ class GreyTextButton extends StatelessWidget {
       onPressed: function,
       child: Text(
         label,
-        style: const TextStyle(
-            color: Colors.black54,
-            fontWeight: FontWeight.w400,
-            fontSize: 13),
+        style: const TextStyle(fontSize: 13, color: Colors.black54),
         textAlign: TextAlign.center,
       ),
     );

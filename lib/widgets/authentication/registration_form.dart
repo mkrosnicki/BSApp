@@ -29,11 +29,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  InputDecoration _getFormFieldDecoration(String hintText) {
-    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
-        .copyWith(hintText: hintText);
-  }
-
   InputDecoration formFieldDecoration = const InputDecoration(
     enabledBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
@@ -116,7 +111,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         controller: _emailController,
                         cursorColor: Colors.black,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: _getFormFieldDecoration('E-mail'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Email'),
                         validator: (value) {
                           if (value.isEmpty || !value.contains('@')) {
                             return 'Nieprawidłowy e-mail!';
@@ -135,7 +130,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         controller: _nameController,
                         cursorColor: Colors.black,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: _getFormFieldDecoration('Imię'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Imię'),
                         validator: (value) {
                           if (value.length < 3) {
                             return 'Za krótkie imię, wprowadź co najmniej 3 znaki.';
@@ -154,7 +149,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         controller: _passwordController,
                         cursorColor: Colors.black,
                         obscureText: true,
-                        decoration: _getFormFieldDecoration('Hasło'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Hasło'),
                         validator: (value) {
                           if (value.length < 3) {
                             return 'Za krótkie hasło!';
@@ -173,7 +168,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         controller: _confirmPasswordController,
                         cursorColor: Colors.black,
                         obscureText: true,
-                        decoration: _getFormFieldDecoration('Potwierdź hasło'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Potwierdź hasło'),
                         validator: (value) {
                           if (value != _passwordController.text) {
                             return 'Hasła nie są takie same!';

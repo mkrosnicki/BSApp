@@ -225,7 +225,7 @@ class _OccasionFormState extends State<OccasionForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _formFieldTitle('Link do okazji'),
+                const FormFieldTitle('Link do okazji'),
                 TextFormField(
                   initialValue: _newDeal.urlLocation,
                   validator: (value) {
