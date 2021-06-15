@@ -15,25 +15,23 @@ class InitializationScreen extends StatelessWidget {
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.BLUE),
       ),
       backgroundColor: MyColorsProvider.BLUE,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.7,
-                child: Image.asset(
-                  'assets/images/logo2.png',
-                  fit: BoxFit.fitWidth,
-                ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Image.asset(
+                'assets/images/logo2.png',
+                fit: BoxFit.fitWidth,
               ),
-              const SizedBox(height: 10),
-              JumpingDotsProgressIndicator(
-                fontSize: 60.0,
-                color: Colors.white,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 10),
+            JumpingDotsProgressIndicator(
+              fontSize: 60.0,
+              color: Colors.white,
+            ),
+          ],
         ),
       ),
     );
