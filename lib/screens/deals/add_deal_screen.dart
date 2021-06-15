@@ -28,8 +28,10 @@ class _AddDealScreenState extends State<AddDealScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBarAddDeal(),
-        body: TabBarView(
-          children: [OccasionForm(_newDeal), CouponForm(_newDeal)],
+        body: SafeArea(
+          child: TabBarView(
+            children: [OccasionForm(_newDeal), CouponForm(_newDeal)],
+          ),
         ),
       ),
     );
