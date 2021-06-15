@@ -32,32 +32,30 @@ class MainAuthScreen extends StatelessWidget {
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const AppLogoHeader(),
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25.0),
-              child: const Text(
-                'Aby korzystać ze wszystkich funkcjonalności aplikacji zaloguj się lub załóż konto.',
-                style: TextStyle(fontSize: 12, height: 1.4),
-                textAlign: TextAlign.center,
-              ),
+      body: Column(
+        children: [
+          const AppLogoHeader(),
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 25.0),
+            child: const Text(
+              'Aby korzystać ze wszystkich funkcjonalności aplikacji zaloguj się lub załóż konto.',
+              style: TextStyle(fontSize: 12, height: 1.4),
+              textAlign: TextAlign.center,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
+          ),
+          Flexible(
+            child: ListView.builder(
+              itemBuilder: (context, index) => menuOptions[index],
+              itemCount: menuOptions.length,
             ),
-            Flexible(
-              child: ListView.builder(
-                itemBuilder: (context, index) => menuOptions[index],
-                itemCount: menuOptions.length,
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
