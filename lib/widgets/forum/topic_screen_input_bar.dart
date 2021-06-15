@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/posts.dart';
@@ -67,58 +69,62 @@ class TopicScreenInputBar extends StatelessWidget {
             }
           },
         ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: 50,
-            maxHeight: 80,
-          ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
-            decoration: const BoxDecoration(
-              border: MyStylingProvider.TOP_GREY_BORDER_THICK,
-              color: Colors.white,
+        Container(
+          color: Colors.white,
+          padding: Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0) : EdgeInsets.zero,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 50,
+              maxHeight: 80,
             ),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Flexible(
-                  child: Stack(
-                    children: [
-                      TextField(
-                        minLines: 1,
-                        maxLines: 3,
-                        controller: textEditingController,
-                        focusNode: textFocusNode,
-                        style: const TextStyle(fontSize: 13),
-                        decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
-                            .copyWith(hintText: 'Napisz post...'),
-                      ),
-                      Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Consumer<Auth>(
-                            builder: (context, authData, child) => StreamBuilder(
-                                stream: _postToReplyStream,
-                                builder: (context, AsyncSnapshot<PostModel> snapshot) {
-                                  return InkWell(
-                                    onTap: () => _addReply(context, authData.isAuthenticated, snapshot.data),
-                                    child: const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Icon(
-                                        CupertinoIcons.chevron_right,
-                                        color: Colors.blue,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+              decoration: const BoxDecoration(
+                border: MyStylingProvider.TOP_GREY_BORDER_THICK,
+                color: Colors.white,
+              ),
+              child: Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(
+                    child: Stack(
+                      children: [
+                        TextField(
+                          minLines: 1,
+                          maxLines: 3,
+                          controller: textEditingController,
+                          focusNode: textFocusNode,
+                          style: const TextStyle(fontSize: 13),
+                          decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                              .copyWith(hintText: 'Napisz post...'),
+                        ),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Consumer<Auth>(
+                              builder: (context, authData, child) => StreamBuilder(
+                                  stream: _postToReplyStream,
+                                  builder: (context, AsyncSnapshot<PostModel> snapshot) {
+                                    return InkWell(
+                                      onTap: () => _addReply(context, authData.isAuthenticated, snapshot.data),
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                        child: Icon(
+                                          CupertinoIcons.chevron_right,
+                                          color: Colors.blue,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
