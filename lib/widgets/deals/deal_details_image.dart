@@ -1,6 +1,7 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/deals/deal_item_heart_button.dart';
+import 'package:BSApp/widgets/deals/deal_item_share_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,20 @@ class DealDetailsImage extends StatelessWidget {
                   color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
             ),
             child: DealItemHeartButton(deal, 30),
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 65,
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+            ),
+            child: DealItemShareButton(deal, 30),
           ),
         ),
       ],

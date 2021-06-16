@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "738270402284",
+    "project_id": "babybook-6ea5d",
+    "storage_bucket": "babybook-6ea5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738270402284:android:83708ad1a210fe837877c9",
+        "android_client_info": {
+          "package_name": "com.mk.bb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738270402284-9cqjugoj3cq9qeta8prm0t5jc4dad5r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR5nxDHOI8vgT--3pfVy0fikihlTHLsFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738270402284-9cqjugoj3cq9qeta8prm0t5jc4dad5r1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "738270402284-euhqhv92s82ur9osbv8f4b0sjp6c4s4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mk.bb",
+                "app_store_id": "123456789"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

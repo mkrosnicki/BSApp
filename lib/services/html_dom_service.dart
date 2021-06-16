@@ -5,7 +5,7 @@ import 'package:html/parser.dart' as parser;
 class HtmlDomService {
 
   static Future<List<String>> getImageUrlsFrom(String url) async {
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(url));
     final dom.Document document = parser.parse(response.body);
     final List<dom.Element> elements = document.getElementsByTagName('img');
     List<String> list = [];

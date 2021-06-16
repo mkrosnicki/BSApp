@@ -66,5 +66,9 @@
 	<false/>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+    <array>
+      <string>https://babybook.page.link</string>
+    </array>
 </dict>
 </plist>

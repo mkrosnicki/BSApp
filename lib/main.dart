@@ -39,12 +39,14 @@ import 'package:BSApp/screens/profile/your_profile_screen.dart';
 import 'package:BSApp/screens/profile/your_topics_screen.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -65,14 +67,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, CurrentUser>(
           create: (context) => CurrentUser.empty(),
           lazy: false,
-          update: (context, auth, previousCurrentUser) =>
-          previousCurrentUser..update(auth.token, auth.userId),
+          update: (context, auth, previousCurrentUser) => previousCurrentUser..update(auth.token, auth.userId),
         ),
         ChangeNotifierProxyProvider<Auth, Deals>(
           create: (context) => Deals.empty(),
           lazy: true,
-          update: (context, auth, previousDeals) =>
-              previousDeals..update(auth.token, previousDeals.deals),
+          update: (context, auth, previousDeals) => previousDeals..update(auth.token, previousDeals.deals),
         ),
         ChangeNotifierProxyProvider<Auth, Comments>(
           create: (context) => Comments.empty(),
@@ -80,38 +80,34 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Searches>(
           create: (context) => Searches.empty(),
-          update: (context, auth, previousSearches) =>
-              previousSearches..update(auth.token, previousSearches.searches),
+          update: (context, auth, previousSearches) => previousSearches..update(auth.token, previousSearches.searches),
         ),
         ChangeNotifierProxyProvider<Auth, Topics>(
           create: (context) => Topics.empty(),
           lazy: true,
-          update: (context, auth, previousTopics) =>
-              previousTopics..update(auth.token, previousTopics.topics),
+          update: (context, auth, previousTopics) => previousTopics..update(auth.token, previousTopics.topics),
         ),
         ChangeNotifierProxyProvider<Auth, Posts>(
           create: (context) => Posts.empty(),
           lazy: true,
-          update: (context, auth, previousPosts) =>
-              previousPosts..update(auth.token, previousPosts.posts),
+          update: (context, auth, previousPosts) => previousPosts..update(auth.token, previousPosts.posts),
         ),
         ChangeNotifierProxyProvider<CurrentUser, Notifications>(
           create: (context) => Notifications.empty(),
           lazy: false,
           update: (context, currentUser, previousNotifications) =>
-          previousNotifications..update(currentUser.token, currentUser.me?.id, currentUser.me?.notificationsSeenAt),
+              previousNotifications..update(currentUser.token, currentUser.me?.id, currentUser.me?.notificationsSeenAt),
         ),
         ChangeNotifierProxyProvider<Auth, Activities>(
           create: (context) => Activities.empty(),
           lazy: true,
           update: (context, auth, previousActivities) =>
-          previousActivities..update(auth.token, previousActivities.activities),
+              previousActivities..update(auth.token, previousActivities.activities),
         ),
         ChangeNotifierProxyProvider<Auth, Users>(
           create: (context) => Users.empty(),
           lazy: false,
-          update: (context, auth, previousUsers) =>
-          previousUsers..update(),
+          update: (context, auth, previousUsers) => previousUsers..update(),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
