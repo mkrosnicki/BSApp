@@ -11,6 +11,7 @@ class UserModel {
   final UserRole userRole;
   final DateTime registeredAt;
   final DateTime lastLoginAt;
+  final DateTime bannedUntil;
   final DateTime notificationsSeenAt;
   final Uint8List avatar;
   final String imagePath;
@@ -20,32 +21,32 @@ class UserModel {
 
   UserModel(
       {this.id,
-        this.username,
-        this.userRole,
-        this.registeredAt,
-        this.lastLoginAt,
-        this.notificationsSeenAt,
-        this.avatar,
-        this.imagePath,
-        this.pointsForDeals,
-        this.likesCount,
-        this.activityPerDay});
+      this.username,
+      this.userRole,
+      this.registeredAt,
+      this.lastLoginAt,
+      this.bannedUntil,
+      this.notificationsSeenAt,
+      this.avatar,
+      this.imagePath,
+      this.pointsForDeals,
+      this.likesCount,
+      this.activityPerDay});
 
   static UserModel fromJson(dynamic userSnapshot) {
     final registeredAt = userSnapshot['registeredAt'] as String;
     final lastLoginAt = userSnapshot['lastLoginAt'] as String;
+    final bannedUntil = userSnapshot['bannedUntil'] as String;
     final notificationsSeenAt = userSnapshot['notificationsSeenAt'] as String;
     return UserModel(
-        id: userSnapshot['id'] as String,
-        username: userSnapshot['username'] as String,
-        userRole: UserRoleHelper.fromString(userSnapshot['userRole']),
-        registeredAt:
-        registeredAt != null ? DateUtil.parseFromStringToUtc(registeredAt) : null,
-        lastLoginAt: lastLoginAt != null ? DateUtil.parseFromStringToUtc(lastLoginAt) : null,
-        notificationsSeenAt: notificationsSeenAt != null
-            ? DateUtil.parseFromStringToUtc(notificationsSeenAt)
-            : null,
-        avatar: _getAvatar(userSnapshot),
+      id: userSnapshot['id'] as String,
+      username: userSnapshot['username'] as String,
+      userRole: UserRoleHelper.fromString(userSnapshot['userRole']),
+      registeredAt: registeredAt != null ? DateUtil.parseFromStringToUtc(registeredAt) : null,
+      bannedUntil: bannedUntil != null ? DateUtil.parseFromStringToUtc(bannedUntil) : null,
+      lastLoginAt: lastLoginAt != null ? DateUtil.parseFromStringToUtc(lastLoginAt) : null,
+      notificationsSeenAt: notificationsSeenAt != null ? DateUtil.parseFromStringToUtc(notificationsSeenAt) : null,
+      avatar: _getAvatar(userSnapshot),
       pointsForDeals: userSnapshot['pointsForDeals'],
       imagePath: userSnapshot['imagePath'],
       likesCount: userSnapshot['likesCount'],
@@ -66,14 +67,17 @@ class UserModel {
     return avatar != null ? Image.memory(avatar) : null;
   }
 
-  bool isAdmin() {
+  bool get isAdmin {
     return userRole == UserRole.ROLE_ADMIN;
+  }
+
+  bool get isBanned {
+    return bannedUntil != null && bannedUntil.isBefore(DateTime.now().toUtc());
   }
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is UserModel && runtimeType == other.runtimeType && id == other.id;
+      identical(this, other) || other is UserModel && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;

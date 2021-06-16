@@ -1,6 +1,5 @@
 import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/util/date_util.dart';
-import 'package:BSApp/util/fake_data_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -64,12 +63,34 @@ class UserProfileMainInfo extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                      child: _banBadge(),
+                    )
                   ],
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _banBadge() {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 100),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 6.0),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        child: Text(
+          'Zablokowany',
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
       ),
     );
   }

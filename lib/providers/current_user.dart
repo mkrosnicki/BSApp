@@ -25,7 +25,7 @@ class CurrentUser with ChangeNotifier {
   }
 
   bool get isAdmin {
-    return _me != null && _me.isAdmin();
+    return _me != null && _me.isAdmin;
   }
 
   UserModel get me {
