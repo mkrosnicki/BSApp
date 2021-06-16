@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 
 class UserScreenAdminActionsButton extends StatelessWidget {
   final UserModel user;
+  final Function updateFunction;
 
-  const UserScreenAdminActionsButton(this.user);
+  const UserScreenAdminActionsButton(this.user, this.updateFunction);
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +61,14 @@ class UserScreenAdminActionsButton extends StatelessWidget {
     final DateTime bannedUntil = DateTime.now().add(duration).toUtc();
     await Provider.of<Users>(context, listen: false).updateUser(user.id, bannedUntil);
     Navigator.of(context).pop();
+    updateFunction();
   }
 
   Future<void> _unblockUser(final BuildContext context) async {
     final DateTime bannedUntil = DateTime.now().subtract(const Duration(days: 1)).toUtc();
     await Provider.of<Users>(context, listen: false).updateUser(user.id, bannedUntil);
     Navigator.of(context).pop();
+    updateFunction();
   }
 
   Widget _buildListTile(String title, IconData icon, Function() function) {

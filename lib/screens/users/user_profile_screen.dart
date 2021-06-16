@@ -71,7 +71,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   width: 70,
                                   height: 35,
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: UserScreenAdminActionsButton(_user),
+                                  child: UserScreenAdminActionsButton(_user, _updateScreen),
                                 ),
                               )
                             : Container();
@@ -93,5 +93,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   Future<void> _initUser(BuildContext context, String userId) async {
     _user = await Provider.of<Users>(context, listen: false).findUser(userId);
+  }
+
+  void _updateScreen() {
+    setState(() {
+    });
   }
 }
