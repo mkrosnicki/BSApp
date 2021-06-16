@@ -104,9 +104,10 @@ class Deals with ChangeNotifier {
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Deal Found!');
+    } else {
+      _deals.clear();
+      _deals.add(DealModel.fromJson(responseBody));
     }
-    _deals.clear();
-    _deals.add(DealModel.fromJson(responseBody));
   }
 
   Future<void> voteForDeal(String dealId, bool isPositive) async {

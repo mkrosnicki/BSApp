@@ -3,15 +3,15 @@ import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ContactScreen extends StatelessWidget {
-  static const routeName = '/contact';
+class NoResourceScreen extends StatelessWidget {
+  static const routeName = '/no-resource';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
         leading: AppBarBackButton(Colors.black),
-        title: 'Kontakt',
+        title: 'Błąd',
       ),
       backgroundColor: Colors.white,
       body: Center(
@@ -24,7 +24,7 @@ class ContactScreen extends StatelessWidget {
               child: Icon(CupertinoIcons.exclamationmark_triangle, color: Colors.black54, size: 28,),
             ),
             Text(
-              'Kontakt',
+              'Ten zasób już nie istnieje!',
               style: TextStyle(fontSize: 15, color: Colors.black54),
             ),
           ],

@@ -4,6 +4,7 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:BSApp/screens/profile/no_resource_screen.dart';
 
 class DynamicLinkService {
   Future<void> retrieveDynamicLink(BuildContext context) async {
@@ -25,8 +26,14 @@ class DynamicLinkService {
         final String dealId = dynamicLink.link.queryParameters['dealId'];
         final dealProvider = Provider.of<Deals>(context, listen: false);
         dealProvider.fetchDeal(dealId).then((_) {
-          deal = dealProvider.findById(dealId);
-          Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+          try {
+            final deal = dealProvider.findById(dealId);
+            if (deal != null) {
+              Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+            }
+          } catch (e) {
+            Navigator.of(context).pushNamed(NoResourceScreen.routeName);
+          }
         });
       });
     } catch (e) {
