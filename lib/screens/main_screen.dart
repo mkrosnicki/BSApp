@@ -1,17 +1,16 @@
-import 'package:BSApp/providers/auth.dart';
-import 'package:BSApp/providers/current_user.dart';
+import 'dart:async';
+
 import 'package:BSApp/providers/notifications.dart';
-import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/initialization/init.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/your_profile_screen.dart';
+import 'package:BSApp/services/dynamic_link_service.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'deals/add_deal_screen.dart';
 import 'favourites/favourites_screen.dart';
 import 'forum/forum_screen.dart';
 import 'initialization/initialization_screen.dart';
@@ -23,7 +22,37 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
+  final DynamicLinkService _dynamicLinkService = DynamicLinkService();
+  Timer _timerLink;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _timerLink = Timer(
+        const Duration(milliseconds: 1000),
+        () {
+          _dynamicLinkService.retrieveDynamicLink(context);
+        },
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    if (_timerLink != null) {
+      _timerLink.cancel();
+    }
+    super.dispose();
+  }
+
   bool _isInitialized = false;
   int _selectedIndex = 0;
 
@@ -77,8 +106,7 @@ class _MainScreenState extends State<MainScreen> {
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(
                 border: Border(
-                  top: BorderSide(
-                      color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+                  top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
                 ),
               ),
               child: BottomNavigationBar(
@@ -112,16 +140,17 @@ class _MainScreenState extends State<MainScreen> {
                       builder: (context, notificationsData, child) => Stack(
                         children: [
                           const Icon(CupertinoIcons.bell, size: 21),
-                          if (notificationsData.areUnseenNotifications) Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(left: 12.0),
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          )
+                          if (notificationsData.areUnseenNotifications)
+                            Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(left: 12.0),
+                              width: 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            )
                         ],
                       ),
                     ),

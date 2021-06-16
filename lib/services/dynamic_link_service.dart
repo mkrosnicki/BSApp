@@ -1,12 +1,43 @@
+import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DynamicLinkService {
+  Future<void> retrieveDynamicLink(BuildContext context) async {
+    try {
+      final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+      final Uri deepLink = data?.link;
 
-  Future<Uri> createDynamicLink() async {
-    print('DUPA');
+      DealModel deal;
+      if (deepLink != null) {
+        final String dealId = deepLink.queryParameters['dealId'];
+        final dealsProvider = Provider.of<Deals>(context, listen: false);
+        dealsProvider.fetchDeal(dealId).then((_) {
+          deal = dealsProvider.findById(dealId);
+          Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+        });
+      }
+
+      FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        final String dealId = dynamicLink.link.queryParameters['dealId'];
+        final dealProvider = Provider.of<Deals>(context, listen: false);
+        dealProvider.fetchDeal(dealId).then((_) {
+          deal = dealProvider.findById(dealId);
+          Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<Uri> createDynamicLink(final String id) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://babybook.page.link',
-      link: Uri.parse('https://babybook.page.link/deal'),
+      link: Uri.parse('https://babybook.page.link/deal?dealId=$id'),
       androidParameters: AndroidParameters(
         packageName: 'com.mk.bb',
         minimumVersion: 1,
@@ -17,10 +48,7 @@ class DynamicLinkService {
         appStoreId: '123456789',
       ),
     );
-    print('DUPADUPADUPADUPADUPADUPA');
-    var dynamicUrl = await parameters.buildShortLink();
-    final Uri shortUrl = dynamicUrl.shortUrl;
-    return shortUrl;
+    final Uri dynamicUrl = await parameters.buildUrl();
+    return dynamicUrl;
   }
-
 }

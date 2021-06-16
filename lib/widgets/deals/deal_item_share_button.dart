@@ -18,7 +18,7 @@ class DealItemShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final DynamicLinkService dynamicLinkService = DynamicLinkService();
     return FutureBuilder<Uri>(
-        future: dynamicLinkService.createDynamicLink(),
+        future: dynamicLinkService.createDynamicLink(deal.id),
         builder: (context, snapshot) {
           if(snapshot.hasData) {
             Uri uri = snapshot.data;
