@@ -21,10 +21,10 @@ class DealItemShareButton extends StatelessWidget {
         future: dynamicLinkService.createDynamicLink(deal.id),
         builder: (context, snapshot) {
           if(snapshot.hasData) {
-            Uri uri = snapshot.data;
+            final Uri uri = snapshot.data;
             return GestureDetector(
               onTap: () => Share.share(uri.toString()),
-              child: Icon(CupertinoIcons.share, size: iconSize, color: MyColorsProvider.LIGHT_RED_SHADY),
+              child: Icon(CupertinoIcons.share, size: iconSize, color: MyColorsProvider.DEEP_BLUE),
             );
           } else {
             return Container();

@@ -23,10 +23,13 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   @override
   void initState() {
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         final Deals dealsProvider = Provider.of<Deals>(context, listen: false);
         if (dealsProvider.canLoadPage(_currentPage + 1)) {
-          dealsProvider.fetchDealsPaged(requestParams: filterSettings.toParamsMap(), pageNo: ++_currentPage);
+          dealsProvider.fetchDealsPaged(
+              requestParams: filterSettings.toParamsMap(),
+              pageNo: ++_currentPage);
         }
       }
     });
@@ -36,7 +39,8 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap()),
+      future: Provider.of<Deals>(context, listen: false)
+          .fetchDealsPaged(requestParams: filterSettings.toParamsMap()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -74,11 +78,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
                           return Container(
                             color: Colors.white,
                             height: MediaQuery.of(context).size.height * 0.7,
-                            child: Column(
-                              children: const [
-                                Expanded(child: DealsNotFound()),
-                              ],
-                            ),
+                            child: const Center(child: DealsNotFound()),
                           );
                         }
                       },
@@ -95,6 +95,7 @@ class _DealsScreenMainContentState extends State<DealsScreenMainContent> {
 
   Future<void> _refreshDeals(BuildContext context) async {
     _currentPage = 0;
-    await Provider.of<Deals>(context, listen: false).fetchDealsPaged(requestParams: filterSettings.toParamsMap(), pageNo: _currentPage);
+    await Provider.of<Deals>(context, listen: false).fetchDealsPaged(
+        requestParams: filterSettings.toParamsMap(), pageNo: _currentPage);
   }
 }
