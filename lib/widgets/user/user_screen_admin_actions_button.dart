@@ -34,19 +34,19 @@ class UserScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              if (!user.isBanned) _buildListTile('Zablokuj na 24h', CupertinoIcons.clear, () {
+              if (!user.isBanned) _buildListTile('Zablokuj na 24h', CupertinoIcons.lock_fill, () {
                 _blockUserFor(context, const Duration(hours: 24));
               }),
-              if (!user.isBanned) _buildListTile('Zablokuj na 72h', CupertinoIcons.clear, () {
+              if (!user.isBanned) _buildListTile('Zablokuj na 72h', CupertinoIcons.lock_fill, () {
                 _blockUserFor(context, const Duration(hours: 72));
               }),
-              if (!user.isBanned) _buildListTile('Zablokuj na tydzień', CupertinoIcons.clear, () {
+              if (!user.isBanned) _buildListTile('Zablokuj na tydzień', CupertinoIcons.lock_fill, () {
                 _blockUserFor(context, const Duration(days: 7));
               }),
-              if (!user.isBanned) _buildListTile('Zablokuj na miesiąc', CupertinoIcons.clear, () {
+              if (!user.isBanned) _buildListTile('Zablokuj na miesiąc', CupertinoIcons.lock_fill, () {
                 _blockUserFor(context, const Duration(days: 30));
               }),
-              if (user.isBanned) _buildListTile('Odblokuj', CupertinoIcons.clear, () {
+              if (user.isBanned) _buildListTile('Odblokuj', CupertinoIcons.lock_open_fill, () {
                 _unblockUser(context);
               }),
             ],
