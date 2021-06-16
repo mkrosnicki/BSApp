@@ -9,8 +9,13 @@ class Users with ChangeNotifier {
 
   UserModel _user;
   UsersProfileModel _usersProfile;
+  String _token;
 
   Users.empty();
+
+  UserModel get user {
+    return _user;
+  }
 
   Future<void> fetchUser(String userId) async {
     final responseBody = await _apiProvider.get('/users/$userId') as Map;
@@ -49,5 +54,18 @@ class Users with ChangeNotifier {
     return _usersProfile;
   }
 
-  void update() {}
+
+  Future<void> updateUser(String userId, DateTime bannedUntil) async {
+    final responseBody = await _apiProvider.patch('/users/$userId/votes', {'bannedUntil': bannedUntil.toIso8601String}, token: _token);
+    if (responseBody != null) {
+      final UserModel updatedUser = UserModel.fromJson(responseBody);
+      _user = updatedUser;
+      notifyListeners();
+    }
+  }
+
+  void update(String token, UserModel user) {
+    _user = user;
+    _token = token;
+  }
 }

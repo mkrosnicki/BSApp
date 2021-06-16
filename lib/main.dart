@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Users>(
           create: (context) => Users.empty(),
           lazy: false,
-          update: (context, auth, previousUsers) => previousUsers..update(),
+          update: (context, auth, previousUsers) => previousUsers..update(auth.token, previousUsers.user),
         ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
