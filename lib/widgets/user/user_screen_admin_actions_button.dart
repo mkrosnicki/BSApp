@@ -1,6 +1,8 @@
 import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/providers/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserScreenAdminActionsButton extends StatelessWidget {
   final UserModel user;
@@ -32,12 +34,38 @@ class UserScreenAdminActionsButton extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Text('Akcje admina'),
               ),
-              _buildListTile('Zablokuj użytkownika', CupertinoIcons.clear, () {}),
+              if (!user.isBanned) _buildListTile('Zablokuj na 24h', CupertinoIcons.clear, () {
+                _blockUserFor(context, const Duration(hours: 24));
+              }),
+              if (!user.isBanned) _buildListTile('Zablokuj na 72h', CupertinoIcons.clear, () {
+                _blockUserFor(context, const Duration(hours: 72));
+              }),
+              if (!user.isBanned) _buildListTile('Zablokuj na tydzień', CupertinoIcons.clear, () {
+                _blockUserFor(context, const Duration(days: 7));
+              }),
+              if (!user.isBanned) _buildListTile('Zablokuj na miesiąc', CupertinoIcons.clear, () {
+                _blockUserFor(context, const Duration(days: 30));
+              }),
+              if (user.isBanned) _buildListTile('Odblokuj', CupertinoIcons.clear, () {
+                _unblockUser(context);
+              }),
             ],
           ),
         );
       },
     );
+  }
+
+  Future<void> _blockUserFor(final BuildContext context, final Duration duration) async {
+    final DateTime bannedUntil = DateTime.now().add(duration).toUtc();
+    await Provider.of<Users>(context, listen: false).updateUser(user.id, bannedUntil);
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _unblockUser(final BuildContext context) async {
+    final DateTime bannedUntil = DateTime.now().subtract(const Duration(days: 1)).toUtc();
+    await Provider.of<Users>(context, listen: false).updateUser(user.id, bannedUntil);
+    Navigator.of(context).pop();
   }
 
   Widget _buildListTile(String title, IconData icon, Function() function) {

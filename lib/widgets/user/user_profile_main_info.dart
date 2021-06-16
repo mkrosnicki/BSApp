@@ -63,7 +63,7 @@ class UserProfileMainInfo extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Padding(
+                    if (user.isBanned) Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
                       child: _banBadge(),
                     )

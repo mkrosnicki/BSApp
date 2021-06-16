@@ -72,7 +72,7 @@ class UserModel {
   }
 
   bool get isBanned {
-    return bannedUntil != null && bannedUntil.isBefore(DateTime.now().toUtc());
+    return bannedUntil != null && bannedUntil.isAfter(DateTime.now().toUtc());
   }
 
   @override

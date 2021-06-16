@@ -56,7 +56,7 @@ class Users with ChangeNotifier {
 
 
   Future<void> updateUser(String userId, DateTime bannedUntil) async {
-    final responseBody = await _apiProvider.patch('/users/$userId/votes', {'bannedUntil': bannedUntil.toIso8601String}, token: _token);
+    final responseBody = await _apiProvider.patch('/users/$userId', {'bannedUntil': bannedUntil.toIso8601String()}, token: _token);
     if (responseBody != null) {
       final UserModel updatedUser = UserModel.fromJson(responseBody);
       _user = updatedUser;
