@@ -11,7 +11,7 @@ class FilterSettings {
   static const bool DEFAULT_SHOW_INTERNET_ONLY = false;
 
   String phrase;
-  List<CategoryModel> categories = [];
+  CategoryModel category;
   bool showActiveOnly = DEFAULT_SHOW_ACTIVE_ONLY;
   bool showInternetOnly = DEFAULT_SHOW_INTERNET_ONLY;
   Voivodeship voivodeship;
@@ -23,16 +23,16 @@ class FilterSettings {
 
   FilterSettings.phrase(this.phrase);
 
-  FilterSettings.categories(this.categories);
+  FilterSettings.category(this.category);
 
   FilterSettings.sort(this.sortBy);
 
   CategoryModel get lastCategory {
-    return categories.isNotEmpty ? categories[categories.length - 1] : null;
+    return category;
   }
 
-  String get categoriesString {
-    return categories.isNotEmpty ? categories.map((e) => e.name).join(" / ") : 'Wszystkie';
+  String get categoryString {
+    return category != null ? category.name : 'Wszystkie';
   }
 
   String get lastCategoryString {
@@ -68,8 +68,8 @@ class FilterSettings {
     if (phrase != null) {
       paramsMap.putIfAbsent('phrase', () => phrase);
     }
-    if (categories.isNotEmpty) {
-      paramsMap.putIfAbsent('category', () => categories.last.id);
+    if (category != null) {
+      paramsMap.putIfAbsent('category', () => category.id);
     }
     if (showActiveOnly) {
       paramsMap.putIfAbsent('showActiveOnly', () => showActiveOnly.toString());
@@ -139,7 +139,7 @@ class FilterSettings {
   }
 
   void _clearCategories() {
-    categories = [];
+    category = null;
   }
 
   void _clearAgeTypes() {
@@ -173,7 +173,7 @@ class FilterSettings {
     if (showActiveOnly != DEFAULT_SHOW_ACTIVE_ONLY) {
       count++;
     }
-    if (categories.isNotEmpty) {
+    if (category != null) {
       count++;
     }
     if (ageTypes.isNotEmpty) {
@@ -196,7 +196,7 @@ class FilterSettings {
     print(json);
     final FilterSettings newFilterSettings = FilterSettings();
     newFilterSettings.phrase = json['phrase'];
-    newFilterSettings.categories = (json['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList();
+    newFilterSettings.category = CategoryModel.fromJson(json['category']);
     newFilterSettings.ageTypes = (json['ageTypes'] as List).map((e) => AgeTypeHelper.fromString(e)).toList();
     newFilterSettings.voivodeship = Voivodeship.fromJson(json['voivodeship']);
     newFilterSettings.city = City.fromJson(json['city']);
@@ -209,7 +209,7 @@ class FilterSettings {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
       'phrase': phrase,
-      'categories': categories.map((e) => e.toJson()).toList(),
+      'category': category.toJson(),
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
       'showActiveOnly': showActiveOnly,
       'showInternetOnly': showInternetOnly,
@@ -223,7 +223,7 @@ class FilterSettings {
   Map<String, dynamic> toSaveSearchDto() {
     Map<String, dynamic> dto = {
       'phrase': phrase,
-      'categories': categories.map((e) => e.id).toList(),
+      'category': category.id,
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
       'showActiveOnly': showActiveOnly.toString(),
       'showInternetOnly': showInternetOnly.toString(),
@@ -241,7 +241,7 @@ class FilterSettings {
       other is FilterSettings &&
           runtimeType == other.runtimeType &&
           phrase == other.phrase &&
-          const DeepCollectionEquality.unordered().equals(categories, other.categories) &&
+          const DeepCollectionEquality.unordered().equals(category, other.category) &&
           showActiveOnly == other.showActiveOnly &&
           showInternetOnly == other.showInternetOnly &&
           voivodeship == other.voivodeship &&
@@ -252,7 +252,7 @@ class FilterSettings {
   @override
   int get hashCode =>
       phrase.hashCode ^
-      categories.hashCode ^
+      category.hashCode ^
       showActiveOnly.hashCode ^
       showInternetOnly.hashCode ^
       voivodeship.hashCode ^
@@ -262,6 +262,6 @@ class FilterSettings {
 
   @override
   String toString() {
-    return 'FilterSettings{phrase: $phrase, categories: $categories, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
+    return 'FilterSettings{phrase: $phrase, category: $category, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
   }
 }

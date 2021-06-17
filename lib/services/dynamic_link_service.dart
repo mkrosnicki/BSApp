@@ -54,6 +54,10 @@ class DynamicLinkService {
         minimumVersion: '1',
         appStoreId: '123456789',
       ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+          title: 'BabyBook',
+          description: 'Zobacz okazję',
+      ),
     );
     final Uri dynamicUrl = await parameters.buildUrl();
     return dynamicUrl;

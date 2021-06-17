@@ -11,7 +11,7 @@ class SearchModel {
 
   String id;
   String phrase;
-  List<CategoryModel> categories;
+  CategoryModel category;
   bool showActiveOnly;
   bool showInternetOnly;
   Voivodeship voivodeship;
@@ -22,7 +22,7 @@ class SearchModel {
   SearchModel(
       {this.id,
       this.phrase,
-      this.categories,
+      this.category,
       this.showActiveOnly,
       this.showInternetOnly,
       this.voivodeship,
@@ -42,7 +42,7 @@ class SearchModel {
     return SearchModel(
       id: searchSnapshot['id'],
       phrase: searchSnapshot['phrase'],
-      categories: (searchSnapshot['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList(),
+      category: CategoryModel.fromJson(searchSnapshot['category']),
       showActiveOnly: searchSnapshot['showActiveOnly'],
       showInternetOnly: searchSnapshot['showInternetOnly'],
       voivodeship: Voivodeship.fromJson(searchSnapshot['voivodeship']),
@@ -55,7 +55,7 @@ class SearchModel {
   FilterSettings toFilterSettings() {
     final FilterSettings filterSettings = FilterSettings();
     filterSettings.phrase = phrase;
-    filterSettings.categories = categories;
+    filterSettings.category = category;
     filterSettings.ageTypes = ageTypes;
     filterSettings.showActiveOnly = showActiveOnly;
     filterSettings.showInternetOnly = showInternetOnly;
@@ -69,7 +69,7 @@ class SearchModel {
     final Function eq = const DeepCollectionEquality.unordered().equals;
     return
       phrase == filterSettings.phrase &&
-          eq(categories, filterSettings.categories) &&
+          eq(category, filterSettings.category) &&
           showActiveOnly == filterSettings.showActiveOnly &&
           showInternetOnly == filterSettings.showInternetOnly &&
           voivodeship == filterSettings.voivodeship &&
@@ -88,6 +88,6 @@ class SearchModel {
 
   @override
   String toString() {
-    return 'SearchModel{id: $id, phrase: $phrase, categories: $categories, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
+    return 'SearchModel{id: $id, phrase: $phrase, categories: $category, showActiveOnly: $showActiveOnly, showInternetOnly: $showInternetOnly, voivodeship: $voivodeship, city: $city, ageTypes: $ageTypes, sortBy: $sortBy}';
   }
 }

@@ -78,23 +78,11 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                     // const FormFieldDivider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FiltersSelectionCategorySelector(filtersSettings.categories, () => _openCategorySelector(context)),
+                      child: FiltersSelectionCategorySelector(
+                        filtersSettings.category != null ? [filtersSettings.category] : [],
+                        () => _openCategorySelector(context),
+                      ),
                     ),
-                    // ListTile(
-                    //   title: const Text('Kategoria', style: headerTextStyle),
-                    //   subtitle: filtersSettings.categories.isNotEmpty
-                    //       ? Text(
-                    //           filtersSettings.categoriesString,
-                    //           style: valueTextStyle,
-                    //         )
-                    //       : const Text(
-                    //           'Wszystkie kategorie',
-                    //           style: noValueTextStyle,
-                    //         ),
-                    //   trailing: MyIconsProvider.FORWARD_ICON,
-                    //   onTap: () => _openCategorySelector(context),
-                    // ),
-                    // const FormFieldDivider(),
                     SwitchListTile(
                       title: const Text('Tylko internetowe okazje', style: headerTextStyle),
                       value: filtersSettings.showInternetOnly,
@@ -107,10 +95,12 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
                       },
                     ),
                     // const FormFieldDivider(),
-                    if (!filtersSettings.showInternetOnly) Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: FiltersSelectionLocationTypeSelector(filtersSettings, () => _openLocationSelector(context), !filtersSettings.showInternetOnly),
-                    ),
+                    if (!filtersSettings.showInternetOnly)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: FiltersSelectionLocationTypeSelector(
+                            filtersSettings, () => _openLocationSelector(context), !filtersSettings.showInternetOnly),
+                      ),
                     // ListTile(
                     //   title: const Text('Lokalizacja', style: headerTextStyle),
                     //   subtitle: filtersSettings.voivodeship != null
@@ -249,10 +239,10 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
   }
 
   Future<void> _openCategorySelector(BuildContext context) async {
-    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    final List selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName) as List;
     if (selectedCategories != null) {
       setState(() {
-        filtersSettings.categories = selectedCategories;
+        filtersSettings.category = selectedCategories.isNotEmpty ? selectedCategories[0] : null;
       });
     }
   }
@@ -292,5 +282,4 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
       ],
     );
   }
-
 }

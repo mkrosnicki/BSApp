@@ -41,7 +41,7 @@ class FilterSettingsBar extends StatelessWidget {
                       style: TextStyle(fontSize: 11, color: Colors.grey),
                     ),
                     Text(
-                      filterSettings.categoriesString,
+                      filterSettings.categoryString,
                       // overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 12, color: MyColorsProvider.DEEP_BLUE),
@@ -115,9 +115,9 @@ class FilterSettingsBar extends StatelessWidget {
   }
 
   Future _openCategorySelector(BuildContext context) async {
-    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    final List selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName) as List;
     if (selectedCategories != null) {
-      filterSettings.categories = selectedCategories;
+      filterSettings.category = selectedCategories.isNotEmpty ? selectedCategories[0] : null;
       updateFunction(filterSettings);
     }
   }

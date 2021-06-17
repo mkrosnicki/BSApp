@@ -15,7 +15,7 @@ class AddDealModel {
   String _urlLocation;
   String _description;
   String _locationDescription;
-  List<CategoryModel> _categories = [];
+  CategoryModel _category;
   List<AgeType> _ageTypes = [];
   LocationType _locationType;
   String _voivodeship;
@@ -45,7 +45,7 @@ class AddDealModel {
 
   DateTime get validTo => _validTo;
 
-  List<CategoryModel> get categories => _categories;
+  CategoryModel get category => _category;
 
   List<AgeType> get ageTypes => _ageTypes;
 
@@ -97,8 +97,8 @@ class AddDealModel {
     _locationDescription = value;
   }
 
-  set categories(List<CategoryModel> value) {
-    _categories = value;
+  set category(CategoryModel value) {
+    _category = value;
   }
 
   set ageTypes(List<AgeType> value) {
@@ -168,7 +168,7 @@ class AddDealModel {
     _urlLocation = null;
     _description = null;
     _locationDescription = null;
-    _categories = [];
+    _category = null;
     _ageTypes = [];
     _voivodeship = null;
     _voivodeshipReadable = null;
@@ -192,7 +192,7 @@ class AddDealModel {
       'link': _urlLocation,
       'description': _description,
       'locationDescription': _locationDescription,
-      'categoriesIds': _categories.map((e) => e.id).toList(),
+      'categoryId': _category.id,
       'ageTypes': _ageTypes.map((e) => e.index).toList(),
       'locationType': _locationType.index,
       'city': _city,
@@ -212,6 +212,6 @@ class AddDealModel {
 
   @override
   String toString() {
-    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_categories, _ageType: $_ageTypes, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice, _imageUrl: $imageUrl}';
+    return 'AddDealModel{_title: $_title, _urlLocation: $_urlLocation, _description: $_description, _categories: $_category, _ageType: $_ageTypes, _locationType: $_locationType, _city: $_city, _validFrom: $_validFrom, _validTo: $_validTo, _dealCode: $_dealCode, _discountValue: $_discountValue, _regularPrice: $_regularPrice, _currentPrice: $_currentPrice, _shippingPrice: $_shippingPrice, _imageUrl: $imageUrl}';
   }
 }

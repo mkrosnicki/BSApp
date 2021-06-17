@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:BSApp/models/add_deal_model.dart';
 import 'package:BSApp/models/age_type.dart';
+import 'package:BSApp/models/category_model.dart';
 import 'package:BSApp/models/custom_exception.dart';
 import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
@@ -154,7 +155,7 @@ class _OccasionFormState extends State<OccasionForm> {
                     SafeArea(
                       child: SizedBox(
                         width: double.infinity,
-                        child: PrimaryButton('Dodaj okazję', _newDeal.categories.isNotEmpty ? _submit : null),
+                        child: PrimaryButton('Dodaj okazję', _newDeal.category != null ? _submit : null),
                       ),
                     ),
                   ],
@@ -176,7 +177,7 @@ class _OccasionFormState extends State<OccasionForm> {
 
   Widget _categorySelectionSection() {
     return DealsFormCategorySelector(
-      _newDeal.categories,
+      _newDeal.category != null ? [_newDeal.category] : [],
       () => _openCategorySelector(context),
     );
   }
@@ -487,15 +488,15 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   String get categoriesString {
-    return _newDeal.categories.map((e) => e.name).join(" / ");
+    return _newDeal.category.name;
   }
 
   Future<void> _openCategorySelector(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    final List selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName) as List;
     if (selectedCategories != null) {
       setState(() {
-        _newDeal.categories = selectedCategories;
+        _newDeal.category =selectedCategories.isNotEmpty ? selectedCategories[0] : null;
       });
     }
   }

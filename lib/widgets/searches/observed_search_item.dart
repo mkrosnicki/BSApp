@@ -31,7 +31,7 @@ class ObservedSearchItem extends StatelessWidget {
               runSpacing: 4.0,
               children: [
                 if (searchModel.phrase != null) _buildItem('Szukana fraza', searchModel.phrase),
-                if (filterSettings.categories.isNotEmpty) _buildItem('Kategoria', filterSettings.categoriesString),
+                if (filterSettings.category != null) _buildItem('Kategoria', filterSettings.categoryString),
                 if (filterSettings.voivodeship != null) _buildItem('Lokalizacja', filterSettings.locationString),
                 if (filterSettings.ageTypes.isNotEmpty) _buildItem('Wiek dziecka', filterSettings.ageTypesString),
                 if (filterSettings.showActiveOnly != FilterSettings.DEFAULT_SHOW_ACTIVE_ONLY)

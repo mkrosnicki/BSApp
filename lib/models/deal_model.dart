@@ -18,7 +18,7 @@ class DealModel {
   final String link;
   final String code;
   final DealType dealType;
-  final List<String> categories;
+  final String category;
   final LocationType locationType;
   final String voivodeship;
   final String city;
@@ -45,7 +45,7 @@ class DealModel {
     @required this.link,
     @required this.code,
     @required this.dealType,
-    @required this.categories,
+    @required this.category,
     @required this.locationType,
     @required this.voivodeship,
     @required this.city,
@@ -85,9 +85,7 @@ class DealModel {
       link: dealSnapshot['link'],
       code: dealSnapshot['code'],
       dealType: DealTypeHelper.of(dealSnapshot['dealType']),
-      categories: [
-        ...(dealSnapshot['categories'] as List).map((e) => e['name']).toList()
-      ],
+      category: dealSnapshot['category']['name'],
       locationType: LocationTypeHelper.fromString(dealSnapshot['locationType']),
       voivodeship: dealSnapshot['voivodeship'],
       city: dealSnapshot['city'],
@@ -165,7 +163,7 @@ class DealModel {
 
   @override
   String toString() {
-    return 'DealModel{id: $id, title: $title, dealType: $dealType, categories: $categories}';
+    return 'DealModel{id: $id, title: $title, dealType: $dealType, categories: $category}';
   }
 
   @override

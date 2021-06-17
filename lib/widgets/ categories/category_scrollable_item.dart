@@ -61,7 +61,7 @@ class CategoryScrollableItem extends StatelessWidget {
   Future _navigateToResults(BuildContext context) async {
     var result = await Navigator.of(context).pushNamed(
         DealSearchResultScreen.routeName,
-        arguments: FilterSettings.categories([categoryModel]));
+        arguments: FilterSettings.category(categoryModel));
     if (result != null && result == true) {
       refreshFunction(context);
     }

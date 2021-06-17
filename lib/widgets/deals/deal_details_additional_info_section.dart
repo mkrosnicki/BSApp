@@ -33,9 +33,9 @@ class DealDetailsAdditionalInfoSection extends StatelessWidget {
                 Flexible(
                   child: DealDetailsInfoTile(
                       'Kategoria',
-                      dealModel.categories[0],
+                      dealModel.category,
                       ImageAssetsHelper.productCategoryPath(
-                          dealModel.categories[0])),
+                          dealModel.category)),
                 ),
                 Flexible(
                   child: DealDetailsInfoTile(

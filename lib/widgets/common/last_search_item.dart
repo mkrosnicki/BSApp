@@ -85,7 +85,7 @@ class LastSearchItem extends StatelessWidget {
 
   List<String> _getFiltersSet() {
     final List<String> filtersSet = [];
-    if (filterSettings.categories.isNotEmpty) {
+    if (filterSettings.category != null) {
       filtersSet.add(filterSettings.lastCategoryString);
     }
     if (filterSettings.voivodeship != null) {

@@ -155,7 +155,7 @@ class _CouponFormState extends State<CouponForm> {
                     SafeArea(
                       child: SizedBox(
                         width: double.infinity,
-                        child: PrimaryButton('Dodaj kupon', _newDeal.categories.isNotEmpty ? _submit : null),
+                        child: PrimaryButton('Dodaj kupon', _newDeal.category != null ? _submit : null),
                       ),
                     ),
                   ],
@@ -192,7 +192,7 @@ class _CouponFormState extends State<CouponForm> {
 
   Widget _categorySelectionSection() {
     return DealsFormCategorySelector(
-      _newDeal.categories,
+      _newDeal.category != null ? [_newDeal.category] : [],
       () => _openCategorySelector(context),
     );
   }
@@ -554,15 +554,15 @@ class _CouponFormState extends State<CouponForm> {
   }
 
   String get categoriesString {
-    return _newDeal.categories.map((e) => e.name).join(" / ");
+    return _newDeal.category.name;
   }
 
   Future<void> _openCategorySelector(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    final selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName);
+    final List selectedCategories = await Navigator.of(context).pushNamed(CategorySelectionScreen.routeName) as List;
     if (selectedCategories != null) {
       setState(() {
-        _newDeal.categories = selectedCategories;
+        _newDeal.category = selectedCategories.isNotEmpty ? selectedCategories[0] : null;
       });
     }
   }
