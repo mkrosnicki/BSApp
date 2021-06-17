@@ -60,6 +60,7 @@ class DynamicLinkService {
       ),
     );
     final Uri dynamicUrl = await parameters.buildUrl();
-    return dynamicUrl;
+    final shortLink = await parameters.buildShortLink();
+    return shortLink.shortUrl;
   }
 }
