@@ -26,11 +26,6 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  InputDecoration _getFormFieldDecoration(String hintText) {
-    return MyStylingProvider.TEXT_FORM_FIELD_DECORATION
-        .copyWith(hintText: hintText);
-  }
-
   Future<void> _submit() async {
     bool wasError = false;
 
