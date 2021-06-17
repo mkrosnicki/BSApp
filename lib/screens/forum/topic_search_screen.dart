@@ -34,9 +34,6 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         title: _createSearchBox(context),
         leadingWidth: 40.0,
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
-        backwardsCompatibility: false,
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
         automaticallyImplyLeading: false,
         bottom: const AppBarBottomBorder(),
         leading: AppBarBackButton(

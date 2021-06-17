@@ -51,9 +51,6 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
           titleSpacing: 0,
           title: _createSearchBox(context),
           leadingWidth: 40.0,
-          brightness: Brightness.light,
-          backwardsCompatibility: false,
-          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
           automaticallyImplyLeading: false,
           leading: AppBarBackButton(
             Colors.black87,

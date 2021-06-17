@@ -11,10 +11,7 @@ class InitializationScreen extends StatelessWidget {
     return Scaffold(
       appBar: !Platform.isIOS ? AppBar(
         toolbarHeight: 0.0,
-        brightness: Brightness.light,
-        backwardsCompatibility: false,
         elevation: 0.0,
-        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: MyColorsProvider.BLUE),
       ) : null,
       backgroundColor: MyColorsProvider.BLUE,
       body: Center(

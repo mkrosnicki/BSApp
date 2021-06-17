@@ -108,9 +108,6 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
             elevation: 0,
             titleSpacing: 0.0,
             centerTitle: true,
-            brightness: Brightness.light,
-            backwardsCompatibility: false,
-            systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(4.0),
               child: Container(

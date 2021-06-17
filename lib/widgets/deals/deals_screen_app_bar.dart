@@ -33,10 +33,7 @@ class DealsScreenAppBar extends StatelessWidget {
     return AppBar(
       titleSpacing: 4,
       leadingWidth: 0,
-      brightness: Brightness.light,
       centerTitle: true,
-      backwardsCompatibility: false,
-      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       title: _searchField(context),
       backgroundColor: Colors.white,
       elevation: 0,
@@ -47,10 +44,7 @@ class DealsScreenAppBar extends StatelessWidget {
   Widget _mainAppBar(BuildContext context) {
     return AppBar(
       leadingWidth: 100.0,
-      brightness: Brightness.light,
       centerTitle: true,
-      backwardsCompatibility: false,
-      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       leading: _addNewDealButton(context),
       title: const Text(
         'Okazje',
