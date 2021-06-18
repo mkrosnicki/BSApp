@@ -15,7 +15,8 @@ class ApiProvider {
 
   final _ProtocolType _protocolType = _ProtocolType.HTTP;
   // final String _domain = "YOUR_LOCAL_IP:PORT";
-  final String _domain = "192.168.1.128:8080";
+  static const String domain = "192.168.1.139:8080";
+  // static const String domain = "api.babybook.duckdns.org";
 
   Future<dynamic> get(String endpoint, {String token, Map<String, dynamic> requestParams}) async {
     return _sendRequest(_RequestType.GET, endpoint, token: token, requestParams: requestParams);

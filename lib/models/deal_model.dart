@@ -12,7 +12,6 @@ import 'adder_info_model.dart';
 class DealModel {
   final String id;
   final DateTime addedAt;
-  final AdderInfoModel adderInfo;
   final String title;
   final String description;
   final String link;
@@ -30,7 +29,6 @@ class DealModel {
   final double discountValue;
   final DateTime startDate;
   final DateTime endDate;
-  final int numberOfComments;
   final List<String> positiveVoters;
   final List<String> negativeVoters;
   final Image image;
@@ -39,7 +37,6 @@ class DealModel {
   DealModel({
     @required this.id,
     @required this.addedAt,
-    @required this.adderInfo,
     @required this.title,
     @required this.description,
     @required this.link,
@@ -57,7 +54,6 @@ class DealModel {
     @required this.discountValue,
     @required this.startDate,
     @required this.endDate,
-    @required this.numberOfComments,
     @required this.positiveVoters,
     @required this.negativeVoters,
     @required this.image,
@@ -79,7 +75,6 @@ class DealModel {
     return DealModel(
       id: dealSnapshot['id'],
       addedAt: DateUtil.parseFromStringToUtc(dealSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.fromJson(dealSnapshot['adderInfo']),
       title: dealSnapshot['title'],
       description: dealSnapshot['description'],
       link: dealSnapshot['link'],
@@ -97,7 +92,6 @@ class DealModel {
       discountValue: dealSnapshot['discountValue'],
       startDate: dealSnapshot['startDate'] == null ? null : DateUtil.parseFromStringToUtc(dealSnapshot['startDate']),
       endDate: dealSnapshot['endDate'] == null ? null : DateUtil.parseFromStringToUtc(dealSnapshot['endDate']),
-      numberOfComments: dealSnapshot['numberOfComments'],
       positiveVoters: [...dealSnapshot['positiveVoters'] as List],
       negativeVoters: [...dealSnapshot['negativeVoters'] as List],
       image: _getImage(dealSnapshot),
@@ -148,18 +142,6 @@ class DealModel {
     return endDate != null && DateTime.now().isAfter(endDate);
   }
 
-  String get adderName {
-    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
-  }
-
-  Uint8List get userAvatar {
-    return adderInfo != null ? adderInfo.avatar : null;
-  }
-
-  String get userImagePath {
-    return adderInfo != null ? adderInfo.imagePath : null;
-  }
-
 
   @override
   String toString() {
@@ -175,12 +157,12 @@ class DealModel {
   int get hashCode => id.hashCode;
 
   static _getImage(dealObject) {
-    final base64Image = base64Decode(dealObject['base64Image']);
-    if (base64Image.isEmpty) {
+    final encodedImage = base64Decode(dealObject['encodedImage']);
+    if (encodedImage.isEmpty) {
       return null;
     }
     // var image = File('test.png');
-    // return image.writeAsBytesSync(base64Image);
-    return Image.memory(base64Image, fit: BoxFit.cover,);
+    // return image.writeAsBytesSync(encodedImage);
+    return Image.memory(encodedImage, fit: BoxFit.cover,);
   }
 }

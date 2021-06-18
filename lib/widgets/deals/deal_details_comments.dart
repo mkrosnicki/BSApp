@@ -1,5 +1,4 @@
 import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/comments/comment_with_replies_item.dart';
@@ -10,17 +9,17 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsComments extends StatelessWidget {
-  final DealModel deal;
+  final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  const DealDetailsComments(this.deal, this.commentToReplySubject);
+  const DealDetailsComments(this.dealId, this.commentToReplySubject);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         FutureBuilder(
-          future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(deal.id),
+          future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(dealId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
@@ -59,7 +58,7 @@ class DealDetailsComments extends StatelessWidget {
                             );
                           } else {
                             return CommentWithRepliesItem(
-                                deal.id, commentsData.parentComments[index - 1], commentToReplySubject);
+                                dealId, commentsData.parentComments[index - 1], commentToReplySubject);
                           }
                         },
                       );

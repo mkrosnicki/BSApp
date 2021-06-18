@@ -1,5 +1,7 @@
 
 import 'package:BSApp/models/add_deal_model.dart';
+import 'package:BSApp/models/adder_info_model.dart';
+import 'package:BSApp/models/deal_details_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,15 @@ class Deals with ChangeNotifier {
     }
     _deals = DealModel.fromJsonList(responseBody['content'] as List);
     notifyListeners();
+  }
+
+  Future<AdderInfoModel> fetchAdderInfo(final String dealId) async {
+    final responseBody = await _apiProvider.get('/deals/$dealId/adder');
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.e('No Adder Found!');
+    }
+    return AdderInfoModel.fromJson(responseBody);
   }
 
   Future<void> fetchDealsPaged({int pageNo = 0, int pageSize = 7, Map<String, dynamic> requestParams}) async {
