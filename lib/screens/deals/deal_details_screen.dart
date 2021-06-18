@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_author.dart';
@@ -12,7 +13,7 @@ import 'package:BSApp/widgets/deals/deal_screen_admin_actions_button.dart';
 import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealDetailsScreen extends StatefulWidget {
@@ -81,7 +82,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                   ),
                   Container(
                     color: Colors.white,
-                    padding: Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0) : EdgeInsets.zero,
+                    padding: Platform.isIOS
+                        ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0)
+                        : EdgeInsets.zero,
                     child: DealDetailsNewComment(deal.id, _commentToReplySubject),
                   ),
                 ],
@@ -116,7 +119,11 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
               ),
             ),
             actions: [
-              DealScreenAdminActionsButton(deal, color: _iconColorTween.value),
+              Consumer<CurrentUser>(
+                builder: (context, currentUser, child) {
+                  return currentUser.isAdmin ? DealScreenAdminActionsButton(deal, color: _iconColorTween.value) : Container();
+                },
+              ),
             ],
             title: Text(
               deal.title,

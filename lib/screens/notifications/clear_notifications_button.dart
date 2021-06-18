@@ -47,10 +47,6 @@ class ClearNotificationsButton extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // const Padding(
-              //   padding: EdgeInsets.all(8.0),
-              //   child: Text('Akcje admina'),
-              // ),
               _buildListTile('Oznacz jako przeczytane', CupertinoIcons.checkmark, () {
                 _markAllAsRead(context);
               }),
