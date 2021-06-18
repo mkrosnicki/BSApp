@@ -1,7 +1,10 @@
 import 'package:BSApp/models/topic_category_model.dart';
+import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/forum/new_topic_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppBarAddTopicButton extends StatelessWidget {
 
@@ -11,9 +14,19 @@ class AppBarAddTopicButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => Navigator.of(context).pushNamed(NewTopicScreen.routeName, arguments: topicCategory),
-      child: const Icon(CupertinoIcons.plus, color: Colors.black,),
+    return Consumer<CurrentUser>(
+      builder: (context, currentUser, child) {
+        return TextButton(
+          onPressed: () {
+            if (currentUser.isAuthenticated) {
+              Navigator.of(context).pushNamed(NewTopicScreen.routeName, arguments: topicCategory);
+            } else {
+              AuthScreenProvider.showLoginScreen(context);
+            }
+          },
+          child: const Icon(CupertinoIcons.plus, color: Colors.black,),
+        );
+      },
     );
   }
 }
