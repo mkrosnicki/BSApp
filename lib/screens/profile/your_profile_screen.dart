@@ -40,16 +40,16 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     } else {
                       return Consumer<CurrentUser>(
                         builder: (context, currentUserData, child) {
-                          return Container(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: ListView(
-                              shrinkWrap: true,
-                              children: [
-                                ProfileUserInfo(currentUserData.me),
-                                MyProfileStatisticsInfo(currentUserData.me),
-                                const MyProfileOptionsList(),
-                              ],
-                            ),
+                          return ListView(
+                            shrinkWrap: true,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: ProfileUserInfo(currentUserData.me),
+                              ),
+                              MyProfileStatisticsInfo(currentUserData.me),
+                              const MyProfileOptionsList(),
+                            ],
                           );
                         },
                       );
