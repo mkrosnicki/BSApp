@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ClearNotificationsButton extends StatelessWidget {
+
+  Function(bool) setLoadingState;
+
+  ClearNotificationsButton(this.setLoadingState);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -19,13 +24,17 @@ class ClearNotificationsButton extends StatelessWidget {
     );
   }
 
-  void _clearNotifications(BuildContext context) {
-    Provider.of<Notifications>(context, listen: false).deleteMyNotifications();
+  void _clearNotifications(BuildContext context) async {
+    setLoadingState(true);
+    await Provider.of<Notifications>(context, listen: false).deleteMyNotifications();
+    setLoadingState(false);
     Navigator.of(context).pop();
   }
 
-  void _markAllAsRead(BuildContext context) {
+  void _markAllAsRead(BuildContext context) async {
+    setLoadingState(true);
     Provider.of<Notifications>(context, listen: false).updateAllClickedAt();
+    setLoadingState(false);
     Navigator.of(context).pop();
   }
 

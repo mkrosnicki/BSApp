@@ -45,17 +45,14 @@ class Notifications with ChangeNotifier {
   }
 
   Future<void> deleteMyNotifications() async {
-    await _apiProvider.delete('/users/me/notifications', token: _token).then((value) {
-      _lastNotificationDate = null;
-      _notifications = [];
-    });
-    // todo exception after notification
+    _apiProvider.delete('/users/me/notifications', token: _token);
+    _lastNotificationDate = null;
+    _notifications = [];
     notifyListeners();
   }
 
   void updateNotificationsTimestamp() {
     _notificationsSeenAt = DateTime.now();
-    // todo exception after notification
     notifyListeners();
   }
 
