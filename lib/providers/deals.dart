@@ -15,6 +15,7 @@ class Deals with ChangeNotifier {
   int _totalElements = 0;
 
   List<DealModel> _deals = [];
+  DealDetailsModel _deal = null;
 
   String _token;
 
@@ -117,7 +118,9 @@ class Deals with ChangeNotifier {
       logger.i('No Deal Found!');
     } else {
       _deals.clear();
-      _deals.add(DealModel.fromJson(responseBody));
+      final DealDetailsModel dealDetails = DealDetailsModel.fromJson(responseBody);
+      _deals.add(dealDetails.deal);
+      _deal = dealDetails;
     }
   }
 
