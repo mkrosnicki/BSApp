@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/util/date_util.dart';
+
+import 'comment_adder_info_model.dart';
 
 class CommentModel {
   final String id;
@@ -13,7 +14,7 @@ class CommentModel {
   final String replyForUserId;
   final String replyForUsername;
   final DateTime addedAt;
-  final AdderInfoModel adderInfo;
+  final CommentAdderInfoModel adderInfo;
   final List<String> positiveVoters;
   final List<String> negativeVoters;
 
@@ -55,7 +56,7 @@ class CommentModel {
           .map((e) => CommentModel.fromJson(e))
           .toList(),
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
-      adderInfo: AdderInfoModel.fromJson(commentSnapshot['adderInfo']),
+      adderInfo: CommentAdderInfoModel.fromJson(commentSnapshot['adderInfo']),
       positiveVoters: [...commentSnapshot['positiveVoters'] as List],
       negativeVoters: [...commentSnapshot['negativeVoters'] as List],
     );

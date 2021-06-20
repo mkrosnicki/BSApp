@@ -1,15 +1,14 @@
 import 'dart:typed_data';
 
+import 'package:BSApp/models/post_adder_info_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
-
-import 'adder_info_model.dart';
 
 class PostModel {
   final String id;
   final String topicId;
   final DateTime addedAt;
-  final AdderInfoModel adderInfo;
+  final PostAdderInfoModel adderInfo;
   final String content;
   final String quote;
   final String replyForId;
@@ -47,7 +46,7 @@ class PostModel {
       id: postSnapshot['id'],
       topicId: postSnapshot['topicId'],
       addedAt: DateUtil.parseFromStringToUtc(postSnapshot['addedAt']),
-      adderInfo: AdderInfoModel.fromJson(postSnapshot['adderInfo']),
+      adderInfo: PostAdderInfoModel.fromJson(postSnapshot['adderInfo']),
       content: postSnapshot['content'],
       quote: postSnapshot['quote'],
       replyForId: postSnapshot['replyForId'],

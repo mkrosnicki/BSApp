@@ -1,19 +1,14 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/deal_type.dart';
-import 'package:BSApp/models/discount_type.dart';
-import 'package:BSApp/models/location_type.dart';
-import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
-import 'adder_info_model.dart';
+import 'deal_adder_info_model.dart';
 
 class DealDetailsModel {
   final String id;
   final DealModel deal;
-  final AdderInfoModel adderInfo;
+  final DealAdderInfoModel adderInfo;
 
   DealDetailsModel({
     @required this.id,
@@ -28,7 +23,7 @@ class DealDetailsModel {
     return DealDetailsModel(
       id: dealDetailsSnapshot['id'] as String,
       deal: DealModel.fromJson(dealDetailsSnapshot['deal']),
-      adderInfo: AdderInfoModel.fromJson(dealDetailsSnapshot['adderInfo']),
+      adderInfo: DealAdderInfoModel.fromJson(dealDetailsSnapshot['adderInfo']),
     );
   }
 

@@ -7,8 +7,6 @@ import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 
-import 'adder_info_model.dart';
-
 class DealModel {
   final String id;
   final DateTime addedAt;
