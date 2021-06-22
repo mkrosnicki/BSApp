@@ -5,14 +5,14 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/models/my_profile_model.dart';
 import 'package:BSApp/models/user_details_model.dart';
-import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUser with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
-  UserModel _me;
+  UserDetailsModel _me;
   String _token;
   List<DealModel> _observedDeals = [];
   List<TopicModel> _observedTopics = [];
@@ -28,7 +28,7 @@ class CurrentUser with ChangeNotifier {
     return _me != null && _me.isAdmin;
   }
 
-  UserModel get me {
+  UserDetailsModel get me {
     return _me;
   }
 
@@ -38,7 +38,7 @@ class CurrentUser with ChangeNotifier {
 
   Future<void> fetchMe() async {
     final responseBody = await _apiProvider.get('/users/me', token: _token);
-    final UserDetailsModel details = UserDetailsModel.fromJson(responseBody);
+    final MyProfileModel details = MyProfileModel.fromJson(responseBody);
     _me = details.user;
     _observedDeals = details.observedDeals;
     _observedTopics = details.observedTopics;
@@ -50,14 +50,14 @@ class CurrentUser with ChangeNotifier {
       'avatar': base64Encode(newAvatar.readAsBytesSync()),
     };
     final responseBody = await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
-    _me = UserModel.fromJson(responseBody);
+    _me = UserDetailsModel.fromJson(responseBody);
     notifyListeners();
   }
 
   Future<void> updateNotificationsTimestamp() async {
     final updateNotificationsTimestampDto = {'notificationsSeenAtUpdate': true};
     final responseBody = await _apiProvider.patch('/users/me/', updateNotificationsTimestampDto, token: _token);
-    _me = UserModel.fromJson(responseBody);
+    _me = UserDetailsModel.fromJson(responseBody);
     // notifyListeners();
   }
 

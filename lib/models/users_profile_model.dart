@@ -1,11 +1,11 @@
 import 'package:BSApp/models/activity_model.dart';
 import 'package:BSApp/models/topic_model.dart';
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 
 import 'deal_model.dart';
 
 class UsersProfileModel {
-  final UserModel user;
+  final UserDetailsModel user;
   final List<DealModel> addedDeals;
   final List<TopicModel> addedTopics;
   final List<ActivityModel> activities;
@@ -15,7 +15,7 @@ class UsersProfileModel {
 
   static UsersProfileModel fromJson(dynamic profileSnapshot) {
     return UsersProfileModel(
-      user: UserModel.fromJson(profileSnapshot['user']),
+      user: UserDetailsModel.fromJson(profileSnapshot['user']),
       addedDeals: (profileSnapshot['addedDeals'] as List)
           .map((e) => DealModel.fromJson(e))
           .toList(),

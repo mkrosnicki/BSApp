@@ -1,5 +1,5 @@
 import 'package:BSApp/models/notification_model.dart';
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:BSApp/services/custom_stomp' as customStomp;
 import 'package:BSApp/util/date_util.dart';
@@ -13,7 +13,7 @@ class Notifications with ChangeNotifier {
   DateTime _notificationsSeenAt;
   List<NotificationModel> _notifications = [];
   StompClient client;
-  UserModel me;
+  UserDetailsModel me;
   String _token;
 
 

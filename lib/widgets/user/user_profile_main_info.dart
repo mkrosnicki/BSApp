@@ -1,11 +1,11 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/common/ban_badge.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileMainInfo extends StatelessWidget {
-  final UserModel user;
+  final UserDetailsModel user;
 
   const UserProfileMainInfo(this.user);
 

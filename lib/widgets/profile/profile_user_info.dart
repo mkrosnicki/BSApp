@@ -1,11 +1,11 @@
 
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/widgets/profile/my_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileUserInfo extends StatelessWidget {
-  final UserModel user;
+  final UserDetailsModel user;
 
   const ProfileUserInfo(this.user);
 
