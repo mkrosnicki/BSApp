@@ -14,8 +14,8 @@ class CurrentUser with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
   UserDetailsModel _me;
   String _token;
-  List<DealModel> _observedDeals = [];
-  List<TopicModel> _observedTopics = [];
+  List<String> _observedDeals = [];
+  List<String> _observedTopics = [];
   List<SearchModel> _observedSearches = [];
 
   CurrentUser.empty();
@@ -65,13 +65,14 @@ class CurrentUser with ChangeNotifier {
     final addDealToFavouritesDto = {'dealId': dealId};
     final responseBody = await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: _token);
     final DealModel addedDeal = DealModel.fromJson(responseBody);
-    _observedDeals.add(addedDeal);
+    _observedDeals.add(addedDeal.id);
     notifyListeners();
   }
 
   Future<void> removeFromObservedDeals(String dealId) async {
     await _apiProvider.delete('/users/me/deals/observed/$dealId', token: _token);
-    _observedDeals.removeWhere((element) => element.id == dealId);
+    // _observedDeals.removeWhere((element) => element.id == dealId);
+    _observedDeals.remove(dealId);
     notifyListeners();
   }
 
@@ -79,13 +80,14 @@ class CurrentUser with ChangeNotifier {
     final addTopicToFavouritesDto = {'topicId': topicId};
     final responseBody = await _apiProvider.post('/users/me/topics/observed', addTopicToFavouritesDto, token: _token);
     final TopicModel addedTopic = TopicModel.fromJson(responseBody);
-    _observedTopics.add(addedTopic);
+    _observedTopics.add(addedTopic.id);
     notifyListeners();
   }
 
   Future<void> removeFromObservedTopics(String topicId) async {
     await _apiProvider.delete('/users/me/topics/observed/$topicId', token: _token);
-    _observedTopics.removeWhere((element) => element.id == topicId);
+    // _observedTopics.removeWhere((element) => element.id == topicId);
+    _observedTopics.remove(topicId);
     notifyListeners();
   }
 
@@ -108,11 +110,11 @@ class CurrentUser with ChangeNotifier {
   }
 
   bool observesDeal(DealModel deal) {
-    return _observedDeals.contains(deal);
+    return _observedDeals.contains(deal.id);
   }
 
   bool observesTopic(TopicModel topic) {
-    return _observedTopics.contains(topic);
+    return _observedTopics.contains(topic.id);
   }
 
   bool observesSearch(SearchModel search) {

@@ -8,8 +8,8 @@ import 'deal_model.dart';
 class MyProfileModel {
   final UserDetailsModel user;
   final List<SearchModel> observedSearches;
-  final List<TopicModel> observedTopics;
-  final List<DealModel> observedDeals;
+  final List<String> observedTopics;
+  final List<String> observedDeals;
 
   MyProfileModel(
       {this.user,
@@ -18,17 +18,14 @@ class MyProfileModel {
       this.observedTopics});
 
   static MyProfileModel fromJson(dynamic userSnapshot) {
+    print(userSnapshot);
     return MyProfileModel(
-      user: MyProfileModel.fromJson(userSnapshot['user']),
+      user: UserDetailsModel.fromJson(userSnapshot['user']),
       observedSearches: (userSnapshot['observedSearches'] as List)
           .map((e) => SearchModel.fromJson(e))
           .toList(),
-      observedTopics: (userSnapshot['observedTopics'] as List)
-          .map((e) => TopicModel.fromJson(e))
-          .toList(),
-      observedDeals: (userSnapshot['observedDeals'] as List)
-          .map((e) => DealModel.fromJson(e))
-          .toList(),
+      observedDeals: [...userSnapshot['observedDeals'] as List],
+      observedTopics: [...userSnapshot['observedTopics'] as List],
     );
   }
 
