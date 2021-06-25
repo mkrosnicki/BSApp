@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class DealCreatedActivityContent extends StatelessWidget {
   final String username;
-  final DealModel deal;
+  final String dealTitle;
 
-  const DealCreatedActivityContent(this.username, this.deal);
+  const DealCreatedActivityContent(this.username, this.dealTitle);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class DealCreatedActivityContent extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: Text(
-              deal.title,
+              dealTitle,
               style:
               const TextStyle(
                 fontSize: 12,

@@ -81,19 +81,19 @@ class ActivityItem extends StatelessWidget {
     Widget content;
     switch (activity.activityType) {
       case ActivityType.TOPIC_CREATED:
-        content = TopicCreatedActivityContent(activity.issuedByUsername, activity.relatedTopic);
+        content = TopicCreatedActivityContent(activity.issuedByUsername, activity.relatedTopicTitle);
         break;
       case ActivityType.DEAL_CREATED:
-        content = DealCreatedActivityContent(activity.issuedByUsername, activity.relatedDeal);
+        content = DealCreatedActivityContent(activity.issuedByUsername, activity.relatedDealTitle);
         break;
       case ActivityType.POST_ADDED:
-        content = PostAddedActivityContent(activity.issuedByUsername, activity.relatedTopic);
+        content = PostAddedActivityContent(activity.issuedByUsername, activity.relatedTopicTitle);
         break;
       case ActivityType.COMMENT_ADDED:
-        content = CommentAddedActivityContent(activity.issuedByUsername, activity.relatedDeal);
+        content = CommentAddedActivityContent(activity.issuedByUsername, activity.relatedDealTitle);
         break;
       case ActivityType.COMMENT_REPLIED:
-        content = CommentRepliedActivityContent(activity.issuedByUsername, activity.relatedDeal);
+        content = CommentRepliedActivityContent(activity.issuedByUsername, activity.relatedDealTitle);
         break;
       default:
         content = null;
@@ -145,31 +145,31 @@ class ActivityItem extends StatelessWidget {
 
   void _navigateToTopic(BuildContext context) {
     final topicsProvider = Provider.of<Topics>(context, listen: false);
-    topicsProvider.fetchTopic(activity.relatedTopic.id).then((_) {
-      final TopicModel topic = topicsProvider.findById(activity.relatedTopic.id);
+    topicsProvider.fetchTopic(activity.relatedTopicId).then((_) {
+      final TopicModel topic = topicsProvider.findById(activity.relatedTopicId);
       Navigator.of(context).pushNamed(TopicScreen.routeName,
           arguments: TopicScreenArguments(topic,
-              postToScrollId: activity.relatedPost != null ? activity.relatedPost.id : null));
+              postToScrollId: activity.relatedPostId));
     });
   }
 
   void _navigateToDeal(BuildContext context) {
     final dealsProvider = Provider.of<Deals>(context, listen: false);
-    dealsProvider.fetchDeal(activity.relatedDeal.id).then((_) {
-      final DealModel deal = dealsProvider.findById(activity.relatedDeal.id);
+    dealsProvider.fetchDeal(activity.relatedDealId).then((_) {
+      final DealModel deal = dealsProvider.findById(activity.relatedDealId);
       Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal);
     });
   }
 
   void _navigateToComment(BuildContext context) {
-    final CommentModel relatedComment = activity.relatedComment;
+    final bool isParent = activity.relatedCommentParentId != null;
     Navigator.of(context).pushNamed(
       CommentScreen.routeName,
       arguments: CommentScreenArguments(
-        activity.relatedDeal.id,
-        activity.relatedDeal.title,
-        relatedComment.isParent() ? null : relatedComment.id,
-        relatedComment.isParent() ? relatedComment.id : relatedComment.parentId,
+        activity.relatedDealId,
+        activity.relatedDealTitle,
+        isParent ? null : activity.relatedCommentId,
+        isParent ? activity.relatedCommentId : activity.relatedCommentParentId,
         null,
         activity.activityType,
       ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class PostModel {
   final String id;
-  final String topicId;
   final DateTime addedAt;
   final PostAdderInfoModel adderInfo;
   final String content;
@@ -19,7 +18,6 @@ class PostModel {
 
   const PostModel({
     @required this.id,
-    @required this.topicId,
     @required this.addedAt,
     @required this.adderInfo,
     @required this.content,
@@ -44,7 +42,6 @@ class PostModel {
     }
     return PostModel(
       id: postSnapshot['id'],
-      topicId: postSnapshot['topicId'],
       addedAt: DateUtil.parseFromStringToUtc(postSnapshot['addedAt']),
       adderInfo: PostAdderInfoModel.fromJson(postSnapshot['adderInfo']),
       content: postSnapshot['content'],

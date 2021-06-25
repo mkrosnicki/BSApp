@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class CommentAddedActivityContent extends StatelessWidget {
   final String username;
-  final DealModel deal;
+  final String dealTitle;
 
-  const CommentAddedActivityContent(this.username, this.deal);
+  const CommentAddedActivityContent(this.username, this.dealTitle);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CommentAddedActivityContent extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: Text(
-              deal.title,
+              dealTitle,
               style:
               const TextStyle(
                 fontSize: 12,

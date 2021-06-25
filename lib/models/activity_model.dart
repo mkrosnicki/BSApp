@@ -12,10 +12,15 @@ class ActivityModel {
   final String issuedByUsername;
   final DateTime issuedAt;
   final ActivityType activityType;
-  final TopicModel relatedTopic;
-  final DealModel relatedDeal;
-  final PostModel relatedPost;
-  final CommentModel relatedComment;
+  final String relatedDealId;
+  final String relatedDealTitle;
+  final String relatedCommentId;
+  final String relatedCommentParentId;
+  final String relatedCommentContent;
+  final String relatedTopicId;
+  final String relatedTopicTitle;
+  final String relatedPostId;
+  final String relatedPostContent;
 
   ActivityModel(
       {this.id,
@@ -23,10 +28,16 @@ class ActivityModel {
       this.issuedByUsername,
       this.issuedAt,
       this.activityType,
-      this.relatedTopic,
-      this.relatedDeal,
-      this.relatedPost,
-      this.relatedComment});
+      this.relatedDealId,
+      this.relatedDealTitle,
+      this.relatedCommentId,
+      this.relatedCommentParentId,
+      this.relatedCommentContent,
+      this.relatedTopicId,
+      this.relatedTopicTitle,
+      this.relatedPostId,
+      this.relatedPostContent
+      });
 
   static List<ActivityModel> fromJsonList(List<dynamic> activitiesSnapshot) {
     final List<ActivityModel> activities = [];
@@ -43,10 +54,15 @@ class ActivityModel {
       issuedByUsername: activitySnapshot['issuedByUsername'],
       issuedAt: DateUtil.parseFromStringToUtc(activitySnapshot['issuedAt']),
       activityType: ActivityTypeHelper.fromString(activitySnapshot['activityType']),
-      relatedTopic: TopicModel.fromJson(activitySnapshot['relatedTopic']),
-      relatedDeal: DealModel.fromJson(activitySnapshot['relatedDeal']),
-      relatedPost: PostModel.fromJson(activitySnapshot['relatedPost']),
-      relatedComment: CommentModel.fromJson(activitySnapshot['relatedComment']),
+      relatedDealId: activitySnapshot['relatedDealId'],
+      relatedDealTitle: activitySnapshot['relatedDealTitle'],
+      relatedCommentId: activitySnapshot['relatedCommentId'],
+      relatedCommentParentId: activitySnapshot['relatedCommentParentId'],
+      relatedCommentContent: activitySnapshot['relatedCommentContent'],
+      relatedTopicId: activitySnapshot['relatedTopicId'],
+      relatedTopicTitle: activitySnapshot['relatedTopicTitle'],
+      relatedPostId: activitySnapshot['relatedPostId'],
+      relatedPostContent: activitySnapshot['relatedPostContent'],
     );
   }
 
