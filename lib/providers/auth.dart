@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -14,7 +14,7 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
   Timer _authTimer;
-  UserModel _me;
+  UserDetailsModel _me;
 
   bool get isAuthenticated {
     return _token != null;
@@ -33,7 +33,7 @@ class Auth with ChangeNotifier {
     return _userId;
   }
 
-  UserModel get me {
+  UserDetailsModel get me {
     return _me;
   }
 
@@ -139,8 +139,8 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchMe() async {
-    final responseBody = await _apiProvider.get('/users/me', token: _token);
-    _me = UserModel.fromJson(responseBody);
+    final responseBody = await _apiProvider.get('/users/me', token: _token, timeout: const Duration(seconds: 10));
+    _me = UserDetailsModel.fromJson(responseBody);
   }
 
   Future<void> updateMe() async {
@@ -150,7 +150,7 @@ class Auth with ChangeNotifier {
     if (responseBody == null) {
       print('No User Found!');
     }
-    _me = UserModel.fromJson(responseBody);
+    _me = UserDetailsModel.fromJson(responseBody);
     notifyListeners();
   }
 

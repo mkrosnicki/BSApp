@@ -1,4 +1,4 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -23,7 +23,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  UserModel _user;
+  UserDetailsModel _user;
 
   final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 

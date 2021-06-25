@@ -1,11 +1,11 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreenAdminActionsButton extends StatelessWidget {
-  final UserModel user;
+  final UserDetailsModel user;
   final Function updateFunction;
 
   const UserScreenAdminActionsButton(this.user, this.updateFunction);

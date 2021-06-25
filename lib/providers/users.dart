@@ -1,4 +1,4 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/models/users_profile_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +7,13 @@ import 'package:logger/logger.dart';
 class Users with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
-  UserModel _user;
+  UserDetailsModel _user;
   UsersProfileModel _usersProfile;
   String _token;
 
   Users.empty();
 
-  UserModel get user {
+  UserDetailsModel get user {
     return _user;
   }
 
@@ -23,7 +23,7 @@ class Users with ChangeNotifier {
       final logger = Logger();
       logger.e('No User Found!');
     }
-    _user = UserModel.fromJson(responseBody);
+    _user = UserDetailsModel.fromJson(responseBody);
   }
 
   Future<void> fetchUsersProfile(String userId) async {
@@ -36,7 +36,7 @@ class Users with ChangeNotifier {
     _usersProfile = UsersProfileModel.fromJson(responseBody);
   }
 
-  Future<UserModel> findUser(String userId) async {
+  Future<UserDetailsModel> findUser(String userId) async {
     await fetchUser(userId);
     return _user;
   }
@@ -46,7 +46,7 @@ class Users with ChangeNotifier {
     return _usersProfile;
   }
 
-  UserModel getUser(String userId) {
+  UserDetailsModel getUser(String userId) {
     return _user;
   }
 
@@ -58,13 +58,13 @@ class Users with ChangeNotifier {
   Future<void> updateUser(String userId, DateTime bannedUntil) async {
     final responseBody = await _apiProvider.patch('/users/$userId', {'bannedUntil': bannedUntil.toIso8601String()}, token: _token);
     if (responseBody != null) {
-      final UserModel updatedUser = UserModel.fromJson(responseBody);
+      final UserDetailsModel updatedUser = UserDetailsModel.fromJson(responseBody);
       _user = updatedUser;
       notifyListeners();
     }
   }
 
-  void update(String token, UserModel user) {
+  void update(String token, UserDetailsModel user) {
     _user = user;
     _token = token;
   }

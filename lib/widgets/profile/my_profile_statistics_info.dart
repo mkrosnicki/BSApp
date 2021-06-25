@@ -1,10 +1,10 @@
-import 'package:BSApp/models/user_model.dart';
+import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class MyProfileStatisticsInfo extends StatefulWidget {
 
-  final UserModel user;
+  final UserDetailsModel user;
 
   const MyProfileStatisticsInfo(this.user);
 

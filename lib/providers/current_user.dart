@@ -5,17 +5,17 @@ import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/models/my_profile_model.dart';
 import 'package:BSApp/models/user_details_model.dart';
-import 'package:BSApp/models/user_model.dart';
 import 'package:BSApp/services/api_provider.dart';
 import 'package:flutter/material.dart';
 
 class CurrentUser with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
-  UserModel _me;
+  UserDetailsModel _me;
   String _token;
-  List<DealModel> _observedDeals = [];
-  List<TopicModel> _observedTopics = [];
+  List<String> _observedDeals = [];
+  List<String> _observedTopics = [];
   List<SearchModel> _observedSearches = [];
 
   CurrentUser.empty();
@@ -28,7 +28,7 @@ class CurrentUser with ChangeNotifier {
     return _me != null && _me.isAdmin;
   }
 
-  UserModel get me {
+  UserDetailsModel get me {
     return _me;
   }
 
@@ -38,7 +38,7 @@ class CurrentUser with ChangeNotifier {
 
   Future<void> fetchMe() async {
     final responseBody = await _apiProvider.get('/users/me', token: _token);
-    final UserDetailsModel details = UserDetailsModel.fromJson(responseBody);
+    final MyProfileModel details = MyProfileModel.fromJson(responseBody);
     _me = details.user;
     _observedDeals = details.observedDeals;
     _observedTopics = details.observedTopics;
@@ -50,14 +50,14 @@ class CurrentUser with ChangeNotifier {
       'avatar': base64Encode(newAvatar.readAsBytesSync()),
     };
     final responseBody = await _apiProvider.patch('/users/me/', updateAvatarDto, token: _token);
-    _me = UserModel.fromJson(responseBody);
+    _me = UserDetailsModel.fromJson(responseBody);
     notifyListeners();
   }
 
   Future<void> updateNotificationsTimestamp() async {
     final updateNotificationsTimestampDto = {'notificationsSeenAtUpdate': true};
     final responseBody = await _apiProvider.patch('/users/me/', updateNotificationsTimestampDto, token: _token);
-    _me = UserModel.fromJson(responseBody);
+    _me = UserDetailsModel.fromJson(responseBody);
     // notifyListeners();
   }
 
@@ -65,13 +65,14 @@ class CurrentUser with ChangeNotifier {
     final addDealToFavouritesDto = {'dealId': dealId};
     final responseBody = await _apiProvider.post('/users/me/deals/observed', addDealToFavouritesDto, token: _token);
     final DealModel addedDeal = DealModel.fromJson(responseBody);
-    _observedDeals.add(addedDeal);
+    _observedDeals.add(addedDeal.id);
     notifyListeners();
   }
 
   Future<void> removeFromObservedDeals(String dealId) async {
     await _apiProvider.delete('/users/me/deals/observed/$dealId', token: _token);
-    _observedDeals.removeWhere((element) => element.id == dealId);
+    // _observedDeals.removeWhere((element) => element.id == dealId);
+    _observedDeals.remove(dealId);
     notifyListeners();
   }
 
@@ -79,13 +80,14 @@ class CurrentUser with ChangeNotifier {
     final addTopicToFavouritesDto = {'topicId': topicId};
     final responseBody = await _apiProvider.post('/users/me/topics/observed', addTopicToFavouritesDto, token: _token);
     final TopicModel addedTopic = TopicModel.fromJson(responseBody);
-    _observedTopics.add(addedTopic);
+    _observedTopics.add(addedTopic.id);
     notifyListeners();
   }
 
   Future<void> removeFromObservedTopics(String topicId) async {
     await _apiProvider.delete('/users/me/topics/observed/$topicId', token: _token);
-    _observedTopics.removeWhere((element) => element.id == topicId);
+    // _observedTopics.removeWhere((element) => element.id == topicId);
+    _observedTopics.remove(topicId);
     notifyListeners();
   }
 
@@ -108,11 +110,11 @@ class CurrentUser with ChangeNotifier {
   }
 
   bool observesDeal(DealModel deal) {
-    return _observedDeals.contains(deal);
+    return _observedDeals.contains(deal.id);
   }
 
   bool observesTopic(TopicModel topic) {
-    return _observedTopics.contains(topic);
+    return _observedTopics.contains(topic.id);
   }
 
   bool observesSearch(SearchModel search) {
