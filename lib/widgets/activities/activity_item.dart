@@ -135,7 +135,7 @@ class ActivityItem extends StatelessWidget {
         _navigateToDeal(context);
         break;
       case ActivityType.COMMENT_ADDED:
-      case ActivityType.COMMENT_ADDED:
+      case ActivityType.COMMENT_REPLIED:
         _navigateToComment(context);
         break;
       default:
