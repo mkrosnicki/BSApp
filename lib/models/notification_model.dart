@@ -3,7 +3,7 @@ import 'package:BSApp/util/date_util.dart';
 import 'notification_type.dart';
 
 class NotificationModel {
-  final List<String> ids;
+  final String id;
   final String mainIssuerId;
   final String mainIssuerUsername;
   final int totalNumberOfIssuers;
@@ -21,7 +21,7 @@ class NotificationModel {
   final String relatedCommentContent;
 
   NotificationModel(
-      {this.ids,
+      {this.id,
       this.mainIssuerId,
       this.mainIssuerUsername,
       this.totalNumberOfIssuers,
@@ -47,8 +47,9 @@ class NotificationModel {
   }
 
   static NotificationModel fromJson(dynamic notificationSnapshot) {
+    print(notificationSnapshot);
     return NotificationModel(
-      ids: (notificationSnapshot['ids'] as List).map((e) => e.toString()).toList(),
+      id: notificationSnapshot['id'],
       mainIssuerId: notificationSnapshot['mainIssuerId'],
       mainIssuerUsername: notificationSnapshot['mainIssuerUsername'],
       totalNumberOfIssuers: notificationSnapshot['totalNumberOfIssuers'],
@@ -69,13 +70,13 @@ class NotificationModel {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is NotificationModel && runtimeType == other.runtimeType && ids == other.ids;
+      identical(this, other) || other is NotificationModel && runtimeType == other.runtimeType && id == other.id;
 
   @override
-  int get hashCode => ids.hashCode;
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {
-    return 'NotificationModel{ids: $ids, issuedAt: $issuedAt, notificationType: $notificationType, relatedTopicId: $relatedTopicId, relatedDealId: $relatedDealId, relatedPostId: $relatedPostId}';
+    return 'NotificationModel{id: $id, notificationType: $notificationType}';
   }
 }
