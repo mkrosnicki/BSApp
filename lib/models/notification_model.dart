@@ -47,7 +47,6 @@ class NotificationModel {
   }
 
   static NotificationModel fromJson(dynamic notificationSnapshot) {
-    print(notificationSnapshot);
     return NotificationModel(
       id: notificationSnapshot['id'],
       mainIssuerId: notificationSnapshot['mainIssuerId'],

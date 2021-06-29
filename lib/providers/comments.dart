@@ -7,7 +7,7 @@ class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> _comments = [];
-  Map<String, List<CommentModel>> _parentIdToSubComments = {};
+  final Map<String, List<CommentModel>> _parentIdToSubComments = {};
   String _token;
 
   Comments.empty();
@@ -33,10 +33,6 @@ class Comments with ChangeNotifier {
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
     _comments.clear();
     _comments.addAll(loadedComments);
-    for (final comment in loadedComments) {
-      _comments.addAll(comment.subComments);
-      // _parentIdToSubComments.update(comment.id, (subComments) => subComments = comment.subComments, ifAbsent: () => comment.subComments);
-    }
     // notifyListeners();
   }
 
@@ -53,18 +49,6 @@ class Comments with ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> deleteComment(CommentModel comment) async {
-    await _apiProvider.delete('/comments/${comment.id}', token: _token);
-    if (!comment.isParent()) {
-      final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
-      if (parent != null) {
-        parent.subComments.removeWhere((c) => c.id == comment.id);
-      }
-    }
-    _comments.removeWhere((c) => c.id == comment.id);
-    notifyListeners();
-  }
-
   Future<void> fetchComment(String commentId) async {
     final responseBody = await _apiProvider.get('/comments/$commentId');
     if (responseBody == null) {
@@ -74,7 +58,24 @@ class Comments with ChangeNotifier {
     final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();
     _comments.add(comment);
-    _comments.addAll(comment.subComments);
+  }
+
+  Future<void> fetchCommentWithSubComments(final String commentId) async {
+    await fetchComment(commentId);
+    await fetchSubCommentsForComment(commentId);
+  }
+
+  Future<void> deleteComment(CommentModel comment) async {
+    await _apiProvider.delete('/comments/${comment.id}', token: _token);
+    if (!comment.isParent()) {
+      final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
+      if (parent != null) {
+        // parent.subComments.removeWhere((c) => c.id == comment.id);
+        _parentIdToSubComments.remove(parent.id);
+      }
+    }
+    _comments.removeWhere((c) => c.id == comment.id);
+    notifyListeners();
   }
 
   Future<void> addCommentToDeal(String dealId, String content) async {

@@ -30,6 +30,7 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
   CommentModel _comment;
+  List<CommentModel> _subComments;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _CommentScreenState extends State<CommentScreen> {
         margin: const EdgeInsets.symmetric(),
         padding: const EdgeInsets.all(0),
         child: FutureBuilder(
-          future: Provider.of<Comments>(context, listen: false).fetchComment(parentCommentId),
+          future: Provider.of<Comments>(context, listen: false).fetchCommentWithSubComments(parentCommentId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
@@ -65,14 +66,15 @@ class _CommentScreenState extends State<CommentScreen> {
                       child: Consumer<Comments>(
                         builder: (context, commentsData, child) {
                           _comment = _comment ?? commentsData.findById(parentCommentId);
+                          _subComments = _subComments ?? commentsData.getSubCommentsOf(parentCommentId);
                           return ScrollablePositionedList.builder(
-                            itemCount: _comment.subCommentsCount + 1,
-                            initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment),
+                            itemCount: _subComments.length + 1,
+                            initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment, _subComments),
                             itemBuilder: (context, index) {
                               if (index == 0) {
                                 return CommentItem(_comment, dealId, _commentToReplySubject);
                               } else {
-                                return CommentItem(_comment.subComments[index - 1], dealId, _commentToReplySubject);
+                                return CommentItem(_subComments[index - 1], dealId, _commentToReplySubject);
                               }
                             },
                           );
@@ -90,11 +92,11 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  int _determineInitialIndex(String commentToScrollId, CommentModel comment) {
+  int _determineInitialIndex(String commentToScrollId, CommentModel comment, List<CommentModel> subComments) {
     if (comment.id == commentToScrollId) {
       return 0;
     } else {
-      final int foundIndex = comment.subComments.indexWhere((comment) => comment.id == commentToScrollId);
+      final int foundIndex = subComments.indexWhere((comment) => comment.id == commentToScrollId);
       return foundIndex != -1 ? foundIndex + 1 : 0;
     }
   }

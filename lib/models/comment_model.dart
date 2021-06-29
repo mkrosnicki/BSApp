@@ -8,7 +8,6 @@ class CommentModel {
   final String id;
   final String content;
   final String quote;
-  final List<CommentModel> subComments;
   final int subCommentsCount;
   final String parentId;
   final String replyForId;
@@ -23,7 +22,6 @@ class CommentModel {
       {this.id,
       this.content,
       this.quote,
-      this.subComments,
       this.subCommentsCount,
       this.parentId,
       this.replyForId,
@@ -54,9 +52,6 @@ class CommentModel {
       replyForId: commentSnapshot['replyForId'] as String,
       replyForUserId: commentSnapshot['replyForUserId'] as String,
       replyForUsername: commentSnapshot['replyForUsername'] as String,
-      subComments: (commentSnapshot['subComments'] as List)
-          .map((e) => CommentModel.fromJson(e))
-          .toList(),
       subCommentsCount: commentSnapshot['subCommentsCount'],
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
       adderInfo: CommentAdderInfoModel.fromJson(commentSnapshot['adderInfo']),
