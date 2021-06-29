@@ -24,7 +24,7 @@ class PostItemQuote extends StatelessWidget {
               child: Wrap(
                 children: [
                   Text(
-                    post.replyForUsername,
+                    post.repliedUsername,
                     style: Theme
                         .of(context)
                         .textTheme

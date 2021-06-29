@@ -56,7 +56,7 @@ class Posts with ChangeNotifier {
       String topicId, String postId, String replyContent, String quote) async {
     final addReplyToPostDto = {
       'topicId': topicId,
-      'replyForPostId': postId,
+      'repliedPostId': postId,
       'content': replyContent,
       'quote': quote
     };

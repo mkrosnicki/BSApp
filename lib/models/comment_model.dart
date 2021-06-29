@@ -10,9 +10,9 @@ class CommentModel {
   final String quote;
   final int subCommentsCount;
   final String parentId;
-  final String replyForId;
-  final String replyForUserId;
-  final String replyForUsername;
+  final String repliedId;
+  final String repliedUserId;
+  final String repliedUsername;
   final DateTime addedAt;
   final CommentAdderInfoModel adderInfo;
   final List<String> positiveVoters;
@@ -24,9 +24,9 @@ class CommentModel {
       this.quote,
       this.subCommentsCount,
       this.parentId,
-      this.replyForId,
-      this.replyForUserId,
-      this.replyForUsername,
+      this.repliedId,
+      this.repliedUserId,
+      this.repliedUsername,
       this.addedAt,
       this.adderInfo,
       this.positiveVoters,
@@ -49,9 +49,9 @@ class CommentModel {
       content: commentSnapshot['content'] as String,
       quote: commentSnapshot['quote'] as String,
       parentId: commentSnapshot['parentId'] as String,
-      replyForId: commentSnapshot['replyForId'] as String,
-      replyForUserId: commentSnapshot['replyForUserId'] as String,
-      replyForUsername: commentSnapshot['replyForUsername'] as String,
+      repliedId: commentSnapshot['repliedId'] as String,
+      repliedUserId: commentSnapshot['repliedUserId'] as String,
+      repliedUsername: commentSnapshot['repliedUsername'] as String,
       subCommentsCount: commentSnapshot['subCommentsCount'],
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
       adderInfo: CommentAdderInfoModel.fromJson(commentSnapshot['adderInfo']),
