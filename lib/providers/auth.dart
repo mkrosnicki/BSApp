@@ -57,7 +57,6 @@ class Auth with ChangeNotifier {
 
     final response = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token'));
     final profile = json.decode(response.body);
-    print(profile);
 
     final responseData = await _apiProvider.post('/auth/login-fb', {'email': profile['email'], 'userId': profile['id'], 'inputToken': token});
     _handleAuthenticationResponse(responseData);

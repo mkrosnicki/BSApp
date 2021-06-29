@@ -9,6 +9,7 @@ class CommentModel {
   final String content;
   final String quote;
   final List<CommentModel> subComments;
+  final int subCommentsCount;
   final String parentId;
   final String replyForId;
   final String replyForUserId;
@@ -23,6 +24,7 @@ class CommentModel {
       this.content,
       this.quote,
       this.subComments,
+      this.subCommentsCount,
       this.parentId,
       this.replyForId,
       this.replyForUserId,
@@ -55,6 +57,7 @@ class CommentModel {
       subComments: (commentSnapshot['subComments'] as List)
           .map((e) => CommentModel.fromJson(e))
           .toList(),
+      subCommentsCount: commentSnapshot['subCommentsCount'],
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
       adderInfo: CommentAdderInfoModel.fromJson(commentSnapshot['adderInfo']),
       positiveVoters: [...commentSnapshot['positiveVoters'] as List],
@@ -86,8 +89,12 @@ class CommentModel {
     return adderInfo != null ? adderInfo.imagePath : null;
   }
 
+  bool get hasSubComments {
+    return subCommentsCount > 0;
+  }
+
   @override
   String toString() {
-    return 'CommentModel{id: $id, content: $content}';
+    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount}';
   }
 }

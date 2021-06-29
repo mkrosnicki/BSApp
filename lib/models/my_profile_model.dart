@@ -18,7 +18,6 @@ class MyProfileModel {
       this.observedTopics});
 
   static MyProfileModel fromJson(dynamic userSnapshot) {
-    print(userSnapshot);
     return MyProfileModel(
       user: UserDetailsModel.fromJson(userSnapshot['user']),
       observedSearches: (userSnapshot['observedSearches'] as List)

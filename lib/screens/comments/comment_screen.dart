@@ -66,7 +66,7 @@ class _CommentScreenState extends State<CommentScreen> {
                         builder: (context, commentsData, child) {
                           _comment = _comment ?? commentsData.findById(parentCommentId);
                           return ScrollablePositionedList.builder(
-                            itemCount: _comment.subComments.length + 1,
+                            itemCount: _comment.subCommentsCount + 1,
                             initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment),
                             itemBuilder: (context, index) {
                               if (index == 0) {

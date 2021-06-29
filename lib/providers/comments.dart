@@ -7,6 +7,7 @@ class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> _comments = [];
+  Map<String, List<CommentModel>> _parentIdToSubComments = {};
   String _token;
 
   Comments.empty();
@@ -19,9 +20,12 @@ class Comments with ChangeNotifier {
     return _comments.where((element) => element.parentId == null).toList();
   }
 
+  List<CommentModel> getSubCommentsOf(final String parentCommentId) {
+    return _parentIdToSubComments[parentCommentId];
+  }
+
   Future<void> fetchCommentsForDeal(String dealId) async {
-    final responseBody =
-        await _apiProvider.get('/deals/$dealId/comments') as List;
+    final responseBody = await _apiProvider.get('/deals/$dealId/comments') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
@@ -31,8 +35,22 @@ class Comments with ChangeNotifier {
     _comments.addAll(loadedComments);
     for (final comment in loadedComments) {
       _comments.addAll(comment.subComments);
+      // _parentIdToSubComments.update(comment.id, (subComments) => subComments = comment.subComments, ifAbsent: () => comment.subComments);
     }
-    notifyListeners();
+    // notifyListeners();
+  }
+
+  Future<void> fetchSubCommentsForComment(final String commentId) async {
+    final responseBody = await _apiProvider.get('/comments/$commentId/replies') as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Comments Found!');
+    }
+    final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
+    _parentIdToSubComments.update(commentId, (subComments) => subComments = loadedComments,
+        ifAbsent: () => loadedComments);
+    _comments.addAll(loadedComments);
+    // notifyListeners();
   }
 
   Future<void> deleteComment(CommentModel comment) async {
@@ -48,8 +66,7 @@ class Comments with ChangeNotifier {
   }
 
   Future<void> fetchComment(String commentId) async {
-    final responseBody =
-    await _apiProvider.get('/comments/$commentId');
+    final responseBody = await _apiProvider.get('/comments/$commentId');
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
@@ -75,7 +92,8 @@ class Comments with ChangeNotifier {
   }
 
   Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
-    final responseBody = await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: _token);
+    final responseBody =
+        await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: _token);
     final CommentModel updatedComment = CommentModel.fromJson(responseBody);
     _comments[_comments.indexWhere((element) => element.id == updatedComment.id)] = updatedComment;
     notifyListeners();

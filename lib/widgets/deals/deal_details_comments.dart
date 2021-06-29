@@ -57,8 +57,10 @@ class DealDetailsComments extends StatelessWidget {
                               ),
                             );
                           } else {
+                            final CommentModel parentComment = commentsData.parentComments[index - 1];
+                            final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
                             return CommentWithRepliesItem(
-                                dealId, commentsData.parentComments[index - 1], commentToReplySubject);
+                                dealId, parentComment, subComments, commentToReplySubject);
                           }
                         },
                       );

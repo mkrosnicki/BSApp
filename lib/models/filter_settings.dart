@@ -193,7 +193,6 @@ class FilterSettings {
   }
 
   static FilterSettings fromJson(Map<String, dynamic> json) {
-    print(json);
     final FilterSettings newFilterSettings = FilterSettings();
     newFilterSettings.phrase = json['phrase'];
     newFilterSettings.category = CategoryModel.fromJson(json['category']);

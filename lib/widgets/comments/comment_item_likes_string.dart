@@ -14,7 +14,6 @@ class CommentItemLikesString extends StatelessWidget {
     return Consumer<Comments>(
       builder: (context, commentsData, child) {
         final CommentModel aComment = commentsData.findById(commentId);
-        print(aComment.positiveVoters.length);
         return Text(
           '${aComment.positiveVoters.length} ${ConjugationHelper.likesConjugation(aComment.positiveVoters.length)}',
           style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
