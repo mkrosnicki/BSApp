@@ -21,7 +21,7 @@ class InitializationScreen extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               child: Image.asset(
-                'assets/images/logo2.png',
+                'assets/images/logo5.png',
                 fit: BoxFit.fitWidth,
               ),
             ),
