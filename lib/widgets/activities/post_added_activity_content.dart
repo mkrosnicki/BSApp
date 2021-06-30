@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class PostAddedActivityContent extends StatelessWidget {
   final String username;
-  final TopicModel topic;
+  final String topicTitle;
 
-  const PostAddedActivityContent(this.username, this.topic);
+  const PostAddedActivityContent(this.username, this.topicTitle);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class PostAddedActivityContent extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: Text(
-              topic.title,
+              topicTitle,
               style:
               const TextStyle(
                 fontSize: 12,

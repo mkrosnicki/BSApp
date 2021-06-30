@@ -8,11 +8,11 @@ class CommentModel {
   final String id;
   final String content;
   final String quote;
-  final List<CommentModel> subComments;
+  final int subCommentsCount;
   final String parentId;
-  final String replyForId;
-  final String replyForUserId;
-  final String replyForUsername;
+  final String repliedId;
+  final String repliedUserId;
+  final String repliedUsername;
   final DateTime addedAt;
   final CommentAdderInfoModel adderInfo;
   final List<String> positiveVoters;
@@ -22,11 +22,11 @@ class CommentModel {
       {this.id,
       this.content,
       this.quote,
-      this.subComments,
+      this.subCommentsCount,
       this.parentId,
-      this.replyForId,
-      this.replyForUserId,
-      this.replyForUsername,
+      this.repliedId,
+      this.repliedUserId,
+      this.repliedUsername,
       this.addedAt,
       this.adderInfo,
       this.positiveVoters,
@@ -49,12 +49,10 @@ class CommentModel {
       content: commentSnapshot['content'] as String,
       quote: commentSnapshot['quote'] as String,
       parentId: commentSnapshot['parentId'] as String,
-      replyForId: commentSnapshot['replyForId'] as String,
-      replyForUserId: commentSnapshot['replyForUserId'] as String,
-      replyForUsername: commentSnapshot['replyForUsername'] as String,
-      subComments: (commentSnapshot['subComments'] as List)
-          .map((e) => CommentModel.fromJson(e))
-          .toList(),
+      repliedId: commentSnapshot['repliedId'] as String,
+      repliedUserId: commentSnapshot['repliedUserId'] as String,
+      repliedUsername: commentSnapshot['repliedUsername'] as String,
+      subCommentsCount: commentSnapshot['subCommentsCount'],
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
       adderInfo: CommentAdderInfoModel.fromJson(commentSnapshot['adderInfo']),
       positiveVoters: [...commentSnapshot['positiveVoters'] as List],
@@ -86,8 +84,12 @@ class CommentModel {
     return adderInfo != null ? adderInfo.imagePath : null;
   }
 
+  bool get hasSubComments {
+    return subCommentsCount > 0;
+  }
+
   @override
   String toString() {
-    return 'CommentModel{id: $id, content: $content}';
+    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount}';
   }
 }

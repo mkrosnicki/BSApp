@@ -7,6 +7,7 @@ class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> _comments = [];
+  final Map<String, List<CommentModel>> _parentIdToSubComments = {};
   String _token;
 
   Comments.empty();
@@ -19,9 +20,12 @@ class Comments with ChangeNotifier {
     return _comments.where((element) => element.parentId == null).toList();
   }
 
+  List<CommentModel> getSubCommentsOf(final String parentCommentId) {
+    return _parentIdToSubComments[parentCommentId];
+  }
+
   Future<void> fetchCommentsForDeal(String dealId) async {
-    final responseBody =
-        await _apiProvider.get('/deals/$dealId/comments') as List;
+    final responseBody = await _apiProvider.get('/deals/$dealId/comments') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
@@ -29,27 +33,24 @@ class Comments with ChangeNotifier {
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
     _comments.clear();
     _comments.addAll(loadedComments);
-    for (final comment in loadedComments) {
-      _comments.addAll(comment.subComments);
-    }
-    notifyListeners();
+    // notifyListeners();
   }
 
-  Future<void> deleteComment(CommentModel comment) async {
-    await _apiProvider.delete('/comments/${comment.id}', token: _token);
-    if (!comment.isParent()) {
-      final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
-      if (parent != null) {
-        parent.subComments.removeWhere((c) => c.id == comment.id);
-      }
+  Future<void> fetchSubCommentsForComment(final String commentId) async {
+    final responseBody = await _apiProvider.get('/comments/$commentId/replies') as List;
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Comments Found!');
     }
-    _comments.removeWhere((c) => c.id == comment.id);
-    notifyListeners();
+    final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
+    _parentIdToSubComments.update(commentId, (subComments) => subComments = loadedComments,
+        ifAbsent: () => loadedComments);
+    _comments.addAll(loadedComments);
+    // notifyListeners();
   }
 
   Future<void> fetchComment(String commentId) async {
-    final responseBody =
-    await _apiProvider.get('/comments/$commentId');
+    final responseBody = await _apiProvider.get('/comments/$commentId');
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
@@ -57,7 +58,24 @@ class Comments with ChangeNotifier {
     final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();
     _comments.add(comment);
-    _comments.addAll(comment.subComments);
+  }
+
+  Future<void> fetchCommentWithSubComments(final String commentId) async {
+    await fetchComment(commentId);
+    await fetchSubCommentsForComment(commentId);
+  }
+
+  Future<void> deleteComment(CommentModel comment) async {
+    await _apiProvider.delete('/comments/${comment.id}', token: _token);
+    if (!comment.isParent()) {
+      final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
+      if (parent != null) {
+        // parent.subComments.removeWhere((c) => c.id == comment.id);
+        _parentIdToSubComments.remove(parent.id);
+      }
+    }
+    _comments.removeWhere((c) => c.id == comment.id);
+    notifyListeners();
   }
 
   Future<void> addCommentToDeal(String dealId, String content) async {
@@ -75,7 +93,8 @@ class Comments with ChangeNotifier {
   }
 
   Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
-    final responseBody = await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: _token);
+    final responseBody =
+        await _apiProvider.post('/comments/$commentId/votes', {'isPositive': isPositive}, token: _token);
     final CommentModel updatedComment = CommentModel.fromJson(responseBody);
     _comments[_comments.indexWhere((element) => element.id == updatedComment.id)] = updatedComment;
     notifyListeners();

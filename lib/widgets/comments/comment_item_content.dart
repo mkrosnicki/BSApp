@@ -41,7 +41,7 @@ class CommentItemContent extends StatelessWidget {
                 children: [
                   if (_displayRepliedUsername(comment))
                     Text(
-                      '@${comment.replyForUsername} ',
+                      '@${comment.repliedUsername} ',
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.blue,
@@ -66,11 +66,11 @@ class CommentItemContent extends StatelessWidget {
   }
 
   bool _displayRepliedUsername(CommentModel comment) {
-    return !_isReplyToParent(comment) && comment.replyForUsername != null;
+    return !_isReplyToParent(comment) && comment.repliedUsername != null;
   }
 
   bool _isReplyToParent(CommentModel comment) {
-    return comment.parentId == comment.replyForId;
+    return comment.parentId == comment.repliedId;
   }
 
   void _navigateToUserProfileScreen(BuildContext context, String userId) {

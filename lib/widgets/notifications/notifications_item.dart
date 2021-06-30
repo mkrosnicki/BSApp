@@ -139,6 +139,6 @@ class NotificationItem extends StatelessWidget {
   }
 
   void _updateClickedAt(BuildContext context) {
-    Provider.of<Notifications>(context, listen: false).updateClickedAt(notification.ids, DateTime.now().toUtc());
+    Provider.of<Notifications>(context, listen: false).updateClickedAt([notification.id], DateTime.now().toUtc());
   }
 }

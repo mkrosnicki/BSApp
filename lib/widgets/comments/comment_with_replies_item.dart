@@ -1,17 +1,20 @@
 import 'dart:async';
 
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentWithRepliesItem extends StatefulWidget {
   final CommentModel comment;
+  final List<CommentModel> subComments;
   final String dealId;
   final PublishSubject<CommentModel> commentToReplySubject;
 
-  const CommentWithRepliesItem(this.dealId, this.comment, this.commentToReplySubject);
+  const CommentWithRepliesItem(this.dealId, this.comment, this.subComments, this.commentToReplySubject);
 
   @override
   _CommentWithRepliesItemState createState() => _CommentWithRepliesItemState();
@@ -20,7 +23,11 @@ class CommentWithRepliesItem extends StatefulWidget {
 class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   bool showAnswers;
+
   StreamSubscription subscription;
+
+  bool showReplies = false;
+  bool repliesLoaded = false;
 
   @override
   void initState() {
@@ -48,28 +55,36 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   @override
   Widget build(BuildContext context) {
+    final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
+    final List<CommentModel> subComments = commentsProvider.getSubCommentsOf(widget.comment.id);
     return Container(
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Column(
         children: [
           CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
-          if (!showAnswers && widget.comment.subComments.isNotEmpty) GestureDetector(
-            onTap: () => showAnswers ? _showAnswers(false) : _showAnswers(true),
+          if (widget.comment.hasSubComments && !showReplies) GestureDetector(
+            // onTap: () => subComments.isNotEmpty ? _showAnswers(false) : _showAnswers(true),
+            onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
             child: Container(
               padding: const EdgeInsets.only(left: 50.0, top: 4.0, bottom: 6.0),
               width: double.infinity,
               color: Colors.white,
-              child: Text(
-                showAnswers ? '' : 'Pokaż odpowiedzi (${widget.comment.subComments.length})',
+              child: widget.comment.hasSubComments ? Text(
+                'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
                 style: const TextStyle(fontSize: 11, color: Colors.blueAccent),
-              ),
+              ) : Container(),
             ),
           ),
-          if (showAnswers) Column(
-            children: widget.comment.subComments
+          // if (!subComments.isNotEmpty) Column(
+          //   children: widget.subComments
+          //       .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
+          //       .toList(),
+          // ),
+          if (showReplies && repliesLoaded) Column(
+            children: commentsProvider.getSubCommentsOf(widget.comment.id)
                 .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
                 .toList(),
-          ),
+          )
         ],
       ),
     );
@@ -80,4 +95,21 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
       showAnswers = show;
     });
   }
+
+  void _showReplies(final Comments commentsProvider, final bool show) async {
+    if (show) {
+      await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
+        setState(() {
+          repliesLoaded = true;
+          showReplies = show;
+        });
+      });
+    } else {
+      setState(() {
+        repliesLoaded = false;
+        showReplies = false;
+      });
+    }
+  }
+
 }

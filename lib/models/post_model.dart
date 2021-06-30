@@ -6,27 +6,25 @@ import 'package:flutter/material.dart';
 
 class PostModel {
   final String id;
-  final String topicId;
   final DateTime addedAt;
   final PostAdderInfoModel adderInfo;
   final String content;
   final String quote;
-  final String replyForId;
-  final String replyForUserId;
-  final String replyForUsername;
+  final String repliedId;
+  final String repliedUserId;
+  final String repliedUsername;
   final List<String> likers;
 
 
   const PostModel({
     @required this.id,
-    @required this.topicId,
     @required this.addedAt,
     @required this.adderInfo,
     @required this.content,
     @required this.quote,
-    @required this.replyForId,
-    @required this.replyForUserId,
-    @required this.replyForUsername,
+    @required this.repliedId,
+    @required this.repliedUserId,
+    @required this.repliedUsername,
     @required this.likers,
   });
 
@@ -44,14 +42,13 @@ class PostModel {
     }
     return PostModel(
       id: postSnapshot['id'],
-      topicId: postSnapshot['topicId'],
       addedAt: DateUtil.parseFromStringToUtc(postSnapshot['addedAt']),
       adderInfo: PostAdderInfoModel.fromJson(postSnapshot['adderInfo']),
       content: postSnapshot['content'],
       quote: postSnapshot['quote'],
-      replyForId: postSnapshot['replyForId'],
-      replyForUserId: postSnapshot['replyForUserId'],
-      replyForUsername: postSnapshot['replyForUsername'],
+      repliedId: postSnapshot['repliedId'],
+      repliedUserId: postSnapshot['repliedUserId'],
+      repliedUsername: postSnapshot['repliedUsername'],
       likers: [...postSnapshot['likers'] as List],
     );
   }
@@ -74,7 +71,7 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, content: $content, quote: $quote, replyForId: $replyForId, replyForUserId: $replyForUserId, replyForUsername: $replyForUsername}';
+    return 'PostModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, content: $content, quote: $quote, replyForId: $repliedId, replyForUserId: $repliedUserId, replyForUsername: $repliedUsername}';
   }
 
   @override

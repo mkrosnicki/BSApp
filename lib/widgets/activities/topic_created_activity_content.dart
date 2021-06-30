@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 class TopicCreatedActivityContent extends StatelessWidget {
 
   final String username;
-  final TopicModel topic;
+  final String topicTitle;
 
-  const TopicCreatedActivityContent(this.username, this.topic);
+  const TopicCreatedActivityContent(this.username, this.topicTitle);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class TopicCreatedActivityContent extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: Text(
-              topic.title,
+              topicTitle,
               style:
               const TextStyle(
                 fontSize: 12,

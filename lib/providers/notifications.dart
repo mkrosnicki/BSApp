@@ -111,7 +111,7 @@ class Notifications with ChangeNotifier {
   }
 
   Future<void> updateAllClickedAt() async {
-    final List<String> allIds = _notifications.where((element) => !element.wasClicked).expand((e) => e.ids).toList();
+    final List<String> allIds = _notifications.where((element) => !element.wasClicked).map((e) => e.id).toList();
     await updateClickedAt(allIds, DateTime.now().toUtc());
   }
 
