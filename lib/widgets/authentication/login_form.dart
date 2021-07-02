@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
         _isLoading = true;
       });
       await Provider.of<Auth>(context, listen: false).login(
-        _authData['email'],
+        _authData['email'].trim(),
         _authData['password'],
       );
     } on CustomException catch (error) {
@@ -130,7 +130,8 @@ class _LoginFormState extends State<LoginForm> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Email'),
                         validator: (value) {
-                          if (value.isEmpty || !value.contains('@')) {
+                          final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value.trim());
+                          if (value.isEmpty || !emailValid) {
                             return 'Nieprawidłowy e-mail!';
                           } else {
                             return null;
