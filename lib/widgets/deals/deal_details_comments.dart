@@ -10,9 +10,8 @@ import 'package:rxdart/rxdart.dart';
 
 class DealDetailsComments extends StatelessWidget {
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const DealDetailsComments(this.dealId, this.commentToReplySubject);
+  const DealDetailsComments(this.dealId);
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +34,7 @@ class DealDetailsComments extends StatelessWidget {
               } else {
                 return Consumer<Comments>(
                   builder: (context, commentsData, child) {
+                    print('loadedloadedloadedloadedloadedloaded');
                     if (commentsData.parentComments.isEmpty) {
                       return _noOneAddedACommentSplash();
                     } else {
@@ -59,8 +59,7 @@ class DealDetailsComments extends StatelessWidget {
                           } else {
                             final CommentModel parentComment = commentsData.parentComments[index - 1];
                             final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
-                            return CommentWithRepliesItem(
-                                dealId, parentComment, subComments, commentToReplySubject);
+                            return CommentWithRepliesItem(dealId, parentComment, subComments);
                           }
                         },
                       );

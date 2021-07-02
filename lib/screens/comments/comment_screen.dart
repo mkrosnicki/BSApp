@@ -17,7 +17,6 @@ import 'package:BSApp/widgets/notifications/notification_item_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class CommentScreen extends StatefulWidget {
@@ -28,7 +27,6 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
   CommentModel _comment;
   List<CommentModel> _subComments;
 
@@ -72,16 +70,16 @@ class _CommentScreenState extends State<CommentScreen> {
                             initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment, _subComments),
                             itemBuilder: (context, index) {
                               if (index == 0) {
-                                return CommentItem(_comment, dealId, _commentToReplySubject);
+                                return CommentItem(_comment, dealId);
                               } else {
-                                return CommentItem(_subComments[index - 1], dealId, _commentToReplySubject);
+                                return CommentItem(_subComments[index - 1], dealId);
                               }
                             },
                           );
                         },
                       ),
                     ),
-                    DealDetailsNewComment(dealId, _commentToReplySubject),
+                    DealDetailsNewComment(dealId),
                   ],
                 );
               }

@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/comments.dart';
@@ -6,15 +5,13 @@ import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CommentWithRepliesItem extends StatefulWidget {
   final CommentModel comment;
   final List<CommentModel> subComments;
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const CommentWithRepliesItem(this.dealId, this.comment, this.subComments, this.commentToReplySubject);
+  const CommentWithRepliesItem(this.dealId, this.comment, this.subComments);
 
   @override
   _CommentWithRepliesItemState createState() => _CommentWithRepliesItemState();
@@ -24,19 +21,12 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   bool showAnswers;
 
-  StreamSubscription subscription;
-
   bool showReplies = false;
   bool repliesLoaded = false;
 
   @override
   void initState() {
     showAnswers = false;
-    subscription = widget.commentToReplySubject.listen((value) {
-      if (value != null && value.id == widget.comment.id) {
-        _showAnswers(true);
-      }
-    });
     super.initState();
   }
 
@@ -48,8 +38,6 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   @override
   void dispose() {
-    subscription.cancel();
-    subscription = null;
     super.dispose();
   }
 
@@ -61,7 +49,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Column(
         children: [
-          CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
+          CommentItem(widget.comment, widget.dealId),
           if (widget.comment.hasSubComments && !showReplies) GestureDetector(
             // onTap: () => subComments.isNotEmpty ? _showAnswers(false) : _showAnswers(true),
             onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
@@ -82,7 +70,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
           // ),
           if (showReplies && repliesLoaded) Column(
             children: commentsProvider.getSubCommentsOf(widget.comment.id)
-                .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
+                .map((reply) => CommentItem(reply, widget.dealId))
                 .toList(),
           )
         ],

@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -11,11 +12,8 @@ import 'package:rxdart/rxdart.dart';
 
 class DealDetailsNewComment extends StatefulWidget {
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const DealDetailsNewComment(this.dealId, this.commentToReplySubject);
-
-  Stream<CommentModel> get _commentToReplyStream => commentToReplySubject.stream;
+  const DealDetailsNewComment(this.dealId);
 
   @override
   _DealDetailsNewCommentState createState() => _DealDetailsNewCommentState();
@@ -25,15 +23,23 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
 
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      Provider.of<ReplyState>(context, listen: false).clearState();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        StreamBuilder(
-          stream: widget._commentToReplyStream,
-          builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              _textFocusNode.requestFocus();
+        Consumer<ReplyState>(
+          builder: (context, replyState, child) {
+            if (replyState.commentToReply != null) {
+              _setKeyboardVisible(true);
               return Container(
                 color: MyColorsProvider.SUPER_LIGHT_GREY,
                 padding: const EdgeInsets.only(left: 14.0, right: 10.0),
@@ -49,14 +55,15 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                           style: TextStyle(color: Colors.black54, fontSize: 11),
                         ),
                         Text(
-                          snapshot.data.adderName,
+                          replyState.commentToReply.adderName,
                           style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
                     InkWell(
                       onTap: () {
-                        widget.commentToReplySubject.add(null);
+                        Provider.of<ReplyState>(context, listen: false).clearState();
+                        // widget.commentToReplySubject.add(null);
                       },
                       child: const Icon(
                         CupertinoIcons.clear,
@@ -104,20 +111,19 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                           alignment: Alignment.centerRight,
                           child: Consumer<Auth>(
                             builder: (context, authData, child) {
-                              return StreamBuilder(
-                                  stream: widget._commentToReplyStream,
-                                  builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-                                    return InkWell(
-                                      onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                        child: Icon(
-                                          CupertinoIcons.chevron_right,
-                                          color: Colors.blue,
-                                        ),
+                              return Consumer<ReplyState>(
+                                builder: (context, replyState, child) {
+                                  return InkWell(
+                                    onTap: () => _addReply(authData.isAuthenticated, replyState.commentToReply),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                      child: Icon(
+                                        CupertinoIcons.chevron_right,
+                                        color: Colors.blue,
                                       ),
-                                    );
-                                  }
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),
@@ -132,6 +138,14 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
         ),
       ],
     );
+  }
+
+  void _setKeyboardVisible(bool open) {
+    if (open) {
+      _textFocusNode.requestFocus();
+    } else {
+      _textFocusNode.unfocus();
+    }
   }
 
   Future<void> _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
@@ -153,7 +167,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     await Provider.of<Comments>(context, listen: false)
         .addReplyToComment(widget.dealId, commentToReply.id, _textEditingController.text);
     _clearTextBox();
-    widget.commentToReplySubject.add(null);
+    Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
   Future<void> _addCommentToDeal() async {

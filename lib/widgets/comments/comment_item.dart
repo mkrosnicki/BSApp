@@ -1,16 +1,13 @@
 import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/comments/comment_item_bottom_section.dart';
 import 'package:BSApp/widgets/comments/comment_item_top_section.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CommentItem extends StatelessWidget {
   final CommentModel comment;
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const CommentItem(this.comment, this.dealId, this.commentToReplySubject);
+  const CommentItem(this.comment, this.dealId);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,7 @@ class CommentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommentItemTopSection(comment, dealId),
-          CommentItemBottomSection(comment, commentToReplySubject),
+          CommentItemBottomSection(comment),
         ],
       ),
     );

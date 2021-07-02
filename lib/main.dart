@@ -7,6 +7,7 @@ import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/providers/posts.dart';
+import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/providers/searches.dart';
 import 'package:BSApp/providers/topic_categories.dart';
 import 'package:BSApp/providers/topics.dart';
@@ -119,9 +120,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Locations(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ReplyState(),
+        ),
       ],
       child: MaterialApp(
-        title: 'BSApp',
+        title: 'BB',
         theme: ThemeData(
           fontFamily: 'InterUI',
           // This is the theme of your application.

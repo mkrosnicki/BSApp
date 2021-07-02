@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Init {
+
+  static double statusBarHeight;
+
   static Future initialize(BuildContext context) async {
+    statusBarHeight = MediaQuery.of(context).padding.top;
     await _tryLogin(context);
     await _fetchCategories(context);
     await _justWait();
