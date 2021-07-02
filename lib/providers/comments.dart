@@ -57,7 +57,7 @@ class Comments with ChangeNotifier {
     }
     final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();
-    _comments.add(comment);
+    _addComment(comment);
   }
 
   Future<void> fetchCommentWithSubComments(final String commentId) async {
@@ -80,16 +80,18 @@ class Comments with ChangeNotifier {
 
   Future<void> addCommentToDeal(String dealId, String content) async {
     final addCommentToDealDto = {'content': content};
-    await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
-    // todo fetch? notify is enough probably
-    return fetchCommentsForDeal(dealId);
+    final responseBody = await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
+    final CommentModel addedComment = CommentModel.fromJson(responseBody);
+    _addComment(addedComment);
+    notifyListeners();
   }
 
   Future<void> addReplyToComment(String dealId, String commentId, String replyContent) async {
     final addCommentToDealDto = {'replyContent': replyContent};
-    await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
-    // todo fetch? notify is enough probably
-    return fetchCommentsForDeal(dealId);
+    final responseBody = await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
+    final CommentModel addedComment = CommentModel.fromJson(responseBody);
+    _addComment(addedComment);
+    notifyListeners();
   }
 
   Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
@@ -107,5 +109,13 @@ class Comments with ChangeNotifier {
   void update(String token, List<CommentModel> comments) {
     _token = token;
     _comments = comments;
+  }
+
+  void _addComment(final CommentModel comment) {
+    _comments.add(comment);
+    if (!comment.isParent()) {
+      _parentIdToSubComments.update(comment.parentId, (subComments) => subComments..add(comment),
+          ifAbsent: () => [comment]);
+    }
   }
 }
