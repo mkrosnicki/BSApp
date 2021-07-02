@@ -25,8 +25,8 @@ class TopicItemTopicInfo extends StatelessWidget {
                 TopicItemTitleLines(topic),
                 Wrap(
                   children: [
-                    if (topic.pinned) Padding(
-                      padding: const EdgeInsets.only(right: 5.0),
+                    if (topic.pinned) const Padding(
+                      padding: EdgeInsets.only(right: 5.0),
                       child: Icon(CupertinoIcons.lock_fill, size: 17,),
                     ),
                     TopicItemHeartButton(topic),

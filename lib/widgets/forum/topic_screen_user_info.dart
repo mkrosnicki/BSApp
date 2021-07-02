@@ -2,6 +2,7 @@ import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class TopicScreenUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.5);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
@@ -52,7 +53,7 @@ class TopicScreenUserInfo extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue,
+                                  color: MyColorsProvider.DEEP_BLUE,
                                 ),
                               ),
                             ),
