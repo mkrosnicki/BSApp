@@ -13,6 +13,7 @@ import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
+import 'package:BSApp/util/url_helper.dart';
 import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
@@ -234,7 +235,7 @@ class _OccasionFormState extends State<OccasionForm> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Wprowadź link do okazji';
-                    } else if (!_isUrl(value)) {
+                    } else if (!UrlHelper.isUrl(value)) {
                       return 'Podany ciąg znaków nie jest adresem URL';
                     } else {
                       return null;
@@ -468,9 +469,8 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   void _updateUrl(String value) {
-    _newDeal.urlLocation = value;
-    // https://xx.pl -> 13 characters minimum
-    if (value.length > 13 && _isUrl(value)) {
+    _newDeal.urlLocation = UrlHelper.getWithPrefix(value);
+    if (UrlHelper.isUrl(_newDeal.urlLocation)) {
       setState(() {
         _isImageButtonDisabled = false;
       });
@@ -516,6 +516,7 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   bool _isUrl(String value) {
+    if (value.startsWith("https://"))
     return Uri.parse(value).isAbsolute;
   }
 
