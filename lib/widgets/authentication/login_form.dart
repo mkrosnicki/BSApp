@@ -50,21 +50,17 @@ class _LoginFormState extends State<LoginForm> {
         //
         await _showNotVerifiedDialog();
       } else {
-        var errorMessage =
-            'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
+        var errorMessage = 'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
         if (error.toString().contains('must be a well-formed email address')) {
           errorMessage = 'Email w złym w formacie.';
-        } else if (error
-            .toString()
-            .contains('There is no user witch such email.')) {
+        } else if (error.toString().contains('There is no user with such')) {
           errorMessage = 'Nieprawidłowe hasło i / lub login.';
         }
         await _showErrorDialog(errorMessage);
       }
     } catch (error) {
       wasError = true;
-      const errorMessage =
-          'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
+      const errorMessage = 'Logowanie zakończyło się niepowodzeniem. Spróbuj później.';
       await _showErrorDialog(errorMessage);
     } finally {
       if (wasError) {
@@ -78,8 +74,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _resendActivationToken(BuildContext context) {
-    Provider.of<Auth>(context, listen: false)
-        .resendVerificationToken(_emailController.text);
+    Provider.of<Auth>(context, listen: false).resendVerificationToken(_emailController.text);
     Navigator.of(context).pop();
   }
 
@@ -87,7 +82,7 @@ class _LoginFormState extends State<LoginForm> {
     await infoDialog(
       context,
       title: 'Błąd',
-      textContent: 'Wystąpił błąd podczas próby logowania.',
+      textContent: message,
     );
   }
 
@@ -112,8 +107,7 @@ class _LoginFormState extends State<LoginForm> {
           )
         : SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -123,10 +117,7 @@ class _LoginFormState extends State<LoginForm> {
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: const Text(
                         'Zaloguj się',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                        style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                     // const FormFieldDivider(),
@@ -181,13 +172,12 @@ class _LoginFormState extends State<LoginForm> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
                           padding: MaterialStateProperty.all(EdgeInsets.zero),
                         ),
-                        onPressed: () => Navigator.of(context)
-                            .pushNamed(ResetPasswordScreen.routeName),
-                        child: const Text('Nie pamiętasz hasła?', style: TextStyle(fontSize: 13, color: Colors.black54)),
+                        onPressed: () => Navigator.of(context).pushNamed(ResetPasswordScreen.routeName),
+                        child:
+                            const Text('Nie pamiętasz hasła?', style: TextStyle(fontSize: 13, color: Colors.black54)),
                       ),
                     ),
                     const FormFieldDivider(),
