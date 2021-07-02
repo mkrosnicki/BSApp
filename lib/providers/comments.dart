@@ -90,7 +90,8 @@ class Comments with ChangeNotifier {
     final addCommentToDealDto = {'replyContent': replyContent};
     final responseBody = await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
     final CommentModel addedComment = CommentModel.fromJson(responseBody);
-    _addComment(addedComment);
+    await fetchSubCommentsForComment(commentId);
+    // _addComment(addedComment);
     notifyListeners();
   }
 

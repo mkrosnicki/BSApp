@@ -58,7 +58,7 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
                 return ListView.builder(
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  itemCount: _comments.length + 1,
+                  itemCount: commentsData.parentComments.length + 1,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -74,8 +74,8 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
                         ),
                       );
                     } else {
-                      final CommentModel parentComment = _comments[index - 1];
-                      final List<CommentModel> subComments = Provider.of<Comments>(context, listen: false).getSubCommentsOf(parentComment.id);
+                      final CommentModel parentComment = commentsData.parentComments[index - 1];
+                      final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
                       return CommentWithRepliesItem(widget.dealId, parentComment, subComments);
                     }
                   },

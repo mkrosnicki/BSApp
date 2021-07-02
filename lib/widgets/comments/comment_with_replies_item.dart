@@ -43,6 +43,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
 
   @override
   Widget build(BuildContext context) {
+    print('rebuildrebuildrebuildrebuildrebuildrebuild');
     final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
     final List<CommentModel> subComments = commentsProvider.getSubCommentsOf(widget.comment.id);
     return Container(
