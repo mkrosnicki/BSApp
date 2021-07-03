@@ -41,9 +41,12 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             if (replyState.commentToReply != null) {
               _setKeyboardVisible(true);
               return Container(
-                color: MyColorsProvider.SUPER_LIGHT_GREY,
-                padding: const EdgeInsets.only(left: 14.0, right: 10.0),
-                height: 40,
+                padding: const EdgeInsets.only(left: 14.0, right: 22.0, top: 6.0),
+                decoration: const BoxDecoration(
+                  border: MyStylingProvider.TOP_GREY_BORDER_THICK,
+                  color: Colors.white,
+                ),
+                height: 35,
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,11 +55,11 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       children: [
                         const Text(
                           'Odpowiadasz na komentarz ',
-                          style: TextStyle(color: Colors.black54, fontSize: 11),
+                          style: TextStyle(color: Colors.black87, fontSize: 12),
                         ),
                         Text(
                           replyState.commentToReply.adderName,
-                          style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: Colors.black87, fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -68,7 +71,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       child: const Icon(
                         CupertinoIcons.clear,
                         color: MyColorsProvider.DEEP_BLUE,
-                        size: 19,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -84,56 +87,60 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             minHeight: 50,
             maxHeight: 80,
           ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
-            decoration: const BoxDecoration(
-              border: MyStylingProvider.TOP_GREY_BORDER_THICK,
-              color: Colors.white,
-            ),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Flexible(
-                  child: Stack(
-                    children: [
-                      TextField(
-                        minLines: 1,
-                        maxLines: 3,
-                        controller: _textEditingController,
-                        focusNode: _textFocusNode,
-                        style: const TextStyle(fontSize: 13),
-                        decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
-                            .copyWith(hintText: 'Twój komentarz...'),
-                      ),
-                      Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Consumer<Auth>(
-                            builder: (context, authData, child) {
-                              return Consumer<ReplyState>(
-                                builder: (context, replyState, child) {
-                                  return InkWell(
-                                    onTap: () => _addReply(authData.isAuthenticated, replyState.commentToReply),
-                                    child: const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                      child: Icon(
-                                        CupertinoIcons.chevron_right,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
+          child: Consumer<ReplyState>(
+            builder: (context, rs, child) {
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
+                decoration: BoxDecoration(
+                  border: rs.commentToReply == null ? MyStylingProvider.TOP_GREY_BORDER_THICK : null,
+                  color: Colors.white,
+                ),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Flexible(
+                      child: Stack(
+                        children: [
+                          TextField(
+                            minLines: 1,
+                            maxLines: 3,
+                            controller: _textEditingController,
+                            focusNode: _textFocusNode,
+                            style: const TextStyle(fontSize: 13),
+                            decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                                .copyWith(hintText: 'Twój komentarz...'),
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Consumer<Auth>(
+                                builder: (context, authData, child) {
+                                  return Consumer<ReplyState>(
+                                    builder: (context, replyState, child) {
+                                      return InkWell(
+                                        onTap: () => _addReply(authData.isAuthenticated, replyState.commentToReply),
+                                        child: const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                          child: Icon(
+                                            CupertinoIcons.chevron_right,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ],
