@@ -15,7 +15,7 @@ class CommentItem extends StatelessWidget {
       color: Colors.white,
       width: double.infinity,
       padding: comment.isParent()
-          ? const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0)
+          ? const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 4.0)
           : const EdgeInsets.only(left: 34.0, right: 8.0, bottom: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

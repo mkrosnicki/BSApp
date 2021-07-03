@@ -41,7 +41,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
             GestureDetector(
               onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
               child: Container(
-                padding: const EdgeInsets.only(left: 50.0, top: 6.0, bottom: 6.0),
+                padding: const EdgeInsets.only(left: 50.0, top: 2.0, bottom: 6.0),
                 width: double.infinity,
                 color: Colors.white,
                 child: Text(
