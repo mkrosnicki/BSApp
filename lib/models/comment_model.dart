@@ -72,6 +72,10 @@ class CommentModel {
     return parentId == null;
   }
 
+  bool isChild() {
+    return !isParent();
+  }
+
   String get adderName {
     return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
   }
