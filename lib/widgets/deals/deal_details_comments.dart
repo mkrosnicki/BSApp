@@ -7,40 +7,15 @@ import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DealDetailsComments extends StatefulWidget {
+class DealDetailsComments extends StatelessWidget {
   final String dealId;
 
   const DealDetailsComments(this.dealId);
 
   @override
-  _DealDetailsCommentsState createState() => _DealDetailsCommentsState();
-}
-
-class _DealDetailsCommentsState extends State<DealDetailsComments> {
-  bool _isLoading = true;
-  List<CommentModel> _comments = [];
-
-  Future<void> _initComments(BuildContext context) async {
-    final Comments comments = Provider.of<Comments>(context, listen: false);
-    await comments.fetchCommentsForDeal(widget.dealId);
-    _comments = comments.parentComments;
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () {
-      _initComments(context);
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(widget.dealId),
+      future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(dealId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingIndicator());
@@ -52,7 +27,7 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
           } else {
             return Consumer<Comments>(
               builder: (context, commentsData, child) {
-                if (_comments.isEmpty) {
+                if (commentsData.parentComments.isEmpty) {
                   return _noOneAddedACommentSplash();
                 } else {
                   return ListView.builder(
@@ -76,7 +51,7 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
                       } else {
                         final CommentModel parentComment = commentsData.parentComments[index - 1];
                         final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
-                        return CommentWithRepliesItem(widget.dealId, parentComment, subComments);
+                        return CommentWithRepliesItem(dealId, parentComment, subComments);
                       }
                     },
                   );
@@ -101,4 +76,6 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
       ),
     );
   }
+
+
 }

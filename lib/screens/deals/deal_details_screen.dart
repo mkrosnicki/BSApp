@@ -64,18 +64,16 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                 Expanded(
                   child: NotificationListener<ScrollNotification>(
                     onNotification: _scrollListener,
-                    child: ListView(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DealDetailsImage(deal),
-                            DealDetailsDescription(deal),
-                            DealDetailsAuthor(deal.id),
-                            DealDetailsComments(deal.id),
-                          ],
-                        ),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DealDetailsImage(deal),
+                          DealDetailsDescription(deal),
+                          DealDetailsAuthor(deal.id),
+                          DealDetailsComments(deal.id),
+                        ],
+                      ),
                     ),
                   ),
                 ),
