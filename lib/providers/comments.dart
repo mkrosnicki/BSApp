@@ -7,6 +7,7 @@ class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> _comments = [];
+  final List<CommentModel> _parentComments = [];
   final Map<String, List<CommentModel>> _parentIdToSubComments = {};
   String _token;
 
@@ -17,7 +18,7 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
-    return _comments.where((element) => element.parentId == null).toList();
+    return _parentComments;
   }
 
   List<CommentModel> getSubCommentsOf(final String parentCommentId) {
@@ -32,9 +33,10 @@ class Comments with ChangeNotifier {
     }
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
     _comments.clear();
+    _parentComments.clear();
     _comments.addAll(loadedComments);
+    _parentComments.addAll(loadedComments.where((c) => c.isParent()).toList());
     _parentIdToSubComments.clear();
-    // notifyListeners();
   }
 
   Future<void> fetchSubCommentsForComment(final String commentId) async {
@@ -68,7 +70,7 @@ class Comments with ChangeNotifier {
 
   Future<void> deleteComment(CommentModel comment) async {
     await _apiProvider.delete('/comments/${comment.id}', token: _token);
-    if (!comment.isParent()) {
+    if (comment.isChild()) {
       final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
       if (parent != null) {
         // parent.subComments.removeWhere((c) => c.id == comment.id);
@@ -104,7 +106,7 @@ class Comments with ChangeNotifier {
   }
 
   CommentModel findById(String commentId) {
-    return comments.firstWhere((comment) => comment.id == commentId);
+    return _comments.firstWhere((comment) => comment.id == commentId);
   }
 
   void update(String token, List<CommentModel> comments) {
@@ -114,9 +116,11 @@ class Comments with ChangeNotifier {
 
   void _addComment(final CommentModel comment) {
     _comments.add(comment);
-    if (!comment.isParent()) {
+    if (comment.isChild()) {
       _parentIdToSubComments.update(comment.parentId, (subComments) => subComments..add(comment),
           ifAbsent: () => [comment]);
+    } else {
+      _parentComments.add(comment);
     }
   }
 }

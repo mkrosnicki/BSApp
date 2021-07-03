@@ -94,6 +94,6 @@ class CommentModel {
 
   @override
   String toString() {
-    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount}';
+    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount, likers: ${positiveVoters.length}}';
   }
 }
