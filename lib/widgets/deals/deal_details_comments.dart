@@ -65,7 +65,7 @@ class _DealDetailsCommentsState extends State<DealDetailsComments> {
                         return Container(
                           color: Colors.white,
                           width: double.infinity,
-                          padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
+                          padding: const EdgeInsets.only(top: 12.0, bottom: 10.0, left: 12.0, right: 6.0),
                           margin: EdgeInsets.zero,
                           alignment: Alignment.centerLeft,
                           child: const Text(
