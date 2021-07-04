@@ -18,9 +18,6 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
-    _parentComments.forEach((element) {
-      element.positiveVoters.length;
-    });
     return _parentComments;
   }
 
@@ -52,7 +49,6 @@ class Comments with ChangeNotifier {
     _parentIdToSubComments.update(commentId, (subComments) => subComments = loadedComments,
         ifAbsent: () => loadedComments);
     _comments.addAll(loadedComments);
-    // notifyListeners();
   }
 
   Future<void> fetchComment(String commentId) async {
@@ -96,7 +92,7 @@ class Comments with ChangeNotifier {
     final addCommentToDealDto = {'replyContent': replyContent};
     final responseBody = await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
     final CommentModel addedComment = CommentModel.fromJson(responseBody);
-    await fetchSubCommentsForComment(commentId);
+    await fetchSubCommentsForComment(addedComment.parentId);
     notifyListeners();
   }
 
