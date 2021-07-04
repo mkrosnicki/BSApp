@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
-import 'package:BSApp/models/adder_info_model.dart';
-import 'package:BSApp/models/topic_adder_info_model.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
+
+import 'forum_users_info_model.dart';
 
 class TopicModel {
   final String id;
   final DateTime addedAt;
-  final TopicAdderInfoModel adderInfo;
+  final ForumUsersInfo adderInfo;
   final String title;
   final String content;
   final bool pinned;
@@ -45,7 +45,7 @@ class TopicModel {
     return TopicModel(
       id: topicSnapshot['id'],
       addedAt: DateUtil.parseFromStringToUtc(topicSnapshot['addedAt']),
-      adderInfo: TopicAdderInfoModel.fromJson(topicSnapshot['adderInfo']),
+      adderInfo: ForumUsersInfo.fromJson(topicSnapshot['adderInfo']),
       title: topicSnapshot['title'],
       content: topicSnapshot['content'],
       pinned: topicSnapshot['pinned'],

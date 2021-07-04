@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:BSApp/util/date_util.dart';
 
-import 'comment_adder_info_model.dart';
 import 'deals_users_info_model.dart';
 
 class CommentModel {

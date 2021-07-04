@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:flutter/material.dart';
 
-import 'deal_adder_info_model.dart';
+import 'deals_users_info_model.dart';
 
 class DealDetailsModel {
   final String id;
   final DealModel deal;
-  final DealAdderInfoModel adderInfo;
+  final DealsUsersInfo adderInfo;
 
   DealDetailsModel({
     @required this.id,
@@ -23,7 +23,7 @@ class DealDetailsModel {
     return DealDetailsModel(
       id: dealDetailsSnapshot['id'] as String,
       deal: DealModel.fromJson(dealDetailsSnapshot['deal']),
-      adderInfo: DealAdderInfoModel.fromJson(dealDetailsSnapshot['adderInfo']),
+      adderInfo: DealsUsersInfo.fromJson(dealDetailsSnapshot['adderInfo']),
     );
   }
 
