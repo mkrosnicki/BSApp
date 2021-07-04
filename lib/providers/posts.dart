@@ -7,12 +7,17 @@ class Posts with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<PostModel> _posts = [];
+  final List<PostModel> _topicPosts = [];
   String _token;
 
   Posts.empty();
 
   List<PostModel> get posts {
     return [..._posts];
+  }
+
+  List<PostModel> get topicPosts {
+    return _topicPosts;
   }
 
   Future<void> fetchPostsForTopic(String topicId) async {
@@ -22,7 +27,11 @@ class Posts with ChangeNotifier {
       final logger = Logger();
       logger.i('No Posts Found!');
     }
-    _posts = PostModel.fromJsonList(responseBody);
+    final List<PostModel> loadedPosts = PostModel.fromJsonList(responseBody);
+    _posts.clear();
+    _posts.addAll(loadedPosts);
+    _topicPosts.clear();
+    _topicPosts.addAll(loadedPosts);
     notifyListeners();
   }
 
@@ -73,10 +82,6 @@ class Posts with ChangeNotifier {
     final PostModel updatedPost = PostModel.fromJson(responseBody);
     _posts[_posts.indexWhere((element) => element.id == updatedPost.id)] = updatedPost;
     notifyListeners();
-  }
-
-  bool wasLikedBy(String postId, String userId) {
-    return findById(postId).likers.any((element) => element == userId);
   }
 
   void update(String token, List<PostModel> posts) {

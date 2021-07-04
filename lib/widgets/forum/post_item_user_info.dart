@@ -77,7 +77,7 @@ class PostItemUserInfo extends StatelessWidget {
                               return currentUser.isAdmin ? PostItemAdminActionsButton(post) : Container();
                             },
                           ),
-                          PostItemHeartButton(post),
+                          PostItemHeartButton(post.id),
                         ],
                       ),
                     ],

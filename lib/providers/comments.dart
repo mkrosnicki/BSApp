@@ -18,6 +18,9 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
+    _parentComments.forEach((element) {
+      element.positiveVoters.length;
+    });
     return _parentComments;
   }
 

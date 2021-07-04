@@ -21,13 +21,13 @@ class TopicScreenPosts extends StatelessWidget {
     return Consumer<Posts>(
       builder: (context, postsData, child) {
         return ScrollablePositionedList.builder(
-          itemCount: postsData.posts.length + 1,
-          initialScrollIndex: _determineInitialIndex(postToScrollId, postsData.posts),
+          itemCount: postsData.topicPosts.length + 1,
+          initialScrollIndex: _determineInitialIndex(postToScrollId, postsData.topicPosts),
           itemBuilder: (context, index) {
             if (index == 0) {
               return TopicScreenTopicInfo(topic);
             } else {
-              return PostItem(postsData.posts[index - 1]);
+              return PostItem(postsData.topicPosts[index - 1]);
             }
           },
         );

@@ -22,7 +22,7 @@ class DealDetailsNewComment extends StatefulWidget {
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
-  bool _isInitialized;
+  bool _isInitialized = false;
 
   @override
   void initState() {
