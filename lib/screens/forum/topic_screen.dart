@@ -1,4 +1,3 @@
-import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/providers/current_user.dart';
@@ -14,7 +13,6 @@ import 'package:BSApp/widgets/forum/topic_screen_posts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class TopicScreen extends StatefulWidget {
   static const routeName = '/topic';
@@ -24,13 +22,6 @@ class TopicScreen extends StatefulWidget {
 }
 
 class _TopicScreenState extends State<TopicScreen> {
-  final _postToReplySubject = PublishSubject<PostModel>();
-
-  @override
-  void dispose() {
-    _postToReplySubject.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +58,9 @@ class _TopicScreenState extends State<TopicScreen> {
                 return Column(
                   children: [
                     Expanded(
-                      child: TopicScreenPosts(topic, topicScreenArguments.postToScrollId, _postToReplySubject),
+                      child: TopicScreenPosts(topic, topicScreenArguments.postToScrollId),
                     ),
-                    TopicScreenInputBar(topic.id, _postToReplySubject),
+                    TopicScreenInputBar(topic.id),
                   ],
                 );
               }

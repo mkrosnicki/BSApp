@@ -15,6 +15,14 @@ class ReplyState with ChangeNotifier {
     return _aPostToReply;
   }
 
+  bool get hasCommentToReply {
+    return _aCommentToReply != null;
+  }
+
+  bool get hasPostToReply {
+    return _aPostToReply != null;
+  }
+
   void setCommentToReply(final CommentModel comment) {
     if (commentToReply != comment) {
       _aCommentToReply = comment;

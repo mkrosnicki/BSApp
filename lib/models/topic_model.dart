@@ -71,11 +71,19 @@ class TopicModel {
   }
 
   Uint8List get userAvatar {
-    return adderInfo != null ? adderInfo.avatar : null;
+    if (adderInfo != null) {
+      return adderInfo.avatar;
+    } else {
+      return null;
+    }
   }
 
   String get userImagePath {
-    return adderInfo != null ? adderInfo.imagePath : null;
+    if (adderInfo != null) {
+      return adderInfo.imagePath;
+    } else {
+      return null;
+    }
   }
 
 

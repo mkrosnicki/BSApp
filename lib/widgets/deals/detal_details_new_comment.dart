@@ -66,7 +66,6 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                     InkWell(
                       onTap: () {
                         Provider.of<ReplyState>(context, listen: false).clearState();
-                        // widget.commentToReplySubject.add(null);
                       },
                       child: const Icon(
                         CupertinoIcons.clear,

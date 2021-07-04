@@ -13,9 +13,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class TopicScreenPosts extends StatelessWidget {
   final TopicModel topic;
   final String postToScrollId;
-  final PublishSubject<PostModel> postToReplySubject;
 
-  const TopicScreenPosts(this.topic, this.postToScrollId, this.postToReplySubject);
+  const TopicScreenPosts(this.topic, this.postToScrollId);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +27,7 @@ class TopicScreenPosts extends StatelessWidget {
             if (index == 0) {
               return TopicScreenTopicInfo(topic);
             } else {
-              return PostItem(
-                  postsData.posts[index - 1], postToReplySubject);
+              return PostItem(postsData.posts[index - 1]);
             }
           },
         );
