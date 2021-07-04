@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class TopicScreenInputBar extends StatefulWidget {
   final String topicId;
 
-  TopicScreenInputBar(this.topicId);
+  const TopicScreenInputBar(this.topicId);
 
   @override
   _TopicScreenInputBarState createState() => _TopicScreenInputBarState();
@@ -33,7 +33,6 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
       Provider.of<ReplyState>(context, listen: false).clearState();
       _isInitialized = true;
     });
-    _setKeyboardVisible(false);
     super.initState();
   }
 
