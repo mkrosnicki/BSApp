@@ -1,6 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
@@ -11,11 +12,8 @@ import 'package:rxdart/rxdart.dart';
 
 class DealDetailsNewComment extends StatefulWidget {
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const DealDetailsNewComment(this.dealId, this.commentToReplySubject);
-
-  Stream<CommentModel> get _commentToReplyStream => commentToReplySubject.stream;
+  const DealDetailsNewComment(this.dealId);
 
   @override
   _DealDetailsNewCommentState createState() => _DealDetailsNewCommentState();
@@ -24,20 +22,32 @@ class DealDetailsNewComment extends StatefulWidget {
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      Provider.of<ReplyState>(context, listen: false).clearState();
+      _isInitialized = true;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        StreamBuilder(
-          stream: widget._commentToReplyStream,
-          builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              _textFocusNode.requestFocus();
+        Consumer<ReplyState>(
+          builder: (context, replyState, child) {
+            if (_isInitialized && replyState.hasCommentToReply) {
+              _setKeyboardVisible(true);
               return Container(
-                color: MyColorsProvider.SUPER_LIGHT_GREY,
-                padding: const EdgeInsets.only(left: 14.0, right: 10.0),
-                height: 40,
+                padding: const EdgeInsets.only(left: 14.0, right: 22.0, top: 6.0),
+                decoration: const BoxDecoration(
+                  border: MyStylingProvider.TOP_GREY_BORDER_THICK,
+                  color: Colors.white,
+                ),
+                height: 35,
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,22 +56,22 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                       children: [
                         const Text(
                           'Odpowiadasz na komentarz ',
-                          style: TextStyle(color: Colors.black54, fontSize: 11),
+                          style: TextStyle(color: Colors.black87, fontSize: 12),
                         ),
                         Text(
-                          snapshot.data.adderName,
-                          style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.w600),
+                          replyState.commentToReply.adderName,
+                          style: const TextStyle(color: Colors.black87, fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
                     InkWell(
                       onTap: () {
-                        widget.commentToReplySubject.add(null);
+                        Provider.of<ReplyState>(context, listen: false).clearState();
                       },
                       child: const Icon(
                         CupertinoIcons.clear,
                         color: MyColorsProvider.DEEP_BLUE,
-                        size: 19,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -77,61 +87,72 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
             minHeight: 50,
             maxHeight: 80,
           ),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
-            decoration: const BoxDecoration(
-              border: MyStylingProvider.TOP_GREY_BORDER_THICK,
-              color: Colors.white,
-            ),
-            child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Flexible(
-                  child: Stack(
-                    children: [
-                      TextField(
-                        minLines: 1,
-                        maxLines: 3,
-                        controller: _textEditingController,
-                        focusNode: _textFocusNode,
-                        style: const TextStyle(fontSize: 13),
-                        decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
-                            .copyWith(hintText: 'Twój komentarz...'),
-                      ),
-                      Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Consumer<Auth>(
-                            builder: (context, authData, child) {
-                              return StreamBuilder(
-                                  stream: widget._commentToReplyStream,
-                                  builder: (context, AsyncSnapshot<CommentModel> snapshot) {
-                                    return InkWell(
-                                      onTap: () => _addReply(authData.isAuthenticated, snapshot.data),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                        child: Icon(
-                                          CupertinoIcons.chevron_right,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+          child: Consumer<ReplyState>(
+            builder: (context, rs, child) {
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
+                decoration: BoxDecoration(
+                  border: rs.hasCommentToReply ? null : MyStylingProvider.TOP_GREY_BORDER_THICK,
+                  color: Colors.white,
                 ),
-              ],
-            ),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Flexible(
+                      child: Stack(
+                        children: [
+                          TextField(
+                            minLines: 1,
+                            maxLines: 3,
+                            controller: _textEditingController,
+                            focusNode: _textFocusNode,
+                            style: const TextStyle(fontSize: 13),
+                            decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                                .copyWith(hintText: 'Twój komentarz...'),
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Consumer<Auth>(
+                                builder: (context, authData, child) {
+                                  return Consumer<ReplyState>(
+                                    builder: (context, replyState, child) {
+                                      return InkWell(
+                                        onTap: () => _addReply(authData.isAuthenticated, replyState.commentToReply),
+                                        child: const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                          child: Icon(
+                                            CupertinoIcons.chevron_right,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ],
     );
+  }
+
+  void _setKeyboardVisible(bool open) {
+    if (open) {
+      _textFocusNode.requestFocus();
+    } else {
+      _textFocusNode.unfocus();
+    }
   }
 
   Future<void> _addReply(bool isUserLoggedIn, CommentModel commentToReply) async {
@@ -153,7 +174,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     await Provider.of<Comments>(context, listen: false)
         .addReplyToComment(widget.dealId, commentToReply.id, _textEditingController.text);
     _clearTextBox();
-    widget.commentToReplySubject.add(null);
+    Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
   Future<void> _addCommentToDeal() async {

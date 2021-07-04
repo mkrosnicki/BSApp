@@ -18,7 +18,7 @@ class ClearNotificationsButton extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Icon(
           CupertinoIcons.ellipsis_vertical,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

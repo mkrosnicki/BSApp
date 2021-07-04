@@ -1,5 +1,5 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'app_bar_bottom_border.dart';
 
@@ -20,7 +20,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleSpacing: 8,
-      backgroundColor: Colors.white,
+      backgroundColor: MyColorsProvider.BLUE,
       elevation: 0,
       bottom: bottom ?? const AppBarBottomBorder(),
       automaticallyImplyLeading: false,
@@ -29,7 +29,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black, fontSize: 16),
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }

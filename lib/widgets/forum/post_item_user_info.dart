@@ -3,6 +3,7 @@ import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/fake_data_provider.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
 import 'package:BSApp/widgets/forum/post_item_admin_actions_button.dart';
 import 'package:BSApp/widgets/forum/post_item_heart_button.dart';
@@ -17,7 +18,7 @@ class PostItemUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.4);
+    const userInfoTextStyle = TextStyle(fontSize: 11, color: Colors.black54, height: 1.5);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Flex(
@@ -56,7 +57,7 @@ class PostItemUserInfo extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue,
+                                  color: MyColorsProvider.DEEP_BLUE,
                                 ),
                               ),
                             ),
@@ -76,7 +77,7 @@ class PostItemUserInfo extends StatelessWidget {
                               return currentUser.isAdmin ? PostItemAdminActionsButton(post) : Container();
                             },
                           ),
-                          PostItemHeartButton(post),
+                          PostItemHeartButton(post.id),
                         ],
                       ),
                     ],

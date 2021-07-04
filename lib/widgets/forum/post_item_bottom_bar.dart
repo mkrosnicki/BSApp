@@ -1,15 +1,16 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostItemBottomBar extends StatelessWidget {
   final PostModel post;
-  final PublishSubject<PostModel> postToReplySubject;
 
-  const PostItemBottomBar(this.post, this.postToReplySubject);
+  const PostItemBottomBar(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class PostItemBottomBar extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              postToReplySubject.add(post);
+              Provider.of<ReplyState>(context, listen: false).setTopicToReply(post);
             },
             child: Text(
               'Odpowiedz',

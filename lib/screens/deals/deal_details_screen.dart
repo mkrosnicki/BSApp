@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/current_user.dart';
+import 'package:BSApp/screens/initialization/init.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/deals/deal_details_author.dart';
@@ -14,7 +14,6 @@ import 'package:BSApp/widgets/deals/detal_details_new_comment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class DealDetailsScreen extends StatefulWidget {
   static const routeName = '/deal-details';
@@ -27,11 +26,8 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
   AnimationController _colorAnimationController;
   Animation<Color> _colorTween, _iconColorTween, _titleColorTween, _borderColorTween;
 
-  final PublishSubject<CommentModel> _commentToReplySubject = PublishSubject<CommentModel>();
-
   @override
   void dispose() {
-    _commentToReplySubject.close();
     super.dispose();
   }
 
@@ -57,17 +53,17 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
   Widget build(BuildContext context) {
     final DealModel deal = ModalRoute.of(context).settings.arguments as DealModel;
     return Scaffold(
-      body: NotificationListener<ScrollNotification>(
-        onNotification: _scrollListener,
-        child: Container(
-          width: double.infinity,
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
+      body: Container(
+        width: double.infinity,
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _scrollListener,
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,30 +71,30 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                           DealDetailsImage(deal),
                           DealDetailsDescription(deal),
                           DealDetailsAuthor(deal.id),
-                          DealDetailsComments(deal.id, _commentToReplySubject),
+                          DealDetailsComments(deal.id),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    color: Colors.white,
-                    padding: Platform.isIOS
-                        ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0)
-                        : EdgeInsets.zero,
-                    child: DealDetailsNewComment(deal.id, _commentToReplySubject),
-                  ),
-                ],
-              ),
-              _buildTopBar(deal),
-            ],
-          ),
+                ),
+                Container(
+                  color: Colors.white,
+                  padding: Platform.isIOS
+                      ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0)
+                      : EdgeInsets.zero,
+                  child: DealDetailsNewComment(deal.id),
+                ),
+              ],
+            ),
+            _buildTopBar(deal),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildTopBar(final DealModel deal) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final statusBarHeight = Init.statusBarHeight ?? 0;
     return AnimatedBuilder(
       animation: _colorAnimationController,
       builder: (context, child) {
@@ -121,7 +117,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
             actions: [
               Consumer<CurrentUser>(
                 builder: (context, currentUser, child) {
-                  return currentUser.isAdmin ? DealScreenAdminActionsButton(deal, color: _iconColorTween.value) : Container();
+                  return currentUser.isAdmin
+                      ? DealScreenAdminActionsButton(deal, color: _iconColorTween.value)
+                      : Container();
                 },
               ),
             ],

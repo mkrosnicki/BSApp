@@ -7,6 +7,7 @@ class Comments with ChangeNotifier {
   final ApiProvider _apiProvider = ApiProvider();
 
   List<CommentModel> _comments = [];
+  final List<CommentModel> _parentComments = [];
   final Map<String, List<CommentModel>> _parentIdToSubComments = {};
   String _token;
 
@@ -17,11 +18,11 @@ class Comments with ChangeNotifier {
   }
 
   List<CommentModel> get parentComments {
-    return _comments.where((element) => element.parentId == null).toList();
+    return _parentComments;
   }
 
   List<CommentModel> getSubCommentsOf(final String parentCommentId) {
-    return _parentIdToSubComments[parentCommentId];
+    return _parentIdToSubComments[parentCommentId] ?? [];
   }
 
   Future<void> fetchCommentsForDeal(String dealId) async {
@@ -32,8 +33,10 @@ class Comments with ChangeNotifier {
     }
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
     _comments.clear();
+    _parentComments.clear();
     _comments.addAll(loadedComments);
-    // notifyListeners();
+    _parentComments.addAll(loadedComments.where((c) => c.isParent()).toList());
+    _parentIdToSubComments.clear();
   }
 
   Future<void> fetchSubCommentsForComment(final String commentId) async {
@@ -46,7 +49,6 @@ class Comments with ChangeNotifier {
     _parentIdToSubComments.update(commentId, (subComments) => subComments = loadedComments,
         ifAbsent: () => loadedComments);
     _comments.addAll(loadedComments);
-    // notifyListeners();
   }
 
   Future<void> fetchComment(String commentId) async {
@@ -57,7 +59,7 @@ class Comments with ChangeNotifier {
     }
     final CommentModel comment = CommentModel.fromJson(responseBody);
     _comments.clear();
-    _comments.add(comment);
+    _addComment(comment);
   }
 
   Future<void> fetchCommentWithSubComments(final String commentId) async {
@@ -67,7 +69,7 @@ class Comments with ChangeNotifier {
 
   Future<void> deleteComment(CommentModel comment) async {
     await _apiProvider.delete('/comments/${comment.id}', token: _token);
-    if (!comment.isParent()) {
+    if (comment.isChild()) {
       final CommentModel parent = _comments.firstWhere((element) => element.id == comment.parentId, orElse: () => null);
       if (parent != null) {
         // parent.subComments.removeWhere((c) => c.id == comment.id);
@@ -80,16 +82,18 @@ class Comments with ChangeNotifier {
 
   Future<void> addCommentToDeal(String dealId, String content) async {
     final addCommentToDealDto = {'content': content};
-    await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
-    // todo fetch? notify is enough probably
-    return fetchCommentsForDeal(dealId);
+    final responseBody = await _apiProvider.post('/deals/$dealId/comments', addCommentToDealDto, token: _token);
+    final CommentModel addedComment = CommentModel.fromJson(responseBody);
+    _addComment(addedComment);
+    notifyListeners();
   }
 
   Future<void> addReplyToComment(String dealId, String commentId, String replyContent) async {
     final addCommentToDealDto = {'replyContent': replyContent};
-    await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
-    // todo fetch? notify is enough probably
-    return fetchCommentsForDeal(dealId);
+    final responseBody = await _apiProvider.post('/comments/$commentId/replies', addCommentToDealDto, token: _token);
+    final CommentModel addedComment = CommentModel.fromJson(responseBody);
+    await fetchSubCommentsForComment(addedComment.parentId);
+    notifyListeners();
   }
 
   Future<void> voteForComment(String dealId, String commentId, bool isPositive) async {
@@ -101,11 +105,21 @@ class Comments with ChangeNotifier {
   }
 
   CommentModel findById(String commentId) {
-    return comments.firstWhere((comment) => comment.id == commentId);
+    return _comments.firstWhere((comment) => comment.id == commentId);
   }
 
   void update(String token, List<CommentModel> comments) {
     _token = token;
     _comments = comments;
+  }
+
+  void _addComment(final CommentModel comment) {
+    _comments.add(comment);
+    if (comment.isChild()) {
+      _parentIdToSubComments.update(comment.parentId, (subComments) => subComments..add(comment),
+          ifAbsent: () => [comment]);
+    } else {
+      _parentComments.add(comment);
+    }
   }
 }

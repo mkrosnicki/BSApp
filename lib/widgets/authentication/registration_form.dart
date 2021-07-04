@@ -54,7 +54,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     var signUpSuccessful = false;
     try {
       await Provider.of<Auth>(context, listen: false).signUp(
-        _authData['email'],
+        _authData['email'].trim(),
         _authData['password'],
         _authData['username'],
       );
@@ -113,7 +113,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Email'),
                         validator: (value) {
-                          if (value.isEmpty || !value.contains('@')) {
+                          final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value.trim());
+                          if (value.isEmpty || !emailValid) {
                             return 'Nieprawidłowy e-mail!';
                           } else {
                             return null;
@@ -129,7 +130,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       child: TextFormField(
                         controller: _nameController,
                         cursorColor: Colors.black,
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Imię'),
                         validator: (value) {
                           if (value.length < 3) {

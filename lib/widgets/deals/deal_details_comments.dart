@@ -6,72 +6,61 @@ import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class DealDetailsComments extends StatelessWidget {
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const DealDetailsComments(this.dealId, this.commentToReplySubject);
+  const DealDetailsComments(this.dealId);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-          future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(dealId),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                height: 300,
-                color: Colors.white,
-                child: const Center(child: LoadingIndicator()),
-              );
-            } else {
-              if (snapshot.error != null) {
-                return const Center(
-                  child: ServerErrorSplash(),
-                );
-              } else {
-                return Consumer<Comments>(
-                  builder: (context, commentsData, child) {
-                    if (commentsData.parentComments.isEmpty) {
-                      return _noOneAddedACommentSplash();
-                    } else {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemCount: commentsData.parentComments.length + 1,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Container(
-                              color: Colors.white,
-                              width: double.infinity,
-                              padding: const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 12.0, right: 6.0),
-                              margin: EdgeInsets.zero,
-                              alignment: Alignment.centerLeft,
-                              child: const Text(
-                                'Komentarze',
-                                style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
-                              ),
-                            );
-                          } else {
-                            final CommentModel parentComment = commentsData.parentComments[index - 1];
-                            final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
-                            return CommentWithRepliesItem(
-                                dealId, parentComment, subComments, commentToReplySubject);
-                          }
-                        },
-                      );
-                    }
-                  },
-                );
-              }
-            }
-          },
-        ),
-      ],
+    return FutureBuilder(
+      future: Provider.of<Comments>(context, listen: false).fetchCommentsForDeal(dealId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: LoadingIndicator());
+        } else {
+          if (snapshot.error != null) {
+            return const Center(
+              child: ServerErrorSplash(),
+            );
+          } else {
+            return Consumer<Comments>(
+              builder: (context, commentsData, child) {
+                if (commentsData.parentComments.isEmpty) {
+                  return _noOneAddedACommentSplash();
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemCount: commentsData.parentComments.length + 1,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Container(
+                          color: Colors.white,
+                          width: double.infinity,
+                          padding: const EdgeInsets.only(top: 12.0, bottom: 10.0, left: 12.0, right: 6.0),
+                          margin: EdgeInsets.zero,
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Komentarze',
+                            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        );
+                      } else {
+                        final CommentModel parentComment = commentsData.parentComments[index - 1];
+                        final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
+                        return CommentWithRepliesItem(dealId, parentComment, subComments);
+                      }
+                    },
+                  );
+                }
+              },
+            );
+          }
+        }
+      },
     );
   }
 
@@ -87,4 +76,6 @@ class DealDetailsComments extends StatelessWidget {
       ),
     );
   }
+
+
 }

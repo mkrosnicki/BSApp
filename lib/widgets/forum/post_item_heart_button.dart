@@ -9,15 +9,16 @@ import 'package:provider/provider.dart';
 
 class PostItemHeartButton extends StatelessWidget {
 
-  final PostModel post;
+  final String postId;
 
-  const PostItemHeartButton(this.post);
+  const PostItemHeartButton(this.postId);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<Auth>(
       builder: (context, authData, child) => Consumer<Posts>(
         builder: (context, postsData, child) {
+          final PostModel post = postsData.findById(postId);
           final bool wasLikedByLoggedUser = post.wasLikedBy(authData.userId);
           return InkWell(
             onTap: () {

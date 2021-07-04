@@ -48,10 +48,10 @@ class DealsScreenAppBar extends StatelessWidget {
       leading: _addNewDealButton(context),
       title: const Text(
         'Okazje',
-        style: TextStyle(color: Colors.black, fontSize: 16),
+        style: TextStyle(color: Colors.white, fontSize: 16),
         textAlign: TextAlign.center,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: MyColorsProvider.BLUE,
       elevation: 0,
       actions: [
         _startSearchModeButton(context),
@@ -67,7 +67,7 @@ class DealsScreenAppBar extends StatelessWidget {
         margin: const EdgeInsets.only(right: 8.0),
         child: const Icon(
           CupertinoIcons.search,
-          color: Colors.black87,
+          color: Colors.white,
           size: 22,
         ),
       ),
@@ -99,7 +99,7 @@ class DealsScreenAppBar extends StatelessWidget {
         child: const TextButton(
           child: Text(
             'Dodaj',
-            style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 15),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ),
       ),

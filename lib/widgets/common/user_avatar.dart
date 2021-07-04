@@ -28,7 +28,7 @@ class UserAvatar extends StatelessWidget {
         maxRadius: radius,
         foregroundColor: Colors.white,
         backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
-        child: Text(username.substring(0, 1)),
+        child: Text(username.substring(0, 1).toUpperCase()),
       );
     }
     if (useImage) {

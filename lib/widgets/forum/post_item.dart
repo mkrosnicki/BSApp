@@ -9,9 +9,8 @@ import 'package:rxdart/rxdart.dart';
 
 class PostItem extends StatelessWidget {
   final PostModel post;
-  final PublishSubject<PostModel> postToReplySubject;
 
-  const PostItem(this.post, this.postToReplySubject);
+  const PostItem(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class PostItem extends StatelessWidget {
           PostItemUserInfo(post),
           if (post.quote != null) PostItemQuote(post),
           PostItemContent(post),
-          PostItemBottomBar(post, postToReplySubject),
+          PostItemBottomBar(post),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class TopicItemTitleLines extends StatelessWidget {
@@ -35,7 +36,7 @@ class TopicItemTitleLines extends StatelessWidget {
           Text(
             topic.adderName,
             style: Theme.of(context).textTheme.bodyText2.copyWith(
-                fontSize: 11, color: Colors.blue, fontWeight: FontWeight.w600),
+                fontSize: 11, color: MyColorsProvider.DEEP_BLUE, fontWeight: FontWeight.w600),
           ),
         ],
       ),

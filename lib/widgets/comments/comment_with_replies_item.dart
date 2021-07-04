@@ -1,30 +1,23 @@
-import 'dart:async';
-
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CommentWithRepliesItem extends StatefulWidget {
   final CommentModel comment;
   final List<CommentModel> subComments;
   final String dealId;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const CommentWithRepliesItem(this.dealId, this.comment, this.subComments, this.commentToReplySubject);
+  const CommentWithRepliesItem(this.dealId, this.comment, this.subComments);
 
   @override
   _CommentWithRepliesItemState createState() => _CommentWithRepliesItemState();
 }
 
 class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
-
   bool showAnswers;
-
-  StreamSubscription subscription;
 
   bool showReplies = false;
   bool repliesLoaded = false;
@@ -32,25 +25,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
   @override
   void initState() {
     showAnswers = false;
-    subscription = widget.commentToReplySubject.listen((value) {
-      if (value != null && value.id == widget.comment.id) {
-        _showAnswers(true);
-      }
-    });
     super.initState();
-  }
-
-
-  @override
-  void didChangeDependencies() {
-    // widget.dep
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    subscription = null;
-    super.dispose();
   }
 
   @override
@@ -61,42 +36,37 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Column(
         children: [
-          CommentItem(widget.comment, widget.dealId, widget.commentToReplySubject),
-          if (widget.comment.hasSubComments && !showReplies) GestureDetector(
-            // onTap: () => subComments.isNotEmpty ? _showAnswers(false) : _showAnswers(true),
-            onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
-            child: Container(
-              padding: const EdgeInsets.only(left: 50.0, top: 4.0, bottom: 6.0),
-              width: double.infinity,
-              color: Colors.white,
-              child: widget.comment.hasSubComments ? Text(
-                'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
-                style: const TextStyle(fontSize: 11, color: Colors.blueAccent),
-              ) : Container(),
+          CommentItem(widget.comment, widget.dealId),
+          if (_areSubCommentsPresentAndLoaded(subComments))
+            GestureDetector(
+              onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
+              child: Container(
+                padding: const EdgeInsets.only(left: 50.0, top: 2.0, bottom: 6.0),
+                width: double.infinity,
+                color: Colors.white,
+                child: Text(
+                  'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
+                  style: const TextStyle(fontSize: 10, color: Colors.blueAccent),
+                ),
+              ),
             ),
-          ),
-          // if (!subComments.isNotEmpty) Column(
-          //   children: widget.subComments
-          //       .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
-          //       .toList(),
-          // ),
-          if (showReplies && repliesLoaded) Column(
-            children: commentsProvider.getSubCommentsOf(widget.comment.id)
-                .map((reply) => CommentItem(reply, widget.dealId, widget.commentToReplySubject))
-                .toList(),
-          )
+          if (subComments.isNotEmpty)
+            Column(
+              children: commentsProvider
+                  .getSubCommentsOf(widget.comment.id)
+                  .map((reply) => CommentItem(reply, widget.dealId))
+                  .toList(),
+            )
         ],
       ),
     );
   }
 
-  void _showAnswers(bool show) {
-    setState(() {
-      showAnswers = show;
-    });
+  bool _areSubCommentsPresentAndLoaded(final List<CommentModel> subComments) {
+    return widget.comment.hasSubComments && subComments.isEmpty;
   }
 
-  void _showReplies(final Comments commentsProvider, final bool show) async {
+  Future<void> _showReplies(final Comments commentsProvider, final bool show) async {
     if (show) {
       await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
         setState(() {
@@ -111,5 +81,4 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
       });
     }
   }
-
 }

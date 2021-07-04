@@ -13,23 +13,21 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class TopicScreenPosts extends StatelessWidget {
   final TopicModel topic;
   final String postToScrollId;
-  final PublishSubject<PostModel> postToReplySubject;
 
-  const TopicScreenPosts(this.topic, this.postToScrollId, this.postToReplySubject);
+  const TopicScreenPosts(this.topic, this.postToScrollId);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<Posts>(
       builder: (context, postsData, child) {
         return ScrollablePositionedList.builder(
-          itemCount: postsData.posts.length + 1,
-          initialScrollIndex: _determineInitialIndex(postToScrollId, postsData.posts),
+          itemCount: postsData.topicPosts.length + 1,
+          initialScrollIndex: _determineInitialIndex(postToScrollId, postsData.topicPosts),
           itemBuilder: (context, index) {
             if (index == 0) {
               return TopicScreenTopicInfo(topic);
             } else {
-              return PostItem(
-                  postsData.posts[index - 1], postToReplySubject);
+              return PostItem(postsData.topicPosts[index - 1]);
             }
           },
         );

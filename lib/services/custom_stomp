@@ -58,7 +58,7 @@ class _WSStompConnector extends StringStompConnector {
 
   void _init() {
     _listen = _socket.stream.listen((data) {
-      print("Read $data");
+      // print("Read $data");
       if (data != null) {
         final String sdata = data.toString();
         if (sdata.isNotEmpty) onString(sdata);
@@ -76,7 +76,7 @@ class _WSStompConnector extends StringStompConnector {
 
   @override
   void writeString_(String string) {
-    print("Write $string");
+    // print("Write $string");
     _socket.sink.add(string);
   }
 

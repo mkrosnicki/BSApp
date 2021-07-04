@@ -1,17 +1,18 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/widgets/comments/comment_item_likes_string.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:provider/provider.dart';
 
 class CommentItemBottomSection extends StatelessWidget {
   final CommentModel comment;
-  final PublishSubject<CommentModel> commentToReplySubject;
 
-  const CommentItemBottomSection(this.comment, this.commentToReplySubject);
+  const CommentItemBottomSection(this.comment);
 
   @override
   Widget build(BuildContext context) {
+    final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(left: 42.0, top: 4.0),
@@ -36,7 +37,7 @@ class CommentItemBottomSection extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap: () => _startCommentReply(comment),
+            onTap: () => _startCommentReply(comment, replyState),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
@@ -50,7 +51,7 @@ class CommentItemBottomSection extends StatelessWidget {
     );
   }
 
-  void _startCommentReply(CommentModel comment) {
-    commentToReplySubject.add(comment);
+  void _startCommentReply(final CommentModel comment, final ReplyState replyState) {
+    replyState.setCommentToReply(comment);
   }
 }
