@@ -45,9 +45,12 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
             if (_isInitialized && replyState.hasPostToReply) {
               _setKeyboardVisible(true);
               return Container(
-                padding: const EdgeInsets.only(left: 14.0, right: 10.0),
-                height: 40,
-                color: MyColorsProvider.SUPER_LIGHT_GREY,
+                padding: const EdgeInsets.only(left: 14.0, right: 22.0, top: 6.0),
+                decoration: const BoxDecoration(
+                  border: MyStylingProvider.TOP_GREY_BORDER_THICK,
+                  color: Colors.white,
+                ),
+                height: 35,
                 child: Flex(
                   direction: Axis.horizontal,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +74,7 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
                       child: const Icon(
                         CupertinoIcons.clear,
                         color: MyColorsProvider.DEEP_BLUE,
-                        size: 19,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -91,50 +94,54 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
               minHeight: 50,
               maxHeight: 80,
             ),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
-              decoration: const BoxDecoration(
-                border: MyStylingProvider.TOP_GREY_BORDER_THICK,
-                color: Colors.white,
-              ),
-              child: Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Flexible(
-                    child: Stack(
-                      children: [
-                        TextField(
-                          minLines: 1,
-                          maxLines: 3,
-                          controller: textEditingController,
-                          focusNode: _textFocusNode,
-                          style: const TextStyle(fontSize: 13),
-                          decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
-                              .copyWith(hintText: 'Napisz post...'),
-                        ),
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Consumer<Auth>(
-                              builder: (context, authData, child) => InkWell(
-                                onTap: () => _addReply(context, authData.isAuthenticated),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Icon(
-                                    CupertinoIcons.chevron_right,
-                                    color: Colors.blue,
+            child: Consumer<ReplyState>(
+              builder: (context, rs, child) {
+                return Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+                  decoration: BoxDecoration(
+                    border: rs.hasPostToReply ? null : MyStylingProvider.TOP_GREY_BORDER_THICK,
+                    color: Colors.white,
+                  ),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Flexible(
+                        child: Stack(
+                          children: [
+                            TextField(
+                              minLines: 1,
+                              maxLines: 3,
+                              controller: textEditingController,
+                              focusNode: _textFocusNode,
+                              style: const TextStyle(fontSize: 13),
+                              decoration: MyStylingProvider.POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION
+                                  .copyWith(hintText: 'Napisz post...'),
+                            ),
+                            Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Consumer<Auth>(
+                                  builder: (context, authData, child) => InkWell(
+                                    onTap: () => _addReply(context, authData.isAuthenticated),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Icon(
+                                        CupertinoIcons.chevron_right,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),

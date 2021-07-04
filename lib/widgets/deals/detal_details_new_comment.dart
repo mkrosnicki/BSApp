@@ -22,12 +22,13 @@ class DealDetailsNewComment extends StatefulWidget {
 class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   final TextEditingController _textEditingController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
-
+  bool _isInitialized;
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
       Provider.of<ReplyState>(context, listen: false).clearState();
+      _isInitialized = true;
     });
     super.initState();
   }
@@ -38,7 +39,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
       children: [
         Consumer<ReplyState>(
           builder: (context, replyState, child) {
-            if (replyState.commentToReply != null) {
+            if (_isInitialized && replyState.hasCommentToReply) {
               _setKeyboardVisible(true);
               return Container(
                 padding: const EdgeInsets.only(left: 14.0, right: 22.0, top: 6.0),
@@ -92,7 +93,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0, bottom: 5.0),
                 decoration: BoxDecoration(
-                  border: rs.commentToReply == null ? MyStylingProvider.TOP_GREY_BORDER_THICK : null,
+                  border: rs.hasCommentToReply ? null : MyStylingProvider.TOP_GREY_BORDER_THICK,
                   color: Colors.white,
                 ),
                 child: Flex(
