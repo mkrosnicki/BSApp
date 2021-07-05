@@ -40,7 +40,7 @@ class _CommentScreenState extends State<CommentScreen> {
     return Scaffold(
       appBar: BaseAppBar(
         title: _screenTitle(arguments),
-        leading: const AppBarBackButton(Colors.black),
+        leading: const AppBarBackButton(Colors.white),
       ),
       body: Container(
         width: double.infinity,

@@ -29,11 +29,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white, fontSize: 18),
+        style: const TextStyle(color: Colors.white, fontSize: 17),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(50.0);
 }

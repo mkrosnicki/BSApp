@@ -46,7 +46,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
           onPress: () => _goUp(),
         ),
         actions: const [
-          AppBarCloseButton(Colors.black),
+          AppBarCloseButton(Colors.white),
         ],
       ),
       body: _selectedCategories.isEmpty

@@ -13,7 +13,7 @@ class ZeroAppBar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        // leading: const AppBarBackButton(Colors.black),
+        // leading: const AppBarBackButton(Colors.white),
         // bottom: AppBarBottomBorder(),
       ),
     );

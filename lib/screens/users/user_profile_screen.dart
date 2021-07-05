@@ -59,7 +59,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       width: 56,
                       height: 50,
                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: const AppBarBackButton(Colors.black),
+                      child: const AppBarBackButton(Colors.white),
                     ),
                     Consumer<CurrentUser>(
                       builder: (context, currentUser, child) {

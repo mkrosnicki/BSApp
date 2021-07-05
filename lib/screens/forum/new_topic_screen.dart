@@ -60,7 +60,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
       backgroundColor: Colors.white,
       appBar: BaseAppBar(
         title: 'Nowy temat',
-        leading: const AppBarCloseButton(Colors.black),
+        leading: const AppBarCloseButton(Colors.white),
         actions: [
           TextButton(
             onPressed: () {
@@ -70,7 +70,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
             },
             child: const Text(
               'Wyślij',
-              style: MyStylingProvider.TEXT_BLUE,
+              style: TextStyle(color: Colors.white),
             ),
           )
         ],

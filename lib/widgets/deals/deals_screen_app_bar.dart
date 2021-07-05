@@ -35,7 +35,7 @@ class DealsScreenAppBar extends StatelessWidget {
       leadingWidth: 0,
       centerTitle: true,
       title: _searchField(context),
-      backgroundColor: Colors.white,
+      backgroundColor: MyColorsProvider.PASTEL_BLUE,
       elevation: 0,
       actions: [_stopSearchModeButton()],
     );
@@ -51,7 +51,7 @@ class DealsScreenAppBar extends StatelessWidget {
         style: TextStyle(color: Colors.white, fontSize: 16),
         textAlign: TextAlign.center,
       ),
-      backgroundColor: MyColorsProvider.BLUE,
+      backgroundColor: MyColorsProvider.PASTEL_BLUE,
       elevation: 0,
       actions: [
         _startSearchModeButton(context),
@@ -81,7 +81,7 @@ class DealsScreenAppBar extends StatelessWidget {
         child: Text(
           'Anuluj',
           style: TextStyle(
-            color: MyColorsProvider.DEEP_BLUE,
+            color: Colors.white,
             fontSize: 12,
             // letterSpacing: 0.3,
           ),

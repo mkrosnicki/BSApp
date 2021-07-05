@@ -25,10 +25,10 @@ class _ForumScreenState extends State<ForumScreen> {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(85.0),
+          preferredSize: const Size.fromHeight(80.0),
           child: BaseAppBar(
             title: 'Forum',
-            leading: AppBarSearchTopicButton(),
+            leading: const AppBarSearchTopicButton(),
             bottom: DecoratedTabBar(
               tabBar: TabBar(
                 labelPadding: EdgeInsets.zero,
@@ -38,7 +38,6 @@ class _ForumScreenState extends State<ForumScreen> {
                 unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
                 onTap: (index) {
                   setState(() {
-                    print(index);
                     _selectedIndex = index;
                   });
                 },
@@ -48,7 +47,7 @@ class _ForumScreenState extends State<ForumScreen> {
                 ],
               ),
             ),
-            actions: [
+            actions: const [
               AppBarAddTopicButton(null),
             ],
           ),

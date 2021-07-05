@@ -19,7 +19,7 @@ class ForumCategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: BaseAppBar(
         title: topicCategory.name,
-        leading: const AppBarBackButton(Colors.black),
+        leading: const AppBarBackButton(Colors.white),
         actions: [
           AppBarAddTopicButton(topicCategory),
         ],

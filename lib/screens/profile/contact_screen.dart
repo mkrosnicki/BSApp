@@ -33,7 +33,7 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
         title: 'Kontakt',
       ),
       backgroundColor: Colors.white,

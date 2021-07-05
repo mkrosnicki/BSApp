@@ -45,7 +45,7 @@ class _FilterSelectionScreenState extends State<FilterSelectionScreen> {
       backgroundColor: Colors.white,
       appBar: BaseAppBar(
         title: 'Filtry i sortowanie',
-        leading: const AppBarCloseButton(Colors.black),
+        leading: const AppBarCloseButton(Colors.white),
         actions: [
           TextButton(
             onPressed: _clearFilters,

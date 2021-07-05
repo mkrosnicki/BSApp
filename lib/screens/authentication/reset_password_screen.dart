@@ -37,7 +37,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       backgroundColor: Colors.white,
       appBar: const BaseAppBar(
         title: 'Resetowanie hasła',
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -13,7 +13,7 @@ class ColoredTab extends StatelessWidget {
     return Container(
       color: isSelected ? MyColorsProvider.PASTEL_BLUE : MyColorsProvider.PASTEL_LIGHT_BLUE,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       alignment: Alignment.center,
       child: Text(label),
     );
