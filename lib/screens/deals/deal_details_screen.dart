@@ -34,9 +34,9 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
   @override
   void initState() {
     _colorAnimationController = AnimationController(vsync: this, duration: Duration.zero);
-    _colorTween = ColorTween(begin: Colors.transparent, end: Colors.white).animate(_colorAnimationController);
-    _iconColorTween = ColorTween(begin: Colors.white, end: Colors.black).animate(_colorAnimationController);
-    _titleColorTween = ColorTween(begin: Colors.transparent, end: Colors.black).animate(_colorAnimationController);
+    _colorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.PASTEL_BLUE).animate(_colorAnimationController);
+    _iconColorTween = ColorTween(begin: Colors.white, end: Colors.white).animate(_colorAnimationController);
+    _titleColorTween = ColorTween(begin: Colors.transparent, end: Colors.white).animate(_colorAnimationController);
     _borderColorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
         .animate(_colorAnimationController);
     super.initState();

@@ -11,7 +11,7 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      color: MyColorsProvider.DEEP_BLUE,
+      color: MyColorsProvider.PASTEL_BLUE,
       textColor: Colors.white,
       disabledColor: MyColorsProvider.LIGHT_GRAY,
       onPressed: function,
