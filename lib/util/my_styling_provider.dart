@@ -80,6 +80,6 @@ class MyStylingProvider {
   static const TextStyle TEXT_WHITE = TextStyle(color: Colors.white);
   static const TextStyle TEXT_BLUE = TextStyle(color: Colors.blue);
 
-  static const TextStyle SELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 13);
-  static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 13);
+  static const TextStyle SELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
+  static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
 }

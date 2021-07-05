@@ -12,16 +12,17 @@ class UserProfileStatisticsInfo extends StatefulWidget {
 }
 
 class _UserProfileStatisticsInfoState extends State<UserProfileStatisticsInfo> {
-  static const statNameStyle = TextStyle(fontSize: 10, color: Colors.grey);
-  static const activeMenuItemStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
+  static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey);
+  static const activeMenuItemStyle = TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: MyColorsProvider.GREEN);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      width: MediaQuery.of(context).size.width,
+      color: Colors.white,
+      padding: const EdgeInsets.only(left: 90.0, top: 4.0, bottom: 4.0),
       child: Flex(
         direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildMenuItem('punkty \nza okazje', widget.user.pointsForDeals.toString(), 1, false, true),
           _buildMenuItem('polubione \nwypowiedzi', widget.user.likesCount.toString(), 2, false, true),

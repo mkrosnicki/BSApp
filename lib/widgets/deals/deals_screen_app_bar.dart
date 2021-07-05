@@ -99,7 +99,7 @@ class DealsScreenAppBar extends StatelessWidget {
         child: const TextButton(
           child: Text(
             'Dodaj',
-            style: TextStyle(color: Colors.white, fontSize: 15),
+            style: TextStyle(color: Colors.white, fontSize: 14),
           ),
         ),
       ),

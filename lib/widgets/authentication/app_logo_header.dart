@@ -8,7 +8,7 @@ class AppLogoHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: MyColorsProvider.PASTEL_BLUE,
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,

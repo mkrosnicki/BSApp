@@ -18,19 +18,6 @@ class MyProfileHeader extends StatelessWidget {
       child: Column(
         children: [
           MyProfileAvatar(user),
-          Container(
-            margin: const EdgeInsets.only(bottom: 2.0),
-            child: GestureDetector(
-              onTap: () => {},
-              child: Text(
-                user.username,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

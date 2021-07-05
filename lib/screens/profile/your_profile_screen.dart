@@ -10,6 +10,7 @@ import 'package:BSApp/widgets/profile/app_bar_logout_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_header.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_list.dart';
 import 'package:BSApp/widgets/profile/my_profile_statistics_info.dart';
+import 'package:BSApp/widgets/profile/my_profile_username.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,14 +54,16 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         builder: (context, currentUserData, child) {
                           return Container(
                             color: MyColorsProvider.BACKGROUND_COLOR,
+                            padding: const EdgeInsets.only(top: 12.0),
                             child: ListView(
                               shrinkWrap: true,
                               children: [
+                                MyProfileUsername(currentUserData.me),
                                 Stack(
                                   children: [
-                                    Container(height: 135,),
+                                    Container(height: 110,),
                                     Positioned(
-                                      top: 32.0,
+                                      top: 24.0,
                                       child: Container(
                                         width: MediaQuery.of(context).size.width,
                                         color: Colors.white,
@@ -73,7 +76,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                                       child: Container(
                                         // color: Colors.green,
                                         alignment: Alignment.centerLeft,
-                                        padding: const EdgeInsets.only(top: 8.0),
                                         child: MyProfileHeader(currentUserData.me),
                                       ),
                                     )

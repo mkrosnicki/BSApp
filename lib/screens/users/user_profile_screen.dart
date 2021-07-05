@@ -1,6 +1,7 @@
 import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
@@ -11,6 +12,7 @@ import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
 import 'package:BSApp/widgets/user/user_profile_scrollable_menu.dart';
 import 'package:BSApp/widgets/user/user_profile_statistics_info.dart';
+import 'package:BSApp/widgets/user/user_profile_username.dart';
 import 'package:BSApp/widgets/user/user_screen_admin_actions_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,16 +63,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: Flex(
                     direction: Axis.vertical,
                     children: [
-                      Flex(
-                        direction: Axis.horizontal,
+                      UserProfileUsername(_user),
+                      Stack(
                         children: [
-                          Flexible(
-                            flex: 35,
-                            child: UserProfileMainInfo(_user),
+                          Container(
+                            height: 120,
                           ),
-                          Flexible(
-                            flex: 65,
+                          Positioned(
+                            top: 22.0,
                             child: UserProfileStatisticsInfo(_user),
+                          ),
+                          Positioned(
+                            child: UserProfileMainInfo(_user),
                           ),
                         ],
                       ),
