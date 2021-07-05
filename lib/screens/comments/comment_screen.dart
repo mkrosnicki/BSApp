@@ -103,7 +103,7 @@ class _CommentScreenState extends State<CommentScreen> {
     return Container(
       width: double.infinity,
       color: Colors.white,
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      margin: const EdgeInsets.only(bottom: 10.0),
       padding: const EdgeInsets.only(top: 12.0, left: 8.0, bottom: 12.0),
       child: Row(
         children: [

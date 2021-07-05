@@ -29,7 +29,7 @@ class TopicScreenHeartButton extends StatelessWidget {
                 size: 22,
                 color: isObservedTopic
                     ? MyColorsProvider.RED_SHADY
-                    : Colors.black),
+                    : Colors.white),
           ),
         );
       },
