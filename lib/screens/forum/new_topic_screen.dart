@@ -8,6 +8,7 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,6 +83,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -186,11 +188,12 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                     ),
                   ),
                 ),
+                const FormFieldTitle('Tytuł'),
                 TextFormField(
                   cursorColor: Colors.black,
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 13),
-                  decoration: textFieldDecoration.copyWith(hintText: 'Tytuł'),
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł'),
                   controller: _topicTitleController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
@@ -206,6 +209,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 const Padding(
                   padding: EdgeInsets.all(12.0),
                 ),
+                const FormFieldTitle('Treść'),
                 TextFormField(
                   minLines: 12,
                   maxLines: 12,
@@ -213,7 +217,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   textInputAction: TextInputAction.next,
                   style: const TextStyle(fontSize: 13),
                   onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-                  decoration: textFieldDecoration.copyWith(hintText: 'Napisz coś...'),
+                  decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Napisz coś...'),
                   controller: _topicContentController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 20) {
