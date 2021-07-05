@@ -13,7 +13,7 @@ class MyProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(top: 10.0),
       child: Column(
         children: [

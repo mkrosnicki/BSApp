@@ -56,22 +56,45 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                             child: ListView(
                               shrinkWrap: true,
                               children: [
-                                Flex(
-                                  direction: Axis.horizontal,
+                                Stack(
                                   children: [
-                                    Flexible(
-                                      flex: 35,
-                                      child: Padding(
+                                    Container(height: 120,),
+                                    Positioned(
+                                      top: 32.0,
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        color: Colors.white,
+                                        alignment: Alignment.centerRight,
+                                        child: MyProfileStatisticsInfo(currentUserData.me),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 8.0,
+                                      child: Container(
+                                        // color: Colors.green,
+                                        alignment: Alignment.centerLeft,
                                         padding: const EdgeInsets.only(top: 8.0),
                                         child: MyProfileHeader(currentUserData.me),
                                       ),
-                                    ),
-                                    Flexible(
-                                      flex: 65,
-                                      child: MyProfileStatisticsInfo(currentUserData.me),
-                                    ),
+                                    )
                                   ],
                                 ),
+                                // Flex(
+                                //   direction: Axis.horizontal,
+                                //   children: [
+                                //     Flexible(
+                                //       flex: 35,
+                                //       child: Padding(
+                                //         padding: const EdgeInsets.only(top: 8.0),
+                                //         child: MyProfileHeader(currentUserData.me),
+                                //       ),
+                                //     ),
+                                //     Flexible(
+                                //       flex: 65,
+                                //       child: MyProfileStatisticsInfo(currentUserData.me),
+                                //     ),
+                                //   ],
+                                // ),
                                 const FormFieldDivider(),
                                 const FormFieldDivider(),
                                 const MyProfileOptionsList(),

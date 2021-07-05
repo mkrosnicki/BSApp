@@ -27,7 +27,7 @@ class MyProfileAvatar extends StatelessWidget {
             username: user.username,
             imagePath: user.imagePath,
             image: user.avatar,
-            radius: 40,
+            radius: 45,
           ),
         ),
         Positioned(
