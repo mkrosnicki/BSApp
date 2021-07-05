@@ -21,9 +21,9 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
       height: 36,
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
-        ),
+        // border: Border(
+        //   bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
+        // ),
       ),
       width: double.infinity,
       alignment: Alignment.bottomCenter,
@@ -46,7 +46,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
         onPressed: () => _setIndex(index),
         shape: selectedIndex == index
             ? const Border(
-                bottom: BorderSide(color: MyColorsProvider.DEEP_BLUE),
+                bottom: BorderSide(color: MyColorsProvider.DEEP_BLUE, width: 1.2),
               )
             : const Border(),
         child: Text(

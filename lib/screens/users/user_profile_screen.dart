@@ -78,7 +78,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                         ],
                       ),
-                      const FormFieldDivider(),
                       UserProfileScrollableMenu(_contentIdSubject),
                       UserProfileContent(userId, _contentIdSubject),
                     ],
