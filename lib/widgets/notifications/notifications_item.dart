@@ -37,10 +37,14 @@ class NotificationItem extends StatelessWidget {
                 _navigateToSource(context);
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 4.0),
                 padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
                 width: double.infinity,
-                color: wasClicked ? Colors.white : Colors.blue.shade50,
+                decoration: BoxDecoration(
+                  color: wasClicked ? Colors.white : Colors.blue.shade50,
+                  border: const Border(
+                    bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+                  ),
+                ),
                 // color: Colors.white,
                 child: Flex(
                   direction: Axis.horizontal,

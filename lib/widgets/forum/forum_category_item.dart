@@ -13,10 +13,11 @@ class ForumCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 6.0),
       child: FlatButton(
         padding: EdgeInsets.zero,
-        shape: const Border(bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
+        shape: const Border(
+          bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+        ),
         onPressed: () => _navigateToForum(context),
         child: ListTile(
           tileColor: Colors.white,

@@ -17,7 +17,7 @@ class MyProfileUsername extends StatelessWidget {
         Wrap(
           children: [
             const Text(
-              'Dołączył(a) ',
+              'Dołączyłaś(eś) ',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey,

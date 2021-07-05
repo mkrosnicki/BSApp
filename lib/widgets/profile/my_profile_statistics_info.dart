@@ -21,7 +21,7 @@ class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 94.0, top: 4.0, bottom: 4.0),
+      padding: const EdgeInsets.only(left: 64.0, top: 4.0, bottom: 4.0),
       width: double.infinity,
       child: Flex(
         direction: Axis.horizontal,
