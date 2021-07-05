@@ -49,7 +49,7 @@ class MyProfileOptionItem extends StatelessWidget {
                 ),
             ],
           ),
-          trailing: const Icon(Icons.chevron_right),
+          trailing: const Icon(Icons.chevron_right, color: MyColorsProvider.DEEP_BLUE,),
           focusColor: Colors.grey,
         ),
       ),

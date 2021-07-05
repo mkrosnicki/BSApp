@@ -29,10 +29,10 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         if (auth.isAuthenticated) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: BaseAppBar(
+            appBar: const BaseAppBar(
               title: 'Twój profil',
               actions: [
-                const AppBarLogoutButton(),
+                AppBarLogoutButton(),
               ],
             ),
             body: SafeArea(
@@ -58,7 +58,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                               children: [
                                 Stack(
                                   children: [
-                                    Container(height: 120,),
+                                    Container(height: 135,),
                                     Positioned(
                                       top: 32.0,
                                       child: Container(
