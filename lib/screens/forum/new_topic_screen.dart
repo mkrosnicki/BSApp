@@ -8,6 +8,7 @@ import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:BSApp/widgets/common/form_field_title.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
@@ -85,6 +86,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const FormFieldDivider(),
+                const FormFieldTitle('Temat'),
                 GestureDetector(
                   onTap: () {
                     FocusScope.of(context).unfocus();
@@ -150,10 +153,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                     margin: const EdgeInsets.only(bottom: 14.0, top: 6.0),
                     decoration: const BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR),
-                      ),
+                      color: MyColorsProvider.SUPER_LIGHT_GREY,
+                      borderRadius: BorderRadius.all(Radius.circular(4.0),),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
