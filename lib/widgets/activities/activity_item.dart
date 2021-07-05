@@ -37,10 +37,14 @@ class ActivityItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToSource(context),
       child: Container(
-        margin: const EdgeInsets.only(top: 8.0),
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
         width: double.infinity,
-        color: Colors.white,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+          ),
+        ),
         child: Flex(
           direction: Axis.horizontal,
           children: [

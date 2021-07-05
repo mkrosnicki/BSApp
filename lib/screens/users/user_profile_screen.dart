@@ -71,6 +71,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           Positioned(
                             top: 22.0,
+                            right: 0,
                             child: UserProfileStatisticsInfo(_user),
                           ),
                           Positioned(

@@ -29,11 +29,15 @@ class UserProfileAddedTopics extends StatelessWidget {
               return Consumer<Topics>(
                 builder: (context, topicsData, child) {
                   return topicsData.topics.isNotEmpty
-                      ? ListView.builder(
-                          itemBuilder: (context, index) =>
-                              TopicItem(topicsData.topics[index]),
-                          itemCount: topicsData.topics.length,
-                        )
+                      ? Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListView.builder(
+                            itemBuilder: (context, index) =>
+                                TopicItem(topicsData.topics[index]),
+                            itemCount: topicsData.topics.length,
+                          ),
+                      )
                       : _buildNoAddedDealsSplashView();
                 },
               );
