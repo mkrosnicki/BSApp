@@ -46,7 +46,7 @@ class ObservedSearchesView extends StatelessWidget {
             },
           );
         } else {
-          return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n swoje wyszukiwania');
+          return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n zapisane wyszukiwania');
         }
       },
     );
