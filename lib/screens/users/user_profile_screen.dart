@@ -2,9 +2,9 @@ import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
-import 'package:BSApp/widgets/common/zero_app_bar.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
 import 'package:BSApp/widgets/user/user_profile_main_info.dart';
 import 'package:BSApp/widgets/user/user_profile_scrollable_menu.dart';
@@ -31,7 +31,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
-      appBar: const ZeroAppBar(),
+      appBar: BaseAppBar(
+        title: _user.username,
+        leading: const AppBarBackButton(Colors.white),
+        actions: [
+          Consumer<CurrentUser>(
+            builder: (context, currentUser, child) {
+              return currentUser.isAdmin
+                  ? UserScreenAdminActionsButton(_user, _updateScreen) : Container();
+            },
+          ),
+        ],
+      ),
       body: FutureBuilder(
           future: _initUser(context, userId),
           builder: (context, snapshot) {
@@ -96,7 +107,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   void _updateScreen() {
-    setState(() {
-    });
+    setState(() {});
   }
 }
