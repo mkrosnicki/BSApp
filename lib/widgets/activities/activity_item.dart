@@ -162,17 +162,18 @@ class ActivityItem extends StatelessWidget {
   }
 
   void _navigateToComment(BuildContext context) {
-    final bool isParent = activity.relatedCommentParentId != null;
     Navigator.of(context).pushNamed(
       CommentScreen.routeName,
-      arguments: CommentScreenArguments(
-        activity.relatedDealId,
-        activity.relatedDealTitle,
-        isParent ? null : activity.relatedCommentId,
-        isParent ? activity.relatedCommentId : activity.relatedCommentParentId,
-        null,
-        activity.activityType,
-      ),
+      arguments: CommentScreenArguments(activity.relatedDealId, activity.relatedDealTitle,
+          activity.relatedCommentId, activity.relatedCommentParentId, null, activity.activityType),
+      // arguments: CommentScreenArguments(
+      //   activity.relatedDealId,
+      //   activity.relatedDealTitle,
+      //   isParent ? null : activity.relatedCommentId,
+      //   isParent ? activity.relatedCommentId : activity.relatedCommentParentId,
+      //   null,
+      //   activity.activityType,
+      // ),
     );
   }
 }

@@ -1,7 +1,3 @@
-import 'package:BSApp/models/comment_model.dart';
-import 'package:BSApp/models/deal_model.dart';
-import 'package:BSApp/models/post_model.dart';
-import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/util/date_util.dart';
 
 import 'activity_type.dart';
@@ -48,6 +44,7 @@ class ActivityModel {
   }
 
   static ActivityModel fromJson(dynamic activitySnapshot) {
+    print(activitySnapshot);
     return ActivityModel(
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],

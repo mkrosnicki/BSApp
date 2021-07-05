@@ -47,7 +47,7 @@ class _CommentScreenState extends State<CommentScreen> {
         margin: const EdgeInsets.symmetric(),
         padding: const EdgeInsets.all(0),
         child: FutureBuilder(
-          future: Provider.of<Comments>(context, listen: false).fetchCommentWithSubComments(parentCommentId),
+          future: Provider.of<Comments>(context, listen: false).fetchCommentWithSubComments(parentCommentId ?? commentToScrollId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());
@@ -63,8 +63,8 @@ class _CommentScreenState extends State<CommentScreen> {
                     Expanded(
                       child: Consumer<Comments>(
                         builder: (context, commentsData, child) {
-                          _comment = commentsData.findById(parentCommentId);
-                          _subComments = commentsData.getSubCommentsOf(parentCommentId);
+                          _comment = commentsData.findById(parentCommentId ?? commentToScrollId);
+                          _subComments = commentsData.getSubCommentsOf(parentCommentId ?? commentToScrollId);
                           return ScrollablePositionedList.builder(
                             itemCount: _subComments.length + 1,
                             initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment, _subComments),
