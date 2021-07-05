@@ -1,7 +1,9 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/profile/app_bar_logout_button.dart';
@@ -49,27 +51,32 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     } else {
                       return Consumer<CurrentUser>(
                         builder: (context, currentUserData, child) {
-                          return ListView(
-                            shrinkWrap: true,
-                            children: [
-                              Flex(
-                                direction: Axis.horizontal,
-                                children: [
-                                  Flexible(
-                                    flex: 35,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: MyProfileHeader(currentUserData.me),
+                          return Container(
+                            color: MyColorsProvider.BACKGROUND_COLOR,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: [
+                                Flex(
+                                  direction: Axis.horizontal,
+                                  children: [
+                                    Flexible(
+                                      flex: 35,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 8.0),
+                                        child: MyProfileHeader(currentUserData.me),
+                                      ),
                                     ),
-                                  ),
-                                  Flexible(
-                                    flex: 65,
-                                    child: MyProfileStatisticsInfo(currentUserData.me),
-                                  ),
-                                ],
-                              ),
-                              const MyProfileOptionsList(),
-                            ],
+                                    Flexible(
+                                      flex: 65,
+                                      child: MyProfileStatisticsInfo(currentUserData.me),
+                                    ),
+                                  ],
+                                ),
+                                const FormFieldDivider(),
+                                const FormFieldDivider(),
+                                const MyProfileOptionsList(),
+                              ],
+                            ),
                           );
                         },
                       );

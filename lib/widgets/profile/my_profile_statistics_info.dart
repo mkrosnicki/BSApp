@@ -14,16 +14,14 @@ class MyProfileStatisticsInfo extends StatefulWidget {
 
 class _MyProfileStatisticsInfoState extends State<MyProfileStatisticsInfo> {
   static const statNameStyle = TextStyle(fontSize: 11, color: Colors.grey,);
-  static const countStyle = TextStyle(fontSize: 13, fontWeight: FontWeight.w600, height: 1.2);
+  static const countStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w600, height: 1.2, color: MyColorsProvider.DEEP_BLUE);
 
   int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 40,
       padding: const EdgeInsets.symmetric(vertical: 12.0),
-      color: Colors.white,
       width: double.infinity,
       child: Flex(
         direction: Axis.horizontal,

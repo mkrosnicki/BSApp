@@ -1,5 +1,6 @@
 
 import 'package:BSApp/models/user_details_model.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/profile/my_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,37 +13,22 @@ class MyProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      width: double.infinity,
       padding: const EdgeInsets.only(top: 10.0),
-      child: Flex(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          Flexible(
-            child: Flex(
-              direction: Axis.vertical,
-              children: [
-                MyProfileAvatar(user),
-                Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 2.0),
-                      child: GestureDetector(
-                        onTap: () => {},
-                        child: Text(
-                          user.username,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+          MyProfileAvatar(user),
+          Container(
+            margin: const EdgeInsets.only(bottom: 2.0),
+            child: GestureDetector(
+              onTap: () => {},
+              child: Text(
+                user.username,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
                 ),
-              ],
+              ),
             ),
           ),
         ],
