@@ -1,6 +1,7 @@
 import 'package:BSApp/models/user_details_model.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/form_field_divider.dart';
@@ -33,7 +34,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final userId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       appBar: BaseAppBar(
-        title: _user.username,
+        title: 'Profil użytkownika',
         leading: const AppBarBackButton(Colors.white),
         actions: [
           Consumer<CurrentUser>(
@@ -56,7 +57,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               } else {
                 return Container(
                   padding: const EdgeInsets.symmetric(vertical: 14.0),
-                  color: Colors.white,
+                  color: MyColorsProvider.BACKGROUND_COLOR,
                   child: Flex(
                     direction: Axis.vertical,
                     children: [
