@@ -32,10 +32,10 @@ class _ForumScreenState extends State<ForumScreen> {
             bottom: DecoratedTabBar(
               tabBar: TabBar(
                 labelPadding: EdgeInsets.zero,
-                indicatorColor: MyColorsProvider.PASTEL_LIGHT_BLUE,
+                indicatorColor: Colors.transparent,
                 labelColor: Colors.white,
                 labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
-                unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
+                unselectedLabelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
                 onTap: (index) {
                   setState(() {
                     _selectedIndex = index;
