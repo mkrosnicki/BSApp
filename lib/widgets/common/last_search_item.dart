@@ -18,7 +18,7 @@ class LastSearchItem extends StatelessWidget {
         color: Colors.white,
         alignment: Alignment.center,
         padding: const EdgeInsets.all(12.0),
-        margin: const EdgeInsets.only(bottom: 4.0),
+        margin: const EdgeInsets.only(bottom: 6.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,7 +42,7 @@ class LastSearchItem extends StatelessWidget {
                       if (filterSettings.phrase == null)
                         const Text(
                           'Brak wyszukiwanej frazy',
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 12, height: 1.4),
                         ),
                     ],
                   ),
@@ -53,6 +53,7 @@ class LastSearchItem extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 11,
                       color: Colors.black54,
+                      height: 1.2
                     ),
                   ),
               ],
@@ -61,7 +62,7 @@ class LastSearchItem extends StatelessWidget {
               onTap: removeFunction,
               child: const Icon(
                 CupertinoIcons.clear,
-                size: 16,
+                size: 18,
                 color: Colors.blue,
               ),
             ),
