@@ -1,11 +1,13 @@
 import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/authentication/main_auth_screen.dart';
+import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_list.dart';
 import 'package:BSApp/widgets/profile/my_profile_statistics_info.dart';
 import 'package:BSApp/widgets/profile/profile_user_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +25,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       builder: (context, auth, child) {
         if (auth.isAuthenticated) {
           return Scaffold(
+            appBar: BaseAppBar(
+              title: 'Twój profil',
+              actions: [
+                Icon(CupertinoIcons.lock, color: Colors.white,)
+              ],
+            ),
             backgroundColor: Colors.white,
             body: SafeArea(
               child: FutureBuilder(
-                future: Provider.of<CurrentUser>(context, listen: false).fetchMe(),
+                future:
+                    Provider.of<CurrentUser>(context, listen: false).fetchMe(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
