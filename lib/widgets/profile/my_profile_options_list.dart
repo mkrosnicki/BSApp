@@ -9,6 +9,7 @@ import 'package:BSApp/screens/profile/your_activity_screen.dart';
 import 'package:BSApp/screens/profile/your_deals_screen.dart';
 import 'package:BSApp/screens/profile/your_topics_screen.dart';
 import 'package:BSApp/services/custom_confirm.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/profile/logout_button.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
@@ -39,13 +40,15 @@ class MyProfileOptionsList extends StatelessWidget {
       const MyProfileOptionItem(title: 'Regulamin', route: RegulationsScreen.routeName),
       const MyProfileOptionItem(title: 'Polityka prywatności', route: PrivacyPolicyScreen.routeName),
       const MyProfileOptionItem(title: 'O aplikacji', route: AboutAppScreen.routeName),
-      const LogoutButton(),
     ];
-    return ListView.builder(
-      itemBuilder: (context, index) => menuOptions[index],
-      itemCount: menuOptions.length,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
+    return Container(
+      color: MyColorsProvider.BACKGROUND_COLOR,
+      child: ListView.builder(
+        itemBuilder: (context, index) => menuOptions[index],
+        itemCount: menuOptions.length,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+      ),
     );
   }
 

@@ -4,10 +4,10 @@ import 'package:BSApp/widgets/profile/my_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileUserInfo extends StatelessWidget {
+class MyProfileHeader extends StatelessWidget {
   final UserDetailsModel user;
 
-  const ProfileUserInfo(this.user);
+  const MyProfileHeader(this.user);
 
   @override
   Widget build(BuildContext context) {

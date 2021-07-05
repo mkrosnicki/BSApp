@@ -2,9 +2,11 @@ import 'package:BSApp/screens/profile/about_app_screen.dart';
 import 'package:BSApp/screens/profile/contact_screen.dart';
 import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
 import 'package:BSApp/screens/profile/regulations_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/authentication/app_logo_header.dart';
 import 'package:BSApp/widgets/authentication/main_auth_screen_header.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
+import 'package:BSApp/widgets/common/zero_app_bar.dart';
 import 'package:BSApp/widgets/profile/my_profile_option_item.dart';
 import 'package:BSApp/widgets/profile/my_profile_options_header.dart';
 import 'package:flutter/material.dart';
@@ -24,25 +26,14 @@ class MainAuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: MyColorsProvider.BACKGROUND_COLOR,
+      appBar: const ZeroAppBar(),
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.05),
-            child: AppLogoHeader(),
-          ),
-          Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
-            child: const Text(
-              'Aby korzystać ze wszystkich funkcjonalności aplikacji zaloguj się lub załóż konto.',
-              style: TextStyle(fontSize: 12, height: 1.4),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          const AppLogoHeader(),
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
-            padding: const EdgeInsets.only(bottom: 20.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: PrimaryButton('Zaloguj się lub załóż konto', () => AuthScreenProvider.showLoginScreen(context)),
           ),
           Flexible(
