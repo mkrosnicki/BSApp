@@ -3,6 +3,7 @@ import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/users.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/user/user_profile_content.dart';
@@ -37,8 +38,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         actions: [
           Consumer<CurrentUser>(
             builder: (context, currentUser, child) {
-              return currentUser.isAdmin
-                  ? UserScreenAdminActionsButton(_user, _updateScreen) : Container();
+              return currentUser.isAdmin ? UserScreenAdminActionsButton(_user, _updateScreen) : Container();
             },
           ),
         ],
@@ -54,41 +54,30 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: ServerErrorSplash(),
                 );
               } else {
-                return Stack(
-                  children: [
-                    Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        UserProfileMainInfo(_user),
-                        UserProfileStatisticsInfo(_user),
-                        UserProfileScrollableMenu(_contentIdSubject),
-                        UserProfileContent(userId, _contentIdSubject),
-                      ],
-                    ),
-                    Container(
-                      // color: Colors.green,
-                      width: 56,
-                      height: 50,
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: const AppBarBackButton(Colors.white),
-                    ),
-                    Consumer<CurrentUser>(
-                      builder: (context, currentUser, child) {
-                        return currentUser.isAdmin
-                            ? Positioned(
-                                right: 0,
-                                child: Container(
-                                  // color: Colors.green,
-                                  width: 70,
-                                  height: 35,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: UserScreenAdminActionsButton(_user, _updateScreen),
-                                ),
-                              )
-                            : Container();
-                      },
-                    ),
-                  ],
+                return Container(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  color: Colors.white,
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Flexible(
+                            flex: 35,
+                            child: UserProfileMainInfo(_user),
+                          ),
+                          Flexible(
+                            flex: 65,
+                            child: UserProfileStatisticsInfo(_user),
+                          ),
+                        ],
+                      ),
+                      const FormFieldDivider(),
+                      UserProfileScrollableMenu(_contentIdSubject),
+                      UserProfileContent(userId, _contentIdSubject),
+                    ],
+                  ),
                 );
               }
             }

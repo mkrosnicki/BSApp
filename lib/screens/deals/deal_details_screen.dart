@@ -125,7 +125,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
             ],
             title: Text(
               deal.title,
-              style: TextStyle(color: _titleColorTween.value, fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(color: _titleColorTween.value, fontSize: 16),
             ),
             iconTheme: IconThemeData(
               color: _iconColorTween.value,

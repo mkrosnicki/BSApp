@@ -12,13 +12,13 @@ class UserProfileMainInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const userInfoTextStyle = TextStyle(
-      fontSize: 12,
+      fontSize: 10,
       color: Colors.grey,
     );
     return Container(
       color: Colors.white,
       // height: 100,
-      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0, left: 5.0),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +33,7 @@ class UserProfileMainInfo extends StatelessWidget {
                     username: user.username,
                     image: user.avatar,
                     imagePath: user.imagePath,
-                    radius: 45,
+                    radius: 30,
                   ),
                 ),
                 Flex(
@@ -47,7 +47,7 @@ class UserProfileMainInfo extends StatelessWidget {
                         child: Text(
                           user.username,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -56,7 +56,7 @@ class UserProfileMainInfo extends StatelessWidget {
                     Wrap(
                       children: [
                         const Text(
-                          'Dołączył(a) ',
+                          'Od ',
                           style: userInfoTextStyle,
                         ),
                         Text(
