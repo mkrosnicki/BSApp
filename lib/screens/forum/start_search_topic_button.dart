@@ -11,7 +11,7 @@ class StartSearchTopicButton extends StatelessWidget {
       onPressed: () => _clearNotifications(context),
       child: const Text(
         'Szukaj',
-        style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 13),
+        style: TextStyle(color: Colors.white, fontSize: 13),
       ),
     );
   }

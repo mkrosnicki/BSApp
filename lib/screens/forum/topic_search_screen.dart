@@ -33,11 +33,12 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         elevation: 0,
         title: _createSearchBox(context),
         leadingWidth: 40.0,
-        backgroundColor: Colors.white,
+        toolbarHeight: 50.0,
+        backgroundColor: MyColorsProvider.PASTEL_BLUE,
         automaticallyImplyLeading: false,
         bottom: const AppBarBottomBorder(),
         leading: AppBarBackButton(
-          Colors.black87,
+          Colors.white,
           function: () => Navigator.of(context).pop(true),
         ),
         actions: [
@@ -69,7 +70,6 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
                         child: Row(
                           children: [
                             Text(_mentionedString(topicsData.searchResults[index].matchingPosts.length), style: const TextStyle(fontSize: 12, color: Colors.grey)),
-                            // Text('  ...zobacz', style: TextStyle(fontSize: 12, color: Colors.blue)),
                           ],
                         ),
                       ),
@@ -97,10 +97,6 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _refreshNotifications(BuildContext context) async {
-    await Provider.of<Notifications>(context, listen: false).fetchMyNotifications();
   }
 
   Widget _createSearchBox(BuildContext context) {
