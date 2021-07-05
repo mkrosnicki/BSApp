@@ -42,7 +42,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
       appBar: BaseAppBar(
         title: 'Wybierz kategorię',
         leading: AppBarButton(
-          icon: MyIconsProvider.BACK_BLACK_ICON,
+          icon: MyIconsProvider.BACK_WHITE_ICON,
           onPress: () => _goUp(),
         ),
         actions: const [

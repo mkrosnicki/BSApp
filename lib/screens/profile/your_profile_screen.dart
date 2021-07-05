@@ -54,7 +54,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                         builder: (context, currentUserData, child) {
                           return Container(
                             color: MyColorsProvider.BACKGROUND_COLOR,
-                            padding: const EdgeInsets.only(top: 12.0),
+                            padding: const EdgeInsets.only(top: 18.0),
                             child: ListView(
                               shrinkWrap: true,
                               children: [

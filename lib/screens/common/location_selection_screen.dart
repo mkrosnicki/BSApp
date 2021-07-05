@@ -44,10 +44,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
         title: 'Lokalizacja',
         leading: AppBarButton(
           onPress: () => _goUp(),
-          icon: MyIconsProvider.BACK_BLACK_ICON,
+          icon: MyIconsProvider.BACK_WHITE_ICON,
         ),
-        actions: [
-          const AppBarCloseButton(Colors.white),
+        actions: const [
+          AppBarCloseButton(Colors.white),
         ],
       ),
       body: _selectedVoivodeship == null
