@@ -12,7 +12,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
         title: 'Polityka prywatności',
       ),
       body: Text('Polityka prywatności'),

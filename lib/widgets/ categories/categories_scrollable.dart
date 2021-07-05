@@ -22,7 +22,7 @@ class _CategoriesScrollableState extends State<CategoriesScrollable> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.only(top: 4.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: SizedBox(
         height: 95,
         width: double.infinity,

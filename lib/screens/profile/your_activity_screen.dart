@@ -16,7 +16,7 @@ class YourActivityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
         title: 'Twoja aktywność',
       ),
       body: FutureBuilder(

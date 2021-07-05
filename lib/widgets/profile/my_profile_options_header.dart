@@ -1,3 +1,4 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class MyProfileOptionsHeader extends StatelessWidget {
@@ -11,10 +12,11 @@ class MyProfileOptionsHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
       child: Text(
-        title,
+        title.toUpperCase(),
         style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
+          fontSize: 12,
+          color: MyColorsProvider.DEEP_BLUE,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

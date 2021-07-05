@@ -30,7 +30,7 @@ class _TopicScreenState extends State<TopicScreen> {
     return Scaffold(
       appBar: BaseAppBar(
         title: topic.title,
-        leading: const AppBarBackButton(Colors.black),
+        leading: const AppBarBackButton(Colors.white),
         actions: [
           Consumer<CurrentUser>(
             builder: (context, currentUser, child) {

@@ -13,41 +13,45 @@ class MyProfileOptionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      shape: const Border(
-          bottom: BorderSide(
-              color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5)),
-      onPressed: () {
-        _preformAction(context);
-      },
-      child: ListTile(
-        title: Wrap(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 12),
-            ),
-            if (number != null)
-              Container(
-                decoration: BoxDecoration(
-                  color: MyColorsProvider.SUPER_LIGHT_GREY,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                margin: const EdgeInsets.only(left: 6.0),
-                padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 4.0),
-                child: Text(
-                  number.toString(),
-                  style: const TextStyle(
-                      fontSize: 10,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-          ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 0.0),
+      child: FlatButton(
+        padding: EdgeInsets.zero,
+        shape: const Border(
+          bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
         ),
-        trailing: const Icon(Icons.chevron_right),
-        focusColor: Colors.grey,
+        onPressed: () {
+          _preformAction(context);
+        },
+        child: ListTile(
+          tileColor: Colors.white,
+          title: Wrap(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(fontSize: 12),
+              ),
+              if (number != null)
+                Container(
+                  decoration: BoxDecoration(
+                    color: MyColorsProvider.SUPER_LIGHT_GREY,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  margin: const EdgeInsets.only(left: 6.0),
+                  padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 4.0),
+                  child: Text(
+                    number.toString(),
+                    style: const TextStyle(fontSize: 10, color: Colors.black87, fontWeight: FontWeight.w400),
+                  ),
+                ),
+            ],
+          ),
+          trailing: const Icon(
+            Icons.chevron_right,
+            color: MyColorsProvider.DEEP_BLUE,
+          ),
+          focusColor: Colors.grey,
+        ),
       ),
     );
   }

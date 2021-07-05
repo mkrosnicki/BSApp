@@ -24,7 +24,7 @@ class AppBarAddTopicButton extends StatelessWidget {
               AuthScreenProvider.showLoginScreen(context);
             }
           },
-          child: const Icon(CupertinoIcons.plus, color: Colors.black,),
+          child: const Icon(CupertinoIcons.plus, color: Colors.white,),
         );
       },
     );

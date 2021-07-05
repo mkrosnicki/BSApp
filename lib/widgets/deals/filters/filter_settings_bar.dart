@@ -15,7 +15,7 @@ class FilterSettingsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 11.0),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -32,7 +32,7 @@ class FilterSettingsBar extends StatelessWidget {
               behavior: HitTestBehavior.translucent,
               child: Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: [
                     const Text(

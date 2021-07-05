@@ -20,7 +20,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleSpacing: 8,
-      backgroundColor: MyColorsProvider.BLUE,
+      backgroundColor: MyColorsProvider.PASTEL_BLUE,
       elevation: 0,
       bottom: bottom ?? const AppBarBottomBorder(),
       automaticallyImplyLeading: false,
@@ -29,11 +29,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(color: Colors.white, fontSize: 17),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(50.0);
 }

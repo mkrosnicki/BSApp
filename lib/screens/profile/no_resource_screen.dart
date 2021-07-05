@@ -10,7 +10,7 @@ class NoResourceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
         title: 'Błąd',
       ),
       backgroundColor: Colors.white,

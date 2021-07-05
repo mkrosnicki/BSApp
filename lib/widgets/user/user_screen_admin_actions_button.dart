@@ -17,7 +17,7 @@ class UserScreenAdminActionsButton extends StatelessWidget {
       onTap: () => _openAdminActions(context),
       child: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Icon(CupertinoIcons.ellipsis_vertical, size: 22, color: Colors.black),
+        child: Icon(CupertinoIcons.ellipsis_vertical, size: 22, color: Colors.white),
       ),
     );
   }

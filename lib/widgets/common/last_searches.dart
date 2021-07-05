@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/services/last_searches_util_service.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/common/no_old_searches_info.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +44,12 @@ class _LastSearchesState extends State<LastSearches> {
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        'Ostatnie wyszukiwania',
+                        'OSTATNIE WYSZUKIWANIA',
                         style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w600),
+                            fontSize: 11, color: MyColorsProvider.DEEP_BLUE),
                       ),
                     );
                   } else {

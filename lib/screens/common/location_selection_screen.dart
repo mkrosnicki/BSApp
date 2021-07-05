@@ -1,6 +1,7 @@
 import 'package:BSApp/models/city_model.dart';
 import 'package:BSApp/models/voivodeship_model.dart';
 import 'package:BSApp/providers/locations.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_close_button.dart';
@@ -44,10 +45,10 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
         title: 'Lokalizacja',
         leading: AppBarButton(
           onPress: () => _goUp(),
-          icon: MyIconsProvider.BACK_BLACK_ICON,
+          icon: MyIconsProvider.BACK_WHITE_ICON,
         ),
-        actions: [
-          const AppBarCloseButton(Colors.black),
+        actions: const [
+          AppBarCloseButton(Colors.white),
         ],
       ),
       body: _selectedVoivodeship == null
@@ -80,6 +81,9 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               if (index == 0) {
                 return FlatButton(
                   onPressed: _selectAllCitiesInVoivodeship,
+                  shape: const Border(
+                    bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+                  ),
                   child: ListTile(
                     title: Text(
                       'Całe województwo ${_selectedVoivodeship.name}',
@@ -91,6 +95,9 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
               } else {
                 return FlatButton(
                   onPressed: () => _selectCity(cities[index - 1]),
+                  shape: const Border(
+                    bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+                  ),
                   child: ListTile(
                     title: Text(
                       cities[index - 1].name,
@@ -115,6 +122,9 @@ class _LocationSelectionScreenState extends State<LocationSelectionScreen> {
           child: ListView.builder(
             itemBuilder: (context, index) => FlatButton(
               onPressed: () => _selectVoivodeship(voivodeships[index]),
+              shape: const Border(
+                bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+              ),
               child: ListTile(
                 title: Text(
                   voivodeships[index].name,

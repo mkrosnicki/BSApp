@@ -1,3 +1,4 @@
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
 
 class ZeroAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,11 +10,11 @@ class ZeroAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(0.0),
       child: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: MyColorsProvider.PASTEL_BLUE,
         elevation: 0,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        // leading: const AppBarBackButton(Colors.black),
+        // leading: const AppBarBackButton(Colors.white),
         // bottom: AppBarBottomBorder(),
       ),
     );

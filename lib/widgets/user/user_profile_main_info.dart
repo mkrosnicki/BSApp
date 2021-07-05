@@ -11,17 +11,10 @@ class UserProfileMainInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const userInfoTextStyle = TextStyle(
-      fontSize: 12,
-      color: Colors.grey,
-    );
     return Container(
-      color: Colors.white,
-      // height: 100,
-      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0, left: 5.0),
       child: Flex(
         direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: Flex(
@@ -40,31 +33,6 @@ class UserProfileMainInfo extends StatelessWidget {
                   direction: Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 2.0),
-                      child: GestureDetector(
-                        onTap: () => {},
-                        child: Text(
-                          user.username,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Wrap(
-                      children: [
-                        const Text(
-                          'Dołączył(a) ',
-                          style: userInfoTextStyle,
-                        ),
-                        Text(
-                          DateUtil.getFormatted(user.registeredAt),
-                          style: userInfoTextStyle,
-                        ),
-                      ],
-                    ),
                     if (user.isBanned) const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
                       child: BanBadge(),

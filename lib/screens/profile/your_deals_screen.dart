@@ -15,7 +15,7 @@ class YourDealsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        leading: AppBarBackButton(Colors.black),
+        leading: AppBarBackButton(Colors.white),
         title: 'Dodane okazje',
       ),
       body: FutureBuilder(
