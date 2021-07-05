@@ -13,7 +13,7 @@ class AppBarSearchTopicButton extends StatelessWidget {
       ),
       child: const Icon(
         CupertinoIcons.search,
-        color: Colors.black,
+        color: Colors.white,
         size: 22,
       ),
     );

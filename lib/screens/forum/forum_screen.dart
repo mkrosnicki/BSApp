@@ -3,6 +3,7 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_topic_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
+import 'package:BSApp/widgets/common/colored_tab.dart';
 import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
 import 'package:BSApp/widgets/forum/forum_categories_view.dart';
 import 'package:BSApp/widgets/forum/forum_my_topic_view.dart';
@@ -16,27 +17,34 @@ class ForumScreen extends StatefulWidget {
 }
 
 class _ForumScreenState extends State<ForumScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(85.0),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(85.0),
           child: BaseAppBar(
             title: 'Forum',
             leading: AppBarSearchTopicButton(),
             bottom: DecoratedTabBar(
               tabBar: TabBar(
-                labelPadding: EdgeInsets.all(10.0),
-                indicatorColor: MyColorsProvider.DEEP_BLUE,
-                labelColor: Colors.black,
+                labelPadding: EdgeInsets.zero,
+                indicatorColor: MyColorsProvider.PASTEL_LIGHT_BLUE,
+                labelColor: Colors.white,
                 labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
                 unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
+                onTap: (index) {
+                  setState(() {
+                    print(index);
+                    _selectedIndex = index;
+                  });
+                },
                 tabs: [
-                  Text('Kategorie'),
-                  Text('Obserwowane tematy'),
+                  ColoredTab('Kategorie', _selectedIndex == 0),
+                  ColoredTab('Obserwowane tematy', _selectedIndex == 1),
                 ],
               ),
             ),

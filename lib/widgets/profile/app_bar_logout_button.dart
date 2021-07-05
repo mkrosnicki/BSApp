@@ -10,8 +10,8 @@ class AppBarLogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _logout(context),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+      child: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Icon(CupertinoIcons.square_arrow_left, color: Colors.white,),
       ),
     );
