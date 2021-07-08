@@ -25,13 +25,10 @@ class ForumCategoriesView extends StatelessWidget {
               } else {
                 return Consumer<TopicCategories>(
                   builder: (context, topicCategoriesData, child) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Column(
-                        children: topicCategoriesData.topicCategories
-                            .map((e) => ForumCategoryItem(e))
-                            .toList(),
-                      ),
+                    return Column(
+                      children: topicCategoriesData.topicCategories
+                          .map((e) => ForumCategoryItem(e))
+                          .toList(),
                     );
                   },
                 );

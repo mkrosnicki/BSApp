@@ -46,7 +46,7 @@ class ObservedDealsView extends StatelessWidget {
             },
           );
         } else {
-          return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n swoje okazje');
+          return const LoginToContinueSplash('Zaloguj się, aby zobaczyć\n swoje ulubione okazje');
         }
       },
     );

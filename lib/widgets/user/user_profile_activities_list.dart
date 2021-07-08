@@ -28,10 +28,14 @@ class UserProfileActivitiesList extends StatelessWidget {
               return Consumer<Activities>(
                 builder: (context, activitiesData, child) {
                   return activitiesData.activities.isNotEmpty
-                      ? ListView.builder(
-                          itemBuilder: (context, index) => ActivityItem(activitiesData.activities[index]),
-                          itemCount: activitiesData.activities.length,
-                        )
+                      ? Container(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        color: Colors.white,
+                        child: ListView.builder(
+                            itemBuilder: (context, index) => ActivityItem(activitiesData.activities[index]),
+                            itemCount: activitiesData.activities.length,
+                          ),
+                      )
                       : _buildNoAddedDealsSplashView();
                 },
               );
