@@ -20,7 +20,7 @@ class CommentItemHeartButton extends StatelessWidget {
       builder: (context, authData, child) => Consumer<Comments>(
         builder: (context, commentsData, child) {
           final CommentModel comment = commentsData.findById(commentId);
-          final bool wasVotedByLoggedUser = comment.hasPositiveVoteFrom(authData.userId);
+          final bool wasVotedByLoggedUser = comment.wasLikedBy(authData.userId);
           return Container(
             alignment: Alignment.topCenter,
             child: InkWell(

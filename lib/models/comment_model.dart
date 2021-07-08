@@ -15,8 +15,7 @@ class CommentModel {
   final String repliedUsername;
   final DateTime addedAt;
   final DealsUsersInfo adderInfo;
-  final List<String> positiveVoters;
-  final List<String> negativeVoters;
+  final List<String> likers;
 
   CommentModel(
       {this.id,
@@ -29,8 +28,7 @@ class CommentModel {
       this.repliedUsername,
       this.addedAt,
       this.adderInfo,
-      this.positiveVoters,
-      this.negativeVoters});
+      this.likers});
 
   static List<CommentModel> fromJsonList(List<dynamic> commentsSnapshot) {
     final List<CommentModel> comments = [];
@@ -55,17 +53,12 @@ class CommentModel {
       subCommentsCount: commentSnapshot['subCommentsCount'],
       addedAt: DateUtil.parseFromStringToUtc(commentSnapshot['addedAt'] as String),
       adderInfo: DealsUsersInfo.fromJson(commentSnapshot['adderInfo']),
-      positiveVoters: [...commentSnapshot['positiveVoters'] as List],
-      negativeVoters: [...commentSnapshot['negativeVoters'] as List],
+      likers: [...commentSnapshot['likers'] as List],
     );
   }
 
-  bool hasPositiveVoteFrom(String userId) {
-    return positiveVoters.any((element) => element == userId);
-  }
-
-  bool hasNegativeVoteFrom(String userId) {
-    return negativeVoters.any((element) => element == userId);
+  bool wasLikedBy(String userId) {
+    return likers.any((element) => element == userId);
   }
 
   bool isParent() {
@@ -94,6 +87,6 @@ class CommentModel {
 
   @override
   String toString() {
-    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount, likers: ${positiveVoters.length}}';
+    return 'CommentModel{id: $id, content: $content, subCommentsCount: $subCommentsCount, likers: ${likers.length}}';
   }
 }
