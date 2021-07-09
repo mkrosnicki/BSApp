@@ -8,6 +8,7 @@ import 'package:BSApp/models/deal_type.dart';
 import 'package:BSApp/models/location_type.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/common/category_selection_screen.dart';
+import 'package:BSApp/services/custom_confirm.dart';
 import 'package:BSApp/services/custom_info.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
@@ -104,17 +105,40 @@ class _OccasionFormState extends State<OccasionForm> {
     });
   }
 
-  Future<void> _takePicture() async {
+  Future<void> _choosePicture(BuildContext context) async {
+    final useCamera = await confirmDialog(
+      context,
+      textOK: 'Użyj aparatu',
+      textCancel: 'Wybierz z galerii',
+      title: 'Dodaj zdjęcie',
+      textContent: 'W jaki chcesz dodać zdjęcie?',
+    );
+
+    final PickedFile pickedFile = useCamera ? await _takeFromCamera() : await _takeFromGallery();
+    if (pickedFile != null) {
+      setState(() {
+        _newDeal.image = File(pickedFile.path);
+        _newDeal.imageUrl = null;
+      });
+    }
+
+    return Future.value();
+  }
+
+  Future<PickedFile> _takeFromCamera() async {
     final imageFile = await ImagePicker().getImage(
       source: ImageSource.camera,
-      maxWidth: 600,
+      maxWidth: 300,
     );
-    if (imageFile == null) {
-      return;
-    }
-    setState(() {
-      _newDeal.image = File(imageFile.path);
-    });
+    return imageFile == null ? Future.value() : Future.value(imageFile);
+  }
+
+  Future<PickedFile> _takeFromGallery() async {
+    final imageFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 300,
+    );
+    return imageFile == null ? Future.value() : Future.value(imageFile);
   }
 
   @override
@@ -185,7 +209,7 @@ class _OccasionFormState extends State<OccasionForm> {
 
   Widget _pictureSection() {
     return GestureDetector(
-      onTap: _takePicture,
+      onTap:  () => _choosePicture(context),
       child: Container(
         width: double.infinity,
         height: 120,

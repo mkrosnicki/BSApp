@@ -81,22 +81,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                                     )
                                   ],
                                 ),
-                                // Flex(
-                                //   direction: Axis.horizontal,
-                                //   children: [
-                                //     Flexible(
-                                //       flex: 35,
-                                //       child: Padding(
-                                //         padding: const EdgeInsets.only(top: 8.0),
-                                //         child: MyProfileHeader(currentUserData.me),
-                                //       ),
-                                //     ),
-                                //     Flexible(
-                                //       flex: 65,
-                                //       child: MyProfileStatisticsInfo(currentUserData.me),
-                                //     ),
-                                //   ],
-                                // ),
                                 const FormFieldDivider(),
                                 const FormFieldDivider(),
                                 const MyProfileOptionsList(),
