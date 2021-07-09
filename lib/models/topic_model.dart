@@ -14,8 +14,6 @@ class TopicModel {
   final bool pinned;
   final List<String> categories;
   final int numberOfPosts;
-  final List<String> positiveVoters;
-  final List<String> negativeVoters;
 
   TopicModel({
     @required this.id,
@@ -26,8 +24,6 @@ class TopicModel {
     @required this.pinned,
     @required this.categories,
     @required this.numberOfPosts,
-    @required this.positiveVoters,
-    @required this.negativeVoters,
   });
 
   static List<TopicModel> fromJsonList(List<dynamic> topicsSnapshot) {
@@ -53,17 +49,7 @@ class TopicModel {
         ...(topicSnapshot['categories'] as List).map((e) => e['name']).toList()
       ],
       numberOfPosts: topicSnapshot['numberOfPosts'],
-      positiveVoters: [...topicSnapshot['positiveVoters'] as List],
-      negativeVoters: [...topicSnapshot['negativeVoters'] as List],
     );
-  }
-
-  bool hasPositiveVoteFrom(String topicId, String userId) {
-    return positiveVoters.any((element) => element == userId);
-  }
-
-  bool hasNegativeVoteFrom(String topicId, String userId) {
-    return negativeVoters.any((element) => element == userId);
   }
 
   String get adderName {
@@ -89,7 +75,7 @@ class TopicModel {
 
   @override
   String toString() {
-    return 'TopicModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, title: $title, content: $content, isPinned: $pinned, categories: $categories, numberOfPosts: $numberOfPosts, positiveVoters: $positiveVoters, negativeVoters: $negativeVoters}';
+    return 'TopicModel{id: $id, addedAt: $addedAt, adderInfo: $adderInfo, title: $title, content: $content, isPinned: $pinned, categories: $categories, numberOfPosts: $numberOfPosts}';
   }
 
   @override
