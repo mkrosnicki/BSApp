@@ -27,41 +27,52 @@ class DealDetailsComments extends StatelessWidget {
           } else {
             return Consumer<Comments>(
               builder: (context, commentsData, child) {
-                if (commentsData.parentComments.isEmpty) {
-                  return _noOneAddedACommentSplash();
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemCount: commentsData.parentComments.length + 1,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Container(
-                          color: Colors.white,
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 12.0, bottom: 10.0, left: 12.0, right: 6.0),
-                          margin: EdgeInsets.zero,
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            'Komentarze',
-                            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        );
-                      } else {
-                        final CommentModel parentComment = commentsData.parentComments[index - 1];
-                        final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
-                        return CommentWithRepliesItem(dealId, parentComment, subComments);
-                      }
-                    },
-                  );
-                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _commentsHeader(),
+                    _commentsSection(commentsData)
+                  ],
+                );
               },
             );
           }
         }
       },
     );
+  }
+
+  Widget _commentsHeader() {
+    return Container(
+      margin: const EdgeInsets.only(top: 6.0),
+      padding: const EdgeInsets.all(14.0),
+      child: const Text(
+        'KOMENTARZE',
+        style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 12),
+      ),
+    );
+  }
+
+  Widget _commentsSection(final Comments commentsData) {
+    if (commentsData.parentComments.isEmpty) {
+      return _noOneAddedACommentSplash();
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemCount: commentsData.parentComments.length + 1,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Container();
+          } else {
+            final CommentModel parentComment = commentsData.parentComments[index - 1];
+            final List<CommentModel> subComments = commentsData.getSubCommentsOf(parentComment.id);
+            return CommentWithRepliesItem(dealId, parentComment, subComments);
+          }
+        },
+      );
+    }
   }
 
   Widget _noOneAddedACommentSplash() {
@@ -76,6 +87,4 @@ class DealDetailsComments extends StatelessWidget {
       ),
     );
   }
-
-
 }
