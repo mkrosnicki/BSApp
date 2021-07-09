@@ -26,7 +26,6 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   UserDetailsModel _user;
-  bool _isInitialized = false;
 
   final PublishSubject<int> _contentIdSubject = PublishSubject<int>();
 
