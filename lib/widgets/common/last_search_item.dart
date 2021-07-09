@@ -1,5 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,14 @@ class LastSearchItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(DealSearchResultScreen.routeName, arguments: filterSettings),
       child: Container(
-        color: Colors.white,
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(12.0),
-        margin: const EdgeInsets.only(bottom: 6.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 14.0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

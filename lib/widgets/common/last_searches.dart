@@ -49,7 +49,10 @@ class _LastSearchesState extends State<LastSearches> {
                       child: const Text(
                         'OSTATNIE WYSZUKIWANIA',
                         style: TextStyle(
-                            fontSize: 11, color: MyColorsProvider.DEEP_BLUE),
+                          fontSize: 12,
+                          color: MyColorsProvider.DEEP_BLUE,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     );
                   } else {
