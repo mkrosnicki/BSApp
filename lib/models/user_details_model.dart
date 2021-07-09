@@ -18,6 +18,8 @@ class UserDetailsModel {
   final int pointsForDeals;
   final int likesCount;
   final double activityPerDay;
+  final bool receiveEmails;
+  final bool hideAvatar;
 
   UserDetailsModel(
       {this.id,
@@ -31,7 +33,10 @@ class UserDetailsModel {
       this.imagePath,
       this.pointsForDeals,
       this.likesCount,
-      this.activityPerDay});
+      this.activityPerDay,
+      this.receiveEmails,
+      this.hideAvatar,
+      });
 
   static UserDetailsModel fromJson(dynamic userSnapshot) {
     final registeredAt = userSnapshot['registeredAt'] as String;
@@ -51,6 +56,8 @@ class UserDetailsModel {
       imagePath: userSnapshot['imagePath'],
       likesCount: userSnapshot['likesCount'],
       activityPerDay: userSnapshot['activityPerDay'],
+      receiveEmails: userSnapshot['receiveEmails'],
+      hideAvatar: userSnapshot['hideAvatar'],
     );
   }
 

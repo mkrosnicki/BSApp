@@ -1,9 +1,11 @@
+import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/form_field_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AccountSettingsScreen extends StatefulWidget {
   static const routeName = '/account-settings';
@@ -13,7 +15,6 @@ class AccountSettingsScreen extends StatefulWidget {
 }
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,26 +24,34 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
         title: 'Ustawienia konta',
       ),
       backgroundColor: MyColorsProvider.BACKGROUND_COLOR,
-      body: false ? Container() : _optionsList(),
+      body: Consumer<CurrentUser>(
+        builder: (context, currentUser, child) {
+          return _optionsList(currentUser);
+        },
+      ),
     );
   }
 
-  Widget _optionsList() {
+  Widget _optionsList(final CurrentUser currentUser) {
     final menuOptions = [
       FormFieldDivider(),
       _sectionTitle('Profil'),
       _optionTile(
         'Ukryj zdjęcie profilowe',
         'Zaznaczenie tej opcji automatycznie usunie Twoje zdjęcie z bazy.',
-        false,
-        () {},
+        currentUser.me.hideAvatar,
+        () {
+          Provider.of<CurrentUser>(context, listen: false).updateHideMyPictureSetting(!currentUser.me.hideAvatar);
+        },
       ),
       _sectionTitle('Ustawienia e-mail'),
       _optionTile(
         'Nie otrzymuj maili z aplikacji',
         'Blokuje wysyłanie opcjonalnych maili (np. o nowych okazjach)',
-        true,
-        () {},
+        !currentUser.me.receiveEmails,
+        () {
+          Provider.of<CurrentUser>(context, listen: false).updateReceiveEmailsSetting(!currentUser.me.receiveEmails);
+        },
       ),
     ];
     return ListView.builder(
@@ -90,7 +99,10 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 CupertinoIcons.checkmark,
                 color: MyColorsProvider.DEEP_BLUE,
               )
-            : Container(width: 0, height: 0,),
+            : Container(
+                width: 0,
+                height: 0,
+              ),
         focusColor: Colors.grey,
       ),
     );

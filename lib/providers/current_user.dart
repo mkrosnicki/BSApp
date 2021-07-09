@@ -54,6 +54,24 @@ class CurrentUser with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateHideMyPictureSetting(bool hide) async {
+    final updateDto = {
+      'hideAvatar': hide,
+    };
+    final responseBody = await _apiProvider.patch('/users/me/', updateDto, token: _token);
+    _me = UserDetailsModel.fromJson(responseBody);
+    notifyListeners();
+  }
+
+  Future<void> updateReceiveEmailsSetting(bool receiveEmails) async {
+    final updateDto = {
+      'receiveEmails': receiveEmails,
+    };
+    final responseBody = await _apiProvider.patch('/users/me/', updateDto, token: _token);
+    _me = UserDetailsModel.fromJson(responseBody);
+    notifyListeners();
+  }
+
   Future<void> updateNotificationsTimestamp() async {
     final updateNotificationsTimestampDto = {'notificationsSeenAtUpdate': true};
     final responseBody = await _apiProvider.patch('/users/me/', updateNotificationsTimestampDto, token: _token);
