@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StartSearchTopicButton extends StatelessWidget {
+
+  Function onClick;
+
+  StartSearchTopicButton(this.onClick);
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => _clearNotifications(context),
+      onPressed: () => onClick(),
       child: const Text(
         'Szukaj',
         style: TextStyle(color: Colors.white, fontSize: 13),
       ),
     );
-  }
-
-  void _clearNotifications(BuildContext context) {
-    Provider.of<Notifications>(context, listen: false).deleteMyNotifications();
   }
 }

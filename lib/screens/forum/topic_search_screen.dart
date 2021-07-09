@@ -42,7 +42,7 @@ class _TopicSearchScreenState extends State<TopicSearchScreen> {
           function: () => Navigator.of(context).pop(true),
         ),
         actions: [
-          StartSearchTopicButton(),
+          StartSearchTopicButton(() => _searchForPhrase(_searchTopicTextController.text)),
         ],
       ),
       body: _loaded ? _resultsView(context) : _buildNoTopicsFoundSplashView(),
