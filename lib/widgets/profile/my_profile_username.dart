@@ -11,28 +11,31 @@ class MyProfileUsername extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(user.username, style: const TextStyle(color: Colors.black87, fontSize: 18),),
-        Wrap(
-          children: [
-            const Text(
-              'Dołączyłaś(eś) ',
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.grey,
+    return Container(
+      padding: const EdgeInsets.only(top: 18.0),
+      child: Column(
+        children: [
+          Text(user.username, style: const TextStyle(color: Colors.black87, fontSize: 18),),
+          Wrap(
+            children: [
+              const Text(
+                'Dołączyłaś(eś) ',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-            Text(
-              DateUtil.getFormatted(user.registeredAt),
-              style: const TextStyle(
-                fontSize: 11,
-                color: Colors.grey,
+              Text(
+                DateUtil.getFormatted(user.registeredAt),
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
