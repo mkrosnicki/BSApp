@@ -8,6 +8,9 @@ class CategoryModel {
   CategoryModel({this.id, this.name, this.description, this.subCategories});
 
   static CategoryModel fromJson(dynamic categorySnapshot) {
+    if (categorySnapshot == null) {
+      return null;
+    }
     return CategoryModel(
       id: categorySnapshot['id'],
       name: categorySnapshot['name'],

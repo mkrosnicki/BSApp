@@ -208,7 +208,7 @@ class FilterSettings {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {
       'phrase': phrase,
-      'category': category.toJson(),
+      'category': category?.toJson(),
       'ageTypes': ageTypes.map((e) => AgeTypeHelper.asString(e)).toList(),
       'showActiveOnly': showActiveOnly,
       'showInternetOnly': showInternetOnly,

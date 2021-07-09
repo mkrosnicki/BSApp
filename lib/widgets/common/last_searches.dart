@@ -20,8 +20,6 @@ class _LastSearchesState extends State<LastSearches> {
   Future<void> _initCookies() async {
     _cachedFilterSettings =
         await LastSearchesUtilService.getCachedFilterSettings();
-    final logger = Logger();
-    logger.i(_cachedFilterSettings);
   }
 
   @override
