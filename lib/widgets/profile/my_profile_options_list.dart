@@ -2,6 +2,7 @@ import 'package:BSApp/providers/auth.dart';
 import 'package:BSApp/screens/authentication/change_password_screen.dart';
 import 'package:BSApp/screens/deals/deals_screen.dart';
 import 'package:BSApp/screens/profile/about_app_screen.dart';
+import 'package:BSApp/screens/profile/account_settings_screen.dart';
 import 'package:BSApp/screens/profile/contact_screen.dart';
 import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
 import 'package:BSApp/screens/profile/regulations_screen.dart';
@@ -28,7 +29,7 @@ class MyProfileOptionsList extends StatelessWidget {
       const MyProfileOptionsHeader('Ustawienia'),
       // const MyProfileOptionItem(title: 'Edytuj profil', route: '/favourites'),
       const MyProfileOptionItem(title: 'Zmień hasło', route: ChangePasswordScreen.routeName),
-      const MyProfileOptionItem(title: 'Ustawienia e-mail', route: '/favourites'),
+      const MyProfileOptionItem(title: 'Konto', route: AccountSettingsScreen.routeName),
       MyProfileOptionItem(
         title: 'Usuń konto',
         route: DealsScreen.routeName,

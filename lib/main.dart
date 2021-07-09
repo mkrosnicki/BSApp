@@ -31,6 +31,7 @@ import 'package:BSApp/screens/forum/topic_search_screen.dart';
 import 'package:BSApp/screens/main_screen.dart';
 import 'package:BSApp/screens/notifications/notifications_screen.dart';
 import 'package:BSApp/screens/profile/about_app_screen.dart';
+import 'package:BSApp/screens/profile/account_settings_screen.dart';
 import 'package:BSApp/screens/profile/contact_screen.dart';
 import 'package:BSApp/screens/profile/no_resource_screen.dart';
 import 'package:BSApp/screens/profile/privacy_policy_screen.dart';
@@ -176,6 +177,7 @@ class MyApp extends StatelessWidget {
           ContactScreen.routeName: (ctx) => ContactScreen(),
           TopicSearchScreen.routeName: (ctx) => TopicSearchScreen(),
           NoResourceScreen.routeName: (ctx) => NoResourceScreen(),
+          AccountSettingsScreen.routeName: (ctx) => AccountSettingsScreen(),
         },
       ),
     );
