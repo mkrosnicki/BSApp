@@ -17,7 +17,7 @@ class DealDetailsActions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 16.0, bottom: 10.0),
+            margin: const EdgeInsets.only(top: 20.0, bottom: 10.0),
             child: const Text(
               'Ocena',
               style:

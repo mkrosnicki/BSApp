@@ -14,7 +14,7 @@ class DealDetailsLinkSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 16.0),
+                margin: const EdgeInsets.only(top: 24.0),
                 child: const Text(
                   'Link do okazji',
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),

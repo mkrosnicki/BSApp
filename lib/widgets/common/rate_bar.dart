@@ -25,7 +25,7 @@ class RateBar extends StatelessWidget {
       this.isBig);
 
   void _initDimensions() {
-    maxHeight = isBig ? 30 : 22.0;
+    maxHeight = isBig ? 38.0 : 22.0;
     barHeight = maxHeight * 0.7;
   }
 
