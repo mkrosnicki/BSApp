@@ -31,6 +31,7 @@ class MyStylingProvider {
       borderSide: BorderSide(color: MyColorsProvider.SUPER_LIGHT_GREY),
       borderRadius: BorderRadius.all(Radius.circular(10.0)),
     ),
+    hintStyle: TextStyle(color: Colors.black87)
   );
 
   static const InputDecoration POST_COMMENT_BOTTOM_TEXT_FIELD_DECORATION = InputDecoration(

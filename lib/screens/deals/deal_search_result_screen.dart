@@ -135,7 +135,7 @@ class _DealSearchResultScreenState extends State<DealSearchResultScreen> {
                   padding: EdgeInsets.all(0.0),
                   child: Icon(
                     CupertinoIcons.search,
-                    color: Colors.black54,
+                    color: Colors.black87,
                     size: 15,
                   ),
                 ),
