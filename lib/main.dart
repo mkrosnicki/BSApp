@@ -113,6 +113,11 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (context, auth, previousUsers) => previousUsers..update(auth.token, previousUsers.user),
         ),
+        ChangeNotifierProxyProvider<Auth, Emails>(
+          create: (context) => Emails.empty(),
+          lazy: true,
+          update: (context, auth, previousEmails) => previousEmails..update(auth.token),
+        ),
         ChangeNotifierProvider(
           create: (_) => Categories(),
         ),
@@ -124,9 +129,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ReplyState(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Emails(),
         ),
       ],
       child: MaterialApp(
