@@ -189,11 +189,11 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.only(top: 2.0),
                       child: const FacebookButton(),
                     ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 0.0),
-                      child: const GoogleButton(),
-                    ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   margin: const EdgeInsets.only(top: 0.0),
+                    //   child: const GoogleButton(),
+                    // ),
                   ],
                 ),
               ),
