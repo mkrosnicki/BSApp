@@ -4,6 +4,7 @@ import 'package:BSApp/providers/categories.dart';
 import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/providers/deals.dart';
+import 'package:BSApp/providers/emails.dart';
 import 'package:BSApp/providers/locations.dart';
 import 'package:BSApp/providers/notifications.dart';
 import 'package:BSApp/providers/posts.dart';
@@ -123,6 +124,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ReplyState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Emails(),
         ),
       ],
       child: MaterialApp(

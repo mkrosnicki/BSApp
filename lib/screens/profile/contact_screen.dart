@@ -1,3 +1,4 @@
+import 'package:BSApp/providers/emails.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
@@ -8,6 +9,7 @@ import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactScreen extends StatefulWidget {
   static const routeName = '/contact';
@@ -79,7 +81,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             }
                           },
                           onSaved: (value) {
-                            _contactData['topic'] = value;
+                            // _contactData['topic'] = value;
                           },
                         ),
                       ),
@@ -100,7 +102,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             }
                           },
                           onSaved: (value) {
-                            _contactData['email'] = value;
+                            // _contactData['email'] = value;
                           },
                         ),
                       ),
@@ -122,7 +124,7 @@ class _ContactScreenState extends State<ContactScreen> {
                             }
                           },
                           onSaved: (value) {
-                            _contactData['content'] = value;
+                            // _contactData['content'] = value;
                           },
                         ),
                       ),
@@ -150,12 +152,16 @@ class _ContactScreenState extends State<ContactScreen> {
     setState(() {
       _isLoading = true;
     });
-    await Future.delayed(Duration(seconds: 1));
+
+    final wasSent = await Provider.of<Emails>(context, listen: false).sendEmail(_topicController.text, _contentController.text, _emailController.text);
+
     setState(() {
       _isLoading = false;
     });
-    _resetForm();
-    _showSnackBar();
+    if (wasSent) {
+      _resetForm();
+    }
+    _showSnackBar(wasSent);
     // Navigator.of(context).pop();
   }
 
@@ -168,17 +174,17 @@ class _ContactScreenState extends State<ContactScreen> {
     _emailController.clear();
   }
 
-  void _showSnackBar() {
+  void _showSnackBar(final bool wasSent) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 2),
-        backgroundColor: MyColorsProvider.BLUE,
+        backgroundColor: wasSent ? MyColorsProvider.BLUE : MyColorsProvider.RED_SHADY,
         content: SizedBox(
           height: 22.0,
           child: Stack(
-            children: const [
-              Icon(Icons.check, color: Colors.white),
-              Center(child: Text('Wiadomość została wysłana')),
+            children: [
+              const Icon(Icons.check, color: Colors.white),
+              Center(child: Text(wasSent ? 'Wiadomość została wysłana' : 'Bład podczas wysyłania wiadomości!')),
             ],
           ),
         ),
