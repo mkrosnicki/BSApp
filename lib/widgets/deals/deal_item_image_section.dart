@@ -1,7 +1,9 @@
 import 'package:BSApp/models/deal_model.dart';
+import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DealItemImageSection extends StatelessWidget {
   final DealModel deal;
@@ -12,6 +14,7 @@ class DealItemImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     const double imageHeight = 130.0;
     const double minIndicatorHeight = 22.0;
+    final Image image = Provider.of<Deals>(context, listen: false).getImageById(deal.id);
 
     return GestureDetector(
       onTap: () {
@@ -32,7 +35,7 @@ class DealItemImageSection extends StatelessWidget {
                 topLeft: Radius.circular(4.0),
                 bottomLeft: Radius.circular(4.0),
               ),
-              child: deal.image ??
+              child: image ??
                   (deal.imagePath != null
                       ? Image.network(
                           deal.imagePath,

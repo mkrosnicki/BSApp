@@ -1,4 +1,5 @@
 import 'package:BSApp/models/post_model.dart';
+import 'package:BSApp/providers/posts.dart';
 import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/util/conjugation_helper.dart';
 import 'package:BSApp/util/date_util.dart';
@@ -14,6 +15,7 @@ class PostItemBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int numberOfLikers = Provider.of<Posts>(context, listen: false).findById(post.id).likers.length;
     return Container(
       height: 30,
       padding: const EdgeInsets.only(),
@@ -42,7 +44,7 @@ class PostItemBottomBar extends StatelessWidget {
                 ),
               ),
               Text(
-                '${post.likers.length} ${ConjugationHelper.likesConjugation(post.likers.length)}',
+                '$numberOfLikers ${ConjugationHelper.likesConjugation(numberOfLikers)}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2

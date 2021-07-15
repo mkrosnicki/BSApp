@@ -14,6 +14,7 @@ class Deals with ChangeNotifier {
   int _totalPages = 0;
   int _totalElements = 0;
 
+  Map<String, Image> _dealImages = {};
   List<DealModel> _deals = [];
   DealModel _deal = null;
 
@@ -25,6 +26,10 @@ class Deals with ChangeNotifier {
     return [..._deals];
   }
 
+  Image getImageById(final String dealId) {
+    return _dealImages[dealId];
+  }
+
   Future<void> fetchDeals({Map<String, dynamic> requestParams}) async {
     final responseBody = await _apiProvider.get('/deals', requestParams: requestParams) as Map;
     if (responseBody == null) {
@@ -32,6 +37,9 @@ class Deals with ChangeNotifier {
       logger.e('No Deals Found!');
     }
     _deals = DealModel.fromJsonList(responseBody['content'] as List);
+    _deals.forEach((element) {
+      _dealImages.putIfAbsent(element.id, () => element.image);
+    });
     notifyListeners();
   }
 
@@ -64,6 +72,9 @@ class Deals with ChangeNotifier {
     _totalElements = responseBody['totalElements'] as int;
     final responseContent = responseBody['content'] as List;
     final List<DealModel> fetchedDeals = DealModel.fromJsonList(responseContent);
+    fetchedDeals.forEach((element) {
+      _dealImages.putIfAbsent(element.id, () => element.image);
+    });
     _addPaged(fetchedDeals, pageNo);
   }
 
@@ -90,6 +101,9 @@ class Deals with ChangeNotifier {
       logger.i('No Deals Found!');
     }
     _deals = DealModel.fromJsonList(responseBody);
+    _deals.forEach((element) {
+      _dealImages.putIfAbsent(element.id, () => element.image);
+    });
   }
 
   Future<void> fetchDealsAddedBy(String userId) async {
@@ -99,6 +113,9 @@ class Deals with ChangeNotifier {
       logger.i('No Deals Found!');
     }
     _deals = DealModel.fromJsonList(responseBody);
+    _deals.forEach((element) {
+      _dealImages.putIfAbsent(element.id, () => element.image);
+    });
   }
 
   Future<void> fetchMyAddedDeals() async {
@@ -121,6 +138,7 @@ class Deals with ChangeNotifier {
       final DealModel deal = DealModel.fromJson(responseBody);
       _deals.add(deal);
       _deal = deal;
+      _dealImages.putIfAbsent(_deal.id, () => _deal.image);
     }
   }
 
