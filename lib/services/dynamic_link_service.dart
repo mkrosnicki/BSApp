@@ -43,19 +43,19 @@ class DynamicLinkService {
 
   Future<Uri> createDynamicLink(final String id) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://babybook.page.link',
-      link: Uri.parse('https://babybook.page.link/deal?dealId=$id'),
+      uriPrefix: 'https://bobify.page.link',
+      link: Uri.parse('https://bobify.page.link/deal?dealId=$id'),
       androidParameters: AndroidParameters(
-        packageName: 'com.mk.bb',
+        packageName: 'com.mkrosnicki.bobify',
         minimumVersion: 1,
       ),
       iosParameters: IosParameters(
-        bundleId: 'com.mk.bb',
+        bundleId: 'com.mkrosnicki.bobify',
         minimumVersion: '1',
         appStoreId: '123456789',
       ),
       socialMetaTagParameters: SocialMetaTagParameters(
-          title: 'BabyBook',
+          title: 'Bobify',
           description: 'Zobacz okazję',
       ),
     );

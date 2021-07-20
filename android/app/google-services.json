@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "738270402284",
-    "project_id": "babybook-6ea5d",
-    "storage_bucket": "babybook-6ea5d.appspot.com"
+    "project_number": "636655987050",
+    "project_id": "bobify-ff5ca",
+    "storage_bucket": "bobify-ff5ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:738270402284:android:83708ad1a210fe837877c9",
+        "mobilesdk_app_id": "1:636655987050:android:e90a0c5d10e7598ca79d13",
         "android_client_info": {
-          "package_name": "com.mk.bb"
+          "package_name": "com.mkrosnicki.bobify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "738270402284-9cqjugoj3cq9qeta8prm0t5jc4dad5r1.apps.googleusercontent.com",
+          "client_id": "636655987050-4g41toandp3oku31ave1aeo5897v2n8v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCR5nxDHOI8vgT--3pfVy0fikihlTHLsFY"
+          "current_key": "AIzaSyAqiD0njZPfC9cLo12K-N1NXDsvqL3_sa0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "738270402284-9cqjugoj3cq9qeta8prm0t5jc4dad5r1.apps.googleusercontent.com",
+              "client_id": "636655987050-4g41toandp3oku31ave1aeo5897v2n8v.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "738270402284-euhqhv92s82ur9osbv8f4b0sjp6c4s4f.apps.googleusercontent.com",
+              "client_id": "636655987050-sgsfg4jnbv13l5t4lncvm4t8ub5ejeqg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mk.bb",
+                "bundle_id": "com.mkrosnicki.bobify",
                 "app_store_id": "123456789"
               }
             }

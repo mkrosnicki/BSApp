@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>BabyBook</string>
+	<string>Bobify</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -68,7 +68,35 @@
 	<true/>
 	<key>FirebaseDynamicLinksCustomDomains</key>
     <array>
-      <string>https://babybook.page.link</string>
+      <string>https://bobify.page.link</string>
     </array>
+    <key>CLIENT_ID</key>
+    <string>636655987050-sgsfg4jnbv13l5t4lncvm4t8ub5ejeqg.apps.googleusercontent.com</string>
+    <key>REVERSED_CLIENT_ID</key>
+    <string>com.googleusercontent.apps.636655987050-sgsfg4jnbv13l5t4lncvm4t8ub5ejeqg</string>
+    <key>API_KEY</key>
+    <string>AIzaSyC4vC3l0LRN0uTszx2U5xEesgrSF0PQYfA</string>
+    <key>GCM_SENDER_ID</key>
+    <string>636655987050</string>
+    <key>PLIST_VERSION</key>
+    <string>1</string>
+    <key>BUNDLE_ID</key>
+    <string>com.mkrosnicki.bobify</string>
+    <key>PROJECT_ID</key>
+    <string>bobify-ff5ca</string>
+    <key>STORAGE_BUCKET</key>
+    <string>bobify-ff5ca.appspot.com</string>
+    <key>IS_ADS_ENABLED</key>
+    <false></false>
+    <key>IS_ANALYTICS_ENABLED</key>
+    <false></false>
+    <key>IS_APPINVITE_ENABLED</key>
+    <true></true>
+    <key>IS_GCM_ENABLED</key>
+    <true></true>
+    <key>IS_SIGNIN_ENABLED</key>
+    <true></true>
+    <key>GOOGLE_APP_ID</key>
+    <string>1:636655987050:ios:cdad927a3cf0bcf1a79d13</string>
 </dict>
 </plist>
