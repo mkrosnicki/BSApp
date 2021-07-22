@@ -24,6 +24,9 @@ class ForumUsersInfo {
       });
 
   static ForumUsersInfo fromJson(dynamic adderInfoSnapshot) {
+    if (adderInfoSnapshot == null) {
+      return null;
+    }
     return ForumUsersInfo(
       id: adderInfoSnapshot['id'],
       username: adderInfoSnapshot['username'],
