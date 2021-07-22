@@ -49,58 +49,70 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
             return GestureDetector(
               onTap: () {
                 if (_adderInfo != null) {
-                  Navigator.of(context).pushNamed(UserProfileScreen.routeName,
-                      arguments: _adderInfo.id);
+                  Navigator.of(context).pushNamed(UserProfileScreen.routeName, arguments: _adderInfo.id);
                 }
               },
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    color: MyColorsProvider.BACKGROUND_COLOR,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14.0),
+                    margin: const EdgeInsets.only(top: 6.0),
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'DODANA PRZEZ',
+                      style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 12),
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: SizedBox(
-                            width: 38.0,
-                            child: UserAvatar(
-                              username: _adderInfo.username,
-                              image: _adderInfo.avatar,
-                              imagePath: _adderInfo.imagePath,
-                              radius: 24,
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            const Text(
-                              'Okazja dodana przez',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.grey, height: 1.5),
-                            ),
-                            Text(
-                              _adderInfo.username,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: SizedBox(
+                                width: 38.0,
+                                child: UserAvatar(
+                                  username: _adderInfo != null ? _adderInfo.username : 'U',
+                                  image: _adderInfo != null ? _adderInfo.avatar : null,
+                                  imagePath: _adderInfo != null? _adderInfo.imagePath : null,
+                                  radius: 24,
+                                ),
                               ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Okazja dodana przez',
+                                  style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
+                                ),
+                                Text(
+                                  _adderInfo != null ? _adderInfo.username : 'Użytkownik usunięty',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
+                        const Icon(
+                          CupertinoIcons.chevron_right,
+                          color: MyColorsProvider.DEEP_BLUE,
+                        ),
                       ],
                     ),
-                    const Icon(
-                      CupertinoIcons.chevron_right,
-                      color: MyColorsProvider.DEEP_BLUE,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           }
