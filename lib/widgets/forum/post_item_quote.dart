@@ -24,7 +24,7 @@ class PostItemQuote extends StatelessWidget {
               child: Wrap(
                 children: [
                   Text(
-                    post.repliedUsername,
+                    post.repliedUsername ?? 'Usunięty użytkownik',
                     style: Theme
                         .of(context)
                         .textTheme
