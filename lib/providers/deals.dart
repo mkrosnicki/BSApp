@@ -45,10 +45,6 @@ class Deals with ChangeNotifier {
 
   Future<AdderInfoModel> fetchAdderInfo(final String dealId) async {
     final responseBody = await _apiProvider.get('/deals/$dealId/adder');
-    if (responseBody == null) {
-      final logger = Logger();
-      logger.e('No Adder Found!');
-    }
     return AdderInfoModel.fromJson(responseBody);
   }
 

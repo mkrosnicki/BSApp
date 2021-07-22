@@ -28,6 +28,9 @@ class AdderInfoModel {
       });
 
   static AdderInfoModel fromJson(dynamic adderInfoSnapshot) {
+    if (adderInfoSnapshot == null) {
+      return null;
+    }
     return AdderInfoModel(
       id: adderInfoSnapshot['id'],
       username: adderInfoSnapshot['username'],
