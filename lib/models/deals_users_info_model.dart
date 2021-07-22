@@ -24,6 +24,9 @@ class DealsUsersInfo {
       });
 
   static DealsUsersInfo fromJson(dynamic adderInfoSnapshot) {
+    if (adderInfoSnapshot == null) {
+      return null;
+    }
     return DealsUsersInfo(
       id: adderInfoSnapshot['id'],
       username: adderInfoSnapshot['username'],
