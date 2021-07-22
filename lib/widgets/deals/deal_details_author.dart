@@ -28,6 +28,9 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
 
   @override
   Widget build(BuildContext context) {
+    if (_adderInfo == null) {
+      return Container();
+    }
     return FutureBuilder(
       future: _initAdderInfo(context, widget.dealId),
       builder: (context, snapshot) {
