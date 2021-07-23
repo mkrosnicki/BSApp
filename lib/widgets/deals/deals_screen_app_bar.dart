@@ -1,4 +1,6 @@
 import 'package:BSApp/models/filter_settings.dart';
+import 'package:BSApp/providers/auth.dart';
+import 'package:BSApp/screens/authentication/auth_screen_provider.dart';
 import 'package:BSApp/screens/deals/add_deal_screen.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
@@ -6,6 +8,7 @@ import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 class DealsScreenAppBar extends StatelessWidget {
@@ -91,18 +94,22 @@ class DealsScreenAppBar extends StatelessWidget {
   }
 
   Widget _addNewDealButton(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 6.0),
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () => _navigateToAddDealScreen(context),
-        child: const TextButton(
-          child: Text(
-            'Dodaj',
-            style: TextStyle(color: Colors.white, fontSize: 14),
+    return Consumer<Auth>(
+      builder: (context, auth, child) {
+        return Container(
+          padding: const EdgeInsets.only(left: 6.0),
+          alignment: Alignment.centerLeft,
+          child: GestureDetector(
+            onTap: () => _navigateToAddDealScreen(context, auth.isAuthenticated),
+            child: const TextButton(
+              child: Text(
+                'Dodaj',
+                style: TextStyle(color: Colors.white, fontSize: 14),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -142,8 +149,12 @@ class DealsScreenAppBar extends StatelessWidget {
     }
   }
 
-  void _navigateToAddDealScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(AddDealScreen.routeName);
+  void _navigateToAddDealScreen(BuildContext context, final bool isAuthenticated) {
+    if (!isAuthenticated) {
+      AuthScreenProvider.showLoginScreen(context);
+    } else {
+      Navigator.of(context).pushNamed(AddDealScreen.routeName);
+    }
   }
 
   Future<void> _showLastSearchesPanel(bool isShowSearch) async {
