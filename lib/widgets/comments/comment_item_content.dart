@@ -41,7 +41,7 @@ class CommentItemContent extends StatelessWidget {
                 children: [
                   if (_displayRepliedUsername(comment))
                     Text(
-                      '@${comment.repliedUsername} ',
+                      '@${comment.repliedUsername != null ? comment.repliedUsername : 'Usunięty użytkownik'} ',
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.blue,
@@ -66,7 +66,7 @@ class CommentItemContent extends StatelessWidget {
   }
 
   bool _displayRepliedUsername(CommentModel comment) {
-    return !_isReplyToParent(comment) && comment.repliedUsername != null;
+    return !_isReplyToParent(comment) && comment.quote != null;
   }
 
   bool _isReplyToParent(CommentModel comment) {

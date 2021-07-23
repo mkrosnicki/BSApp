@@ -59,7 +59,7 @@ class PostModel {
   }
 
   String get adderName {
-    return adderInfo != null ? adderInfo.username : 'Użytkownik usunięty';
+    return adderInfo != null ? adderInfo.username : 'Usunięty użytkownik';
   }
 
   Uint8List get userAvatar {

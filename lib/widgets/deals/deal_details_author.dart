@@ -95,7 +95,7 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
                                   style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
                                 ),
                                 Text(
-                                  _adderInfo != null ? _adderInfo.username : 'Użytkownik usunięty',
+                                  _adderInfo != null ? _adderInfo.username : 'Usunięty użytkownik',
                                   style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
