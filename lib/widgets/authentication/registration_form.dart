@@ -17,11 +17,7 @@ class RegistrationForm extends StatefulWidget {
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final Map<String, String> _authData = {
-    'email': '',
-    'password': '',
-    'username': ''
-  };
+  final Map<String, String> _authData = {'email': '', 'password': '', 'username': ''};
   bool _isLoading = false;
 
   final _emailController = TextEditingController();
@@ -60,19 +56,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
       );
       signUpSuccessful = true;
     } on CustomException catch (error) {
-      var errorMessage =
-          'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
+      var errorMessage = 'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
       if (error.toString().contains('Email address already in use')) {
         errorMessage = 'Istnieje już konto z podanym emailem!';
-      } else if (error
-          .toString()
-          .contains('must be a well-formed email address')) {
+      } else if (error.toString().contains('must be a well-formed email address')) {
         errorMessage = 'Email został podany w złym formacie!';
       }
       await infoDialog(context, title: 'Błąd', textContent: errorMessage);
     } catch (error) {
-      const errorMessage =
-          'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
+      const errorMessage = 'Rejestracja zakończyła się niepowodzeniem. Spróbuj później!';
       await infoDialog(context, title: 'Błąd', textContent: errorMessage);
     }
 
@@ -83,8 +75,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
       await infoDialog(
         context,
         title: 'Konto zostało utworzone',
-        textContent:
-            'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.',
+        textContent: 'W celu aktywacji konta sprawdź swoją skrzynkę pocztową i potwierdź swój email.',
       );
       Navigator.of(context).pop();
     }
@@ -98,8 +89,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           )
         : SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -113,7 +103,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Email'),
                         validator: (value) {
-                          final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value.trim());
+                          final bool emailValid =
+                              RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value.trim());
                           if (value.isEmpty || !emailValid) {
                             return 'Nieprawidłowy e-mail!';
                           } else {
@@ -187,6 +179,17 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       margin: const EdgeInsets.only(top: 6.0),
                       child: PrimaryButton('Stwórz konto', _submit),
                     ),
+                    const Padding(
+                      padding: EdgeInsets.all(4.0),
+                    ),
+                    const Text(
+                      'Rejestrując się akceptujesz Regulamin oraz Politykę Prywatności.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black54,
+                      ),
+                    )
                   ],
                 ),
               ),
