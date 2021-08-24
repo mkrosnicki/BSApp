@@ -123,10 +123,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         controller: _nameController,
                         cursorColor: Colors.black,
                         keyboardType: TextInputType.text,
-                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Imię'),
+                        decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Imię / nazwa użytkownika'),
                         validator: (value) {
                           if (value.length < 3) {
-                            return 'Za krótkie imię, wprowadź co najmniej 3 znaki.';
+                            return 'Za krótka nazwa użytkownika, wprowadź co najmniej 3 znaki.';
                           } else {
                             return null;
                           }
@@ -144,8 +144,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         obscureText: true,
                         decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Hasło'),
                         validator: (value) {
-                          if (value.length < 3) {
-                            return 'Za krótkie hasło!';
+                          if (value.length < 7) {
+                            return 'Hasło musi składać się z przynajmniej 7 znaków!';
                           } else {
                             return null;
                           }
