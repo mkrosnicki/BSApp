@@ -204,6 +204,7 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget _buildNavigationButton(BuildContext context, String dealId) {
     return GestureDetector(
       onTap: () => _navigateToDeal(context, dealId),
+      behavior: HitTestBehavior.translucent,
       child: Container(
         padding: const EdgeInsets.only(left: 2.0, top: 2.0, bottom: 2.0),
         child: Wrap(

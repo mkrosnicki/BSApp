@@ -2,5 +2,7 @@
 <resources>
     <string name="app_name">Bobify</string>
     <string name="facebook_app_id">209613880709650</string>
-    <string name="fb_login_protocol_scheme">939893eb924c2ac7c5f1964a272903fe</string>
+    <string name="fb_login_protocol_scheme">fb209613880709650</string>
+<!--    <string name="fb_login_protocol_scheme">939893eb924c2ac7c5f1964a272903fe</string>-->
+<!--    <string name="fb_login_protocol_scheme">fff82809728968ce13214b81054d8d05</string>-->
 </resources>

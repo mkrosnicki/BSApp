@@ -19,6 +19,7 @@ class DealItemHeartButton extends StatelessWidget {
       builder: (context, currentUser, child) {
         final bool isObservedDeal = currentUser.observesDeal(deal);
         return GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () => _toggleFavourites(
               context, deal, isObservedDeal, currentUser.isAuthenticated),
           child: isObservedDeal

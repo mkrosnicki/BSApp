@@ -20,6 +20,7 @@ class DealItemTopSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => Navigator.of(context).pushNamed(DealDetailsScreen.routeName, arguments: deal),
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

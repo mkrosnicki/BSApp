@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'BB',
+        title: 'Bobify',
         theme: ThemeData(
           fontFamily: 'InterUI',
           // This is the theme of your application.

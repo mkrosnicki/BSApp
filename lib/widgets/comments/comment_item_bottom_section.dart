@@ -36,10 +36,11 @@ class CommentItemBottomSection extends StatelessWidget {
               CommentItemLikesString(comment.id),
             ],
           ),
-          InkWell(
+          GestureDetector(
             onTap: () => _startCommentReply(comment, replyState),
+            behavior: HitTestBehavior.translucent,
             child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
               child: Text(
                 'Odpowiedz',
                 style: TextStyle(fontSize: 12, color: Colors.blue),

@@ -17,6 +17,7 @@ class DealItemImageSection extends StatelessWidget {
     final Image image = Provider.of<Deals>(context, listen: false).getImageById(deal.id);
 
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context)
             .pushNamed(DealDetailsScreen.routeName, arguments: deal);

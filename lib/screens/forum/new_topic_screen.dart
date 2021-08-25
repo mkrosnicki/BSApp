@@ -89,6 +89,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                 const FormFieldDivider(),
                 const FormFieldTitle('Temat'),
                 GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: () {
                     FocusScope.of(context).unfocus();
                     showModalBottomSheet(

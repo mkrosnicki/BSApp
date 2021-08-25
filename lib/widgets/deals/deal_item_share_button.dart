@@ -23,6 +23,7 @@ class DealItemShareButton extends StatelessWidget {
           if(snapshot.hasData) {
             final Uri uri = snapshot.data;
             return GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => Share.share(uri.toString()),
               child: Icon(CupertinoIcons.share, size: iconSize, color: MyColorsProvider.DEEP_BLUE),
             );

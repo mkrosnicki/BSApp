@@ -118,8 +118,9 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
                                 builder: (context, authData, child) {
                                   return Consumer<ReplyState>(
                                     builder: (context, replyState, child) {
-                                      return InkWell(
+                                      return GestureDetector(
                                         onTap: () => _addReply(authData.isAuthenticated, replyState.commentToReply),
+                                        behavior: HitTestBehavior.translucent,
                                         child: const Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                           child: Icon(
