@@ -1,3 +1,4 @@
+import 'package:BSApp/screens/authentication/curve_painter.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/authentication/login_form.dart';
@@ -13,12 +14,10 @@ class LoginRegistrationScreen extends StatefulWidget {
   static const routeName = '/auth';
 
   @override
-  _LoginRegistrationScreenState createState() =>
-      _LoginRegistrationScreenState();
+  _LoginRegistrationScreenState createState() => _LoginRegistrationScreenState();
 }
 
 class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
-
   int _selectedIndex = 0;
 
   @override
@@ -58,22 +57,6 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
             RegistrationForm(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildTabBar(String label) {
-    return Tab(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              child: Center(child: Text(label)),
-            ),
-          ),
-        ],
       ),
     );
   }

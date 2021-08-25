@@ -7,8 +7,11 @@ class AppLogoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: MyColorsProvider.PASTEL_BLUE,
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.only(top: 15.0),
+      decoration: BoxDecoration(
+        color: MyColorsProvider.PASTEL_BLUE,
+        border: Border.all(color: MyColorsProvider.PASTEL_BLUE, width: 3.0),
+      ),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,11 +19,15 @@ class AppLogoHeader extends StatelessWidget {
           Flexible(
             // ignore: avoid_unnecessary_containers
             child: Container(
+              decoration: BoxDecoration(
+                color: MyColorsProvider.PASTEL_BLUE,
+                border: Border.all(color: MyColorsProvider.PASTEL_BLUE, width: 2.0),
+              ),
               child: Flex(
                 direction: Axis.vertical,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0, top: 20.0),
+                    padding: const EdgeInsets.only(top: 15.0),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Image.asset(
