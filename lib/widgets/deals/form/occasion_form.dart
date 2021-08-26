@@ -259,7 +259,7 @@ class _OccasionFormState extends State<OccasionForm> {
                   initialValue: _newDeal.urlLocation,
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Wprowadź link do okazji';
+                      return null;
                     } else if (!UrlHelper.isUrl(value)) {
                       return 'Podany ciąg znaków nie jest adresem URL';
                     } else {

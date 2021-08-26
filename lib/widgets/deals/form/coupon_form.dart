@@ -209,6 +209,7 @@ class _CouponFormState extends State<CouponForm> {
           onChanged: (value) {
             _newDeal.title = value;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
         ),
       ],
@@ -279,6 +280,7 @@ class _CouponFormState extends State<CouponForm> {
                     } else {
                       _newDeal.discountType = DiscountType.ABSOLUTE;
                     }
+                    _formKey.currentState.validate();
                   });
                 },
                 child: Container(
@@ -308,7 +310,7 @@ class _CouponFormState extends State<CouponForm> {
                   initialValue: _newDeal.urlLocation,
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Wprowadź link do kuponu';
+                      return null;
                     } else if (!UrlHelper.isUrl(value)) {
                       return 'Podany ciąg znaków nie jest adresem URL';
                     } else {
@@ -318,6 +320,7 @@ class _CouponFormState extends State<CouponForm> {
                   onChanged: (value) {
                     _updateUrl(value);
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do kuponu'),
                 ),
               ],
@@ -327,8 +330,8 @@ class _CouponFormState extends State<CouponForm> {
             onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
             behavior: HitTestBehavior.translucent,
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.bottomRight,
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 32.0),
+              alignment: Alignment.topRight,
               child: Icon(
                 Icons.image_outlined,
                 color: _isImageButtonDisabled ? Colors.grey : MyColorsProvider.DEEP_BLUE,
