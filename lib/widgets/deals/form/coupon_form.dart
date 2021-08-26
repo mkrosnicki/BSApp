@@ -141,6 +141,7 @@ class _CouponFormState extends State<CouponForm> {
 
   @override
   Widget build(BuildContext context) {
+    _newDeal.discountType ??= DiscountType.PERCENTAGE;
     return _isLoading
         ? const Center(
             child: LoadingIndicator(),
@@ -245,16 +246,28 @@ class _CouponFormState extends State<CouponForm> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return "Wprowadź wartość";
-                    } else if (double.parse(value) < 0) {
-                      return "Wartość nie może być ujemna";
                     } else {
-                      return null;
+                      if (value.startsWith('-')) {
+                        return "Wartość nie może być ujemna";
+                      } else if (double.tryParse(value) == null) {
+                        return "Wartość musi być liczbą!";
+                      } else if (double.parse(value) < 0) {
+                        return "Kwota nie może być ujemna";
+                      } else if (_newDeal.discountType == DiscountType.PERCENTAGE && double.parse(value) > 100) {
+                        return "Zniżka nie może wynosić więcej niż 100%!";
+                      } else {
+                        return null;
+                      }
                     }
                   },
                   keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    _newDeal.discountValue = double.tryParse(value);
+                  },
                   onSaved: (value) {
                     _newDeal.discountValue = double.parse(value);
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Wartość kuponu'),
                 ),
               ),
@@ -361,9 +374,13 @@ class _CouponFormState extends State<CouponForm> {
               return null;
             }
           },
+          onChanged: (value) {
+            _newDeal.dealCode = value;
+          },
           onSaved: (value) {
             _newDeal.dealCode = value;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Kod kuponu'),
         ),
       ],
@@ -431,6 +448,7 @@ class _CouponFormState extends State<CouponForm> {
           onChanged: (value) {
             _newDeal.description = value;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText(
               'Krótko opisz kupon i sposób, w jaki można go zrealizować 🙂'),
         ),
