@@ -104,6 +104,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     return null;
                                   }
                                 },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onSaved: (value) {
                                   _currentPassword = value;
                                 },
@@ -129,6 +130,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     return null;
                                   }
                                 },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onSaved: (value) {
                                   _newPassword = value;
                                 },
@@ -153,6 +155,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                     return null;
                                   }
                                 },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 onSaved: (value) {
                                   _newPassword = value;
                                 },
