@@ -130,7 +130,7 @@ class DealModel {
       } else if (voivodeship != null) {
         return voivodeship;
       } else {
-        return 'brak';
+        return 'Cała Polska';
       }
     }
   }
