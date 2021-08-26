@@ -300,7 +300,7 @@ class _OccasionFormState extends State<OccasionForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _formFieldTitle('Opis'),
+        _formFieldTitle('Opis*'),
         TextFormField(
           initialValue: _newDeal.description,
           minLines: 4,
