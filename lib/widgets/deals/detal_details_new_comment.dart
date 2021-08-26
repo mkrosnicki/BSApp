@@ -163,6 +163,7 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
+      _clearTextBox();
       if (commentToReply == null) {
         _addCommentToDeal();
       } else {
@@ -174,13 +175,11 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
   Future<void> _addReplyToComment(CommentModel commentToReply) async {
     await Provider.of<Comments>(context, listen: false)
         .addReplyToComment(widget.dealId, commentToReply.id, _textEditingController.text);
-    _clearTextBox();
     Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
   Future<void> _addCommentToDeal() async {
     await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _textEditingController.text);
-    _clearTextBox();
   }
 
   void _clearTextBox() {

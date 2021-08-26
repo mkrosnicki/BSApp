@@ -157,6 +157,7 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
       AuthScreenProvider.showLoginScreen(context);
     } else {
       final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
+      _clearTextBox();
       if (replyState.hasPostToReply) {
         _addReplyToPost(context, replyState.postToReply);
       } else {
@@ -168,13 +169,11 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
   Future<void> _addReplyToPost(BuildContext context, PostModel postToReply) async {
     await Provider.of<Posts>(context, listen: false)
         .addReplyToPost(widget.topicId, postToReply.id, textEditingController.text, postToReply.content);
-    _clearTextBox();
     Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
   Future<void> _addPostToTopic(BuildContext context) async {
     await Provider.of<Posts>(context, listen: false).addPostToTopic(widget.topicId, textEditingController.text);
-    _clearTextBox();
   }
 
   void _setKeyboardVisible(bool open) {

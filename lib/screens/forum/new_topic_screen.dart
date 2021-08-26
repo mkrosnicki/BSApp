@@ -198,8 +198,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł'),
                   controller: _topicTitleController,
                   validator: (value) {
-                    if (value.isEmpty || value.length < 5) {
-                      return 'Tytuł musi mieć przynajmniej 5 znaków!';
+                    if (value.isEmpty || value.length < 4) {
+                      return 'Tytuł musi mieć przynajmniej 4 znaki!';
                     } else {
                       return null;
                     }
@@ -222,8 +222,8 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                   decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Napisz coś...'),
                   controller: _topicContentController,
                   validator: (value) {
-                    if (value.isEmpty || value.length < 20) {
-                      return 'Treść musi składać się przynajmniej z 20 znaków!';
+                    if (value.isEmpty || value.length < 10) {
+                      return 'Treść musi składać się przynajmniej z 10 znaków!';
                     } else {
                       return null;
                     }
