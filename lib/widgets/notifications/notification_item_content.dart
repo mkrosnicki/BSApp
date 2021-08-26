@@ -40,37 +40,37 @@ class NotificationItemContent extends StatelessWidget {
     switch (notification.notificationType) {
       case NotificationType.YOUR_DEAL_RATED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} ocenili Twoją okazję'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób ocenili Twoją okazję'
             : '${notification.mainIssuerUsername} ocenił(a) Twoją okazję';
         break;
       case NotificationType.YOUR_DEAL_COMMENTED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} skomentowali Twoją okazję'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób skomentowali Twoją okazję'
             : '${notification.mainIssuerUsername} skomentował(a) Twoją okazję';
         break;
       case NotificationType.YOUR_COMMENT_RATED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} polubili Twój komentarz'
+            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób polubili Twój komentarz'
             : '${notification.mainIssuerUsername} polubił(a) Twój komentarz';
         break;
       case NotificationType.YOUR_COMMENT_REPLIED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} odpowiedzieli na Twój komentarz'
+            ? '${notification.mainIssuerUsername}${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób odpowiedzieli na Twój komentarz'
             : '${notification.mainIssuerUsername} odpowiedział(a) na Twój komentarz';
         break;
       case NotificationType.YOUR_POST_REPLIED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} odpowiedzieli na Twój post w temacie'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób odpowiedzieli na Twój post w temacie'
             : '${notification.mainIssuerUsername} odpowiedział(a) na Twój post w temacie';
         break;
       case NotificationType.YOUR_POST_LIKED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} polubili na Twój post w temacie'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} innych osób polubili na Twój post w temacie'
             : '${notification.mainIssuerUsername} polubił(a) Twój post w temacie';
         break;
       case NotificationType.YOUR_TOPIC_REPLIED:
         return notification.totalNumberOfIssuers > 1
-            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} inni napisali post w Twoim temacie'
+            ? '${notification.mainIssuerUsername} i ${notification.totalNumberOfIssuers - 1} inni osób napisali post w Twoim temacie'
             : '${notification.mainIssuerUsername} napisał(a) post w Twoim temacie';
         break;
       default:
