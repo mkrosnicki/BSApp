@@ -66,6 +66,7 @@ class MyStylingProvider {
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         borderSide: BorderSide(style: BorderStyle.none),
       ),
+      errorStyle: const TextStyle(fontSize: 11),
     );
   }
 

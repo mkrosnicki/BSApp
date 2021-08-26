@@ -204,6 +204,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                       return null;
                     }
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onSaved: (value) {
                     // _newPassword = value;
                   },
@@ -228,6 +229,7 @@ class _NewTopicScreenState extends State<NewTopicScreen> {
                       return null;
                     }
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onSaved: (value) {
                     // _newPassword = value;
                   },
