@@ -45,7 +45,7 @@ class Notifications with ChangeNotifier {
   }
 
   Future<void> deleteMyNotifications() async {
-    _apiProvider.delete('/users/me/notifications', token: _token);
+    await _apiProvider.delete('/users/me/notifications', token: _token);
     _lastNotificationDate = null;
     _notifications = [];
     notifyListeners();
