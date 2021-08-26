@@ -284,8 +284,9 @@ class _CouponFormState extends State<CouponForm> {
                   });
                 },
                 child: Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(left: 15.0, right: 8.0, bottom: 4.0, top: 4.0),
+                  alignment: Alignment.topRight,
+                  height: 20,
+                  padding: const EdgeInsets.only(left: 15.0, right: 8.0, bottom: 4.0, top: 10.0),
                   child: Text(_newDeal.discountType == DiscountType.ABSOLUTE ? 'zł' : '%', style: const TextStyle(fontSize: 18, color: MyColorsProvider.DEEP_BLUE),),
                 ),
               ),
@@ -579,15 +580,19 @@ class _CouponFormState extends State<CouponForm> {
   }
 
   void _updateUrl(String value) {
-    _newDeal.urlLocation = UrlHelper.getWithPrefix(value);
-    if (UrlHelper.isUrl(_newDeal.urlLocation)) {
-      setState(() {
-        _isImageButtonDisabled = false;
-      });
+    if (value == null || value.isEmpty) {
+      _newDeal.urlLocation = null;
     } else {
-      setState(() {
-        _isImageButtonDisabled = true;
-      });
+      _newDeal.urlLocation = UrlHelper.getWithPrefix(value);
+      if (UrlHelper.isUrl(_newDeal.urlLocation)) {
+        setState(() {
+          _isImageButtonDisabled = false;
+        });
+      } else {
+        setState(() {
+          _isImageButtonDisabled = true;
+        });
+      }
     }
   }
 

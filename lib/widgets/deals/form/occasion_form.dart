@@ -518,15 +518,19 @@ class _OccasionFormState extends State<OccasionForm> {
   }
 
   void _updateUrl(String value) {
-    _newDeal.urlLocation = UrlHelper.getWithPrefix(value);
-    if (UrlHelper.isUrl(_newDeal.urlLocation)) {
-      setState(() {
-        _isImageButtonDisabled = false;
-      });
+    if (value == null || value.isEmpty) {
+      _newDeal.urlLocation = null;
     } else {
-      setState(() {
-        _isImageButtonDisabled = true;
-      });
+      _newDeal.urlLocation = UrlHelper.getWithPrefix(value);
+      if (UrlHelper.isUrl(_newDeal.urlLocation)) {
+        setState(() {
+          _isImageButtonDisabled = false;
+        });
+      } else {
+        setState(() {
+          _isImageButtonDisabled = true;
+        });
+      }
     }
   }
 
