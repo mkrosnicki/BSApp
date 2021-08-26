@@ -157,23 +157,24 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
       AuthScreenProvider.showLoginScreen(context);
     } else {
       final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
+      final String postText = textEditingController.text;
       _clearTextBox();
       if (replyState.hasPostToReply) {
-        _addReplyToPost(context, replyState.postToReply);
+        _addReplyToPost(context, replyState.postToReply, postText);
       } else {
-        _addPostToTopic(context);
+        _addPostToTopic(context, postText);
       }
     }
   }
 
-  Future<void> _addReplyToPost(BuildContext context, PostModel postToReply) async {
+  Future<void> _addReplyToPost(BuildContext context, PostModel postToReply, final String postText) async {
     await Provider.of<Posts>(context, listen: false)
-        .addReplyToPost(widget.topicId, postToReply.id, textEditingController.text, postToReply.content);
+        .addReplyToPost(widget.topicId, postToReply.id, postText, postToReply.content);
     Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
-  Future<void> _addPostToTopic(BuildContext context) async {
-    await Provider.of<Posts>(context, listen: false).addPostToTopic(widget.topicId, textEditingController.text);
+  Future<void> _addPostToTopic(BuildContext context, final String postText) async {
+    await Provider.of<Posts>(context, listen: false).addPostToTopic(widget.topicId, postText);
   }
 
   void _setKeyboardVisible(bool open) {

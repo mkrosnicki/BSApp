@@ -163,23 +163,24 @@ class _DealDetailsNewCommentState extends State<DealDetailsNewComment> {
     if (!isUserLoggedIn) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
+      final String commentText = _textEditingController.text;
       _clearTextBox();
       if (commentToReply == null) {
-        _addCommentToDeal();
+        _addCommentToDeal(commentText);
       } else {
-        _addReplyToComment(commentToReply);
+        _addReplyToComment(commentToReply, commentText);
       }
     }
   }
 
-  Future<void> _addReplyToComment(CommentModel commentToReply) async {
+  Future<void> _addReplyToComment(CommentModel commentToReply, final String commentText) async {
     await Provider.of<Comments>(context, listen: false)
-        .addReplyToComment(widget.dealId, commentToReply.id, _textEditingController.text);
+        .addReplyToComment(widget.dealId, commentToReply.id, commentText);
     Provider.of<ReplyState>(context, listen: false).clearState();
   }
 
-  Future<void> _addCommentToDeal() async {
-    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, _textEditingController.text);
+  Future<void> _addCommentToDeal(final String commentText) async {
+    await Provider.of<Comments>(context, listen: false).addCommentToDeal(widget.dealId, commentText);
   }
 
   void _clearTextBox() {
