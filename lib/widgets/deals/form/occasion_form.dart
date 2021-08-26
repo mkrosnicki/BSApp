@@ -238,6 +238,7 @@ class _OccasionFormState extends State<OccasionForm> {
           onChanged: (value) {
             _newDeal.title = value;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Tytuł ogłoszenia'),
         ),
       ],
@@ -268,6 +269,7 @@ class _OccasionFormState extends State<OccasionForm> {
                   onChanged: (value) {
                     _updateUrl(value);
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Link do okazji'),
                 ),
               ],
@@ -277,8 +279,8 @@ class _OccasionFormState extends State<OccasionForm> {
             onTap: _isImageButtonDisabled ? null : () => _buildImagePickerDialog(context),
             behavior: HitTestBehavior.translucent,
             child: Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.bottomRight,
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 32.0),
+              alignment: Alignment.topRight,
               child: Icon(Icons.image_outlined, color: _isImageButtonDisabled ? Colors.grey : MyColorsProvider.DEEP_BLUE,),
               // child: SizedBox(
               //   width: 30.0,
@@ -315,6 +317,7 @@ class _OccasionFormState extends State<OccasionForm> {
           onChanged: (value) {
             _newDeal.description = value;
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText(
               'Krótko opisz okazję i napisz, dlaczego jest atrakcyjna 🙂'),
         ),
@@ -382,43 +385,65 @@ class _OccasionFormState extends State<OccasionForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const FormFieldDivider(),
-        _formFieldTitle('Regularna cena*'),
+        _formFieldTitle('Regularna cena (zł)*'),
         TextFormField(
           validator: (value) {
             if (value.isEmpty) {
               return "Wprowadź kwotę";
-            } else if (double.parse(value) < 0) {
-              return "Kwota nie może być ujemna";
             } else {
-              return null;
+              if (value.startsWith('-')) {
+                return "Kwota nie może być ujemna";
+              } else if (double.tryParse(value) == null) {
+                return "Kwota musi być liczbą!";
+              } else if (double.parse(value) < 0) {
+                return "Kwota nie może być ujemna";
+              } else {
+                return null;
+              }
             }
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.number,
+          onChanged: (value) {
+            _newDeal.regularPrice = double.tryParse(value);
+          },
           onSaved: (value) {
             _newDeal.regularPrice = double.parse(value);
           },
-          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Regularna cena'),
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Regularna cena (zł)'),
         ),
         const FormFieldDivider(),
-        _formFieldTitle('Aktualna cena*'),
+        _formFieldTitle('Aktualna cena (zł)*'),
         TextFormField(
           validator: (value) {
             if (value.isEmpty) {
               return "Wprowadź kwotę";
-            } else if (double.parse(value) < 0) {
-              return "Kwota nie może być ujemna";
             } else {
-              return null;
+              if (value.startsWith('-')) {
+                return "Kwota nie może być ujemna";
+              } else if (double.tryParse(value) == null) {
+                return "Kwota musi być liczbą!";
+              } else if (double.parse(value) < 0) {
+                return "Kwota nie może być ujemna";
+              } else if (_newDeal.regularPrice != null && _newDeal.regularPrice < double.parse(value)) {
+                return 'Aktualna cena powinna być niższa od regularnej!';
+              } else {
+                return null;
+              }
             }
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.number,
+          onChanged: (value) {
+            _newDeal.currentPrice = double.tryParse(value);
+          },
           onSaved: (value) {
             _newDeal.currentPrice = double.parse(value);
           },
-          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Aktualna cena'),
+          decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Aktualna cena (zł)'),
         ),
         const FormFieldDivider(),
-        _formFieldTitle('Koszt dostawy (opcjonalnie)'),
+        _formFieldTitle('Koszt dostawy (zł) (opcjonalnie)'),
         TextFormField(
           keyboardType: TextInputType.number,
           onSaved: (value) {

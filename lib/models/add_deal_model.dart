@@ -33,6 +33,10 @@ class AddDealModel {
   File _image;
   String _imageUrl;
 
+  double get currentPrice => _currentPrice;
+
+  double get regularPrice => _regularPrice;
+
   DateTime get validFrom => _validFrom;
 
   String get title => _title;
