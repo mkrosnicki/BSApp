@@ -28,9 +28,6 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
 
   @override
   Widget build(BuildContext context) {
-    if (_adderInfo == null) {
-      return Container();
-    }
     return FutureBuilder(
       future: _initAdderInfo(context, widget.dealId),
       builder: (context, snapshot) {
@@ -46,6 +43,9 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
               child: ServerErrorSplash(),
             );
           } else {
+            if (_adderInfo == null) {
+              return Container();
+            }
             return GestureDetector(
               onTap: () {
                 if (_adderInfo != null) {
