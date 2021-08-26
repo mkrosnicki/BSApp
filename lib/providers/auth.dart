@@ -53,6 +53,9 @@ class Auth with ChangeNotifier {
   Future<void> loginFB() async {
     final FacebookLogin fbLogin = FacebookLogin();
     final FacebookLoginResult result = await fbLogin.logIn(["email"]);
+    if (result == null || result.accessToken == null) {
+      return;
+    }
     final String token = result.accessToken.token;
 
     final response = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token'));

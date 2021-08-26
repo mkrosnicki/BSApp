@@ -9,6 +9,10 @@ import 'package:flutter/material.dart';
 class AppBarAddDeal extends StatefulWidget implements PreferredSizeWidget {
   static const Size _aPreferredSize = Size.fromHeight(85.0);
 
+  final TabController tabController;
+
+  const AppBarAddDeal(this.tabController);
+
   @override
   _AppBarAddDealState createState() => _AppBarAddDealState();
 
@@ -19,6 +23,18 @@ class AppBarAddDeal extends StatefulWidget implements PreferredSizeWidget {
 class _AppBarAddDealState extends State<AppBarAddDeal> {
   int _selectedIndex = 0;
 
+
+  @override
+  void didChangeDependencies() {
+    widget.tabController.addListener(() {
+      setState(() {
+        _selectedIndex = widget.tabController.index;
+        widget.tabController.animateTo(_selectedIndex, duration: Duration.zero);
+      });
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseAppBar(
@@ -26,6 +42,7 @@ class _AppBarAddDealState extends State<AppBarAddDeal> {
       leading: const AppBarBackButton(Colors.white),
       bottom: DecoratedTabBar(
         tabBar: TabBar(
+          controller: widget.tabController,
           labelPadding: EdgeInsets.zero,
           indicatorColor: MyColorsProvider.PASTEL_LIGHT_BLUE,
           labelColor: Colors.white,
