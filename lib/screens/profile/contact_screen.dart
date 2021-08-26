@@ -80,6 +80,7 @@ class _ContactScreenState extends State<ContactScreen> {
                               return null;
                             }
                           },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (value) {
                             // _contactData['topic'] = value;
                           },
@@ -101,6 +102,7 @@ class _ContactScreenState extends State<ContactScreen> {
                               return null;
                             }
                           },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (value) {
                             // _contactData['email'] = value;
                           },
@@ -118,11 +120,12 @@ class _ContactScreenState extends State<ContactScreen> {
                           decoration: MyStylingProvider.textFormFiledDecorationWithLabelText('Treść wiadomości'),
                           validator: (value) {
                             if (value.length < 10) {
-                              return 'Za krótka wiadomość!';
+                              return 'Wiadomość musi mieć przynajmniej 10 znaków';
                             } else {
                               return null;
                             }
                           },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onSaved: (value) {
                             // _contactData['content'] = value;
                           },
