@@ -40,11 +40,11 @@ class RateBar extends StatelessWidget {
             onTap: positiveVoteFunction,
             behavior: HitTestBehavior.translucent,
             child: Container(
-              padding: const EdgeInsets.only(right: 4.0),
+              padding: const EdgeInsets.only(right: 4.0, bottom: 2.0, top: 2.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsup,
-                size: isBig ? 22 : 18,
+                size: isBig ? 24 : 20,
                 color: wasVotedPositively ? Colors.black : Colors.black38,
               ),
             ),
@@ -127,11 +127,11 @@ class RateBar extends StatelessWidget {
             onTap: negativeVoteFunction,
             behavior: HitTestBehavior.translucent,
             child: Container(
-              padding: const EdgeInsets.only(left: 4.0),
+              padding: const EdgeInsets.only(left: 4.0, bottom: 2.0, top: 2.0),
               alignment: Alignment.centerLeft,
               child: Icon(
                 CupertinoIcons.hand_thumbsdown,
-                size: isBig ? 22 : 18,
+                size: isBig ? 24 : 20,
                 color: wasVotedNegatively ? Colors.black : Colors.black38,
               ),
             ),
