@@ -61,7 +61,7 @@ class DealDetailsTitlePriceSection extends StatelessWidget {
             ),
             if (deal.dealType == DealType.OCCASION && deal.regularPrice != null)
               Text(
-                '${deal.regularPrice} zł',
+                '${deal.regularPrice.toStringAsFixed(2)} zł',
                 style: const TextStyle(
                     fontSize: 15,
                     color: Colors.grey,

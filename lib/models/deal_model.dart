@@ -107,7 +107,7 @@ class DealModel {
 
   String get priceString {
     if (dealType == DealType.OCCASION) {
-     return '${currentPrice.toString()} zł';
+     return '${currentPrice.toStringAsFixed(2)} zł';
     } else {
       return '-$discountValue${DiscountTypeHelper.getReadable(discountType)}';
     }
