@@ -53,9 +53,9 @@ class MainAuthScreen extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () => AuthScreenProvider.showLoginScreen(context),
-                        child: Text(
+                        child: const Text(
                           'Zaloguj się',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+                          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: Colors.white),
                         ),
                       ),
                       // Text('lub', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),),
