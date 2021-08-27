@@ -1,6 +1,7 @@
 import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,12 +19,8 @@ class LastSearchItem extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 14.0),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
-          ),
-        ),
+        margin: MyStylingProvider.ITEMS_MARGIN,
+        decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

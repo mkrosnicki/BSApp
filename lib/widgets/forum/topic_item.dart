@@ -1,7 +1,7 @@
 import 'package:BSApp/models/topic_model.dart';
 import 'package:BSApp/models/topic_screen_arguments.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/forum/topic_item_topic_info.dart';
 import 'package:BSApp/widgets/forum/topic_item_user_avatar.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,12 +18,8 @@ class TopicItem extends StatelessWidget {
       onTap: () => _navigateTo(context),
       child: Container(
         alignment: Alignment.topLeft,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
-          ),
-        ),
+        margin: MyStylingProvider.ITEMS_MARGIN,
+        decoration: MyStylingProvider.ITEMS_BORDER,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
         child: Row(

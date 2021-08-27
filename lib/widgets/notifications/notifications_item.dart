@@ -13,6 +13,7 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/notifications/notification_item_content.dart';
 import 'package:BSApp/widgets/notifications/notification_item_icon.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,14 +38,10 @@ class NotificationItem extends StatelessWidget {
                 _navigateToSource(context);
               },
               child: Container(
+                margin: MyStylingProvider.ITEMS_MARGIN,
+                decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: wasClicked ? Colors.white : Colors.blue.shade50),
                 padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: wasClicked ? Colors.white : Colors.blue.shade50,
-                  border: const Border(
-                    bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
-                  ),
-                ),
                 // color: Colors.white,
                 child: Flex(
                   direction: Axis.horizontal,

@@ -3,7 +3,6 @@ import 'package:BSApp/models/notification_type.dart';
 import 'package:flutter/material.dart';
 
 class NotificationItemContent extends StatelessWidget {
-
   final NotificationModel notification;
 
   const NotificationItemContent(this.notification);

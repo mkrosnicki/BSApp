@@ -12,6 +12,7 @@ import 'package:BSApp/screens/deals/deal_details_screen.dart';
 import 'package:BSApp/screens/forum/topic_screen.dart';
 import 'package:BSApp/util/date_util.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/activities/comment_added_activity_content.dart';
 import 'package:BSApp/widgets/activities/comment_added_icon.dart';
 import 'package:BSApp/widgets/activities/deal_added_icon.dart';
@@ -37,14 +38,10 @@ class ActivityItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToSource(context),
       child: Container(
+        margin: MyStylingProvider.ITEMS_MARGIN,
+        decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 6.0),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
-          ),
-        ),
         child: Flex(
           direction: Axis.horizontal,
           children: [

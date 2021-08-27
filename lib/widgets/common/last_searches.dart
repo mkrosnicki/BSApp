@@ -42,7 +42,7 @@ class _LastSearchesState extends State<LastSearches> {
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 12.0, bottom: 4.0),
                       alignment: Alignment.centerLeft,
                       child: const Text(
                         'OSTATNIE WYSZUKIWANIA',

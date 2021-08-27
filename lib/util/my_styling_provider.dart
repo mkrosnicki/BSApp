@@ -86,4 +86,15 @@ class MyStylingProvider {
   static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
 
   static const BoxDecoration DEFAULT_TAB_BAR_DECORATION = BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY)));
+  static const EdgeInsets ITEMS_MARGIN = EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0);
+  static const BoxDecoration ITEMS_BORDER = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+    border: Border(
+      left: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+      right: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+      top: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+      bottom: BorderSide(color: MyColorsProvider.GREY_BORDER_COLOR, width: 0.5),
+    ),
+  );
 }

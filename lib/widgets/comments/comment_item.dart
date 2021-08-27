@@ -1,4 +1,5 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/comments/comment_item_bottom_section.dart';
 import 'package:BSApp/widgets/comments/comment_item_top_section.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ class CommentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      margin: MyStylingProvider.ITEMS_MARGIN,
+      decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
       width: double.infinity,
       padding: comment.isParent()
           ? const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 4.0)
@@ -20,7 +22,6 @@ class CommentItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (comment.isChild()) Divider(),
           CommentItemTopSection(comment, dealId),
           CommentItemBottomSection(comment),
         ],

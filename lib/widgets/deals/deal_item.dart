@@ -1,5 +1,6 @@
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/deals/deal_item_image_section.dart';
 import 'package:BSApp/widgets/deals/deal_item_info_section.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,15 +14,8 @@ class DealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-        color: Colors.white,
-        border: Border.all(
-          color: MyColorsProvider.GREY_BORDER_COLOR,
-          width: 0.2,
-        ),
-      ),
+      margin: MyStylingProvider.ITEMS_MARGIN,
+      decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
       child: Flex(
         direction: Axis.horizontal,
         children: [

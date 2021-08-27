@@ -31,12 +31,9 @@ class ForumMyTopicsView extends StatelessWidget {
                       final List<TopicModel> observedTopics =
                           topicsData.topics.where((element) => currentUser.observesTopic(element)).toList();
                       return topicsData.topics.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: ListView.builder(
-                                itemBuilder: (context, index) => TopicItem(observedTopics[index]),
-                                itemCount: observedTopics.length,
-                              ),
+                          ? ListView.builder(
+                              itemBuilder: (context, index) => TopicItem(observedTopics[index]),
+                              itemCount: observedTopics.length,
                             )
                           : _buildNoObservedTopicsView();
                     },
