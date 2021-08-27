@@ -1,7 +1,7 @@
 import 'package:BSApp/models/comment_model.dart';
+import 'package:BSApp/providers/comments.dart';
 import 'package:BSApp/providers/reply_state.dart';
 import 'package:BSApp/util/date_util.dart';
-import 'package:BSApp/widgets/comments/comment_item_likes_string.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +13,8 @@ class CommentItemBottomSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
+    final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
+    final List<CommentModel> subComments = commentsProvider.getSubCommentsOf(comment.id);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 4.0),
@@ -33,7 +35,18 @@ class CommentItemBottomSection extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
                 ),
               ),
-              CommentItemLikesString(comment.id),
+              if (_areSubCommentsPresentAndLoaded(subComments))
+                GestureDetector(
+                  onTap: () => _startCommentReply(comment, replyState), // TODO TODO TODO
+                  behavior: HitTestBehavior.translucent,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                    child: Text(
+                      'Pokaż odpowiedzi (${comment.subCommentsCount})',
+                      style: const TextStyle(fontSize: 11, color: Colors.blue),
+                    ),
+                  ),
+                ),
             ],
           ),
           GestureDetector(
@@ -55,4 +68,25 @@ class CommentItemBottomSection extends StatelessWidget {
   void _startCommentReply(final CommentModel comment, final ReplyState replyState) {
     replyState.setCommentToReply(comment);
   }
+
+  bool _areSubCommentsPresentAndLoaded(final List<CommentModel> subComments) {
+    return comment.hasSubComments && subComments.isEmpty;
+  }
+
+  // TODO TODO TODO
+  // Future<void> _showReplies(final Comments commentsProvider, final bool show) async {
+  //   if (show) {
+  //     await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
+  //       setState(() {
+  //         repliesLoaded = true;
+  //         showReplies = show;
+  //       });
+  //     });
+  //   } else {
+  //     setState(() {
+  //       repliesLoaded = false;
+  //       showReplies = false;
+  //     });
+  //   }
+  // }
 }

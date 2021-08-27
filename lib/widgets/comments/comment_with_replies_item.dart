@@ -36,20 +36,20 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
     return Column(
       children: [
         CommentItem(widget.comment, widget.dealId),
-        if (_areSubCommentsPresentAndLoaded(subComments))
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
-            child: Container(
-              padding: const EdgeInsets.only(left: 50.0, top: 3.0, bottom: 6.0, right: 4.0),
-              width: double.infinity,
-              // color: Colors.white,
-              child: Text(
-                'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
-                style: const TextStyle(fontSize: 12, color: MyColorsProvider.DEEP_BLUE),
-              ),
-            ),
-          ),
+        // if (_areSubCommentsPresentAndLoaded(subComments))
+        //   GestureDetector(
+        //     behavior: HitTestBehavior.translucent,
+        //     onTap: () => !showReplies ? _showReplies(commentsProvider, true) : _showReplies(commentsProvider, false),
+        //     child: Container(
+        //       padding: const EdgeInsets.only(left: 50.0, top: 3.0, bottom: 6.0, right: 4.0),
+        //       width: double.infinity,
+        //       // color: Colors.white,
+        //       child: Text(
+        //         'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
+        //         style: const TextStyle(fontSize: 12, color: MyColorsProvider.DEEP_BLUE),
+        //       ),
+        //     ),
+        //   ),
         if (subComments.isNotEmpty)
           Column(
             children: commentsProvider

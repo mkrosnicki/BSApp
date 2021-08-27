@@ -45,7 +45,7 @@ class DealDetailsComments extends StatelessWidget {
   Widget _commentsHeader() {
     return Container(
       margin: const EdgeInsets.only(top: 6.0),
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
       child: const Text(
         'KOMENTARZE',
         style: TextStyle(color: MyColorsProvider.DEEP_BLUE, fontSize: 12),
