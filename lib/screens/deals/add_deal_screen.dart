@@ -12,14 +12,12 @@ class AddDealScreen extends StatefulWidget {
   _AddDealScreenState createState() => _AddDealScreenState();
 }
 
-class _AddDealScreenState extends State<AddDealScreen> with TickerProviderStateMixin {
+class _AddDealScreenState extends State<AddDealScreen> {
   final _newDeal = AddDealModel();
 
-  TabController _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
     _newDeal.locationType = LocationType.INTERNET;
     super.initState();
   }
@@ -30,9 +28,8 @@ class _AddDealScreenState extends State<AddDealScreen> with TickerProviderStateM
       length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBarAddDeal(_tabController),
+        appBar: const AppBarAddDeal(),
         body: TabBarView(
-          controller: _tabController,
           children: [OccasionForm(_newDeal), CouponForm(_newDeal)],
         ),
       ),

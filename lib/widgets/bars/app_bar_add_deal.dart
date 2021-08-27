@@ -4,14 +4,13 @@ import 'package:BSApp/widgets/bars/app_bar_back_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
 import 'package:BSApp/widgets/common/colored_tab.dart';
 import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
+import 'package:BSApp/widgets/common/tab_bar_factory.dart';
 import 'package:flutter/material.dart';
 
 class AppBarAddDeal extends StatefulWidget implements PreferredSizeWidget {
   static const Size _aPreferredSize = Size.fromHeight(85.0);
 
-  final TabController tabController;
-
-  const AppBarAddDeal(this.tabController);
+  const AppBarAddDeal();
 
   @override
   _AppBarAddDealState createState() => _AppBarAddDealState();
@@ -21,19 +20,6 @@ class AppBarAddDeal extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _AppBarAddDealState extends State<AppBarAddDeal> {
-  int _selectedIndex = 0;
-
-
-  @override
-  void didChangeDependencies() {
-    widget.tabController.addListener(() {
-      setState(() {
-        _selectedIndex = widget.tabController.index;
-        widget.tabController.animateTo(_selectedIndex, duration: Duration.zero);
-      });
-    });
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +27,9 @@ class _AppBarAddDealState extends State<AppBarAddDeal> {
       title: 'Dodaj nową okazję',
       leading: const AppBarBackButton(Colors.white),
       bottom: DecoratedTabBar(
-        tabBar: TabBar(
-          controller: widget.tabController,
-          labelPadding: EdgeInsets.zero,
-          indicatorColor: MyColorsProvider.PASTEL_LIGHT_BLUE,
-          labelColor: Colors.white,
-          labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
-          unselectedLabelStyle: MyStylingProvider.UNSELECTED_TAB_TEXT_STYLE,
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          tabs: [
-            ColoredTab('Okazja', _selectedIndex == 0),
-            ColoredTab('Kupon', _selectedIndex == 1),
-          ],
+        decoration: MyStylingProvider.DEFAULT_TAB_BAR_DECORATION,
+        tabBar: TabBarFactory.withTabs(
+          ['Okazja', 'Kupon'],
         ),
       ),
     );

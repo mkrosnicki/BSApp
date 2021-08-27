@@ -84,4 +84,6 @@ class MyStylingProvider {
 
   static const TextStyle SELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
   static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
+
+  static const BoxDecoration DEFAULT_TAB_BAR_DECORATION = BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY)));
 }

@@ -1,12 +1,12 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/app_bar_add_topic_button.dart';
 import 'package:BSApp/widgets/bars/app_bar_search_topic_button.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/common/colored_tab.dart';
 import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
+import 'package:BSApp/widgets/common/tab_bar_factory.dart';
 import 'package:BSApp/widgets/forum/forum_categories_view.dart';
 import 'package:BSApp/widgets/forum/forum_my_topic_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ForumScreen extends StatefulWidget {
@@ -39,42 +39,33 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
-        child: BaseAppBar(
-          title: 'Forum',
-          leading: const AppBarSearchTopicButton(),
-          bottom: DecoratedTabBar(
-            tabBar: TabBar(
-              controller: _tabController,
-              labelPadding: EdgeInsets.zero,
-              indicatorColor: Colors.transparent,
-              labelColor: Colors.white,
-              labelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
-              unselectedLabelStyle: MyStylingProvider.SELECTED_TAB_TEXT_STYLE,
-              onTap: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              tabs: [
-                ColoredTab('Kategorie', _selectedIndex == 0),
-                ColoredTab('Obserwowane tematy', _selectedIndex == 1),
-              ],
+    return DefaultTabController(
+      length: 2,
+      // initialIndex: 0,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(90.0),
+          child: BaseAppBar(
+            title: 'Forum',
+            leading: const AppBarSearchTopicButton(),
+            bottom: DecoratedTabBar(
+              decoration: MyStylingProvider.DEFAULT_TAB_BAR_DECORATION,
+              tabBar: TabBarFactory.withTabs(
+                ['Kategorie', 'Obserwowane tematy'],
+              ),
             ),
+            actions: const [
+              AppBarAddTopicButton(null),
+            ],
           ),
-          actions: const [
-            AppBarAddTopicButton(null),
+        ),
+        body: TabBarView(
+          // controller: _tabController,
+          children: [
+            ForumCategoriesView(),
+            ForumMyTopicsView(),
           ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          ForumCategoriesView(),
-          ForumMyTopicsView(),
-        ],
       ),
     );
   }
