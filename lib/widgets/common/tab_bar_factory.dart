@@ -13,8 +13,8 @@ class TabBarFactory {
       overlayColor: MaterialStateProperty.all(MyColorsProvider.DEEP_BLUE),
       unselectedLabelColor: Colors.grey[500],
       labelColor: Colors.black,
-      labelStyle: const TextStyle(fontSize: 12),
-      unselectedLabelStyle: const TextStyle(fontSize: 12),
+      labelStyle: const TextStyle(fontSize: 13),
+      unselectedLabelStyle: const TextStyle(fontSize: 13),
       tabs: tabNames.map((tabName) => DefaultTab(tabName)).toList(),
     );
   }

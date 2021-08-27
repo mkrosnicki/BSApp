@@ -24,7 +24,7 @@ class _LoginRegistrationScreenState extends State<LoginRegistrationScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(90.0),
+          preferredSize: const Size.fromHeight(96.0),
           child: BaseAppBar(
             title: 'Witaj',
             leading: const AppBarCloseButton(Colors.white),

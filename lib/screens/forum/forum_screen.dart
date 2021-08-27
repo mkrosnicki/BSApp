@@ -44,7 +44,7 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
       // initialIndex: 0,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(90.0),
+          preferredSize: const Size.fromHeight(96.0),
           child: BaseAppBar(
             title: 'Forum',
             leading: const AppBarSearchTopicButton(),

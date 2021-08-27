@@ -9,7 +9,7 @@ class DefaultTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      padding: const EdgeInsets.only(bottom: 14.0, top: 14.0),
       alignment: Alignment.center,
       color: Colors.white,
       child: Text(

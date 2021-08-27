@@ -23,7 +23,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       length: 2,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(90.0),
+          preferredSize: const Size.fromHeight(96.0),
           child: BaseAppBar(
             title: 'Ulubione',
             bottom: DecoratedTabBar(
