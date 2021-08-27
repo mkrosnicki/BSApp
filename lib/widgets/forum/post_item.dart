@@ -5,7 +5,6 @@ import 'package:BSApp/widgets/forum/post_item_quote.dart';
 import 'package:BSApp/widgets/forum/post_item_user_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 class PostItem extends StatelessWidget {
   final PostModel post;

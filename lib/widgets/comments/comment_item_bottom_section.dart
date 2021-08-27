@@ -15,7 +15,7 @@ class CommentItemBottomSection extends StatelessWidget {
     final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 42.0, top: 4.0),
+      padding: const EdgeInsets.only(top: 4.0),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

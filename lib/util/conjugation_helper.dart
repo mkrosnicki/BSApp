@@ -22,6 +22,20 @@ class ConjugationHelper {
     }
   }
 
+  static String commentsConjugation(int numberOfComments) {
+    if (numberOfComments == 0) {
+      return 'komentarzy';
+    } else if (numberOfComments == 1) {
+      return 'komentarz';
+    } else if (numberOfComments > 10 && numberOfComments < 20) {
+      return 'komentarzy';
+    } else if (numberOfComments % 10 == 2 || numberOfComments % 10 == 3 || numberOfComments % 10 == 4) {
+      return 'komentarze';
+    } else {
+      return 'komentarzy';
+    }
+  }
+
   static String likesConjugation(int numberOfLikes) {
     if (numberOfLikes == 0) {
       return 'polubień';
