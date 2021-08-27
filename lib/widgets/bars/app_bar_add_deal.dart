@@ -8,7 +8,7 @@ import 'package:BSApp/widgets/common/tab_bar_factory.dart';
 import 'package:flutter/material.dart';
 
 class AppBarAddDeal extends StatefulWidget implements PreferredSizeWidget {
-  static const Size _aPreferredSize = Size.fromHeight(85.0);
+  static const Size _aPreferredSize = Size.fromHeight(96.0);
 
   const AppBarAddDeal();
 

@@ -1,7 +1,5 @@
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/bars/base_app_bar.dart';
-import 'package:BSApp/widgets/common/colored_tab.dart';
 import 'package:BSApp/widgets/common/decorated_tab_bar.dart';
 import 'package:BSApp/widgets/common/tab_bar_factory.dart';
 import 'package:BSApp/widgets/favourites/observed_deals_view.dart';
