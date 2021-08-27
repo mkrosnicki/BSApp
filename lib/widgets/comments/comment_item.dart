@@ -17,7 +17,7 @@ class CommentItem extends StatelessWidget {
       margin: comment.isParent() ? MyStylingProvider.ITEMS_MARGIN : MyStylingProvider.ITEMS_MARGIN.copyWith(left: 26.0),
       decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 4.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

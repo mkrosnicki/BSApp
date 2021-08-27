@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CommentItemHeartButton extends StatelessWidget {
-
   final String dealId;
   final String commentId;
 
@@ -24,18 +23,25 @@ class CommentItemHeartButton extends StatelessWidget {
           return Container(
             alignment: Alignment.topCenter,
             child: InkWell(
-              onTap: () => _voteForComment(
-                  context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Icon(
-                  CupertinoIcons.heart_fill,
-                  size: 18,
-                  color:
-                  wasVotedByLoggedUser
-                      ? MyColorsProvider.RED_SHADY
-                      : MyColorsProvider.LIGHT_GRAY,
-                ),
+              onTap: () => _voteForComment(context, dealId, commentId, wasVotedByLoggedUser, authData.isAuthenticated),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 2.0, bottom: 1.0),
+                    child: Text(
+                      '${comment.likers.length}',
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Icon(
+                      CupertinoIcons.heart_fill,
+                      size: 18,
+                      color: wasVotedByLoggedUser ? MyColorsProvider.RED_SHADY : MyColorsProvider.LIGHT_GRAY,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -45,17 +51,12 @@ class CommentItemHeartButton extends StatelessWidget {
   }
 
   void _voteForComment(
-      BuildContext context,
-      String dealId,
-      String commentId,
-      bool wasVotedByLoggedUser,
-      bool isAuthenticated) {
+      BuildContext context, String dealId, String commentId, bool wasVotedByLoggedUser, bool isAuthenticated) {
     if (!isAuthenticated) {
       AuthScreenProvider.showLoginScreen(context);
     } else {
       final bool isPositiveVote = !wasVotedByLoggedUser;
-      Provider.of<Comments>(context, listen: false)
-          .voteForComment(dealId, commentId, isPositiveVote);
+      Provider.of<Comments>(context, listen: false).voteForComment(dealId, commentId, isPositiveVote);
     }
   }
 }
