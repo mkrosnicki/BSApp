@@ -13,37 +13,34 @@ class UserProfileAddedTopics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: FutureBuilder(
-        future: Provider.of<Topics>(context, listen: false)
-            .fetchTopicsAddedBy(userId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: LoadingIndicator());
+    return FutureBuilder(
+      future: Provider.of<Topics>(context, listen: false).fetchTopicsAddedBy(userId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: LoadingIndicator());
+        } else {
+          if (snapshot.error != null) {
+            return const Center(
+              child: ServerErrorSplash(),
+            );
           } else {
-            if (snapshot.error != null) {
-              return const Center(
-                child: ServerErrorSplash(),
-              );
-            } else {
-              return Consumer<Topics>(
-                builder: (context, topicsData, child) {
-                  return topicsData.topics.isNotEmpty
-                      ? Container(
+            return Consumer<Topics>(
+              builder: (context, topicsData, child) {
+                return topicsData.topics.isNotEmpty
+                    ? Container(
                         color: MyColorsProvider.BACKGROUND_COLOR,
                         child: ListView.builder(
-                            itemBuilder: (context, index) =>
-                                TopicItem(topicsData.topics[index]),
-                            itemCount: topicsData.topics.length,
-                          ),
-                      )
-                      : _buildNoAddedDealsSplashView();
-                },
-              );
-            }
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => TopicItem(topicsData.topics[index]),
+                          itemCount: topicsData.topics.length,
+                        ))
+                    : _buildNoAddedDealsSplashView();
+              },
+            );
           }
-        },
-      ),
+        }
+      },
     );
   }
 
@@ -54,11 +51,7 @@ class UserProfileAddedTopics extends StatelessWidget {
         child: Text(
           'Brak dodanych tematów',
           textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 18,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-              color: MyColorsProvider.LIGHT_GRAY),
+          style: TextStyle(fontSize: 18, height: 1.5, fontWeight: FontWeight.w600, color: MyColorsProvider.LIGHT_GRAY),
         ),
       ),
     );

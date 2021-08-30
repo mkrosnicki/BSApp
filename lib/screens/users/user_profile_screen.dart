@@ -31,10 +31,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = ModalRoute
-        .of(context)
-        .settings
-        .arguments as String;
+    final userId = ModalRoute.of(context).settings.arguments as String;
     return FutureBuilder(
         future: _initUser(context, userId),
         builder: (context, snapshot) {
@@ -51,11 +48,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
               ],
             ),
-            body: snapshot.connectionState != ConnectionState.waiting ? _loadedContent(userId) : _notLoadedContent(
-                snapshot),
+            body: SingleChildScrollView(
+              child: Flexible(
+                child: snapshot.connectionState != ConnectionState.waiting
+                    ? _loadedContent(userId)
+                    : _notLoadedContent(snapshot),
+              ),
+            ),
           );
-        }
-    );
+        });
   }
 
   Widget _loadedContent(final String userId) {
@@ -115,5 +116,4 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       }
     }
   }
-
 }
