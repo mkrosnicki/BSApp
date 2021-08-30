@@ -1,4 +1,5 @@
 import 'package:BSApp/models/topic_model.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_content.dart';
 import 'package:BSApp/widgets/forum/topic_screen_topic_title.dart';
 import 'package:BSApp/widgets/forum/topic_screen_user_info.dart';
@@ -14,8 +15,9 @@ class TopicScreenTopicInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      color: Colors.white,
       width: double.infinity,
+      margin: MyStylingProvider.ITEMS_MARGIN,
+      decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

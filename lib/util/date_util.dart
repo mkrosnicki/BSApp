@@ -36,6 +36,9 @@ class DateUtil {
     if (diff.inMinutes >= 1) {
       return '${diff.inMinutes}m temu';
     }
+    if (diff.inSeconds < 0) {
+      return '0s temu';
+    }
     return '${diff.inSeconds}s temu';
   }
 
