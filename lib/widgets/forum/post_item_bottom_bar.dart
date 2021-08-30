@@ -43,13 +43,6 @@ class PostItemBottomBar extends StatelessWidget {
                       .copyWith(fontSize: 11, color: Colors.black38),
                 ),
               ),
-              Text(
-                '$numberOfLikers ${ConjugationHelper.likesConjugation(numberOfLikers)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(fontSize: 11, color: Colors.black38),
-              ),
             ],
           ),
           TextButton(

@@ -20,22 +20,33 @@ class PostItemHeartButton extends StatelessWidget {
         builder: (context, postsData, child) {
           final PostModel post = postsData.findById(postId);
           final bool wasLikedByLoggedUser = post.wasLikedBy(authData.userId);
-          return InkWell(
-            onTap: () {
-              _likeTePost(context, post, wasLikedByLoggedUser, authData.isAuthenticated);
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              alignment: Alignment.centerRight,
-              child: Icon(
-                CupertinoIcons.heart_fill,
-                size: 18,
-                color:
-                wasLikedByLoggedUser
-                    ? MyColorsProvider.RED_SHADY
-                    : MyColorsProvider.LIGHT_GRAY,
+          return Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 2.0, bottom: 1.0),
+                child: Text(
+                  '${post.likers.length}',
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
+              InkWell(
+                onTap: () {
+                  _likeTePost(context, post, wasLikedByLoggedUser, authData.isAuthenticated);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    CupertinoIcons.heart_fill,
+                    size: 18,
+                    color:
+                    wasLikedByLoggedUser
+                        ? MyColorsProvider.RED_SHADY
+                        : MyColorsProvider.LIGHT_GRAY,
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),
