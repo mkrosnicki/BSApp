@@ -82,8 +82,8 @@ class MyStylingProvider {
   static const TextStyle TEXT_WHITE = TextStyle(color: Colors.white);
   static const TextStyle TEXT_BLUE = TextStyle(color: Colors.blue);
 
-  static const TextStyle SELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
-  static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 12);
+  static const TextStyle SELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 13);
+  static const TextStyle UNSELECTED_TAB_TEXT_STYLE = TextStyle(color: Colors.black54, fontSize: 13);
 
   static const BoxDecoration DEFAULT_TAB_BAR_DECORATION = BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY)));
   static const EdgeInsets ITEMS_MARGIN = EdgeInsets.only(top: 5.0, left: 6.0, right: 6.0);

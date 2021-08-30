@@ -18,11 +18,12 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
+      height: 42,
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           bottom: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
+          top: BorderSide(color: MyColorsProvider.LIGHT_GRAY),
         ),
       ),
       width: double.infinity,
@@ -43,6 +44,7 @@ class _UserProfileScrollableMenuState extends State<UserProfileScrollableMenu> {
   Widget _buildMenuItem(String label, int index) {
     return Expanded(
       child: FlatButton(
+        height: 42,
         onPressed: () => _setIndex(index),
         shape: selectedIndex == index
             ? const Border(
