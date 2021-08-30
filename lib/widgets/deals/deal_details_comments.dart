@@ -77,6 +77,7 @@ class DealDetailsComments extends StatelessWidget {
 
   Widget _noOneAddedACommentSplash() {
     return Container(
+      margin: const EdgeInsets.only(top: 6.0),
       height: 200,
       color: Colors.white,
       child: const Center(
