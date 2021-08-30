@@ -12,7 +12,10 @@ class DealDetailsImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     final double imageHeight = screenHeight * 0.35;
     return Stack(
       children: [
@@ -24,11 +27,7 @@ class DealDetailsImage extends StatelessWidget {
         SizedBox(
           height: imageHeight,
           width: double.infinity,
-          child: deal.image ??
-              Image.network(
-                'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
-                fit: BoxFit.cover,
-              ),
+          child: _getImage(),
         ),
         Positioned(
           bottom: 0,
@@ -60,5 +59,21 @@ class DealDetailsImage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Image _getImage() {
+    if (deal.image != null) {
+      return deal.image;
+    } else if (deal.imagePath != null) {
+      return Image.network(
+        deal.imagePath,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.network(
+        'https://cdn.arena.pl/7101c435b57786e6e21cb7939e95263f-product_lightbox.jpg',
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

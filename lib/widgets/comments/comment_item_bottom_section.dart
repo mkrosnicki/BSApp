@@ -38,7 +38,7 @@ class CommentItemBottomSection extends StatelessWidget {
               ),
               if (toggleReplies != null && _areSubCommentsPresentAndLoaded(subComments))
                 GestureDetector(
-                  onTap: () => toggleReplies(), // TODO TODO TODO
+                  onTap: () => toggleReplies(),
                   behavior: HitTestBehavior.translucent,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
@@ -73,21 +73,4 @@ class CommentItemBottomSection extends StatelessWidget {
   bool _areSubCommentsPresentAndLoaded(final List<CommentModel> subComments) {
     return comment.hasSubComments && subComments.isEmpty;
   }
-
-  // TODO TODO TODO
-  // Future<void> _showReplies(final Comments commentsProvider, final bool show) async {
-  //   if (show) {
-  //     await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
-  //       setState(() {
-  //         repliesLoaded = true;
-  //         showReplies = show;
-  //       });
-  //     });
-  //   } else {
-  //     setState(() {
-  //       repliesLoaded = false;
-  //       showReplies = false;
-  //     });
-  //   }
-  // }
 }
