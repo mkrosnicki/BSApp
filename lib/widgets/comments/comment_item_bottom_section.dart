@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 
 class CommentItemBottomSection extends StatelessWidget {
   final CommentModel comment;
+  final Function toggleReplies;
 
-  const CommentItemBottomSection(this.comment);
+  const CommentItemBottomSection(this.comment, this.toggleReplies);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,9 @@ class CommentItemBottomSection extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
                 ),
               ),
-              if (_areSubCommentsPresentAndLoaded(subComments))
+              if (toggleReplies != null && _areSubCommentsPresentAndLoaded(subComments))
                 GestureDetector(
-                  onTap: () => _startCommentReply(comment, replyState), // TODO TODO TODO
+                  onTap: () => toggleReplies(), // TODO TODO TODO
                   behavior: HitTestBehavior.translucent,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),

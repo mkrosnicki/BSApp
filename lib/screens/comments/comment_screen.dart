@@ -70,9 +70,9 @@ class _CommentScreenState extends State<CommentScreen> {
                             initialScrollIndex: _determineInitialIndex(commentToScrollId, _comment, _subComments),
                             itemBuilder: (context, index) {
                               if (index == 0) {
-                                return CommentItem(_comment, dealId);
+                                return CommentItem(_comment, dealId, null);
                               } else {
-                                return CommentItem(_subComments[index - 1], dealId);
+                                return CommentItem(_subComments[index - 1], dealId, null);
                               }
                             },
                           );

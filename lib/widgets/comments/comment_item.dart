@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 class CommentItem extends StatelessWidget {
   final CommentModel comment;
   final String dealId;
+  final Function toggleReplies;
 
-  const CommentItem(this.comment, this.dealId);
+  const CommentItem(this.comment, this.dealId, this.toggleReplies);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CommentItem extends StatelessWidget {
         children: [
           CommentItemTopSection(comment, dealId),
           CommentItemContent(comment),
-          CommentItemBottomSection(comment),
+          CommentItemBottomSection(comment, toggleReplies),
         ],
       ),
     );
