@@ -9,8 +9,7 @@ class CommentItemContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4.0),
-      margin: const EdgeInsets.only(left: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10.0),
       child: Row(
         children: [
           if (_displayRepliedUsername(comment))

@@ -27,7 +27,7 @@ class UserAvatar extends StatelessWidget {
         minRadius: radius,
         maxRadius: radius,
         foregroundColor: Colors.white,
-        backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
+        backgroundColor: backgroundColor ?? Colors.deepPurpleAccent,
         child: Text(username.substring(0, 1).toUpperCase()),
       );
     }
@@ -36,7 +36,7 @@ class UserAvatar extends StatelessWidget {
         minRadius: radius,
         maxRadius: radius,
         foregroundColor: Colors.white,
-        backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
+        backgroundColor: backgroundColor ?? Colors.deepPurpleAccent,
         backgroundImage: MemoryImage(image),
       );
     }
@@ -44,7 +44,7 @@ class UserAvatar extends StatelessWidget {
       minRadius: radius,
       maxRadius: radius,
       foregroundColor: Colors.white,
-      backgroundColor: backgroundColor ?? MyColorsProvider.DEEP_BLUE,
+      backgroundColor: backgroundColor ?? Colors.deepPurpleAccent,
       backgroundImage: NetworkImage(imagePath),
     );
   }
