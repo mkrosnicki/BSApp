@@ -82,7 +82,6 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                                   ],
                                 ),
                                 const FormFieldDivider(),
-                                const FormFieldDivider(),
                                 const MyProfileOptionsList(),
                               ],
                             ),
