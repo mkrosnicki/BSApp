@@ -65,14 +65,14 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                                       top: 24.0,
                                       right: 0,
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width - 30,
+                                        width: MediaQuery.of(context).size.width - 20.0,
                                         color: Colors.white,
                                         alignment: Alignment.centerRight,
                                         child: MyProfileStatisticsInfo(currentUserData.me),
                                       ),
                                     ),
                                     Positioned(
-                                      left: 8.0,
+                                      left: 2.0,
                                       child: Container(
                                         // color: Colors.green,
                                         alignment: Alignment.centerLeft,

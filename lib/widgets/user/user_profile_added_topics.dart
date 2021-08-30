@@ -30,8 +30,7 @@ class UserProfileAddedTopics extends StatelessWidget {
                 builder: (context, topicsData, child) {
                   return topicsData.topics.isNotEmpty
                       ? Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.only(top: 8.0),
+                        color: MyColorsProvider.BACKGROUND_COLOR,
                         child: ListView.builder(
                             itemBuilder: (context, index) =>
                                 TopicItem(topicsData.topics[index]),

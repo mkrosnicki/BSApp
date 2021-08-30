@@ -29,8 +29,7 @@ class UserProfileActivitiesList extends StatelessWidget {
                 builder: (context, activitiesData, child) {
                   return activitiesData.activities.isNotEmpty
                       ? Container(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        color: Colors.white,
+                        color: MyColorsProvider.BACKGROUND_COLOR,
                         child: ListView.builder(
                             itemBuilder: (context, index) => ActivityItem(activitiesData.activities[index]),
                             itemCount: activitiesData.activities.length,

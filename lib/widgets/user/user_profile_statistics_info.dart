@@ -18,7 +18,7 @@ class _UserProfileStatisticsInfoState extends State<UserProfileStatisticsInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 30.0,
+      width: MediaQuery.of(context).size.width - 20.0,
       color: Colors.white,
       padding: const EdgeInsets.only(left: 60.0, top: 4.0, bottom: 4.0),
       child: Flex(
