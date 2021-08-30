@@ -2,6 +2,7 @@ import 'package:BSApp/models/adder_info_model.dart';
 import 'package:BSApp/providers/deals.dart';
 import 'package:BSApp/screens/users/user_profile_screen.dart';
 import 'package:BSApp/util/my_colors_provider.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/loading_indicator.dart';
 import 'package:BSApp/widgets/common/server_error_splash.dart';
 import 'package:BSApp/widgets/common/user_avatar.dart';
@@ -57,8 +58,8 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
                   Container(
                     color: MyColorsProvider.BACKGROUND_COLOR,
                     width: double.infinity,
-                    padding: const EdgeInsets.all(14.0),
-                    margin: const EdgeInsets.only(top: 6.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
+                    margin: const EdgeInsets.only(top: 10.0),
                     alignment: Alignment.centerLeft,
                     child: const Text(
                       'DODANA PRZEZ',
@@ -66,7 +67,8 @@ class _DealDetailsAuthorState extends State<DealDetailsAuthor> {
                     ),
                   ),
                   Container(
-                    color: Colors.white,
+                    margin: MyStylingProvider.ITEMS_MARGIN,
+                    decoration: MyStylingProvider.ITEMS_BORDER.copyWith(color: Colors.white),
                     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
