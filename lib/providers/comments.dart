@@ -39,16 +39,27 @@ class Comments with ChangeNotifier {
     _parentIdToSubComments.clear();
   }
 
-  Future<void> fetchSubCommentsForComment(final String commentId) async {
-    final responseBody = await _apiProvider.get('/comments/$commentId/replies') as List;
+  Future<void> fetchSubCommentsForComment(final String parentCommentId) async {
+    final responseBody = await _apiProvider.get('/comments/$parentCommentId/replies') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Comments Found!');
     }
     final List<CommentModel> loadedComments = CommentModel.fromJsonList(responseBody);
-    _parentIdToSubComments.update(commentId, (subComments) => subComments = loadedComments,
+    _parentIdToSubComments.update(parentCommentId, (subComments) => subComments = loadedComments,
         ifAbsent: () => loadedComments);
     _comments.addAll(loadedComments);
+    final CommentModel parentComment = await loadComment(parentCommentId);
+    _parentComments[_parentComments.indexWhere((element) => element.id == parentCommentId)] = parentComment;
+  }
+
+  Future<CommentModel> loadComment(String commentId) async {
+    final responseBody = await _apiProvider.get('/comments/$commentId');
+    if (responseBody == null) {
+      final logger = Logger();
+      logger.i('No Comments Found!');
+    }
+    return CommentModel.fromJson(responseBody);
   }
 
   Future<void> fetchComment(String commentId) async {
