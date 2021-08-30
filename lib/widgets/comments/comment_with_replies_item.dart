@@ -19,7 +19,7 @@ class CommentWithRepliesItem extends StatefulWidget {
 class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
   bool showAnswers;
 
-  bool showReplies = false;
+  bool _showReplies = false;
   bool repliesLoaded = false;
 
   @override
@@ -35,7 +35,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
     return Column(
       children: [
         CommentItem(widget.comment, widget.dealId, _toggleReplies),
-        if (subComments.isNotEmpty)
+        if (subComments.isNotEmpty && _showReplies)
           Column(
             children: commentsProvider
                 .getSubCommentsOf(widget.comment.id)
@@ -46,20 +46,21 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
     );
   }
 
-  Future<void> _toggleReplies() async {
+  Future<bool> _toggleReplies() async {
     final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
-    if (!showReplies) {
+    if (!_showReplies) {
       await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
         setState(() {
           repliesLoaded = true;
-          showReplies = true;
+          _showReplies = true;
         });
       });
     } else {
       setState(() {
         repliesLoaded = false;
-        showReplies = false;
+        _showReplies = false;
       });
     }
+    return _showReplies;
   }
 }

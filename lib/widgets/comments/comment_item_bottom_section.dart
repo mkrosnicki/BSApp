@@ -5,17 +5,25 @@ import 'package:BSApp/util/date_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CommentItemBottomSection extends StatelessWidget {
+class CommentItemBottomSection extends StatefulWidget {
   final CommentModel comment;
   final Function toggleReplies;
 
   const CommentItemBottomSection(this.comment, this.toggleReplies);
 
   @override
+  _CommentItemBottomSectionState createState() => _CommentItemBottomSectionState();
+}
+
+class _CommentItemBottomSectionState extends State<CommentItemBottomSection> {
+
+  bool _repliesShown = false;
+
+  @override
   Widget build(BuildContext context) {
     final ReplyState replyState = Provider.of<ReplyState>(context, listen: false);
     final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
-    final List<CommentModel> subComments = commentsProvider.getSubCommentsOf(comment.id);
+    final List<CommentModel> subComments = commentsProvider.getSubCommentsOf(widget.comment.id);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 4.0),
@@ -26,7 +34,7 @@ class CommentItemBottomSection extends StatelessWidget {
           Wrap(
             children: [
               Text(
-                DateUtil.timeAgoString(comment.addedAt),
+                DateUtil.timeAgoString(widget.comment.addedAt),
                 style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
               ),
               Container(
@@ -36,14 +44,19 @@ class CommentItemBottomSection extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 11, color: Colors.grey),
                 ),
               ),
-              if (toggleReplies != null && _areSubCommentsPresentAndLoaded(subComments))
+              if (widget.toggleReplies != null && _areSubCommentsPresentAndLoaded(subComments))
                 GestureDetector(
-                  onTap: () => toggleReplies(),
+                  onTap: () async {
+                    final bool repliesShown = await widget.toggleReplies();
+                    setState(() {
+                      _repliesShown = repliesShown;
+                    });
+                  },
                   behavior: HitTestBehavior.translucent,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                     child: Text(
-                      'Pokaż odpowiedzi (${comment.subCommentsCount})',
+                      _repliesShown ? 'Schowaj odpowiedzi (${widget.comment.subCommentsCount})' : 'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
                       style: const TextStyle(fontSize: 11, color: Colors.blue),
                     ),
                   ),
@@ -51,7 +64,7 @@ class CommentItemBottomSection extends StatelessWidget {
             ],
           ),
           GestureDetector(
-            onTap: () => _startCommentReply(comment, replyState),
+            onTap: () => _startCommentReply(widget.comment, replyState),
             behavior: HitTestBehavior.translucent,
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
@@ -71,6 +84,6 @@ class CommentItemBottomSection extends StatelessWidget {
   }
 
   bool _areSubCommentsPresentAndLoaded(final List<CommentModel> subComments) {
-    return comment.hasSubComments && subComments.isEmpty;
+    return widget.comment.hasSubComments;
   }
 }
