@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class InitializationScreen extends StatelessWidget {

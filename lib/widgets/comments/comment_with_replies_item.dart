@@ -1,8 +1,10 @@
 import 'package:BSApp/models/comment_model.dart';
 import 'package:BSApp/providers/comments.dart';
+import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/widgets/comments/comment_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 class CommentWithRepliesItem extends StatefulWidget {
@@ -20,7 +22,7 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
   bool showAnswers;
 
   bool _showReplies = false;
-  bool repliesLoaded = false;
+  bool _loadingReplies = false;
 
   @override
   void initState() {
@@ -35,6 +37,14 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
     return Column(
       children: [
         CommentItem(widget.comment, widget.dealId, _toggleReplies),
+        if (_loadingReplies)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: JumpingDotsProgressIndicator(
+              fontSize: 30.0,
+              color: MyColorsProvider.DEEP_BLUE,
+            ),
+          ),
         if (subComments.isNotEmpty && _showReplies)
           Column(
             children: commentsProvider
@@ -49,15 +59,18 @@ class _CommentWithRepliesItemState extends State<CommentWithRepliesItem> {
   Future<bool> _toggleReplies() async {
     final Comments commentsProvider = Provider.of<Comments>(context, listen: false);
     if (!_showReplies) {
+      setState(() {
+        _loadingReplies = true;
+      });
       await commentsProvider.fetchSubCommentsForComment(widget.comment.id).then((value) {
         setState(() {
-          repliesLoaded = true;
+          _loadingReplies = false;
           _showReplies = true;
         });
       });
     } else {
       setState(() {
-        repliesLoaded = false;
+        _loadingReplies = false;
         _showReplies = false;
       });
     }

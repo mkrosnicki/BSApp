@@ -2,6 +2,7 @@ import 'package:BSApp/models/filter_settings.dart';
 import 'package:BSApp/models/search_model.dart';
 import 'package:BSApp/providers/current_user.dart';
 import 'package:BSApp/screens/deals/deal_search_result_screen.dart';
+import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:BSApp/widgets/common/primary_button.dart';
 import 'package:BSApp/widgets/common/secondary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +18,8 @@ class ObservedSearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final filterSettings = searchModel.toFilterSettings();
     return Container(
-      margin: const EdgeInsets.only(top: 8.0),
-      color: Colors.white,
+      margin: MyStylingProvider.ITEMS_MARGIN,
+      decoration: MyStylingProvider.ITEMS_BORDER,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       width: double.infinity,
       child: Column(

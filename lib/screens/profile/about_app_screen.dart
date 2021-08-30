@@ -32,7 +32,7 @@ class AboutAppScreen extends StatelessWidget {
             ),
             const FormFieldDivider(),
             const Text(
-              '1.0.1',
+              '1.0.3',
               style: valueStyle,
             ),
             const FormFieldDivider(),

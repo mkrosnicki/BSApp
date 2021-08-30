@@ -18,6 +18,7 @@ class CommentItemBottomSection extends StatefulWidget {
 class _CommentItemBottomSectionState extends State<CommentItemBottomSection> {
 
   bool _repliesShown = false;
+  bool _loadingReplies = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +48,15 @@ class _CommentItemBottomSectionState extends State<CommentItemBottomSection> {
               if (widget.toggleReplies != null && _areSubCommentsPresentAndLoaded(subComments))
                 GestureDetector(
                   onTap: () async {
+                    if (_loadingReplies) {
+                      return;
+                    }
+                    setState(() {
+                      _loadingReplies = true;
+                    });
                     final bool repliesShown = await widget.toggleReplies();
                     setState(() {
+                      _loadingReplies = false;
                       _repliesShown = repliesShown;
                     });
                   },
@@ -56,7 +64,7 @@ class _CommentItemBottomSectionState extends State<CommentItemBottomSection> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                     child: Text(
-                      _repliesShown ? 'Schowaj odpowiedzi (${widget.comment.subCommentsCount})' : 'Pokaż odpowiedzi (${widget.comment.subCommentsCount})',
+                      _getReplyText(),
                       style: const TextStyle(fontSize: 11, color: Colors.blue),
                     ),
                   ),
@@ -85,5 +93,12 @@ class _CommentItemBottomSectionState extends State<CommentItemBottomSection> {
 
   bool _areSubCommentsPresentAndLoaded(final List<CommentModel> subComments) {
     return widget.comment.hasSubComments;
+  }
+
+  String _getReplyText() {
+    if (_loadingReplies) {
+      return 'Ładowanie...';
+    }
+    return _repliesShown ? 'Schowaj odpowiedzi (${widget.comment.subCommentsCount})' : 'Pokaż odpowiedzi (${widget.comment.subCommentsCount})';
   }
 }

@@ -1,7 +1,6 @@
 import 'package:BSApp/models/topic_category_model.dart';
 import 'package:BSApp/screens/forum/forum_category_screen.dart';
 import 'package:BSApp/util/image_assets_helper.dart';
-import 'package:BSApp/util/my_colors_provider.dart';
 import 'package:BSApp/util/my_icons_provider.dart';
 import 'package:BSApp/util/my_styling_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +14,8 @@ class ForumCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 75,
+      alignment: Alignment.center,
       margin: MyStylingProvider.ITEMS_MARGIN,
       decoration: MyStylingProvider.ITEMS_BORDER,
       padding: const EdgeInsets.all(2.0),
