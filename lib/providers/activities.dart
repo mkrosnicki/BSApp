@@ -27,8 +27,7 @@ class Activities with ChangeNotifier {
   }
 
   Future<void> fetchUsersActivities(String userId) async {
-    final responseBody =
-        await _apiProvider.get('/users/$userId/activities') as List;
+    final responseBody = await _apiProvider.get('/users/$userId/activities') as List;
     if (responseBody == null) {
       final logger = Logger();
       logger.i('No Activities Found!');

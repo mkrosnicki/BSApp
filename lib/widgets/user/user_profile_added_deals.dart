@@ -43,8 +43,12 @@ class UserProfileAddedDeals extends StatelessWidget {
 
   Widget _buildNoAddedDealsSplashView() {
     return Container(
+      margin: const EdgeInsets.only(top: 6.0),
+      height: 500,
+      width: double.infinity,
       color: Colors.white,
-      child: const Center(
+      child: const Padding(
+        padding: EdgeInsets.only(top: 120.0),
         child: Text(
           'Brak dodanych okazji',
           textAlign: TextAlign.center,

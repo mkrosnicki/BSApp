@@ -12,7 +12,6 @@ class UserScreenAdminActionsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () => _openAdminActions(context),
@@ -24,7 +23,6 @@ class UserScreenAdminActionsButton extends StatelessWidget {
   }
 
   void _openAdminActions(BuildContext context) {
-    print(user);
     showModalBottomSheet(
       context: context,
       builder: (context) {

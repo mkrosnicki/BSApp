@@ -49,11 +49,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ],
             ),
             body: SingleChildScrollView(
-              child: Flexible(
-                child: snapshot.connectionState != ConnectionState.waiting
-                    ? _loadedContent(userId)
-                    : _notLoadedContent(snapshot),
-              ),
+              child: snapshot.connectionState != ConnectionState.waiting
+                  ? _loadedContent(userId)
+                  : _notLoadedContent(snapshot),
             ),
           );
         });

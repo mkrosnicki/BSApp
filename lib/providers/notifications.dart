@@ -38,9 +38,6 @@ class Notifications with ChangeNotifier {
   Future<void> fetchMyNotifications() async {
     final responseBody =
     await _apiProvider.get('/users/me/notifications', token: _token) as List;
-    if (responseBody == null) {
-      print('No Notifications Found!');
-    }
     _notifications = NotificationModel.fromJsonList(responseBody);
   }
 

@@ -44,7 +44,6 @@ class ActivityModel {
   }
 
   static ActivityModel fromJson(dynamic activitySnapshot) {
-    print(activitySnapshot);
     return ActivityModel(
       id: activitySnapshot['id'],
       issuedById: activitySnapshot['issuedById'],

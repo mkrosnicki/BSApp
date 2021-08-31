@@ -149,9 +149,6 @@ class Auth with ChangeNotifier {
     final responseBody = await _apiProvider.patch(
         '/users/me/', {'notificationsSeenAtUpdate': true},
         token: _token);
-    if (responseBody == null) {
-      print('No User Found!');
-    }
     _me = UserDetailsModel.fromJson(responseBody);
     notifyListeners();
   }

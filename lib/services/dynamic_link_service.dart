@@ -37,7 +37,7 @@ class DynamicLinkService {
         });
       });
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
