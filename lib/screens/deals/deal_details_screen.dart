@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:BSApp/models/deal_model.dart';
 import 'package:BSApp/providers/current_user.dart';
@@ -34,7 +35,8 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
   @override
   void initState() {
     _colorAnimationController = AnimationController(vsync: this, duration: Duration.zero);
-    _colorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.PASTEL_BLUE).animate(_colorAnimationController);
+    _colorTween =
+        ColorTween(begin: Colors.transparent, end: MyColorsProvider.PASTEL_BLUE).animate(_colorAnimationController);
     _iconColorTween = ColorTween(begin: Colors.white, end: Colors.white).animate(_colorAnimationController);
     _titleColorTween = ColorTween(begin: Colors.transparent, end: Colors.white).animate(_colorAnimationController);
     _borderColorTween = ColorTween(begin: Colors.transparent, end: MyColorsProvider.GREY_BORDER_COLOR)
@@ -80,7 +82,7 @@ class _DealDetailsScreenState extends State<DealDetailsScreen> with TickerProvid
                 Container(
                   color: Colors.white,
                   padding: Platform.isIOS
-                      ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0)
+                      ? EdgeInsets.only(bottom: max(MediaQuery.of(context).padding.bottom - 8.0, 0.0))
                       : EdgeInsets.zero,
                   child: DealDetailsNewComment(deal.id),
                 ),

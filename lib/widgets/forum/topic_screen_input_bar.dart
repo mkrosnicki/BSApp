@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:BSApp/models/post_model.dart';
 import 'package:BSApp/providers/auth.dart';
@@ -88,7 +89,7 @@ class _TopicScreenInputBarState extends State<TopicScreenInputBar> {
         Container(
           color: Colors.white,
           padding:
-              Platform.isIOS ? EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom - 8.0) : EdgeInsets.zero,
+              Platform.isIOS ? EdgeInsets.only(bottom: max(MediaQuery.of(context).padding.bottom - 8.0, 0.0)) : EdgeInsets.zero,
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               minHeight: 50,
