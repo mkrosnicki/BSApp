@@ -141,7 +141,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchMe() async {
-    final responseBody = await _apiProvider.get('/users/me', token: _token, timeout: const Duration(seconds: 10));
+    final responseBody = await _apiProvider.get('/users/me', token: _token);
     _me = UserDetailsModel.fromJson(responseBody);
   }
 
