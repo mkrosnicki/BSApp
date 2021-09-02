@@ -18,9 +18,9 @@ class InitializationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.65,
               child: Image.asset(
-                'assets/images/logo5.png',
+                'assets/images/logo2000.png',
                 fit: BoxFit.fitWidth,
               ),
             ),

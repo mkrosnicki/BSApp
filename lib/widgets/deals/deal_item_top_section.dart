@@ -32,6 +32,7 @@ class DealItemTopSection extends StatelessWidget {
                       deal.title,
                       style: TextStyle(
                         fontSize: 13,
+                        fontWeight: FontWeight.w400,
                         decoration: isExpired ? TextDecoration.lineThrough : TextDecoration.none,
                       ),
                       overflow: TextOverflow.clip,

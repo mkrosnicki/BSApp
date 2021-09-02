@@ -31,7 +31,7 @@ class AppLogoHeader extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Image.asset(
-                        'assets/images/logo5.png',
+                        'assets/images/logo2000.png',
                         fit: BoxFit.fitWidth,
                       ),
                     ),

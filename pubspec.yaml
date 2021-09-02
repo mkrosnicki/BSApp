@@ -76,6 +76,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/logo600.png
+    - assets/images/logo1200.png
+    - assets/images/logo2000.png
     - assets/images/bathtub.png
     - assets/images/car.png
     - assets/images/cradle.png
@@ -124,6 +127,17 @@ flutter:
         - asset: assets/fonts/Inter-UI-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Inter-UI-Bold.ttf
+          weight: 700
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Raleway-Light.ttf
+          weight: 400
+        - asset: assets/fonts/Raleway-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/Raleway-SemiBold.ttf
           weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

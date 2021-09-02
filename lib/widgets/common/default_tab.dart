@@ -14,7 +14,7 @@ class DefaultTab extends StatelessWidget {
       color: Colors.white,
       child: Text(
         tabText,
-        style: const TextStyle(letterSpacing: 0.2, fontFamily: 'InterUI'),
+        style: const TextStyle(letterSpacing: 0.2, fontFamily: 'Raleway'),
       ),
       // width: double.infinity,
     );

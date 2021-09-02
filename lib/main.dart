@@ -134,7 +134,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Bobify',
         theme: ThemeData(
-          fontFamily: 'InterUI',
+          fontFamily: 'Raleway',
           // This is the theme of your application.
           //
           // Try running your application with "flutter run". You'll see the
